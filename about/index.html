@@ -157,6 +157,22 @@
   }
   .quote cite { display: block; margin-top: 12px; font-style: normal; font-size: 13.5px; color: var(--muted); }
 
+  /* ---------- logo strip ---------- */
+  .logos-block { padding-top: 66px; }
+  .logos-title {
+    text-align: center; color: var(--muted);
+    font-size: 12px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase;
+    margin: 0 0 30px;
+  }
+  .logo-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 28px 54px; }
+  .logo {
+    height: 28px; width: auto; max-width: 150px; object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.45;
+    transition: opacity 0.2s ease;
+  }
+  .logo:hover { opacity: 0.85; }
+
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
   .card {
     border: 1px solid var(--line); border-radius: var(--radius);
@@ -283,6 +299,17 @@
 </header>
 
 <main>
+  <section class="wrap logos-block reveal" style="--d:.36s">
+    <p class="logos-title">Organizations Thomas has worked with and for</p>
+    <div class="logo-strip">
+      <img class="logo" src="../assets/logos/teachpilot.svg" alt="TeachPilot">
+      <img class="logo" src="../assets/logos/tufts.svg" alt="Tufts University">
+      <img class="logo" src="../assets/logos/greenway.png" alt="Greenway Institute">
+      <img class="logo" src="../assets/logos/amazon.svg" alt="Amazon">
+      <img class="logo" src="../assets/logos/accenture.svg" alt="Accenture">
+    </div>
+  </section>
+
   <section class="section" id="story">
     <div class="wrap">
       <div class="prose reveal">
@@ -319,7 +346,7 @@
           <ul>
             <li>Founded and scaled Accenture's Best Buy digital engineering practice from 0 to 100+ specialists</li>
             <li>One of Accenture's earliest enterprise AWS adopters; co-presented early cloud proof-of-concepts with Amazon's CTO</li>
-            <li>Led engineering for NFL.com, Disney, and Warner Bros., including an Emmy-recognized digital distribution system</li>
+            <li>Delivered flagship platforms for media clients including NFL.com, Disney, and Warner Bros., with an Emmy-recognized digital distribution system</li>
           </ul>
         </article>
         <article class="card reveal" style="--d:.19s">
@@ -393,9 +420,9 @@
         <div class="entry reveal" style="--d:.21s">
           <span class="years">2006 – 2009</span>
           <div>
-            <h3>Software Development Leadership</h3>
-            <p class="org">NFL.com · Disney · Warner Bros.</p>
-            <p>Launched NFL.com at 100,000+ requests/second, rebuilt Disney.com publishing, and digitized Warner Bros. content distribution.</p>
+            <h3>Client Engineering Leadership</h3>
+            <p class="org">NFL.com · Disney · Warner Bros. — client engagements</p>
+            <p>Delivered flagship platforms for media clients: launched NFL.com at 100,000+ requests/second, rebuilt Disney.com publishing, and digitized Warner Bros. content distribution.</p>
           </div>
         </div>
         <div class="entry reveal" style="--d:.24s">
