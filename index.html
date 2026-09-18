@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ENT-164 · Intro to Making — OpenCode + DeepSeek V4.1 Flash</title>
-<meta name="description" content="A beginner's guide to setting up OpenCode with DeepSeek V4.1 Flash. No terminal, no coding — about 15 minutes, for macOS.">
+<title>ENT-164 · Intro to Making — Guides &amp; Syllabus</title>
+<meta name="description" content="The syllabus and step-by-step, beginner-friendly guides for making with AI in ENT-164.">
 <meta name="theme-color" content="#0a1020">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ENT-164 · Intro to Making — OpenCode + DeepSeek V4.1 Flash">
-<meta property="og:description" content="A beginner's guide to setting up OpenCode with DeepSeek V4.1 Flash. No terminal, no coding — about 15 minutes, for macOS.">
+<meta property="og:title" content="ENT-164 · Intro to Making — Guides &amp; Syllabus">
+<meta property="og:description" content="The syllabus and step-by-step, beginner-friendly guides for making with AI in ENT-164.">
 <meta property="og:url" content="https://tvande08.github.io/ENT-164/">
 <meta property="og:image" content="https://tvande08.github.io/ENT-164/opencode-deepseek-guide/shots/app-00-start-crop.png">
 <style>
@@ -141,18 +141,8 @@
     color: var(--text); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.05);
   }
   .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(111, 179, 236, 0.6); background: rgba(62, 142, 222, 0.14); }
+  .btn-sm { padding: 10px 20px; font-size: 14px; }
   .hero .note { margin: 22px 0 0; color: var(--muted); font-size: 13.5px; }
-
-  /* ---------- stats ---------- */
-  .stats {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border: 1px solid var(--line); border-radius: var(--radius);
-    background: var(--card); overflow: hidden; margin-top: 56px;
-  }
-  .stat { padding: 24px 18px; text-align: center; border-left: 1px solid var(--line); }
-  .stat:first-child { border-left: none; }
-  .stat .value { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.4px; }
-  .stat .label { color: var(--muted); font-size: 13px; margin-top: 3px; }
 
   /* ---------- sections ---------- */
   .section { padding: 84px 0 0; }
@@ -161,6 +151,55 @@
   h2 { font-size: clamp(1.55rem, 3.1vw, 2.15rem); line-height: 1.2; letter-spacing: -0.6px; margin: 0 0 12px; }
   .section-head p { color: var(--muted); margin: 0; }
 
+  /* ---------- guides ---------- */
+  .guide-list { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 18px; align-items: stretch; }
+  .guide-card {
+    display: flex; flex-direction: column;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 30px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .guide-card:hover {
+    transform: translateY(-3px); border-color: rgba(111, 179, 236, 0.45);
+    background: rgba(62, 142, 222, 0.08); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+  }
+  .guide-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .guide-head .mark-md {
+    width: 46px; height: 46px; border-radius: 13px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 6px 18px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  }
+  .guide-head .mark-md svg { width: 23px; height: 23px; }
+  .guide-head h3 { margin: 0; font-size: 1.22rem; letter-spacing: -0.3px; }
+  .guide-head .sub { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .guide-card > p { margin: 0 0 22px; color: var(--muted-2); font-size: 15px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0 0 24px; padding: 0; }
+  .tags li {
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 13px; font-size: 12.5px; color: var(--muted-2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .guide-actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; }
+  .soon-card {
+    border: 1px dashed rgba(255, 255, 255, 0.22); border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.02);
+    padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .soon-card .plus {
+    width: 46px; height: 46px; border-radius: 13px; margin-bottom: 18px;
+    border: 1px dashed rgba(111, 179, 236, 0.5); color: var(--accent);
+    display: grid; place-items: center; font-size: 22px; font-weight: 400; line-height: 1;
+  }
+  .soon-card h3 { margin: 0 0 8px; font-size: 1.05rem; color: var(--muted-2); }
+  .soon-card p { margin: 0; color: var(--muted); font-size: 14px; max-width: 260px; }
+  .soon-card.wide { grid-column: 1 / -1; flex-direction: row; gap: 16px; text-align: left; padding: 22px 30px; }
+  .soon-card.wide .plus { width: 38px; height: 38px; border-radius: 11px; font-size: 19px; margin: 0; flex: 0 0 auto; }
+  .soon-card.wide h3 { margin: 0 0 2px; }
+  .soon-card.wide p { max-width: none; }
+
+  /* ---------- inside cards ---------- */
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(236px, 1fr)); gap: 16px; }
   .card {
     position: relative; border: 1px solid var(--line); border-radius: var(--radius);
@@ -181,35 +220,8 @@
   .card h3 { margin: 0 0 8px; font-size: 1.06rem; letter-spacing: -0.2px; }
   .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
 
-  /* ---------- steps ---------- */
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .step {
-    display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start;
-    border: 1px solid var(--line); border-radius: var(--radius);
-    background: var(--card); padding: 20px 22px;
-    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-  }
-  .step:hover { border-color: rgba(111, 179, 236, 0.4); background: rgba(62, 142, 222, 0.07); transform: translateY(-2px); }
-  .step .num {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
-    color: #fff; font-weight: 700; font-size: 17px;
-    display: grid; place-items: center;
-    box-shadow: 0 6px 18px rgba(62, 142, 222, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-  .step h3 { margin: 8px 0 5px; font-size: 1.02rem; letter-spacing: -0.2px; }
-  .step p { margin: 0; color: var(--muted); font-size: 14.5px; }
-  .step code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.85em; color: #cfe4fa;
-    background: rgba(62, 142, 222, 0.14); border: 1px solid rgba(62, 142, 222, 0.28);
-    border-radius: 5px; padding: 1px 6px;
-  }
-
-  /* ---------- need ---------- */
-  .need {
-    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; align-items: stretch;
-  }
+  /* ---------- before you start ---------- */
+  .need { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; align-items: stretch; }
   .panel {
     border: 1px solid var(--line); border-radius: var(--radius);
     background: var(--card); padding: 30px 30px 26px;
@@ -269,11 +281,9 @@
   .reveal { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22, 0.7, 0.28, 1) forwards; animation-delay: var(--d, 0s); }
 
   @media (max-width: 880px) {
-    .steps { grid-template-columns: 1fr; }
+    .guide-list { grid-template-columns: 1fr; }
+    .soon-card.wide { flex-direction: column; text-align: center; }
     .need { grid-template-columns: 1fr; }
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .stat:nth-child(3) { border-left: none; }
-    .stat:nth-child(n + 3) { border-top: 1px solid var(--line); }
     .hero { padding: 76px 0 64px; }
     .section { padding-top: 66px; }
     .nav-links a:not(.nav-cta) { display: none; }
@@ -283,7 +293,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .reveal { animation: none; opacity: 1; }
-    .btn, .card, .step { transition: none; }
+    .btn, .card, .guide-card { transition: none; }
   }
 </style>
 </head>
@@ -302,9 +312,9 @@
       <span>ENT-164 <small>· Intro to Making</small></span>
     </a>
     <div class="nav-links">
-      <a href="#why">Why this setup</a>
-      <a href="#steps">The 7 steps</a>
-      <a class="nav-cta" href="opencode-deepseek-guide/guide.html">Setup guide &rarr;</a>
+      <a href="#materials">Course materials</a>
+      <a href="#inside">What's inside</a>
+      <a class="nav-cta" href="#materials">Start here &rarr;</a>
     </div>
   </div>
 </nav>
@@ -319,136 +329,130 @@
       </svg>
     </div>
     <p class="kicker reveal" style="--d:.08s">ENT-164 · Intro to Making</p>
-    <h1 class="reveal" style="--d:.14s">Making with AI<br><span class="accent">OpenCode + DeepSeek V4.1 Flash</span></h1>
-    <p class="lead reveal" style="--d:.2s">Download the OpenCode app, connect it to OpenRouter, and start asking questions. No terminal, no coding — just a normal Mac app, set up in about 15 minutes.</p>
+    <h1 class="reveal" style="--d:.14s">Making with <span class="accent">AI</span></h1>
+    <p class="lead reveal" style="--d:.2s">Guides, the syllabus, and class resources — everything you need for the semester. Pick one and follow along: no terminal, no coding, just normal apps on your Mac.</p>
     <div class="pills reveal" style="--d:.26s">
-      <span class="pill">About 15 minutes</span>
+      <span class="pill">Beginner friendly</span>
+      <span class="pill">No coding required</span>
       <span class="pill">For macOS</span>
-      <span class="pill">Provider: OpenRouter</span>
-      <span class="pill">Model: DeepSeek V4.1 Flash</span>
+      <span class="pill">Covered by the class budget</span>
     </div>
     <div class="cta-row reveal" style="--d:.32s">
-      <a class="btn btn-primary" href="opencode-deepseek-guide/guide.html">Read the setup guide &rarr;</a>
-      <a class="btn btn-ghost" href="opencode-deepseek-guide/opencode-deepseek-v4.1-flash-setup.pdf">Download the PDF</a>
+      <a class="btn btn-primary" href="#materials">Browse the materials &darr;</a>
     </div>
-    <p class="note reveal" style="--d:.38s">Everything is covered by the class budget — nothing to buy.</p>
-
-    <div class="stats reveal" style="--d:.44s">
-      <div class="stat"><div class="value">~15 min</div><div class="label">Start to finish</div></div>
-      <div class="stat"><div class="value">7 steps</div><div class="label">Download to first question</div></div>
-      <div class="stat"><div class="value">$0</div><div class="label">Class budget covers usage</div></div>
-      <div class="stat"><div class="value">macOS 13+</div><div class="label">Any Apple laptop</div></div>
-    </div>
+    <p class="note reveal" style="--d:.38s">Syllabus and guides are live — more added as the term goes on.</p>
   </div>
 </header>
 
 <main>
-  <section class="section" id="why">
+  <section class="section" id="materials">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="kicker">Why this setup</p>
-        <h2>Built for making things with AI</h2>
-        <p>OpenCode is the app, DeepSeek V4.1 Flash is the brain, and OpenRouter is the connection. Here is why the class uses them.</p>
+        <p class="kicker">Course materials</p>
+        <h2>Start here</h2>
+        <p>The syllabus has the full semester plan. The guides walk you through the tools, step by step.</p>
+      </div>
+      <div class="guide-list">
+        <article class="guide-card reveal" style="--d:.05s">
+          <div class="guide-head">
+            <span class="mark-md" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 7v14" />
+                <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+              </svg>
+            </span>
+            <div>
+              <h3>Course Syllabus</h3>
+              <p class="sub">Fall 2026 · The semester plan</p>
+            </div>
+          </div>
+          <p>Meeting times, learning outcomes, the week-by-week schedule, grading, policies, and student resources — everything you need for the semester.</p>
+          <ul class="tags">
+            <li>Fall 2026</li>
+            <li>3 credits</li>
+            <li>Thursdays 1:20–4:20pm</li>
+            <li>JCC 301 / Nolop</li>
+          </ul>
+          <div class="guide-actions">
+            <a class="btn btn-primary btn-sm" href="syllabus/">Read the syllabus &rarr;</a>
+            <a class="btn btn-ghost btn-sm" href="syllabus/ENT164%20FA26%20Introduction%20to%20Making%20Syllabus.pdf">Download the PDF</a>
+          </div>
+        </article>
+        <article class="guide-card reveal" style="--d:.1s">
+          <div class="guide-head">
+            <span class="mark-md" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+                <path d="m18 15 4-4" />
+                <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+              </svg>
+            </span>
+            <div>
+              <h3>OpenCode + DeepSeek V4.1 Flash</h3>
+              <p class="sub">Set up guide · Tools</p>
+            </div>
+          </div>
+          <p>Download the OpenCode app, join the class workspace on OpenRouter, and connect DeepSeek V4.1 Flash — from download to your first question in about 15 minutes.</p>
+          <ul class="tags">
+            <li>About 15 minutes</li>
+            <li>For macOS</li>
+            <li>7 steps</li>
+            <li>Beginner friendly</li>
+          </ul>
+          <div class="guide-actions">
+            <a class="btn btn-primary btn-sm" href="opencode-deepseek-guide/guide.html">Read the guide &rarr;</a>
+            <a class="btn btn-ghost btn-sm" href="opencode-deepseek-guide/opencode-deepseek-v4.1-flash-setup.pdf">Download the PDF</a>
+          </div>
+        </article>
+        <aside class="soon-card wide reveal" style="--d:.15s">
+          <span class="plus" aria-hidden="true">+</span>
+          <div>
+            <h3>More materials coming</h3>
+            <p>New guides and class resources will appear here as the term goes on.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="inside">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">What's inside</p>
+        <h2>Every guide, the same way</h2>
+        <p>Whatever the topic, each walkthrough follows the same beginner-friendly format.</p>
       </div>
       <div class="cards">
         <article class="card reveal" style="--d:.05s">
           <span class="num">01</span>
-          <h3>Built for this work</h3>
-          <p>Designed for reasoning and agentic coding with reliable tool use, so it can genuinely help with your class projects.</p>
+          <h3>Illustrated step by step</h3>
+          <p>Screenshots from a real install, so you always know exactly what you should be seeing.</p>
         </article>
         <article class="card reveal" style="--d:.12s">
           <span class="num">02</span>
-          <h3>Open weights</h3>
-          <p>The model itself is openly licensed and inspectable — which fits a making class better than a closed black box.</p>
+          <h3>Plain English</h3>
+          <p>No jargon. New words are explained as they come up, and collected in a short glossary.</p>
         </article>
         <article class="card reveal" style="--d:.19s">
           <span class="num">03</span>
-          <h3>Big context, tiny cost</h3>
-          <p>It can read entire files — up to 1M tokens — for a fraction of a cent per question, so the shared class budget lasts the term.</p>
+          <h3>Troubleshooting included</h3>
+          <p>The common snags, what they look like, and exactly what to do — usually one small fix.</p>
         </article>
         <article class="card reveal" style="--d:.26s">
           <span class="num">04</span>
-          <h3>One connection</h3>
-          <p>One OpenRouter account and one key. Explore other models later without starting over.</p>
+          <h3>Covered by the class budget</h3>
+          <p>Nothing to buy. The shared class budget covers AI usage for your coursework.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="section" id="steps">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Step by step</p>
-        <h2>The whole setup, at a glance</h2>
-        <p>Each step has screenshots and plain-English instructions in the full guide.</p>
-      </div>
-      <ol class="steps">
-        <li class="step reveal" style="--d:.04s">
-          <span class="num">1</span>
-          <div>
-            <h3>Download the OpenCode app</h3>
-            <p>Go to <code>opencode.ai/download</code> and click <b>Download for macOS</b>.</p>
-          </div>
-        </li>
-        <li class="step reveal" style="--d:.08s">
-          <span class="num">2</span>
-          <div>
-            <h3>Install the app</h3>
-            <p>Drag OpenCode onto your Applications folder, then open it like any Mac app.</p>
-          </div>
-        </li>
-        <li class="step reveal" style="--d:.12s">
-          <span class="num">3</span>
-          <div>
-            <h3>Join your class on OpenRouter</h3>
-            <p>Sign up at openrouter.ai with your Tufts email and request to join the class workspace.</p>
-          </div>
-        </li>
-        <li class="step reveal" style="--d:.16s">
-          <span class="num">4</span>
-          <div>
-            <h3>Create your own API key</h3>
-            <p>Name it <b>OpenCode</b>, copy it once, and keep it private — it starts with <code>sk-or-</code>.</p>
-          </div>
-        </li>
-        <li class="step reveal" style="--d:.2s">
-          <span class="num">5</span>
-          <div>
-            <h3>Connect OpenRouter in the app</h3>
-            <p>Open the model panel, choose OpenRouter, paste your key, and click Continue.</p>
-          </div>
-        </li>
-        <li class="step reveal" style="--d:.24s">
-          <span class="num">6</span>
-          <div>
-            <h3>Choose DeepSeek V4.1 Flash</h3>
-            <p>Search <b>v4.1 flash</b>, switch it on in Manage models if needed, and select it.</p>
-          </div>
-        </li>
-        <li class="step reveal" style="--d:.28s">
-          <span class="num">7</span>
-          <div>
-            <h3>Ask your first question</h3>
-            <p>Type in plain English and press Enter. That's it — you're making with AI.</p>
-          </div>
-        </li>
-        <li class="step reveal" style="--d:.32s">
-          <span class="num">✓</span>
-          <div>
-            <h3>Read the full guide</h3>
-            <p><a href="opencode-deepseek-guide/guide.html">Open the illustrated setup guide &rarr;</a> for screenshots, tips, and troubleshooting.</p>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="section" id="need">
+  <section class="section" id="before">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Before you start</p>
         <h2>What you'll need</h2>
-        <p>Almost nothing. If you can install a Mac app, you can do this.</p>
+        <p>Almost nothing. If you can install a Mac app, you can follow any of these guides.</p>
       </div>
       <div class="need">
         <div class="panel reveal" style="--d:.05s">
@@ -456,19 +460,19 @@
           <ul class="checklist">
             <li>An Apple laptop running <b>macOS 13 or newer</b></li>
             <li>An internet connection</li>
-            <li>Your <b>Tufts email</b> — you'll use it to join the class workspace in Step 3</li>
+            <li>Your <b>Tufts email</b> — some class services are tied to the <b>tufts.edu</b> domain</li>
             <li><b>Nothing to pay</b> — the class budget covers AI usage for your coursework</li>
           </ul>
         </div>
         <div class="reveal" style="--d:.12s">
           <div class="callout">
-            <b>New word alert: OpenRouter.</b> A website that gives one account access to many AI models. Connect it once and pick any model you like.
+            <b>Use your Tufts email.</b> Class workspaces and budgets are tied to the <b>tufts.edu</b> domain. Signing up with a different email means you won't be offered them.
           </div>
           <div class="callout warm">
             <b>Keep the budget healthy.</b> The class budget is shared, so keep questions focused on class work and avoid long, off-topic chats.
           </div>
           <div class="callout">
-            <b>Stuck on something?</b> The guide ends with a troubleshooting table covering the common snags, from macOS warnings to invalid keys.
+            <b>Stuck on something?</b> Every guide ends with a troubleshooting table — and your instructor is happy to help.
           </div>
         </div>
       </div>
@@ -478,10 +482,10 @@
   <section class="wrap">
     <div class="cta-band reveal">
       <h2>Ready when you are</h2>
-      <p>Open the illustrated guide and follow along. About 15 minutes from download to your first question.</p>
+      <p>Read the syllabus for the full semester plan, or jump into the first guide — about 15 minutes from download to your first question.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="opencode-deepseek-guide/guide.html">Start the setup guide &rarr;</a>
-        <a class="btn btn-ghost" href="opencode-deepseek-guide/opencode-deepseek-v4.1-flash-setup.pdf">Download the PDF</a>
+        <a class="btn btn-primary" href="syllabus/">Open the syllabus &rarr;</a>
+        <a class="btn btn-ghost" href="opencode-deepseek-guide/guide.html">Open the first guide</a>
       </div>
     </div>
   </section>
@@ -497,11 +501,12 @@
           <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
         </svg>
       </span>
-      <span>ENT-164 · Intro to Making — OpenCode + DeepSeek V4.1 Flash</span>
+      <span>ENT-164 · Intro to Making — class materials</span>
     </div>
     <div class="foot-links">
-      <a href="opencode-deepseek-guide/guide.html">Setup guide</a>
-      <a href="opencode-deepseek-guide/opencode-deepseek-v4.1-flash-setup.pdf">PDF</a>
+      <a href="#materials">Course materials</a>
+      <a href="syllabus/">Syllabus</a>
+      <a href="opencode-deepseek-guide/guide.html">OpenCode guide</a>
       <a href="https://opencode.ai/docs" target="_blank" rel="noopener">OpenCode docs</a>
       <a href="https://openrouter.ai" target="_blank" rel="noopener">OpenRouter</a>
     </div>
