@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About the Instructor — ENT-164 · Intro to Making</title>
+<meta name="description" content="Thomas Van de Velde — technology executive, educator, and founder. Lecturer in Entrepreneurship &amp; AI Innovation at Tufts and instructor for ENT-164 Intro to Making.">
+<meta name="theme-color" content="#0a1020">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About the Instructor — ENT-164 · Intro to Making">
+<meta property="og:description" content="Thomas Van de Velde — technology executive, educator, and founder. Lecturer in Entrepreneurship &amp; AI Innovation at Tufts.">
+<meta property="og:image" content="https://tvande08.github.io/ENT-164/assets/tvdv.jpg">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --accent: #6FB3EC;
+    --ink: #0a1020;
+    --ink-2: #101a2b;
+    --ink-3: #241a13;
+    --text: #f2f2f5;
+    --muted: #9aa0b4;
+    --muted-2: #c3c7d6;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-strong: rgba(255, 255, 255, 0.20);
+    --card: rgba(255, 255, 255, 0.045);
+    --check: #7BC89A;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 16.5px;
+    line-height: 1.62;
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 55%, var(--ink-3) 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgba(62, 142, 222, 0.42); color: #fff; }
+  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  section[id] { scroll-margin-top: 92px; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10, 16, 32, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-weight: 700; letter-spacing: -0.2px; }
+  .brand:hover { text-decoration: none; }
+  .brand .mark-sm {
+    width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 4px 14px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .brand .mark-sm svg { width: 16px; height: 16px; }
+  .brand small { color: var(--muted); font-weight: 500; font-size: 13.5px; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { color: var(--muted-2); font-size: 14.5px; font-weight: 500; transition: color 0.18s ease; }
+  .nav-links a:hover { color: #fff; text-decoration: none; }
+  .nav-links a.nav-cta {
+    color: #fff; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 7px 16px; background: rgba(255, 255, 255, 0.05); transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .nav-links a.nav-cta:hover { border-color: rgba(111, 179, 236, 0.65); background: rgba(62, 142, 222, 0.16); }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 96px 0 20px; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(640px 340px at 14% 0%, rgba(62, 142, 222, 0.28), transparent 70%),
+      radial-gradient(560px 320px at 88% 10%, rgba(99, 73, 58, 0.32), transparent 72%);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; }
+  .hero-grid { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 46px; align-items: center; }
+  .portrait {
+    width: 230px; height: 230px; border-radius: 30px; object-fit: cover;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45), 0 0 0 7px rgba(62, 142, 222, 0.10);
+  }
+  .kicker {
+    font-size: 12.5px; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 14px;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.8vw, 3.05rem);
+    line-height: 1.1; letter-spacing: -1.1px; font-weight: 700;
+    margin: 0 0 16px;
+  }
+  h1 .accent {
+    background: linear-gradient(100deg, #6FB3EC 10%, #9ecdf7 50%, #6FB3EC 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lead { color: var(--muted-2); font-size: 1.1rem; max-width: 640px; margin: 0 0 22px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .pill {
+    border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px;
+    padding: 7px 17px; font-size: 13.5px; color: #dfe2ee;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 26px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.1px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn-primary {
+    color: #fff; background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    box-shadow: 0 10px 30px rgba(62, 142, 222, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(62, 142, 222, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28); }
+  .btn-ghost { color: var(--text); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.05); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(111, 179, 236, 0.6); background: rgba(62, 142, 222, 0.14); }
+
+  /* ---------- sections ---------- */
+  .section { padding: 74px 0 0; }
+  .section-head { max-width: 680px; margin: 0 auto 40px; text-align: center; }
+  .section-head .kicker { margin-bottom: 12px; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2.05rem); line-height: 1.2; letter-spacing: -0.6px; margin: 0 0 12px; }
+  .section-head p { color: var(--muted); margin: 0; }
+
+  .prose p { color: var(--muted-2); margin: 0 0 16px; max-width: 76ch; }
+  .prose p:last-child { margin-bottom: 0; }
+  .quote {
+    margin: 34px 0 0; padding: 24px 30px;
+    border-left: 3px solid var(--tufts-blue);
+    background: rgba(62, 142, 222, 0.10);
+    border-radius: 0 16px 16px 0;
+    font-size: 1.14rem; line-height: 1.58; color: var(--text);
+    max-width: 76ch;
+  }
+  .quote cite { display: block; margin-top: 12px; font-style: normal; font-size: 13.5px; color: var(--muted); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 26px 24px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px); border-color: rgba(111, 179, 236, 0.45);
+    background: rgba(62, 142, 222, 0.08); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+  }
+  .card h3 { margin: 0 0 4px; font-size: 1.08rem; letter-spacing: -0.2px; }
+  .card .sub { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 14px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--muted-2); font-size: 14.5px; }
+  .card li { margin-bottom: 7px; }
+  .card li:last-child { margin-bottom: 0; }
+  .card p { margin: 0; color: var(--muted-2); font-size: 14.5px; }
+
+  /* ---------- timeline ---------- */
+  .timeline { display: flex; flex-direction: column; gap: 12px; }
+  .entry {
+    display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 20px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 18px 24px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .entry:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .entry .years { color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 0.6px; padding-top: 2px; }
+  .entry h3 { margin: 0 0 2px; font-size: 1rem; letter-spacing: -0.2px; }
+  .entry .org { color: var(--muted); font-size: 13.5px; margin: 0 0 6px; }
+  .entry p { margin: 0; color: var(--muted-2); font-size: 14.5px; }
+
+  /* ---------- cta band ---------- */
+  .cta-band {
+    position: relative; overflow: hidden; text-align: center;
+    margin-top: 82px; padding: 62px 28px;
+    border: 1px solid var(--line); border-radius: 24px;
+    background:
+      radial-gradient(640px 240px at 50% -30%, rgba(62, 142, 222, 0.30), transparent 72%),
+      rgba(255, 255, 255, 0.03);
+  }
+  .cta-band h2 { margin-bottom: 10px; }
+  .cta-band p { color: var(--muted); max-width: 560px; margin: 0 auto 30px; }
+  .cta-band p a { color: var(--accent); }
+
+  /* ---------- footer ---------- */
+  footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot-brand { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 13.5px; }
+  .foot-brand .mark-xs {
+    width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+  }
+  .foot-brand .mark-xs svg { width: 14px; height: 14px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13.5px; }
+  .foot-links a { color: var(--muted); transition: color 0.18s ease; }
+  .foot-links a:hover { color: #fff; text-decoration: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22, 0.7, 0.28, 1) forwards; animation-delay: var(--d, 0s); }
+
+  @media (max-width: 880px) {
+    .hero { padding: 64px 0 12px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 26px; }
+    .portrait { width: 150px; height: 150px; border-radius: 22px; }
+    .section { padding-top: 58px; }
+    .entry { grid-template-columns: 1fr; gap: 6px; }
+    .entry .years { padding-top: 0; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .brand small { display: none; }
+    .brand, .nav-links a.nav-cta { white-space: nowrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { animation: none; opacity: 1; }
+    .btn, .card, .entry { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>· Intro to Making</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="../#materials">Course materials</a>
+      <a href="../syllabus/">Syllabus</a>
+      <a class="nav-cta" href="../opencode-deepseek-guide/guide.html">Class guides &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <img class="portrait reveal" src="../assets/tvdv.jpg" alt="Portrait of Thomas Van de Velde" width="480" height="480">
+    <div>
+      <p class="kicker reveal" style="--d:.06s">About the instructor</p>
+      <h1 class="reveal" style="--d:.12s">Thomas <span class="accent">Van de Velde</span></h1>
+      <p class="lead reveal" style="--d:.18s">Technology executive, educator, and founder — teaching entrepreneurship and AI innovation at Tufts, and building tools that make hands-on technical education accessible to everyone.</p>
+      <div class="pills reveal" style="--d:.24s">
+        <span class="pill">20+ years in tech</span>
+        <span class="pill">Lecturer at Tufts</span>
+        <span class="pill">Founder of TeachPilot</span>
+        <span class="pill">Pilot &amp; maker</span>
+      </div>
+      <div class="cta-row reveal" style="--d:.3s">
+        <a class="btn btn-primary" href="#story">Read his story &darr;</a>
+        <a class="btn btn-ghost" href="../syllabus/">See the syllabus</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section" id="story">
+    <div class="wrap">
+      <div class="prose reveal">
+        <p>Thomas is a technology executive and educator with more than 20 years of experience leading digital transformations. At Accenture he built digital engineering teams for retailers like Best Buy; at Amazon he led global AI-driven operations and co-founded Amazon Fresh stores and Amazon Locker. Today he is the founder of TeachPilot and a lecturer in Entrepreneurship &amp; AI Innovation at Tufts University, focused on democratizing engineering education through AI-powered, project-based learning.</p>
+        <p>He brings the same build-test-learn loop he used to ship billion-dollar products into the classroom — teaching students to design, fabricate, wire, program, and iterate until their ideas work in the real world.</p>
+      </div>
+      <blockquote class="quote reveal" style="--d:.08s">
+        "As a pilot I learned that simulators don't replace flight time — they make every hour in the cockpit count."
+        <cite>Thomas Van de Velde, on the idea behind TeachPilot</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section" id="highlights">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Career highlights</p>
+        <h2>From global operations to the classroom</h2>
+        <p>Two decades of building teams, products, and platforms — now applied to teaching.</p>
+      </div>
+      <div class="cards">
+        <article class="card reveal" style="--d:.05s">
+          <h3>Building at scale</h3>
+          <p class="sub">Amazon · 10+ years</p>
+          <ul>
+            <li>Led global AI-driven operations for grocery and same-day delivery, carrying a 3x order surge during COVID-19</li>
+            <li>Co-founded Amazon Fresh stores and Amazon Locker pickup points; inventor on the On Demand Locker System patent</li>
+            <li>Pioneered robotics-powered retail automation and 15-minute fulfillment designs</li>
+          </ul>
+        </article>
+        <article class="card reveal" style="--d:.12s">
+          <h3>Enterprise roots</h3>
+          <p class="sub">Accenture &amp; media · 12 years</p>
+          <ul>
+            <li>Founded and scaled Accenture's Best Buy digital engineering practice from 0 to 100+ specialists</li>
+            <li>One of Accenture's earliest enterprise AWS adopters; co-presented early cloud proof-of-concepts with Amazon's CTO</li>
+            <li>Led engineering for NFL.com, Disney, and Warner Bros., including an Emmy-recognized digital distribution system</li>
+          </ul>
+        </article>
+        <article class="card reveal" style="--d:.19s">
+          <h3>Teaching &amp; learning</h3>
+          <p class="sub">Tufts &amp; TeachPilot · today</p>
+          <ul>
+            <li>Lecturer in Entrepreneurship &amp; AI Innovation at Tufts Gordon Institute since 2023</li>
+            <li>Founder &amp; CEO of TeachPilot, building realistic scenarios that develop professional judgment</li>
+            <li>Presidential Advisory Board of the Greenway Institute; mentors founders at MIT Delta-v; recipient of the 2026 Teaching with Technology Award</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="timeline">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">The path here</p>
+        <h2>A short timeline</h2>
+      </div>
+      <div class="timeline">
+        <div class="entry reveal" style="--d:.03s">
+          <span class="years">2025 – present</span>
+          <div>
+            <h3>Founder &amp; CEO</h3>
+            <p class="org">TeachPilot, Inc. · Boston</p>
+            <p>Building AI-powered scenarios that develop professional judgment and make real interactions count.</p>
+          </div>
+        </div>
+        <div class="entry reveal" style="--d:.06s">
+          <span class="years">2023 – present</span>
+          <div>
+            <h3>Lecturer, Entrepreneurship &amp; AI Innovation</h3>
+            <p class="org">Tufts University Gordon Institute</p>
+            <p>Teaching founders practical skills in CAD, additive manufacturing, electronics, IoT, cloud, and AI.</p>
+          </div>
+        </div>
+        <div class="entry reveal" style="--d:.09s">
+          <span class="years">2021 – 2023</span>
+          <div>
+            <h3>Director/GM, Robotics &amp; Same-Day Fulfillment Automation</h3>
+            <p class="org">Amazon</p>
+            <p>Launched Amazon Style automation and designed 15-minute end-to-end delivery with 60% less floor space.</p>
+          </div>
+        </div>
+        <div class="entry reveal" style="--d:.12s">
+          <span class="years">2016 – 2021</span>
+          <div>
+            <h3>Director/GM, Global Grocery Innovation &amp; Technology</h3>
+            <p class="org">Amazon</p>
+            <p>Led 250+ engineers, PMs, and scientists building delivery and pickup infrastructure; launched the first Amazon Fresh store.</p>
+          </div>
+        </div>
+        <div class="entry reveal" style="--d:.15s">
+          <span class="years">2013 – 2016</span>
+          <div>
+            <h3>Senior Manager, Prime Now, Prime Student &amp; Amazon Locker</h3>
+            <p class="org">Amazon</p>
+            <p>Invented and scaled Amazon Locker, launched campus pickup, and grew Prime Now from pilot to 50+ cities.</p>
+          </div>
+        </div>
+        <div class="entry reveal" style="--d:.18s">
+          <span class="years">2009 – 2013</span>
+          <div>
+            <h3>Technology Executive &amp; Chief Architect</h3>
+            <p class="org">Accenture | Best Buy</p>
+            <p>Built a $20M digital engineering practice and Best Buy's first cloud platform with big data and ML personalization.</p>
+          </div>
+        </div>
+        <div class="entry reveal" style="--d:.21s">
+          <span class="years">2006 – 2009</span>
+          <div>
+            <h3>Software Development Leadership</h3>
+            <p class="org">NFL.com · Disney · Warner Bros.</p>
+            <p>Launched NFL.com at 100,000+ requests/second, rebuilt Disney.com publishing, and digitized Warner Bros. content distribution.</p>
+          </div>
+        </div>
+        <div class="entry reveal" style="--d:.24s">
+          <span class="years">2003 – 2006</span>
+          <div>
+            <h3>Engineering &amp; Product Leadership</h3>
+            <p class="org">Accenture (Paris) · French Tax Authority</p>
+            <p>Helped open-source Spring Batch to the industry and built France's online tax filing platform for 35 million citizens.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="background">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Background</p>
+        <h2>Beyond the résumé</h2>
+      </div>
+      <div class="cards">
+        <article class="card reveal" style="--d:.05s">
+          <h3>Education</h3>
+          <p>Bachelor of Science in Finance — University of Massachusetts Dartmouth.</p>
+        </article>
+        <article class="card reveal" style="--d:.1s">
+          <h3>Languages</h3>
+          <p>English, French, and Dutch (native or bilingual); German (professional); Spanish (elementary).</p>
+        </article>
+        <article class="card reveal" style="--d:.15s">
+          <h3>Certifications</h3>
+          <p>Remote Pilot; Belgian Air Cadet glider pilot; Avalanche Professional Level 1; SARTECH II search and rescue.</p>
+        </article>
+        <article class="card reveal" style="--d:.2s">
+          <h3>Award &amp; patent</h3>
+          <p>2026 Teaching with Technology Award; patent for the On Demand Locker System and related delivery methods.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="cta-band reveal">
+      <h2>Get in touch</h2>
+      <p>Office hours: <a href="https://go.tufts.edu/meet_tvdv">go.tufts.edu/meet_tvdv</a> · <a href="mailto:thomas.van_de_velde@tufts.edu">thomas.van_de_velde@tufts.edu</a></p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="../syllabus/">Read the syllabus &rarr;</a>
+        <a class="btn btn-ghost" href="../#materials">Browse class materials</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark-xs" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 · Intro to Making — about the instructor</span>
+    </div>
+    <div class="foot-links">
+      <a href="../">All class materials</a>
+      <a href="../syllabus/">Syllabus</a>
+      <a href="../opencode-deepseek-guide/guide.html">OpenCode guide</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
