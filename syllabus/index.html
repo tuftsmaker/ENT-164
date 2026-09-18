@@ -181,6 +181,23 @@
   .person a { font-size: 14px; word-break: break-word; }
   .person .oh { color: var(--muted); font-size: 13.5px; margin: 8px 0 0; }
 
+  .instructor {
+    display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 26px; align-items: start;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--card);
+    padding: 28px 30px; margin-bottom: 16px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .instructor:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .instructor .avatar {
+    width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+  .instructor h3 { margin: 0 0 2px; font-size: 1.24rem; letter-spacing: -0.3px; }
+  .instructor .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .instructor .bio { color: var(--muted-2); font-size: 15px; margin: 0 0 14px; max-width: 70ch; }
+  .instructor .contact { color: var(--muted); font-size: 14px; margin: 0; }
+
   /* ---------- weeks ---------- */
   .weeks { display: flex; flex-direction: column; gap: 14px; }
   .week {
@@ -242,6 +259,8 @@
 
   @media (max-width: 880px) {
     .syllabus-layout { grid-template-columns: 1fr; gap: 28px; padding-top: 40px; }
+    .instructor { grid-template-columns: 1fr; gap: 18px; }
+    .instructor .avatar { width: 92px; height: 92px; }
     .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px; padding: 12px; }
     .toc h2 { width: 100%; margin-bottom: 4px; }
     .toc a { padding: 5px 11px; background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
@@ -329,13 +348,16 @@
       </div>
       <div class="callout"><b>No restrictions on enrollment.</b> All undergraduate and graduate students are welcome, including first-year undergrads. No prior experience in design thinking, innovation, or programming is needed.</div>
       <h3>Instructor &amp; TAs</h3>
-      <div class="people">
-        <div class="person">
+      <div class="instructor">
+        <img class="avatar" src="../assets/tvdv.jpg" alt="Portrait of Thomas Van de Velde" width="480" height="480">
+        <div>
           <h3>Thomas Van de Velde</h3>
           <p class="role">Instructor</p>
-          <a href="mailto:thomas.van_de_velde@tufts.edu">thomas.van_de_velde@tufts.edu</a>
-          <p class="oh">Office hours: <a href="https://go.tufts.edu/meet_tvdv">go.tufts.edu/meet_tvdv</a></p>
+          <p class="bio">Thomas is a technology executive and educator with 20+ years leading digital transformations. At Accenture he built digital engineering teams for retailers like Best Buy; at Amazon he led global AI-driven operations and co-founded Amazon Fresh stores and Amazon Locker. Today he is the founder of TeachPilot and lectures in Entrepreneurship &amp; AI Innovation at Tufts, focused on democratizing engineering education through AI-powered, project-based learning.</p>
+          <p class="contact"><a href="mailto:thomas.van_de_velde@tufts.edu">thomas.van_de_velde@tufts.edu</a> · Office hours: <a href="https://go.tufts.edu/meet_tvdv">go.tufts.edu/meet_tvdv</a></p>
         </div>
+      </div>
+      <div class="people">
         <div class="person">
           <h3>Alexander Beattie</h3>
           <p class="role">TA</p>
