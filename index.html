@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 · Intro to Making — OpenCode + DeepSeek V4.1 Flash</title>
+<meta name="description" content="A beginner's guide to setting up OpenCode with DeepSeek V4.1 Flash. No terminal, no coding — about 15 minutes, for macOS.">
+<meta name="theme-color" content="#0a1020">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ENT-164 · Intro to Making — OpenCode + DeepSeek V4.1 Flash">
+<meta property="og:description" content="A beginner's guide to setting up OpenCode with DeepSeek V4.1 Flash. No terminal, no coding — about 15 minutes, for macOS.">
+<meta property="og:url" content="https://tvande08.github.io/ENT-164/">
+<meta property="og:image" content="https://tvande08.github.io/ENT-164/opencode-deepseek-guide/shots/app-00-start-crop.png">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --accent: #6FB3EC;
+    --ink: #0a1020;
+    --ink-2: #101a2b;
+    --ink-3: #241a13;
+    --text: #f2f2f5;
+    --muted: #9aa0b4;
+    --muted-2: #c3c7d6;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-strong: rgba(255, 255, 255, 0.20);
+    --card: rgba(255, 255, 255, 0.045);
+    --check: #7BC89A;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 16.5px;
+    line-height: 1.62;
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 55%, var(--ink-3) 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgba(62, 142, 222, 0.42); color: #fff; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+  a { color: var(--accent); text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  section[id] { scroll-margin-top: 92px; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10, 16, 32, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-weight: 700; letter-spacing: -0.2px; }
+  .brand .mark-sm {
+    width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 4px 14px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .brand .mark-sm svg { width: 16px; height: 16px; }
+  .brand small { color: var(--muted); font-weight: 500; font-size: 13.5px; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { color: var(--muted-2); font-size: 14.5px; font-weight: 500; transition: color 0.18s ease; }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a.nav-cta {
+    color: #fff; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 7px 16px; background: rgba(255, 255, 255, 0.05); transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .nav-links a.nav-cta:hover { border-color: rgba(111, 179, 236, 0.65); background: rgba(62, 142, 222, 0.16); }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; text-align: center; padding: 104px 0 84px; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(640px 340px at 18% 0%, rgba(62, 142, 222, 0.30), transparent 70%),
+      radial-gradient(560px 320px at 86% 8%, rgba(99, 73, 58, 0.34), transparent 72%);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 62% at 50% 0%, #000 30%, transparent 78%);
+    mask-image: radial-gradient(ellipse 70% 62% at 50% 0%, #000 30%, transparent 78%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; }
+  .mark-lg {
+    width: 68px; height: 68px; margin: 0 auto 26px; border-radius: 19px;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 14px 40px rgba(62, 142, 222, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .mark-lg svg { width: 34px; height: 34px; }
+  .kicker {
+    font-size: 12.5px; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 16px;
+  }
+  h1 {
+    font-size: clamp(2.15rem, 5.4vw, 3.55rem);
+    line-height: 1.12; letter-spacing: -1.2px; font-weight: 700;
+    margin: 0 0 20px;
+  }
+  h1 .accent {
+    background: linear-gradient(100deg, #6FB3EC 10%, #9ecdf7 50%, #6FB3EC 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lead {
+    color: var(--muted-2); font-size: 1.13rem; max-width: 660px; margin: 0 auto 28px;
+  }
+  .pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 34px; }
+  .pill {
+    border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px;
+    padding: 7px 17px; font-size: 13.5px; color: #dfe2ee;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .cta-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 14px 28px; border-radius: 999px;
+    font-size: 15.5px; font-weight: 600; letter-spacing: 0.1px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+  .btn-primary {
+    color: #fff; background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    box-shadow: 0 10px 30px rgba(62, 142, 222, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(62, 142, 222, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28); }
+  .btn-ghost {
+    color: var(--text); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.05);
+  }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(111, 179, 236, 0.6); background: rgba(62, 142, 222, 0.14); }
+  .hero .note { margin: 22px 0 0; color: var(--muted); font-size: 13.5px; }
+
+  /* ---------- stats ---------- */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); overflow: hidden; margin-top: 56px;
+  }
+  .stat { padding: 24px 18px; text-align: center; border-left: 1px solid var(--line); }
+  .stat:first-child { border-left: none; }
+  .stat .value { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.4px; }
+  .stat .label { color: var(--muted); font-size: 13px; margin-top: 3px; }
+
+  /* ---------- sections ---------- */
+  .section { padding: 84px 0 0; }
+  .section-head { max-width: 660px; margin: 0 auto 44px; text-align: center; }
+  .section-head .kicker { margin-bottom: 12px; }
+  h2 { font-size: clamp(1.55rem, 3.1vw, 2.15rem); line-height: 1.2; letter-spacing: -0.6px; margin: 0 0 12px; }
+  .section-head p { color: var(--muted); margin: 0; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(236px, 1fr)); gap: 16px; }
+  .card {
+    position: relative; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 26px 24px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px); border-color: rgba(111, 179, 236, 0.45);
+    background: rgba(62, 142, 222, 0.08); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+  }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    display: inline-block; margin-bottom: 14px;
+    border: 1px solid rgba(111, 179, 236, 0.4); background: rgba(62, 142, 222, 0.12);
+    border-radius: 8px; padding: 3px 9px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.06rem; letter-spacing: -0.2px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+
+  /* ---------- steps ---------- */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .step {
+    display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 20px 22px;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .step:hover { border-color: rgba(111, 179, 236, 0.4); background: rgba(62, 142, 222, 0.07); transform: translateY(-2px); }
+  .step .num {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    color: #fff; font-weight: 700; font-size: 17px;
+    display: grid; place-items: center;
+    box-shadow: 0 6px 18px rgba(62, 142, 222, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  .step h3 { margin: 8px 0 5px; font-size: 1.02rem; letter-spacing: -0.2px; }
+  .step p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .step code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85em; color: #cfe4fa;
+    background: rgba(62, 142, 222, 0.14); border: 1px solid rgba(62, 142, 222, 0.28);
+    border-radius: 5px; padding: 1px 6px;
+  }
+
+  /* ---------- need ---------- */
+  .need {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; align-items: stretch;
+  }
+  .panel {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 30px 30px 26px;
+  }
+  .panel h3 { margin: 0 0 16px; font-size: 1.12rem; letter-spacing: -0.2px; }
+  .checklist { list-style: none; margin: 0; padding: 0; }
+  .checklist li {
+    position: relative; padding-left: 30px; margin-bottom: 13px; color: var(--muted-2); font-size: 15px;
+  }
+  .checklist li:last-child { margin-bottom: 0; }
+  .checklist li::before {
+    content: "✓"; position: absolute; left: 0; top: 0;
+    color: var(--check); font-weight: 700;
+  }
+  .checklist b { color: #fff; }
+  .callout {
+    border-left: 3px solid var(--tufts-blue);
+    background: rgba(62, 142, 222, 0.10);
+    border-radius: 0 12px 12px 0; padding: 18px 22px;
+    color: var(--muted-2); font-size: 14.5px; margin: 0 0 16px;
+  }
+  .callout:last-child { margin-bottom: 0; }
+  .callout b { color: #fff; }
+  .callout.warm { border-color: #B07A5A; background: rgba(99, 73, 58, 0.22); }
+
+  /* ---------- cta band ---------- */
+  .cta-band {
+    position: relative; overflow: hidden; text-align: center;
+    margin-top: 84px; padding: 66px 28px;
+    border: 1px solid var(--line); border-radius: 24px;
+    background:
+      radial-gradient(640px 240px at 50% -30%, rgba(62, 142, 222, 0.30), transparent 72%),
+      rgba(255, 255, 255, 0.03);
+  }
+  .cta-band h2 { margin-bottom: 10px; }
+  .cta-band p { color: var(--muted); max-width: 520px; margin: 0 auto 30px; }
+
+  /* ---------- footer ---------- */
+  footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot-brand { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 13.5px; }
+  .foot-brand .mark-xs {
+    width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+  }
+  .foot-brand .mark-xs svg { width: 14px; height: 14px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13.5px; }
+  .foot-links a { color: var(--muted); transition: color 0.18s ease; }
+  .foot-links a:hover { color: #fff; }
+
+  /* ---------- motion ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22, 0.7, 0.28, 1) forwards; animation-delay: var(--d, 0s); }
+
+  @media (max-width: 880px) {
+    .steps { grid-template-columns: 1fr; }
+    .need { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(3) { border-left: none; }
+    .stat:nth-child(n + 3) { border-top: 1px solid var(--line); }
+    .hero { padding: 76px 0 64px; }
+    .section { padding-top: 66px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .brand small { display: none; }
+    .brand, .nav-links a.nav-cta { white-space: nowrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { animation: none; opacity: 1; }
+    .btn, .card, .step { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="./">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>· Intro to Making</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#why">Why this setup</a>
+      <a href="#steps">The 7 steps</a>
+      <a class="nav-cta" href="opencode-deepseek-guide/guide.html">Setup guide &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="mark-lg reveal" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+        <path d="m18 15 4-4" />
+        <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+      </svg>
+    </div>
+    <p class="kicker reveal" style="--d:.08s">ENT-164 · Intro to Making</p>
+    <h1 class="reveal" style="--d:.14s">Making with AI<br><span class="accent">OpenCode + DeepSeek V4.1 Flash</span></h1>
+    <p class="lead reveal" style="--d:.2s">Download the OpenCode app, connect it to OpenRouter, and start asking questions. No terminal, no coding — just a normal Mac app, set up in about 15 minutes.</p>
+    <div class="pills reveal" style="--d:.26s">
+      <span class="pill">About 15 minutes</span>
+      <span class="pill">For macOS</span>
+      <span class="pill">Provider: OpenRouter</span>
+      <span class="pill">Model: DeepSeek V4.1 Flash</span>
+    </div>
+    <div class="cta-row reveal" style="--d:.32s">
+      <a class="btn btn-primary" href="opencode-deepseek-guide/guide.html">Read the setup guide &rarr;</a>
+      <a class="btn btn-ghost" href="opencode-deepseek-guide/opencode-deepseek-v4.1-flash-setup.pdf">Download the PDF</a>
+    </div>
+    <p class="note reveal" style="--d:.38s">Everything is covered by the class budget — nothing to buy.</p>
+
+    <div class="stats reveal" style="--d:.44s">
+      <div class="stat"><div class="value">~15 min</div><div class="label">Start to finish</div></div>
+      <div class="stat"><div class="value">7 steps</div><div class="label">Download to first question</div></div>
+      <div class="stat"><div class="value">$0</div><div class="label">Class budget covers usage</div></div>
+      <div class="stat"><div class="value">macOS 13+</div><div class="label">Any Apple laptop</div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Why this setup</p>
+        <h2>Built for making things with AI</h2>
+        <p>OpenCode is the app, DeepSeek V4.1 Flash is the brain, and OpenRouter is the connection. Here is why the class uses them.</p>
+      </div>
+      <div class="cards">
+        <article class="card reveal" style="--d:.05s">
+          <span class="num">01</span>
+          <h3>Built for this work</h3>
+          <p>Designed for reasoning and agentic coding with reliable tool use, so it can genuinely help with your class projects.</p>
+        </article>
+        <article class="card reveal" style="--d:.12s">
+          <span class="num">02</span>
+          <h3>Open weights</h3>
+          <p>The model itself is openly licensed and inspectable — which fits a making class better than a closed black box.</p>
+        </article>
+        <article class="card reveal" style="--d:.19s">
+          <span class="num">03</span>
+          <h3>Big context, tiny cost</h3>
+          <p>It can read entire files — up to 1M tokens — for a fraction of a cent per question, so the shared class budget lasts the term.</p>
+        </article>
+        <article class="card reveal" style="--d:.26s">
+          <span class="num">04</span>
+          <h3>One connection</h3>
+          <p>One OpenRouter account and one key. Explore other models later without starting over.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="steps">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Step by step</p>
+        <h2>The whole setup, at a glance</h2>
+        <p>Each step has screenshots and plain-English instructions in the full guide.</p>
+      </div>
+      <ol class="steps">
+        <li class="step reveal" style="--d:.04s">
+          <span class="num">1</span>
+          <div>
+            <h3>Download the OpenCode app</h3>
+            <p>Go to <code>opencode.ai/download</code> and click <b>Download for macOS</b>.</p>
+          </div>
+        </li>
+        <li class="step reveal" style="--d:.08s">
+          <span class="num">2</span>
+          <div>
+            <h3>Install the app</h3>
+            <p>Drag OpenCode onto your Applications folder, then open it like any Mac app.</p>
+          </div>
+        </li>
+        <li class="step reveal" style="--d:.12s">
+          <span class="num">3</span>
+          <div>
+            <h3>Join your class on OpenRouter</h3>
+            <p>Sign up at openrouter.ai with your Tufts email and request to join the class workspace.</p>
+          </div>
+        </li>
+        <li class="step reveal" style="--d:.16s">
+          <span class="num">4</span>
+          <div>
+            <h3>Create your own API key</h3>
+            <p>Name it <b>OpenCode</b>, copy it once, and keep it private — it starts with <code>sk-or-</code>.</p>
+          </div>
+        </li>
+        <li class="step reveal" style="--d:.2s">
+          <span class="num">5</span>
+          <div>
+            <h3>Connect OpenRouter in the app</h3>
+            <p>Open the model panel, choose OpenRouter, paste your key, and click Continue.</p>
+          </div>
+        </li>
+        <li class="step reveal" style="--d:.24s">
+          <span class="num">6</span>
+          <div>
+            <h3>Choose DeepSeek V4.1 Flash</h3>
+            <p>Search <b>v4.1 flash</b>, switch it on in Manage models if needed, and select it.</p>
+          </div>
+        </li>
+        <li class="step reveal" style="--d:.28s">
+          <span class="num">7</span>
+          <div>
+            <h3>Ask your first question</h3>
+            <p>Type in plain English and press Enter. That's it — you're making with AI.</p>
+          </div>
+        </li>
+        <li class="step reveal" style="--d:.32s">
+          <span class="num">✓</span>
+          <div>
+            <h3>Read the full guide</h3>
+            <p><a href="opencode-deepseek-guide/guide.html">Open the illustrated setup guide &rarr;</a> for screenshots, tips, and troubleshooting.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="need">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Before you start</p>
+        <h2>What you'll need</h2>
+        <p>Almost nothing. If you can install a Mac app, you can do this.</p>
+      </div>
+      <div class="need">
+        <div class="panel reveal" style="--d:.05s">
+          <h3>Checklist</h3>
+          <ul class="checklist">
+            <li>An Apple laptop running <b>macOS 13 or newer</b></li>
+            <li>An internet connection</li>
+            <li>Your <b>Tufts email</b> — you'll use it to join the class workspace in Step 3</li>
+            <li><b>Nothing to pay</b> — the class budget covers AI usage for your coursework</li>
+          </ul>
+        </div>
+        <div class="reveal" style="--d:.12s">
+          <div class="callout">
+            <b>New word alert: OpenRouter.</b> A website that gives one account access to many AI models. Connect it once and pick any model you like.
+          </div>
+          <div class="callout warm">
+            <b>Keep the budget healthy.</b> The class budget is shared, so keep questions focused on class work and avoid long, off-topic chats.
+          </div>
+          <div class="callout">
+            <b>Stuck on something?</b> The guide ends with a troubleshooting table covering the common snags, from macOS warnings to invalid keys.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="cta-band reveal">
+      <h2>Ready when you are</h2>
+      <p>Open the illustrated guide and follow along. About 15 minutes from download to your first question.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="opencode-deepseek-guide/guide.html">Start the setup guide &rarr;</a>
+        <a class="btn btn-ghost" href="opencode-deepseek-guide/opencode-deepseek-v4.1-flash-setup.pdf">Download the PDF</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark-xs" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 · Intro to Making — OpenCode + DeepSeek V4.1 Flash</span>
+    </div>
+    <div class="foot-links">
+      <a href="opencode-deepseek-guide/guide.html">Setup guide</a>
+      <a href="opencode-deepseek-guide/opencode-deepseek-v4.1-flash-setup.pdf">PDF</a>
+      <a href="https://opencode.ai/docs" target="_blank" rel="noopener">OpenCode docs</a>
+      <a href="https://openrouter.ai" target="_blank" rel="noopener">OpenRouter</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
