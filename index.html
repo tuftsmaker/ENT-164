@@ -181,6 +181,8 @@
     background: rgba(255, 255, 255, 0.04);
   }
   .guide-actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; }
+  .os-icon { width: 16px; height: 16px; filter: brightness(0) invert(1); }
+  .pdf-links { margin: 14px 0 0; color: var(--muted); font-size: 13.5px; }
   .soon-card {
     border: 1px dashed rgba(255, 255, 255, 0.22); border-radius: var(--radius);
     background: rgba(255, 255, 255, 0.02);
@@ -313,6 +315,7 @@
     </a>
     <div class="nav-links">
       <a href="#materials">Course materials</a>
+      <a href="#classes">Class slides</a>
       <a href="#inside">What's inside</a>
       <a href="about/">About</a>
       <a class="nav-cta" href="#materials">Start here &rarr;</a>
@@ -341,7 +344,7 @@
     <div class="cta-row reveal" style="--d:.32s">
       <a class="btn btn-primary" href="#materials">Browse the materials &darr;</a>
     </div>
-    <p class="note reveal" style="--d:.38s">Syllabus and guides are live — more added as the term goes on.</p>
+    <p class="note reveal" style="--d:.38s">Syllabus, guides, and class slides are live — more added as the term goes on.</p>
   </div>
 </header>
 
@@ -390,46 +393,21 @@
             </span>
             <div>
               <h3>OpenCode + DeepSeek V4.1 Flash</h3>
-              <p class="sub">Set up guide · macOS</p>
+              <p class="sub">Set up guide · macOS &amp; Windows</p>
             </div>
           </div>
           <p>Download the OpenCode app, join the class workspace on OpenRouter, and connect DeepSeek V4.1 Flash — from download to your first question in about 15 minutes.</p>
           <ul class="tags">
             <li>About 15 minutes</li>
-            <li>For macOS</li>
+            <li>For macOS &amp; Windows</li>
             <li>7 steps</li>
             <li>Beginner friendly</li>
           </ul>
           <div class="guide-actions">
-            <a class="btn btn-primary btn-sm" href="opencode-deepseek-guide-mac/guide.html">Read the guide &rarr;</a>
-            <a class="btn btn-ghost btn-sm" href="opencode-deepseek-guide-mac/opencode-deepseek-v4.1-flash-setup.pdf">Download the PDF</a>
+            <a class="btn btn-primary btn-sm" href="opencode-deepseek-guide-mac/guide.html"><img class="os-icon" src="assets/logos/apple.svg" alt="" width="16" height="16">Set up on macOS</a>
+            <a class="btn btn-primary btn-sm" href="opencode-deepseek-guide-win/guide.html"><img class="os-icon" src="assets/logos/windows.svg" alt="" width="16" height="16">Set up on Windows</a>
           </div>
-        </article>
-        <article class="guide-card reveal" style="--d:.14s">
-          <div class="guide-head">
-            <span class="mark-md" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
-                <path d="m18 15 4-4" />
-                <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
-              </svg>
-            </span>
-            <div>
-              <h3>OpenCode + DeepSeek V4.1 Flash</h3>
-              <p class="sub">Set up guide · Windows</p>
-            </div>
-          </div>
-          <p>Same beginner-friendly walkthrough for Windows 10 or 11: download the OpenCode installer, connect it to OpenRouter, and start asking questions in about 15 minutes.</p>
-          <ul class="tags">
-            <li>About 15 minutes</li>
-            <li>For Windows</li>
-            <li>7 steps</li>
-            <li>Beginner friendly</li>
-          </ul>
-          <div class="guide-actions">
-            <a class="btn btn-primary btn-sm" href="opencode-deepseek-guide-win/guide.html">Read the guide &rarr;</a>
-            <a class="btn btn-ghost btn-sm" href="opencode-deepseek-guide-win/opencode-deepseek-v4.1-flash-setup.pdf">Download the PDF</a>
-          </div>
+          <p class="pdf-links">Download the PDF: <a href="opencode-deepseek-guide-mac/opencode-deepseek-v4.1-flash-setup.pdf">macOS</a> · <a href="opencode-deepseek-guide-win/opencode-deepseek-v4.1-flash-setup.pdf">Windows</a></p>
         </article>
         <aside class="soon-card wide reveal" style="--d:.15s">
           <span class="plus" aria-hidden="true">+</span>
@@ -437,6 +415,49 @@
             <h3>More materials coming</h3>
             <p>New guides and class resources will appear here as the term goes on.</p>
           </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="classes">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Class slides</p>
+        <h2>In-class decks</h2>
+        <p>Every class, as a modern slide deck. Read it on the web, or download the PDF to follow along in class.</p>
+      </div>
+      <div class="guide-list">
+        <article class="guide-card reveal" style="--d:.05s">
+          <div class="guide-head">
+            <span class="mark-md" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h20" />
+                <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" />
+                <path d="m7 21 5-5 5 5" />
+              </svg>
+            </span>
+            <div>
+              <h3>Class 1 · Introductions</h3>
+              <p class="sub">Week 1 · Fall 2026</p>
+            </div>
+          </div>
+          <p>Welcome to Intro to Making: what you'll learn this semester, how class works, the grading rubric, your tools and maker kit, and an introduction to the Nolop makerspace.</p>
+          <ul class="tags">
+            <li>Thu, Sep 10</li>
+            <li>20 slides</li>
+            <li>Projectable PDF</li>
+            <li>Beginner friendly</li>
+          </ul>
+          <div class="guide-actions">
+            <a class="btn btn-primary btn-sm" href="classes/class-01/">Read the class page &rarr;</a>
+            <a class="btn btn-ghost btn-sm" href="classes/class-01/ENT-164-Class-1-Introductions.pdf">Download the slides</a>
+          </div>
+        </article>
+        <aside class="soon-card reveal" style="--d:.1s">
+          <span class="plus" aria-hidden="true">+</span>
+          <h3>More classes coming</h3>
+          <p>Each week's deck will appear here as the semester goes on.</p>
         </aside>
       </div>
     </div>
@@ -532,6 +553,7 @@
     </div>
     <div class="foot-links">
       <a href="#materials">Course materials</a>
+      <a href="#classes">Class slides</a>
       <a href="syllabus/">Syllabus</a>
       <a href="about/">About the instructor</a>
       <a href="opencode-deepseek-guide-mac/guide.html">OpenCode guide (macOS)</a>
