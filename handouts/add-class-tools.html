@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add your class tools to opencode</title>
+<!--
+  ===========================================================================
+  Class skills URL: https://tvande08.github.io/ENT-164/skills/
+
+  This is a GitHub Pages path, NOT /.well-known/skills/ — GitHub Pages runs
+  Jekyll, which silently ignores dot-directories, so a /.well-known/ path
+  would 404 even after upload. /skills/ avoids that.
+
+  The files must be published there before students run this (the URL 404s
+  until then). See tools/skill-publish/README.md.
+  ===========================================================================
+-->
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+  }
+  @page { size: Letter; margin: 0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: #1c1c22;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    background: #fff;
+  }
+  .page { padding: 9mm 14mm 5mm; }
+
+  .masthead { display: flex; align-items: center; gap: 4mm; border-bottom: 2px solid var(--candle); padding-bottom: 3mm; margin-bottom: 3mm; }
+  .masthead .mark { flex: 0 0 auto; width: 12mm; height: 12mm; border-radius: 3mm; background: var(--tufts-blue); display: flex; align-items: center; justify-content: center; }
+  .masthead .mark img { width: 7.5mm; height: 7.5mm; }
+  .masthead .course { font-size: 8.5pt; letter-spacing: 1.8px; text-transform: uppercase; color: var(--tufts-blue); font-weight: 700; }
+  .masthead h1 { font-size: 17pt; margin: 0.6mm 0 0; font-weight: 700; letter-spacing: -0.3px; color: var(--bessie-brown); }
+  .masthead .mins { margin-left: auto; text-align: right; font-size: 8.5pt; color: #6b7280; line-height: 1.35; }
+
+  .lead { font-size: 10.5pt; margin: 0 0 2mm; }
+
+  .step { margin-bottom: 2mm; break-inside: avoid; page-break-inside: avoid; }
+  .step-header { display: flex; align-items: center; gap: 3.5mm; margin: 0 0 1.2mm; }
+  .step-num { flex: 0 0 auto; width: 8mm; height: 8mm; border-radius: 50%; background: var(--tufts-blue); color: #fff; font-weight: 700; font-size: 10.5pt; display: flex; align-items: center; justify-content: center; }
+  h2 { font-size: 12.5pt; margin: 0; font-weight: 700; color: var(--bessie-brown); letter-spacing: -0.2px; }
+  .step p { margin: 0 0 1.2mm; }
+  .step ol, .step ul { margin: 0 0 1.2mm; padding-left: 5mm; }
+  .step li { margin-bottom: 0.6mm; }
+
+  .paste {
+    background: #F4F8FD;
+    border: 1.5px dashed var(--tufts-blue);
+    border-radius: 8px;
+    padding: 2mm 3mm;
+    margin: 1mm 0 1.2mm;
+    break-inside: avoid;
+  }
+  .paste .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: var(--tufts-blue); font-weight: 700; margin-bottom: 0.8mm; }
+  .paste .say { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10pt; color: #0f172a; line-height: 1.4; }
+  .url { background: #fff3cd; border-bottom: 2px solid #e0a800; padding: 0 0.6mm; font-weight: 700; }
+
+  .callout { border-left: 3px solid var(--tufts-blue); background: #F4F8FD; border-radius: 0 8px 8px 0; padding: 2mm 3mm; margin: 0 0 2mm; font-size: 9.5pt; break-inside: avoid; }
+  .callout.tip { border-color: #1A5532; background: #F1F7F3; }
+  .callout b { color: #111827; }
+
+  table { width: 100%; border-collapse: collapse; margin: 1.2mm 0 0; font-size: 9.5pt; break-inside: avoid; }
+  th, td { text-align: left; padding: 1.3mm 2.5mm; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  th { background: var(--candle); font-size: 8pt; text-transform: uppercase; letter-spacing: 0.6px; color: var(--tufts-brown); }
+  tr:last-child td { border-bottom: none; }
+
+  .keycap { display: inline-block; background: #f3f4f6; border: 1px solid #d1d5db; border-bottom-width: 2px; border-radius: 5px; padding: 0.2mm 1.6mm; font-size: 9pt; font-weight: 600; }
+  .ui { background: var(--candle); border: 1px solid #E3D9CE; border-radius: 5px; padding: 0.2mm 1.6mm; font-weight: 600; font-size: 9.5pt; white-space: nowrap; }
+  .divider { height: 1px; background: #e5e7eb; margin: 2mm 0; }
+  /* fixed, so the footer can never push content onto a second page */
+  .doc-footer { position: fixed; bottom: 5mm; left: 0; right: 0; font-size: 8pt; color: #9ca3af; text-align: center; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <div class="mark"><img src="class-hammer.svg" alt="Class mark"></div>
+    <div>
+      <div class="course">ENT-164 · Intro to Making</div>
+      <h1>Add your class tools to opencode</h1>
+    </div>
+    <div class="mins">About 2 minutes<br>You only do this once</div>
+  </div>
+
+  <p class="lead">Your class has a set of tools that live on the class website — things like the wiring-diagram maker we use in class. This page adds them to opencode. <b>Open opencode first</b>, the same way you always do; it doesn't matter which project you have open. <b>You don't install anything, and you can't break anything</b> — you just ask opencode to do it for you.</p>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><h2>Copy this sentence into opencode</h2></div>
+    <p>Click in opencode's message box (the same box you type questions in), then copy and paste this whole sentence:</p>
+    <div class="paste">
+      <div class="label">Copy and paste this</div>
+      <div class="say">Add my class skills to opencode: <span class="url">https://tvande08.github.io/ENT-164/skills/</span></div>
+    </div>
+    <p>Press <span class="keycap">Enter</span> and let it work. It takes a few seconds.</p>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><h2>If it asks for permission, say yes</h2></div>
+    <p>opencode may ask something like <i>"Can I change your settings file?"</i> or <i>"Can I run this command?"</i> — that's normal. Click <span class="ui">Allow</span> or <span class="ui">Yes</span>.</p>
+    <div class="callout tip"><b>Not sure?</b> It's only changing opencode's own settings, not anything on your Mac. Nothing is deleted, and you can undo it by asking opencode to remove the class skills again.</div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">3</div><h2>Quit opencode and open it again</h2></div>
+    <p>This part matters — the new tools only appear after opencode restarts.</p>
+    <ol>
+      <li>Quit with <span class="keycap">⌘</span>+<span class="keycap">Q</span> (or opencode menu → <span class="ui">Quit</span>).</li>
+      <li>Open it again the same way you always do.</li>
+    </ol>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">4</div><h2>Try it out</h2></div>
+    <p>Type this into the message box and press <span class="keycap">Enter</span>:</p>
+    <div class="paste">
+      <div class="label">Try asking</div>
+      <div class="say">Draw me a wiring diagram for connecting an LED to my ESP32</div>
+    </div>
+    <p>If it works, you'll get back a colored picture of the breadboard with the wires drawn on it.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 style="margin-bottom:1.5mm;">If it doesn't work</h2>
+  <table>
+    <thead><tr><th>What you see</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>opencode says it can't reach the website</td>
+        <td>Check you're connected to wifi. The class tools live online, so it needs internet the first time.</td>
+      </tr>
+      <tr>
+        <td>Nothing new happens after restarting</td>
+        <td>Ask opencode: <b>"do you have the maker skill?"</b> — it will tell you either way.</td>
+      </tr>
+      <tr>
+        <td>Still stuck</td>
+        <td>Show your instructor this page. Nothing you did is broken, and it's quick to fix.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:2.5mm;">
+    <b>You never repeat this.</b> The class tools update by themselves when your instructor changes them.
+  </div>
+
+  <div class="doc-footer">ENT-164 · Add your class tools to opencode · Keep this page for reference</div>
+
+</div>
+</body>
+</html>

@@ -76,6 +76,27 @@ via GitHub Pages: https://tvande08.github.io/ENT-164/
   a committed PDF drifts from its sources. It does not block Pages deploys, so a
   red run means: rebuild the PDF, commit, push again.
 
+## Class skills for opencode (`skills/`)
+
+- `skills/` is served by Pages at `https://tvande08.github.io/ENT-164/skills/`
+  and consumed by opencode via `skills.urls`. `skills/` is the **source of
+  truth** — there is no separate source tree; edit in place.
+- opencode re-downloads a skill only when its `version` changes, and the version
+  is a hash of the skill's contents. So after editing anything under `skills/`:
+  run `tools/skill-publish/rebuild.sh`, then commit and push. Editing without
+  rebuilding means students silently keep the old copy.
+- Never hand-edit `skills/index.json`. `rebuild.sh` derives the file list and
+  version from the directory; a hand-edited index will not match what is served.
+- **`.nojekyll` at the repo root is load-bearing.** Without it Pages runs Jekyll
+  over `skills/`, which converts `maker/SKILL.md` to HTML (so the `.md` 404s) and
+  skips `bbd/__init__.py` because it starts with an underscore. Do not delete it.
+- Failures are silent — a 404ing file just means the skill never appears, with
+  only a log line on the student's machine. After pushing, curl `index.json` and
+  confirm every listed file returns 200 (see `tools/skill-publish/README.md`).
+- `handouts/add-class-tools.html` is the student-facing one-pager; rebuild its
+  PDF with headless Chrome after editing. It is US Letter and must stay on one
+  page — check with `pdftotext -f 2 -l 2 ...` (anything printed = it spilled).
+
 ## Class web pages
 
 - `classes/class-NN/index.html` is the hand-authored dark landing page, separate
