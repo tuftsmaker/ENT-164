@@ -25,25 +25,42 @@ via GitHub Pages: https://tvande08.github.io/ENT-164/
   Pushing to `main` is the only sync step. Do not upload replacement PDFs.
 - Canvas API token and base URL live in `~/esp32/canvas_config.py` (outside the
   repo). Never print, copy, commit, or echo the token.
-- Module map (course 76330). Slides item ids below are Google Slides links until
-  a class is converted; after converting, verify the Pages URL returns 200 with
-  the expected byte size, then create an ExternalUrl item at the slides position
-  and delete the old item (module item type cannot be changed in place):
+- Module map (course 76330). Converted classes point at their Pages PDF; the
+  rest still point at Google Slides. After converting a class, verify the Pages
+  URL returns 200 with the expected byte size, then create an ExternalUrl item
+  at the slides position and delete the old item (module item type cannot be
+  changed in place):
 
   | Class | module id | slides item |
   |-------|-----------|-------------|
-  | 1     | 314490    | 2151234 (ExternalUrl → Pages PDF, pos 2) |
-  | 2     | 314491    | 2140686 |
-  | 3     | 314492    | 2140693 |
-  | 4     | 314493    | 2140699 |
-  | 5     | 314494    | 2140704 |
-  | 6     | 314495    | 2140711 |
-  | 8     | 314496    | 2140716 |
-  | 9     | 314497    | 2140722 |
-  | 10    | 314498    | 2140726 |
-  | 11    | 314499    | 2140731 |
-  | 12    | 314500    | 2140733 |
-  | 13    | 314501    | 2140736 |
+  | 1     | 314490    | 2151234 (ExternalUrl → Pages PDF) |
+  | 2     | 314491    | 2151268 (ExternalUrl → Pages PDF) |
+  | 3     | 314492    | 2140693 (Google Slides — no source pptx yet) |
+  | 4     | 314493    | 2151269 (ExternalUrl → Pages PDF) |
+  | 5     | 314494    | 2151270 (ExternalUrl → Pages PDF) |
+  | 6     | 314495    | 2151271 (ExternalUrl → Pages PDF) |
+  | 8     | 314496    | 2140716 (Google Slides — no source pptx yet) |
+  | 9     | 314497    | 2151272 (ExternalUrl → Pages PDF) |
+  | 10    | 314498    | 2140726 (Google Slides — Smart Devices; no source pptx yet) |
+  | 11    | 314499    | 2151273 (ExternalUrl → Pages PDF) |
+  | 12    | 314500    | 2140733 (Google Slides — no source pptx yet) |
+  | 13    | 314501    | 2140736 (Google Slides — no source pptx yet) |
+
+  Note: the source file `ENT-164 Class 10 - Intelligent Devices with AI.pptx`
+  is the deck for **Class 11** (syllabus Week 11, Thu Nov 19) — module 314499.
+  Class 10 "Smart Devices" still has no source deck.
+
+## Converting another class deck
+
+1. `python3 scripts/extract-pptx.py "slides/ENT-164 Class N - ....pptx" /tmp/class-N`
+   — writes per-slide text (charts included), notes, media, and a contact sheet.
+2. Author `classes/class-NN/slides.html` + `index.html` + `shots/`, using
+   `classes/class-01` as the design reference (same `<style>`, same patterns).
+3. Build: `PDF_NAME=ENT-164-Class-N-<Slug>.pdf scripts/build-class.sh class-NN`.
+4. Add the class to the hub "In-class decks" cards and the syllabus week chip;
+   run `scripts/build-class.sh --check --all`; commit and push.
+5. Once Pages serves the PDF (curl 200 + byte size), repoint the Canvas module
+   item per the table above and update this file.
 
 - After any Canvas change, re-read the module items and confirm type, URL and
   position.
