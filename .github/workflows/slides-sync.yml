@@ -1,0 +1,27 @@
+name: Slides in sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "classes/**"
+      - "assets/**"
+      - "scripts/**"
+      - ".github/workflows/slides-sync.yml"
+  pull_request:
+    paths:
+      - "classes/**"
+      - "assets/**"
+      - "scripts/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify each class PDF matches its slide sources
+        run: ./scripts/build-class.sh --check --all

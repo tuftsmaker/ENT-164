@@ -54,10 +54,10 @@ via GitHub Pages: https://tvande08.github.io/ENT-164/
   status/byte size before pointing Canvas at it.
 - Intentionally unpublished: `slides/*.pptx` (source decks) and stray files
   (`TVdV.png`, `Profile (10).pdf`) stay untracked; do not include them.
-- `.github/workflows/slides-sync.yml` exists locally but is not pushed yet: the
-  `tvande08` GitHub token lacks the `workflow` scope (classic) / Workflows write
-  permission (fine-grained). Once granted, commit and push it — it runs
-  `scripts/build-class.sh --check --all` and fails on drift.
+- `.github/workflows/slides-sync.yml` runs `scripts/build-class.sh --check --all`
+  on pushes and PRs touching `classes/`, `assets/` or `scripts/`, and fails when
+  a committed PDF drifts from its sources. It does not block Pages deploys, so a
+  red run means: rebuild the PDF, commit, push again.
 
 ## Class web pages
 
