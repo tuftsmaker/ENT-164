@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 Class 5 · Electronics — Slides</title>
+<meta name="theme-color" content="#f7f9fc">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --blue-deep: #1F6FD0;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --ink: #0d1526;
+    --text: #17203a;
+    --muted: #5f6b7a;
+    --muted-2: #3f4a5a;
+    --line: #e6eaf1;
+    --line-strong: #d5dce7;
+    --paper: #ffffff;
+    --paper-2: #f7f9fc;
+    --blue-tint: #f2f7fd;
+    --blue-tint-2: #eaf3fd;
+    --radius: 4mm;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: 297mm 167mm; margin: 0; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #e8ecf2;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    position: relative; overflow: hidden;
+    width: 297mm; height: 167mm;
+    padding: 13mm 16mm 15mm;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide > * { position: relative; z-index: 1; }
+  .slide-logo {
+    position: absolute; top: 12.4mm; right: 16mm; z-index: 2;
+    height: 5.2mm; width: auto;
+  }
+  .cover .slide-logo { top: 18mm; height: 7mm; }
+
+  .s-head { margin-bottom: 6.5mm; }
+  .s-kicker {
+    font-size: 8.5pt; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--blue-deep); font-weight: 700; margin: 0 0 2.4mm;
+  }
+  h2 { font-size: 24pt; line-height: 1.12; letter-spacing: -0.6px; font-weight: 700; margin: 0; color: var(--ink); }
+  .s-sub { color: var(--muted); font-size: 12pt; margin: 2.6mm 0 0; max-width: 210mm; }
+  h2 .accent { color: var(--blue-deep); }
+  .s-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .s-foot {
+    position: absolute; left: 16mm; right: 16mm; bottom: 5.5mm; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 7.5pt; color: #8a93a3; letter-spacing: 0.3px;
+    border-top: 1px solid var(--line); padding-top: 2.2mm;
+  }
+  .s-foot .fnum { color: var(--ink); font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 6mm 6mm 5.5mm;
+    box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    display: flex; flex-direction: column;
+  }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);
+    align-self: flex-start; margin-bottom: 3.4mm;
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 2mm; padding: 0.8mm 2.4mm;
+  }
+  .card h3 { margin: 0 0 1.8mm; font-size: 13.5pt; letter-spacing: -0.2px; color: var(--ink); }
+  .card p { margin: 0; color: var(--muted); font-size: 10.5pt; line-height: 1.45; }
+  .card.tight p { font-size: 10pt; }
+  .card .ico {
+    width: 9mm; height: 9mm; border-radius: 2.6mm; margin-bottom: 3.4mm;
+    background: var(--blue-tint-2); border: 1px solid #cfe1f7;
+    display: grid; place-items: center;
+  }
+  .card .ico svg { width: 4.6mm; height: 4.6mm; }
+  .card.accent { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- cover ---------- */
+  .cover { padding: 15mm 16mm 12mm; }
+  .cover .top { display: flex; align-items: center; gap: 4mm; margin-bottom: 7mm; }
+  .cover .mark {
+    width: 13mm; height: 13mm; border-radius: 3.6mm; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 2mm 6mm rgba(62, 142, 222, 0.28);
+  }
+  .cover .mark svg { width: 6.6mm; height: 6.6mm; }
+  .cover .course { font-weight: 700; font-size: 13pt; letter-spacing: -0.2px; color: var(--ink); }
+  .cover .course small { color: var(--muted); font-weight: 500; font-size: 10pt; }
+  .cover .cols { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr); gap: 10mm; flex: 1; min-height: 0; }
+  .cover .lede { display: flex; flex-direction: column; justify-content: center; }
+  .cover h1 { font-size: 40pt; line-height: 1.04; letter-spacing: -1.6px; margin: 0 0 5mm; font-weight: 700; color: var(--ink); }
+  .cover h1 .accent { color: var(--blue-deep); }
+  .cover .sub { color: var(--muted-2); font-size: 13pt; max-width: 150mm; margin: 0 0 6mm; }
+  .cover .pills { display: flex; flex-wrap: wrap; gap: 2.6mm; }
+  .pill {
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 1.6mm 4.4mm; font-size: 9.5pt; color: #46505f;
+    background: var(--paper);
+  }
+  .cover .shot {
+    border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong);
+    box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);
+    position: relative; min-height: 0;
+  }
+  .cover .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover .team {
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    border-top: 1px solid var(--line); margin-top: 7mm; padding-top: 4mm;
+    font-size: 9.5pt; color: var(--muted-2);
+  }
+  .cover .team b { color: var(--ink); font-weight: 600; }
+  .cover .team .tufts { color: var(--muted); }
+
+  /* ---------- discussion ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; flex: 1; }
+  .prompt {
+    position: relative;
+    border: 1px solid var(--line); border-radius: 5mm;
+    background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    padding: 8mm 7mm;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .prompt .q { font-size: 16pt; line-height: 1.3; letter-spacing: -0.3px; font-weight: 600; margin: 0; color: var(--ink); }
+  .prompt .qn { position: absolute; top: 6mm; left: 7mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--blue-deep); font-size: 10pt; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- gallery / mosaic ---------- */
+  .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 2.6mm; flex: 1; min-height: 0; }
+  .tile { position: relative; border-radius: 3mm; overflow: hidden; border: 1px solid var(--line); background: var(--paper); min-height: 0; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 1.8mm 3mm; font-size: 7.5pt; color: var(--muted-2);
+    background: rgba(255, 255, 255, 0.93); border-top: 1px solid var(--line);
+  }
+
+  .gallery { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .gallery.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gallery.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery .tile { display: flex; flex-direction: column; background: var(--paper); }
+  .gallery .tile img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+  .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
+  .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
+
+  /* ---------- structure ---------- */
+  .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
+  .phase.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .phase .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 1mm; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9.5pt; color: var(--muted); margin: 0 0 4mm; }
+  .phase h3 { margin: 0 0 3mm; font-size: 14pt; color: var(--ink); }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted); font-size: 10.5pt; padding-left: 5mm; position: relative; margin-bottom: 2.2mm; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--blue-deep); }
+  .assign { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); margin-top: 4mm; padding: 4.6mm 6mm; display: flex; align-items: center; gap: 6mm; }
+  .assign .alabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); white-space: nowrap; }
+  .assign p { margin: 0; color: var(--muted); font-size: 10.5pt; }
+  .assign p b { color: var(--ink); }
+
+  /* ---------- outline ---------- */
+  .outline { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5mm; flex: 1; min-height: 0; align-items: center; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5.5mm 6mm; display: flex; flex-direction: column; min-height: 0; }
+  .panel .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 3.6mm; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2.2mm; align-content: flex-start; }
+  .chip {
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 999px; padding: 1.4mm 3.6mm; font-size: 10pt; color: var(--muted-2);
+  }
+  .journey { display: flex; align-items: stretch; gap: 2.4mm; margin-top: 4mm; }
+  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.6mm 3mm; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .step b { display: block; font-size: 10.5pt; color: var(--ink); }
+  .step span { display: block; color: var(--muted); font-size: 8.5pt; margin-top: 0.8mm; }
+  .step.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .arrow { display: grid; place-items: center; color: var(--blue-deep); font-size: 14pt; }
+
+  /* ---------- rubrics ---------- */
+  .rubric { display: flex; flex-direction: column; gap: 5mm; flex: 1; justify-content: center; }
+  .rub-row { display: grid; grid-template-columns: 62mm minmax(0, 1fr) 16mm; align-items: center; gap: 6mm; }
+  .rub-label { color: var(--muted-2); font-size: 12pt; }
+  .rub-label small { display: block; color: var(--muted); font-size: 9pt; }
+  .bar { height: 3.4mm; border-radius: 999px; background: #edf1f6; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .rub-val { text-align: right; font-weight: 700; font-size: 16pt; color: var(--ink); }
+  .footnote { color: var(--muted); font-size: 9.5pt; margin-top: 3mm; }
+
+  /* ---------- reflections ---------- */
+  .refl { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 5mm; flex: 1; min-height: 0; }
+  .cycle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5mm 4mm; position: relative; }
+  .cyc .cn { position: absolute; top: 3.6mm; right: 4mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9pt; color: var(--blue-deep); font-weight: 700; }
+  .cyc h3 { margin: 0 0 1.6mm; font-size: 12.5pt; color: var(--ink); }
+  .cyc p { margin: 0; color: var(--muted); font-size: 9.5pt; }
+  .qs { list-style: none; margin: 0; padding: 0; }
+  .qs li { position: relative; padding-left: 7mm; margin-bottom: 3.4mm; color: var(--muted-2); font-size: 11pt; }
+  .qs li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--blue-deep); font-weight: 700; }
+  .qs li:last-child { margin-bottom: 0; }
+
+  /* ---------- kit / makerspace ---------- */
+  .kit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4mm; flex: 1; align-content: center; }
+  .kit .card { align-items: flex-start; }
+  .bigline { text-align: center; margin: auto 0; }
+  .bigline .kicker-sm { font-size: 9pt; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 4mm; }
+  .bigline h2 { font-size: 34pt; letter-spacing: -1.2px; margin: 0 0 5mm; color: var(--ink); }
+  .bigline p { color: var(--muted); font-size: 14pt; max-width: 190mm; margin: 0 auto 6mm; }
+  .bigline .url { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12pt; color: var(--blue-deep); }
+
+  /* ---------- closing ---------- */
+  .closing { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6mm; flex: 1; align-items: center; }
+  .closing h2 { font-size: 36pt; }
+  .contact-card { border: 1px solid var(--line-strong); border-radius: 5mm; background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 7mm; }
+  .contact-card .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 4mm; }
+  .contact-card p { margin: 0 0 3.4mm; color: var(--muted); font-size: 11pt; }
+  .contact-card p:last-child { margin-bottom: 0; }
+  .contact-card b { color: var(--ink); }
+
+  @media screen {
+    body { padding: 10mm 0; }
+    .slide { margin: 0 auto 10mm; box-shadow: 0 12px 40px rgba(13, 21, 38, 0.16); border-radius: 2mm; }
+  }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .slide { margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 01 · COVER ============ -->
+<section class="slide cover">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="top">
+    <span class="mark" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+        <path d="m18 15 4-4" />
+        <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+      </svg>
+    </span>
+    <div class="course">ENT-164 <small>· Intro to Making</small></div>
+  </div>
+  <div class="cols">
+    <div class="lede">
+      <p class="s-kicker">Class 5 · Week 5 · Fall 2026</p>
+      <h1 style="font-size: 56pt;">Electronics</h1>
+      <p class="sub">Today your robot gets a brain. We wire motors, sensors, and controls on the breadboard, install MicroPython, and make AI our coding partner.</p>
+      <div class="pills">
+        <span class="pill">Thu, Oct 8</span>
+        <span class="pill">JCC 301 / Nolop</span>
+        <span class="pill">Robo Challenge</span>
+        <span class="pill">Bring your ESP32 kit</span>
+      </div>
+    </div>
+    <figure class="shot">
+      <img src="shots/cover-electronics.jpg" alt="A robot build in progress with motors, battery pack, breadboard, and motor driver laid out on a table">
+    </figure>
+  </div>
+  <div class="team">
+    <span><b>Thomas Van de Velde</b> · Instructor &nbsp; · &nbsp; <b>Alexander Beattie</b> · TA &nbsp; · &nbsp; <b>Patrice Pinardo</b> · TA</span>
+    <span class="tufts">Tufts University · Gordon Institute</span>
+  </div>
+</section>
+
+<!-- ============ 02 · ROBO CHALLENGE ROADMAP ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Robo Challenge · roadmap</p>
+    <h2>Seven weeks from sketch <span class="accent">to race day</span></h2>
+    <p class="s-sub">Today we're at WK4 — electronics. Here's how the robot build comes together.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3mm;">
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK1</span>
+        <h3 style="font-size: 11pt;">Sketch &amp; Prototype</h3>
+        <p>Sketch concept variations; build a foam core mockup.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK2</span>
+        <h3 style="font-size: 11pt;">Laser Cutting</h3>
+        <p>Create a laser-ready 2D design; cut structural parts.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK3</span>
+        <h3 style="font-size: 11pt;">3D Printing</h3>
+        <p>Model 3D parts; 3D print functional parts.</p>
+      </article>
+      <article class="card tight accent" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK4</span>
+        <h3 style="font-size: 11pt;">Electronics</h3>
+        <p>Wire motors, sensors, and controls; program with MicroPython + AI.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK5</span>
+        <h3 style="font-size: 11pt;">Connectivity</h3>
+        <p>Connect to a wireless network; build a remote control interface.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK6</span>
+        <h3 style="font-size: 11pt;">Final Testing</h3>
+        <p>Final integration and test runs.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK7</span>
+        <h3 style="font-size: 11pt;">Race!</h3>
+        <p>Demonstrate the robot with mechanical systems and motors mounted.</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Today</span>
+      <p><b>WK4 · Electronics</b> — wire motors, sensors, and controls on a breadboard, and program basic movements using MicroPython and AI.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">02</span></footer>
+</section>
+
+<!-- ============ 03 · TODAY'S PLAN ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Robo Challenge · today</p>
+    <h2>Today the robot gets <span class="accent">a brain</span></h2>
+    <p class="s-sub">The mechanics are nearly done — today we bring the electronics to life.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.92fr 1.08fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="phase hot" style="flex: 1;">
+          <p class="plabel">Today's plan</p>
+          <ul style="margin-top: 3mm;">
+            <li>Meet your kit and the ESP32 board</li>
+            <li>Install the MicroPython operating system</li>
+            <li>Blink an LED from Thonny</li>
+            <li>Move a servo with AI-generated code</li>
+            <li>Wire the robot at Nolop</li>
+          </ul>
+        </article>
+        <article class="phase" style="flex: 1;">
+          <p class="plabel">Where we are in the build</p>
+          <p style="margin: 3mm 0 0; color: var(--muted); font-size: 10.5pt;">Sketch, mockup, design, and fabrication are behind you. Now we assemble, run wires, test the wiring, program, and test again.</p>
+        </article>
+      </div>
+      <figure class="tile" style="display: flex;">
+        <img src="shots/maker-loop.jpg" alt="Hand-drawn diagram of the making process: sketch, mockup, design, fabricate, assemble, run wires, test wiring, program, test" style="object-fit: contain; background: var(--paper);">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">03</span></footer>
+</section>
+
+<!-- ============ 04 · YOUR KIT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Your kit</p>
+    <h2>What's in your <span class="accent">personal kit?</span></h2>
+    <p class="s-sub">Freenove FNK0046 Super Starter Kit for ESP32 WROVER — everything you need for the electronics project.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.05fr 0.95fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="card tight" style="flex: 1;">
+          <h3>The brain</h3>
+          <p>ESP32-WROVER board, GPIO extension board, and a solderless breadboard.</p>
+        </article>
+        <article class="card tight" style="flex: 1;">
+          <h3>The basics</h3>
+          <p>Jumper wires, LEDs, resistors (220Ω, 1K, 10K), push buttons, USB cable.</p>
+        </article>
+        <article class="card tight" style="flex: 1;">
+          <h3>The fun stuff</h3>
+          <p>LCD and 7-segment displays, buzzers, joystick, potentiometers, servo, TT motor + wheel, motor driver, ultrasonic sensor, camera.</p>
+        </article>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); flex: 1; min-height: 0;">
+          <img src="shots/kit-contents.jpg" alt="The Freenove ESP32 starter kit contents laid out: board, breadboard, wires, LEDs, resistors, sensors, servo, motors, and displays" style="width: 100%; height: 100%; object-fit: contain; background: var(--paper); display: block;">
+        </figure>
+        <div class="assign" style="margin-top: 0;">
+          <span class="alabel">Note</span>
+          <p>No paper tutorial — the download link for the tutorial and code is <b>on the box</b>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ============ 05 · ESP32-WROVER ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The brain</p>
+    <h2>Meet the <span class="accent">ESP32-WROVER</span></h2>
+    <p class="s-sub">A powerful, small controller with onboard wireless and camera.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.95fr 1.05fr;">
+      <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); display: flex; min-height: 0;">
+        <img src="shots/esp32-board.jpg" alt="Annotated ESP32-WROVER board with its specifications: processor, memory, Wi-Fi, Bluetooth, camera, and GPIO pins" style="width: 100%; height: 100%; object-fit: contain; background: var(--paper); display: block;">
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="card" style="flex: 1.2;">
+          <p class="s-kicker" style="margin-bottom: 3mm;">Specs</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt;">
+            <li>Dual-core 32-bit microprocessor, 80–240 MHz</li>
+            <li>520 KB SRAM · 8 MB PSRAM · 4 MB flash</li>
+            <li>2.4 GHz Wi-Fi and Bluetooth 4.2 LE</li>
+            <li>Onboard camera, LEDs, and code uploader</li>
+            <li>Memory card slot and GPIO pins</li>
+          </ul>
+        </article>
+        <article class="card accent" style="flex: 0.8;">
+          <p class="s-kicker" style="margin-bottom: 3mm;">What it controls</p>
+          <p>Motors through the driver, servos, joystick, potentiometers, sensors, and displays — the brain of your robot.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ============ 06 · BREADBOARD BASICS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Breadboard basics</p>
+    <h2>How the <span class="accent">breadboard</span> works</h2>
+    <p class="s-sub">No soldering — push parts and wires into the holes and they connect.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.95fr 1.05fr;">
+      <div style="display: flex; flex-direction: column; gap: 3mm; min-height: 0;">
+        <figure class="tile" style="flex: 1;">
+          <img src="shots/breadboard.jpg" alt="A white solderless breadboard showing rows of holes and the center channel">
+          <figcaption>A solderless breadboard — rows of connected holes</figcaption>
+        </figure>
+        <figure class="tile" style="flex: 1;">
+          <img src="shots/jumper-wires.jpg" alt="Bundles of male-to-male, male-to-female, and female-to-female jumper wires">
+          <figcaption>Jumper wires — male–male, male–female, female–female</figcaption>
+        </figure>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="card tight" style="flex: 1;">
+          <h3>Rows</h3>
+          <p>Each row of five holes is connected horizontally, and the center channel separates the two sides.</p>
+        </article>
+        <article class="card tight" style="flex: 1;">
+          <h3>Power rails</h3>
+          <p>The vertical rails along the edges carry 5V, 3.3V, and GND to every row.</p>
+        </article>
+        <article class="card tight accent" style="flex: 1;">
+          <h3>Pin rows</h3>
+          <p>Your ESP32 plugs into the GPIO extension board: any of the horizontal holes in a pin's row connects to that pin — for example, pin 34.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ============ 07 · PREP YOUR BOARD ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Before you wire</p>
+    <h2>Prep your <span class="accent">board</span></h2>
+    <p class="s-sub">Three steps before the first circuit.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1fr 0.92fr 1fr;">
+      <figure class="tile">
+        <img src="shots/prep-remove-parts.jpg" alt="Two breadboards side by side: the left one carries a pre-installed demo circuit, the right one is empty" style="object-fit: contain; background: var(--paper);">
+        <figcaption>1 · Remove the pre-installed demo parts</figcaption>
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <span class="num">02</span>
+          <h3>Seat the board</h3>
+          <p>Clip the ESP32 and its GPIO extension board across the breadboard's center channel.</p>
+        </article>
+        <article class="card tight">
+          <span class="num">03</span>
+          <h3>Read the labels</h3>
+          <p>5V, 3V3, GND, and the numbered GPIO pins are printed on the extension board. Check before you plug anything in.</p>
+        </article>
+      </div>
+      <figure class="tile">
+        <img src="shots/prep-seat-board.jpg" alt="An ESP32 board seated on a breadboard with pin labels visible: 5V, 3V3, GND, and numbered GPIO pins" style="object-fit: contain; background: var(--paper);">
+        <figcaption>Pin labels on the extension board</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ============ 08 · INSTALL MICROPYTHON ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">MicroPython</p>
+    <h2>Installing the <span class="accent">operating system</span></h2>
+    <p class="s-sub">Your ESP32 runs MicroPython — a tiny version of Python.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.08fr 0.92fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card accent">
+          <p class="s-kicker" style="margin-bottom: 3mm;">Follow the instructions</p>
+          <p style="font-size: 12pt; color: var(--text); margin-bottom: 4mm;">"Put the snake on the plane" — flash MicroPython onto your ESP32, then connect with Thonny.</p>
+          <span class="mono" style="font-size: 13pt; color: var(--blue-deep);">go.tufts.edu/esp32</span>
+        </article>
+        <article class="card tight">
+          <h3>One-time setup</h3>
+          <p>Do this once per board. After that, Thonny connects and runs your code on the robot.</p>
+        </article>
+      </div>
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
+          <img src="shots/snakes-on-a-plane.jpg" alt="A movie still of a man holding a snake while on the phone — the class joke for putting MicroPython on the board" style="width: 100%; height: auto; display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">The MicroPython snake needs a plane — your ESP32 board.</p>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ============ 09 · BLINK ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">First program</p>
+    <h2>Make an LED <span class="accent">blink</span></h2>
+    <p class="s-sub">Type it in Thonny (or ask AI for it), then run it on the board.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.06fr 0.94fr;">
+      <article class="card accent" style="justify-content: center;">
+        <p class="s-kicker" style="margin-bottom: 3.4mm;">blink.py</p>
+        <pre class="mono" style="margin: 0; font-size: 10.5pt; line-height: 1.85; color: var(--ink); white-space: pre-wrap;">from machine import Pin
+import time
+
+led = Pin(2, Pin.OUT)
+
+while True:
+    led.on()        # Turn LED on
+    time.sleep(1)   # Wait 1 second
+    led.off()       # Turn LED off
+    time.sleep(1)   # Wait 1 second</pre>
+      </article>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); flex: 1; min-height: 0;">
+          <img src="shots/thonny-blink.jpg" alt="The Thonny editor connected to the MicroPython device, showing the blink program" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;">
+        </figure>
+        <article class="card tight" style="flex: 0 0 auto;">
+          <p class="s-kicker" style="margin-bottom: 2mm;">Challenge</p>
+          <p style="font-size: 11.5pt;">Can you make it blink faster or slower?</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">09</span></footer>
+</section>
+
+<!-- ============ 10 · AI CODE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">AI as a coding partner</p>
+    <h2>Generate code and wiring <span class="accent">with AI</span></h2>
+    <p class="s-sub">Go to claude.ai and enter this prompt.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.06fr 0.94fr;">
+      <article class="card" style="justify-content: center;">
+        <p class="s-kicker" style="margin-bottom: 3.4mm;">The prompt</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.7; color: var(--muted-2); margin: 0;">I have an ESP32 WROVER with MicroPython and an SG90 servo.<br><br>I want to move the servo arm from 0 to 180 degrees and back.<br><br>Generate the code and provide beginner-friendly wiring instructions.</p>
+      </article>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
+          <img src="shots/ai-prompt-claude.jpg" alt="The Claude chat screen with the ESP32 and SG90 servo prompt typed in" style="width: 100%; height: auto; display: block;">
+        </figure>
+        <article class="card tight accent">
+          <p>Describe your parts, your goal, and ask for beginner-friendly wiring — one sentence per idea.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">10</span></footer>
+</section>
+
+<!-- ============ 11 · INPUTS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Inputs</p>
+    <h2>Knobs, sticks, and <span class="accent">sensors</span></h2>
+    <p class="s-sub">Your robot reads the world through inputs — here's how two common ones wire up.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.9fr 1.1fr;">
+      <div style="display: flex; flex-direction: column; gap: 3mm; min-height: 0;">
+        <figure class="tile" style="flex: 1;">
+          <img src="shots/potentiometer.jpg" alt="A rotary potentiometer with three pins" style="object-fit: contain; background: var(--paper);">
+          <figcaption>Potentiometer — a knob the ESP32 can read</figcaption>
+        </figure>
+        <figure class="tile" style="flex: 1;">
+          <img src="shots/joystick.jpg" alt="A KY-023 joystick module with X and Y axes and a push button" style="object-fit: contain; background: var(--paper);">
+          <figcaption>KY-023 joystick — two axes plus a button</figcaption>
+        </figure>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="card tight" style="flex: 1;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Potentiometer</p>
+          <ul class="mono" style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10pt; line-height: 1.6;">
+            <li>Left pin → GND</li>
+            <li>Middle pin (wiper) → ESP32</li>
+            <li>Right pin → 3V3</li>
+          </ul>
+        </article>
+        <article class="card tight accent" style="flex: 1.35;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">KY-023 joystick</p>
+          <ul class="mono" style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10pt; line-height: 1.6;">
+            <li>GND → GND</li>
+            <li>+5V → 3V3</li>
+            <li>VRx (X-axis) → ESP32</li>
+            <li>VRy (Y-axis) → ESP32</li>
+            <li>SW (button) → ESP32</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">11</span></footer>
+</section>
+
+<!-- ============ 12 · SERVOS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Outputs · servos</p>
+    <h2>Move an arm with a <span class="accent">servo</span></h2>
+    <p class="s-sub">The SG90 micro servo rotates about 180° — perfect for arms, gates, and grippers.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.92fr 1.08fr;">
+      <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); display: flex; min-height: 0;">
+        <img src="shots/servo-sg90.jpg" alt="An SG90 micro servo with its arm and the three-wire connector" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="card" style="flex: 1;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Servo wiring</p>
+          <ul class="mono" style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.7;">
+            <li>Brown / Black → GND</li>
+            <li>Red → 5V</li>
+            <li>Orange / Yellow → ESP32</li>
+          </ul>
+        </article>
+        <article class="card accent" style="flex: 0.8;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">On the robot</p>
+          <p>Servo 1 and Servo 2 wire up the same way — match the colors, not the memory.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">12</span></footer>
+</section>
+
+<!-- ============ 13 · MOTORS + DRIVER ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Outputs · motors</p>
+    <h2>Spin the wheels with the <span class="accent">L298N</span></h2>
+    <p class="s-sub">The driver is the muscle: the ESP32 sends signals, the L298N sends power to the motors.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.88fr 1.12fr;">
+      <div class="gallery g2" style="align-content: center;">
+        <figure class="tile">
+          <img src="shots/tt-motor.jpg" alt="A TT gearbox DC motor with a yellow wheel and red and black wires" style="aspect-ratio: 1 / 1; object-fit: contain; background: var(--paper);">
+          <figcaption><b>TT Motor</b>DC gearbox motor + wheel</figcaption>
+        </figure>
+        <figure class="tile">
+          <img src="shots/l298n-driver.jpg" alt="An L298N dual H-bridge motor driver board with heatsink and terminal blocks" style="aspect-ratio: 1 / 1; object-fit: contain; background: var(--paper);">
+          <figcaption><b>L298N driver</b>Dual H-bridge motor driver</figcaption>
+        </figure>
+      </div>
+      <article class="card" style="justify-content: center;">
+        <p class="s-kicker" style="margin-bottom: 3mm;">L298N wiring</p>
+        <ul class="mono" style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.75;">
+          <li>12V → battery pack</li>
+          <li>5V → logic power</li>
+          <li>GND → common ground</li>
+          <li>IN1, IN2 → ESP32 (left motor)</li>
+          <li>IN3, IN4 → ESP32 (right motor)</li>
+          <li>OUT1, OUT2 → left motor (red, black)</li>
+          <li>OUT3, OUT4 → right motor (red, black)</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">13</span></footer>
+</section>
+
+<!-- ============ 14 · WIRING MAP ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The full picture</p>
+    <h2>Your robot's <span class="accent">wiring map</span></h2>
+    <p class="s-sub">Two servos, two DC motors, two joysticks, one driver, one brain.</p>
+  </header>
+  <div class="s-body">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 7mm; flex: 1; min-height: 0;">
+      <div style="width: 66mm; flex: 0 0 auto;">
+        <article class="card tight accent">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Read it like a map</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.55;">
+            <li>Power comes from the battery pack</li>
+            <li>Motors run through the L298N driver</li>
+            <li>Servos and controls go to GPIO pins</li>
+          </ul>
+        </article>
+        <p style="margin: 4mm 0 0; color: var(--muted); font-size: 10pt;">Wire from a diagram, never from memory — and ask AI to explain any wire you don't recognize.</p>
+      </div>
+      <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); height: 96mm; flex: 0 0 auto;">
+        <img src="shots/wiring-map.jpg" alt="A complete Fritzing wiring diagram of the robot: ESP32, L298N driver, two DC motors, two servos, two joysticks, and a large joystick" style="height: 100%; width: auto; display: block;">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">14</span></footer>
+</section>
+
+<!-- ============ 15 · AT NOLOP ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">At Nolop today</p>
+    <h2>Wire your robot <span class="accent">one part at a time</span></h2>
+    <p class="s-sub">Mechanical assembly review, then AI-assisted wiring at the makerspace.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.04fr 0.96fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="phase hot" style="flex: 1;">
+          <p class="plabel">Today at Nolop</p>
+          <ul style="margin-top: 3mm;">
+            <li>Mechanical assembly review</li>
+            <li>Use AI to wire robot components one by one</li>
+            <li>Mount parts and run wires after functional testing</li>
+          </ul>
+        </article>
+        <article class="card tight" style="flex: 1.15;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Tips</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.55;">
+            <li>Do not generate all the code and wiring in one prompt.</li>
+            <li>Add components step by step. Test and verify with each iteration.</li>
+            <li>Provide detailed model numbers for the parts.</li>
+          </ul>
+        </article>
+      </div>
+      <article class="card" style="justify-content: center;">
+        <p class="s-kicker" style="margin-bottom: 3mm;">Name your parts exactly</p>
+        <ul class="mono" style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.8;">
+          <li>DC Gearbox Motor — "TT Motor"</li>
+          <li>BOJACK L298N Motor DC Dual H-Bridge Motor Driver</li>
+          <li>KY-023 Control Stick</li>
+          <li>SG90 9g Micro Servo Motor</li>
+          <li>Freenove ESP32 WROOM</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">15</span></footer>
+</section>
+
+<!-- ============ 16 · ASSIGNMENT: BUILD IT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Individual assignment</p>
+    <h2>AI-assisted <span class="accent">electronics project</span></h2>
+    <p class="s-sub">Design and build a fun electronics project using your ESP32 kit — with AI as your coding partner.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1fr 1fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="card accent" style="flex: 1;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Requirements</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.6;">
+            <li>At least 1 input (sensor, button, etc.) + 1 output (LED, display, buzzer, etc.)</li>
+            <li>AI-generated MicroPython code, tested and refined</li>
+          </ul>
+        </article>
+        <article class="card tight" style="flex: 1.35;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">The process — all in ONE chat</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.6;">
+            <li><b>Brainstorm:</b> attach the parts list image, ask AI for project ideas</li>
+            <li><b>Build:</b> get wiring instructions and code from AI</li>
+            <li><b>Test &amp; iterate:</b> describe problems, share errors, refine with AI's help</li>
+          </ul>
+        </article>
+      </div>
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); height: 78mm;">
+          <img src="shots/tutorial-projects.jpg" alt="Four example projects from the kit tutorial: an LED bar graph, an LCD counter, a potentiometer-controlled servo, and a camera detecting a Lego house" style="width: 100%; height: 100%; object-fit: contain; background: var(--paper); display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">Need ideas? The kit tutorial has example projects and code to borrow from.</p>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">16</span></footer>
+</section>
+
+<!-- ============ 17 · ASSIGNMENT: DELIVERABLES ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Individual assignment · deliverables</p>
+    <h2>What you'll <span class="accent">hand in</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Your AI conversation</h3>
+        <p>A link to your chat — one continuous conversation, start to finish.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Video demo</h3>
+        <p>A demo of the working project with a voice-over explanation.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Written reflection</h3>
+        <p>A written reflection on the process.</p>
+      </article>
+    </div>
+    <div class="assign" style="margin-top: 5mm;">
+      <span class="alabel">Demo</span>
+      <p><b>Bring your electronics project to class for a demo.</b></p>
+    </div>
+    <div class="assign" style="margin-top: 3mm;">
+      <span class="alabel">Grading</span>
+      <p>You're graded on <b>collaboration and learning</b>, not coding skills. Keep one chat, iterate often, and ask lots of questions!</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">17</span></footer>
+</section>
+
+<!-- ============ 18 · BUILD GALLERY ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">In the lab</p>
+    <h2>Robots <span class="accent">under construction</span></h2>
+    <p class="s-sub">Wiring, testing, and mounting — the messy middle of the build.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery" style="grid-template-columns: repeat(4, minmax(0, 1fr));">
+      <figure class="tile">
+        <img src="shots/robot-wired.jpg" alt="A tracked robot wired with many jumper wires next to a WALL-E toy" style="aspect-ratio: 1 / 1;">
+        <figcaption><b>Wire by wire</b>The robot takes shape.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/l298n-installed.jpg" alt="An L298N motor driver wired to motors and a battery pack" style="aspect-ratio: 1 / 1;">
+        <figcaption><b>Motor driver</b>Powered and wired in place.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/lab-test-rig.jpg" alt="A test rig on the bench with a breadboard, servo, arm, and battery pack" style="aspect-ratio: 1 / 1;">
+        <figcaption><b>Test rig</b>Test each part before mounting.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/pot-on-bench.jpg" alt="A potentiometer wired to a breadboard, being tested on the bench" style="aspect-ratio: 1 / 1; object-position: center 45%;">
+        <figcaption><b>Controls</b>Knobs wired and verified.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">18</span></footer>
+</section>
+
+<!-- ============ 19 · REFLECTION ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="bigline">
+      <p class="kicker-sm">By the end of class</p>
+      <h2>Personal reflection</h2>
+      <p>Before you leave, complete your personal reflection for today's class.</p>
+      <span class="url">go.tufts.edu/reflect</span>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">19</span></footer>
+</section>
+
+<!-- ============ 20 · CLOSING ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="closing">
+      <div>
+        <p class="s-kicker">Before you go</p>
+        <h2>Questions?</h2>
+        <p class="s-sub" style="margin-top: 4mm;">Next week: Connectivity — connect your microcontroller to a wireless network and build a remote control interface.</p>
+      </div>
+      <div class="contact-card">
+        <p class="plabel">Where to find us</p>
+        <p><b>Office hours</b><br><span class="mono">go.tufts.edu/meet_tvdv</span></p>
+        <p><b>Email</b><br><span class="mono">thomas.van_de_velde@tufts.edu</span></p>
+        <p><b>Course materials</b><br>tvande08.github.io/ENT-164</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">20</span></footer>
+</section>
+
+</body>
+</html>

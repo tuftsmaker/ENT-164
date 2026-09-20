@@ -56,6 +56,10 @@ dir_for() {
 
 pdf_name_for() {
   local dir="$1" existing num
+  if [[ -n "${PDF_NAME:-}" ]]; then
+    printf '%s\n' "$PDF_NAME"
+    return
+  fi
   existing="$(cd "$dir" && ls ENT-164-Class-*.pdf 2>/dev/null | head -n 1 || true)"
   if [[ -n "$existing" ]]; then
     printf '%s\n' "$existing"

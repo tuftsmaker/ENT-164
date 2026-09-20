@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 Class 2 · Hand Making and Robot Challenge Kickoff — Slides</title>
+<meta name="theme-color" content="#f7f9fc">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --blue-deep: #1F6FD0;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --ink: #0d1526;
+    --text: #17203a;
+    --muted: #5f6b7a;
+    --muted-2: #3f4a5a;
+    --line: #e6eaf1;
+    --line-strong: #d5dce7;
+    --paper: #ffffff;
+    --paper-2: #f7f9fc;
+    --blue-tint: #f2f7fd;
+    --blue-tint-2: #eaf3fd;
+    --radius: 4mm;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: 297mm 167mm; margin: 0; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #e8ecf2;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    position: relative; overflow: hidden;
+    width: 297mm; height: 167mm;
+    padding: 13mm 16mm 15mm;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide > * { position: relative; z-index: 1; }
+  .slide-logo {
+    position: absolute; top: 12.4mm; right: 16mm; z-index: 2;
+    height: 5.2mm; width: auto;
+  }
+  .cover .slide-logo { top: 18mm; height: 7mm; }
+
+  .s-head { margin-bottom: 6.5mm; }
+  .s-kicker {
+    font-size: 8.5pt; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--blue-deep); font-weight: 700; margin: 0 0 2.4mm;
+  }
+  h2 { font-size: 24pt; line-height: 1.12; letter-spacing: -0.6px; font-weight: 700; margin: 0; color: var(--ink); }
+  .s-sub { color: var(--muted); font-size: 12pt; margin: 2.6mm 0 0; max-width: 210mm; }
+  h2 .accent { color: var(--blue-deep); }
+  .s-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .s-foot {
+    position: absolute; left: 16mm; right: 16mm; bottom: 5.5mm; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 7.5pt; color: #8a93a3; letter-spacing: 0.3px;
+    border-top: 1px solid var(--line); padding-top: 2.2mm;
+  }
+  .s-foot .fnum { color: var(--ink); font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 6mm 6mm 5.5mm;
+    box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    display: flex; flex-direction: column;
+  }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);
+    align-self: flex-start; margin-bottom: 3.4mm;
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 2mm; padding: 0.8mm 2.4mm;
+  }
+  .card h3 { margin: 0 0 1.8mm; font-size: 13.5pt; letter-spacing: -0.2px; color: var(--ink); }
+  .card p { margin: 0; color: var(--muted); font-size: 10.5pt; line-height: 1.45; }
+  .card.tight p { font-size: 10pt; }
+  .card .ico {
+    width: 9mm; height: 9mm; border-radius: 2.6mm; margin-bottom: 3.4mm;
+    background: var(--blue-tint-2); border: 1px solid #cfe1f7;
+    display: grid; place-items: center;
+  }
+  .card .ico svg { width: 4.6mm; height: 4.6mm; }
+  .card.accent { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- cover ---------- */
+  .cover { padding: 15mm 16mm 12mm; }
+  .cover .top { display: flex; align-items: center; gap: 4mm; margin-bottom: 7mm; }
+  .cover .mark {
+    width: 13mm; height: 13mm; border-radius: 3.6mm; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 2mm 6mm rgba(62, 142, 222, 0.28);
+  }
+  .cover .mark svg { width: 6.6mm; height: 6.6mm; }
+  .cover .course { font-weight: 700; font-size: 13pt; letter-spacing: -0.2px; color: var(--ink); }
+  .cover .course small { color: var(--muted); font-weight: 500; font-size: 10pt; }
+  .cover .cols { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr); gap: 10mm; flex: 1; min-height: 0; }
+  .cover .lede { display: flex; flex-direction: column; justify-content: center; }
+  .cover h1 { font-size: 40pt; line-height: 1.04; letter-spacing: -1.6px; margin: 0 0 5mm; font-weight: 700; color: var(--ink); }
+  .cover h1 .accent { color: var(--blue-deep); }
+  .cover .sub { color: var(--muted-2); font-size: 13pt; max-width: 150mm; margin: 0 0 6mm; }
+  .cover .pills { display: flex; flex-wrap: wrap; gap: 2.6mm; }
+  .pill {
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 1.6mm 4.4mm; font-size: 9.5pt; color: #46505f;
+    background: var(--paper);
+  }
+  .cover .shot {
+    border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong);
+    box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);
+    position: relative; min-height: 0;
+  }
+  .cover .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover .team {
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    border-top: 1px solid var(--line); margin-top: 7mm; padding-top: 4mm;
+    font-size: 9.5pt; color: var(--muted-2);
+  }
+  .cover .team b { color: var(--ink); font-weight: 600; }
+  .cover .team .tufts { color: var(--muted); }
+
+  /* ---------- discussion ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; flex: 1; }
+  .prompt {
+    position: relative;
+    border: 1px solid var(--line); border-radius: 5mm;
+    background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    padding: 8mm 7mm;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .prompt .q { font-size: 16pt; line-height: 1.3; letter-spacing: -0.3px; font-weight: 600; margin: 0; color: var(--ink); }
+  .prompt .qn { position: absolute; top: 6mm; left: 7mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--blue-deep); font-size: 10pt; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- gallery / mosaic ---------- */
+  .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 2.6mm; flex: 1; min-height: 0; }
+  .tile { position: relative; border-radius: 3mm; overflow: hidden; border: 1px solid var(--line); background: var(--paper); min-height: 0; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 1.8mm 3mm; font-size: 7.5pt; color: var(--muted-2);
+    background: rgba(255, 255, 255, 0.93); border-top: 1px solid var(--line);
+  }
+
+  .gallery { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .gallery.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gallery.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery .tile { display: flex; flex-direction: column; background: var(--paper); }
+  .gallery .tile img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+  .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
+  .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
+
+  /* ---------- structure ---------- */
+  .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
+  .phase.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .phase .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 1mm; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9.5pt; color: var(--muted); margin: 0 0 4mm; }
+  .phase h3 { margin: 0 0 3mm; font-size: 14pt; color: var(--ink); }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted); font-size: 10.5pt; padding-left: 5mm; position: relative; margin-bottom: 2.2mm; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--blue-deep); }
+  .assign { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); margin-top: 4mm; padding: 4.6mm 6mm; display: flex; align-items: center; gap: 6mm; }
+  .assign .alabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); white-space: nowrap; }
+  .assign p { margin: 0; color: var(--muted); font-size: 10.5pt; }
+  .assign p b { color: var(--ink); }
+
+  /* ---------- outline ---------- */
+  .outline { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5mm; flex: 1; min-height: 0; align-items: center; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5.5mm 6mm; display: flex; flex-direction: column; min-height: 0; }
+  .panel .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 3.6mm; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2.2mm; align-content: flex-start; }
+  .chip {
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 999px; padding: 1.4mm 3.6mm; font-size: 10pt; color: var(--muted-2);
+  }
+  .journey { display: flex; align-items: stretch; gap: 2.4mm; margin-top: 4mm; }
+  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.6mm 3mm; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .step b { display: block; font-size: 10.5pt; color: var(--ink); }
+  .step span { display: block; color: var(--muted); font-size: 8.5pt; margin-top: 0.8mm; }
+  .step.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .arrow { display: grid; place-items: center; color: var(--blue-deep); font-size: 14pt; }
+
+  /* ---------- rubrics ---------- */
+  .rubric { display: flex; flex-direction: column; gap: 5mm; flex: 1; justify-content: center; }
+  .rub-row { display: grid; grid-template-columns: 62mm minmax(0, 1fr) 16mm; align-items: center; gap: 6mm; }
+  .rub-label { color: var(--muted-2); font-size: 12pt; }
+  .rub-label small { display: block; color: var(--muted); font-size: 9pt; }
+  .bar { height: 3.4mm; border-radius: 999px; background: #edf1f6; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .rub-val { text-align: right; font-weight: 700; font-size: 16pt; color: var(--ink); }
+  .footnote { color: var(--muted); font-size: 9.5pt; margin-top: 3mm; }
+
+  /* ---------- reflections ---------- */
+  .refl { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 5mm; flex: 1; min-height: 0; }
+  .cycle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5mm 4mm; position: relative; }
+  .cyc .cn { position: absolute; top: 3.6mm; right: 4mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9pt; color: var(--blue-deep); font-weight: 700; }
+  .cyc h3 { margin: 0 0 1.6mm; font-size: 12.5pt; color: var(--ink); }
+  .cyc p { margin: 0; color: var(--muted); font-size: 9.5pt; }
+  .qs { list-style: none; margin: 0; padding: 0; }
+  .qs li { position: relative; padding-left: 7mm; margin-bottom: 3.4mm; color: var(--muted-2); font-size: 11pt; }
+  .qs li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--blue-deep); font-weight: 700; }
+  .qs li:last-child { margin-bottom: 0; }
+
+  /* ---------- kit / makerspace ---------- */
+  .kit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4mm; flex: 1; align-content: center; }
+  .kit .card { align-items: flex-start; }
+  .bigline { text-align: center; margin: auto 0; }
+  .bigline .kicker-sm { font-size: 9pt; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 4mm; }
+  .bigline h2 { font-size: 34pt; letter-spacing: -1.2px; margin: 0 0 5mm; color: var(--ink); }
+  .bigline p { color: var(--muted); font-size: 14pt; max-width: 190mm; margin: 0 auto 6mm; }
+  .bigline .url { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12pt; color: var(--blue-deep); }
+
+  /* ---------- closing ---------- */
+  .closing { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6mm; flex: 1; align-items: center; }
+  .closing h2 { font-size: 36pt; }
+  .contact-card { border: 1px solid var(--line-strong); border-radius: 5mm; background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 7mm; }
+  .contact-card .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 4mm; }
+  .contact-card p { margin: 0 0 3.4mm; color: var(--muted); font-size: 11pt; }
+  .contact-card p:last-child { margin-bottom: 0; }
+  .contact-card b { color: var(--ink); }
+
+  @media screen {
+    body { padding: 10mm 0; }
+    .slide { margin: 0 auto 10mm; box-shadow: 0 12px 40px rgba(13, 21, 38, 0.16); border-radius: 2mm; }
+  }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .slide { margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ===== 01 · COVER ===== -->
+<section class="slide cover">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="top">
+    <span class="mark" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+        <path d="m18 15 4-4" />
+        <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+      </svg>
+    </span>
+    <div class="course">ENT-164 <small>· Intro to Making</small></div>
+  </div>
+  <div class="cols">
+    <div class="lede">
+      <p class="s-kicker">Class 2 · Week 2 · Fall 2026</p>
+      <h1 style="font-size: 34pt;">Hand Making<br><span class="accent">and Robot Challenge Kickoff</span></h1>
+      <p class="sub">Today we kick off the Robot Challenge: the rules, your team, the electronics in your kit, and the hand-making skills — foam core and clay — you'll use to prototype your robot.</p>
+      <div class="pills">
+        <span class="pill">Thu, Sep 17</span>
+        <span class="pill">JCC 301 / Nolop</span>
+        <span class="pill">Robot Challenge kickoff</span>
+        <span class="pill">Teams announced today</span>
+      </div>
+    </div>
+    <figure class="shot">
+      <img src="shots/robot-holding-ball.jpg" alt="A small wheeled robot holding a yellow ball">
+    </figure>
+  </div>
+  <div class="team">
+    <span><b>Thomas Van de Velde</b> · Instructor &nbsp; · &nbsp; <b>Alexander Beattie</b> · TA &nbsp; · &nbsp; <b>Patrice Pinardo</b> · TA</span>
+    <span class="tufts">Tufts University · Gordon Institute</span>
+  </div>
+</section>
+
+<!-- ===== 02 · THE CHALLENGE ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The challenge</p>
+    <h2>Move as many balls as you can <span class="accent">in 5 minutes</span></h2>
+    <p class="s-sub">Your robots must be designed, built, and programmed by your team.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1.02fr 0.98fr; grid-template-rows: 1fr;">
+      <div style="display: flex; flex-direction: column; gap: 4.5mm; justify-content: center; min-height: 0;">
+        <article class="card accent">
+          <p class="s-kicker" style="margin-bottom: 2mm;">To succeed</p>
+          <p style="font-size: 11pt;">You'll combine creativity, prototyping, mechanical design, and coding — the whole maker toolkit in one challenge.</p>
+        </article>
+        <div class="chips">
+          <span class="chip">Creativity</span>
+          <span class="chip">Prototyping</span>
+          <span class="chip">Mechanical design</span>
+          <span class="chip">Coding</span>
+        </div>
+      </div>
+      <figure class="tile" style="margin: 0;">
+        <img src="shots/cardboard-robot-prototype.jpg" alt="A cardboard and foam robot prototype with motors and a battery pack on a workbench">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">02</span></footer>
+</section>
+
+<!-- ===== 03 · THE RULES ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The rules</p>
+    <h2>How the race <span class="accent">works</span></h2>
+    <p class="s-sub">Read these twice — every design decision follows from them.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <div class="phase">
+        <p class="plabel">Scoring</p>
+        <h3>Every ball counts</h3>
+        <ul>
+          <li>1 point per ball moved across the line</li>
+          <li>Maximum 10 balls per trip</li>
+          <li>Balls are dropped off in a standard container</li>
+        </ul>
+      </div>
+      <div class="phase hot">
+        <p class="plabel">The course</p>
+        <h3>5 minutes, 10 feet</h3>
+        <ul>
+          <li>Move as many balls as possible in 5 minutes</li>
+          <li>Loading and drop-off zones are 10 feet (~3 meters) apart</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <p class="plabel">Your robot</p>
+        <h3>Hands off during the race</h3>
+        <ul>
+          <li>Designed, built, and programmed by your team</li>
+          <li>You cannot touch the balls or robot during the race</li>
+          <li>Robot and loading mechanism must fit in your team's project box</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">03</span></footer>
+</section>
+
+<!-- ===== 04 · WHY THIS MATTERS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Why this matters</p>
+    <h2>This is about more than <span class="accent">winning</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g4" style="margin-bottom: 4.5mm;">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Experiment quickly</h3>
+        <p>Try ideas fast and learn from what breaks.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Build foundations</h3>
+        <p>Practice sketching, prototyping, electronics, and coding.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Collaborate</h3>
+        <p>Learn to work as a team on a shared build.</p>
+      </article>
+      <article class="card">
+        <span class="num">04</span>
+        <h3>Solve openly</h3>
+        <p>Find creative answers to open-ended problems.</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">The payoff</span>
+      <p>At the end, you'll not only have a robot to show off — you'll have the confidence and maker skills to take on your <b>final team project</b>.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ===== 05 · UPCOMING WORKSHOPS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Schedule</p>
+    <h2>Upcoming workshops <span class="accent">&amp; key dates</span></h2>
+    <p class="s-sub">You don't have to wait for workshops to apply these techniques — learn from others, research online, or ask Nolop staff.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g4">
+      <article class="card accent">
+        <span class="num">TODAY</span>
+        <h3>Prototype</h3>
+        <p>Sketch · Foam core</p>
+      </article>
+      <article class="card">
+        <span class="num">SEP 24</span>
+        <h3>Laser Cutting</h3>
+        <p>2D design · Laser cutting</p>
+      </article>
+      <article class="card">
+        <span class="num">OCT 1</span>
+        <h3>3D Printing</h3>
+        <p>Digital sculpting · 3D design · Slicing</p>
+      </article>
+      <article class="card">
+        <span class="num">OCT 8</span>
+        <h3>Devices</h3>
+        <p>Micro controller · MicroPython · Motors</p>
+      </article>
+      <article class="card">
+        <span class="num">OCT 15</span>
+        <h3>Connectivity</h3>
+        <p>Networking · Remote control</p>
+      </article>
+      <article class="card">
+        <span class="num">OCT 22</span>
+        <h3>Final Build</h3>
+        <p>Finalize · Test</p>
+      </article>
+      <article class="card accent">
+        <span class="num">OCT 29</span>
+        <h3>Challenge!</h3>
+        <p>Race day — put your robot to the test.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ===== 06 · PRODUCT DEVELOPMENT IS NOT LINEAR ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">How making actually works</p>
+    <h2>Product development is <span class="accent">not linear</span></h2>
+    <p class="s-sub">Expect to loop — testing sends you back to the sketch, again and again.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1.1fr 0.9fr; grid-template-rows: 1fr;">
+      <figure class="tile" style="margin: 0;">
+        <img src="shots/product-development-cycle.jpg" alt="A circular diagram looping through sketch, mockup, design, fabricate, assemble, program, and test">
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 4.5mm; justify-content: center; min-height: 0;">
+        <article class="card">
+          <h3>The loop</h3>
+          <p>Sketch → mockup → design → fabricate → assemble → program → test. Then test again.</p>
+        </article>
+        <article class="card accent">
+          <h3>Going backwards is progress</h3>
+          <p>When a test fails, you go back a step — or all the way back to the sketch. That's how prototypes get better.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ===== 07 · MOTORS AND WHEELS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">What's in your robot kit</p>
+    <h2>Motors and wheels <span class="accent">get you moving</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.92fr 1.08fr; grid-template-rows: 1fr;">
+      <div style="display: flex; flex-direction: column; gap: 4.5mm; min-height: 0;">
+        <div class="phase">
+          <p class="plabel">Drive</p>
+          <h3>DC gearbox motor · 2x</h3>
+          <ul>
+            <li>Your powered wheels — one per side</li>
+            <li>3mm mounting holes for screws</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Support</p>
+          <h3>Caster wheels</h3>
+          <ul>
+            <li>Free-rolling wheels that carry the weight</li>
+            <li>Let the robot pivot and turn smoothly</li>
+          </ul>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 3mm; min-height: 0;">
+        <figure class="tile" style="margin: 0;"><img src="shots/dc-motor.jpg" alt="A yellow DC gearbox motor"><figcaption>DC gearbox motor</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/dc-motor-and-wheel.jpg" alt="A DC gearbox motor with a wheel attached"><figcaption>Motor + wheel</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/caster-wheel.jpg" alt="A small caster wheel"><figcaption>Caster wheel</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/delivery-robot-in-the-wild.jpg" alt="A delivery robot driving outdoors"><figcaption>Motors + casters in the wild</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ===== 08 · SERVO MOTORS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">What's in your robot kit</p>
+    <h2>Servo motors <span class="accent">for precise moves</span></h2>
+    <p class="s-sub">Servos rotate to a specific angle — use them for steering, grippers, and your ball-dispensing mechanism.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery" style="grid-template-columns: repeat(4, minmax(0, 1fr));">
+      <figure class="tile">
+        <img src="shots/micro-servo.jpg" alt="A small blue SG90 micro servo motor">
+        <figcaption><b>SG90 9g micro servo</b>The servo in your kit.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/servo-dimensions.jpg" alt="Dimensional drawing of a micro servo">
+        <figcaption><b>Dimensions</b>Check sizes before you design the mount.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/servos-wired.jpg" alt="A servo motor wired to a circuit board">
+        <figcaption><b>Wired up</b>Servos connect to the breadboard.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/legged-robot.jpg" alt="A small four-legged robot built with servo motors">
+        <figcaption><b>In the wild</b>Legged robots run on servos.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ===== 09 · OTHER ELECTRONICS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">What's in your robot kit</p>
+    <h2>The rest of <span class="accent">the electronics</span></h2>
+    <p class="s-sub">Everything on this diagram comes in your kit.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.86fr 1.14fr; grid-template-rows: 1fr;">
+      <div class="phase">
+        <p class="plabel">What each part does</p>
+        <h3>The control chain</h3>
+        <ul>
+          <li>Motor driver — controls speed and direction of both motors</li>
+          <li>Breadboard — connects the wires to the microcontroller</li>
+          <li>Joystick with push button — your remote control</li>
+          <li>Battery pack — powers the microcontroller</li>
+          <li>Microcontroller — the brain; keep its USB-C port accessible to upload code</li>
+        </ul>
+      </div>
+      <figure class="tile" style="margin: 0;">
+        <img src="shots/wiring-diagram.jpg" alt="A wiring diagram showing an ESP32, motor driver, breadboard, joystick, servos, motors, and battery pack">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">09</span></footer>
+</section>
+
+<!-- ===== 10 · COMPONENT DETAILS & WIRING ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Build notes</p>
+    <h2>Component details <span class="accent">&amp; wiring</span></h2>
+    <p class="s-sub">During early design, don't worry about exact connections — plan the space and the wire routes.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.78fr 1fr 1.1fr; grid-template-rows: 1fr;">
+      <figure class="tile" style="margin: 0;">
+        <img src="shots/motor-dimensions.jpg" alt="A technical drawing of the DC gearbox motor with dimensions" style="object-fit: contain; background: #ffffff;">
+      </figure>
+      <div class="phase">
+        <p class="plabel">Exact parts</p>
+        <h3>Search the data sheet</h3>
+        <ul>
+          <li>DC gearbox motor — "TT motor"</li>
+          <li>L298N dual H-bridge motor driver</li>
+          <li>KY-023 control stick</li>
+          <li>SG90 9g micro servo</li>
+          <li>Freenove ESP32 WROOM</li>
+          <li>TCRT5000 infrared sensor (optional)</li>
+        </ul>
+      </div>
+      <div class="phase hot">
+        <p class="plabel">Plan your wiring</p>
+        <h3>Leave room for these runs</h3>
+        <ul>
+          <li>Both motors → motor driver</li>
+          <li>Motor driver → breadboard</li>
+          <li>Servos → breadboard</li>
+          <li>Joystick (long wires) → breadboard</li>
+          <li>Battery pack → microcontroller</li>
+          <li>USB-C port accessible for code uploads</li>
+        </ul>
+        <p style="margin: 3mm 0 0; color: var(--muted); font-size: 9.5pt;">TIP: Try to hide wires for a better finish.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">10</span></footer>
+</section>
+
+<!-- ===== 11 · GET INSPIRED ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Research</p>
+    <h2>Get inspired, <span class="accent">then research solutions</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.92fr 1.08fr; grid-template-rows: 1fr;">
+      <div style="display: flex; flex-direction: column; gap: 4.5mm; justify-content: center; min-height: 0;">
+        <article class="card">
+          <h3>Study existing mechanisms</h3>
+          <p>How do other makers move balls, dispense objects, and steer small robots?</p>
+        </article>
+        <article class="card accent">
+          <h3>Borrow ideas, not parts</h3>
+          <p>Adapt what you find to the components already in your kit.</p>
+        </article>
+        <div class="chips">
+          <span class="chip">Thingiverse</span>
+          <span class="chip">Build videos</span>
+          <span class="chip">Nolop staff</span>
+        </div>
+      </div>
+      <figure class="tile" style="margin: 0;">
+        <img src="shots/thingiverse.jpg" alt="The Thingiverse website showing a library of 3D-printable designs">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">11</span></footer>
+</section>
+
+<!-- ===== 12 · GETTING STARTED ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Getting started</p>
+    <h2>From brainstorm <span class="accent">to prototype</span></h2>
+    <p class="s-sub">Steps you'll take today and in the next workshop.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <div class="phase">
+        <p class="plabel">First, on your own</p>
+        <h3>Review and sketch</h3>
+        <ul>
+          <li>Review the rules and constraints</li>
+          <li>Review the parts in your kit</li>
+          <li>Sketch ideas individually — aim for several concepts</li>
+        </ul>
+      </div>
+      <div class="phase hot">
+        <p class="plabel">Then, as a team</p>
+        <h3>Converge and build</h3>
+        <ul>
+          <li>Brainstorm the robot and a ball-dispensing mechanism</li>
+          <li>Converge on one or more concepts to prototype</li>
+          <li>Assign tasks and build with foam core, clay, glue, and screws</li>
+          <li>Present your prototype(s) next class, Sept 24</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">12</span></footer>
+</section>
+
+<!-- ===== 13 · PROJECT TEAMS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Teams</p>
+    <h2>ENT-164 <span class="accent">project teams</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g4" style="margin-bottom: 4.5mm;">
+      <article class="card">
+        <h3 style="color: #b45309;">Orange</h3>
+        <p style="color: var(--muted); font-size: 10.5pt; margin: 0;">Robot Challenge team</p>
+      </article>
+      <article class="card">
+        <h3 style="color: #1d4ed8;">Blue</h3>
+        <p style="color: var(--muted); font-size: 10.5pt; margin: 0;">Robot Challenge team</p>
+      </article>
+      <article class="card">
+        <h3 style="color: #b91c1c;">Red</h3>
+        <p style="color: var(--muted); font-size: 10.5pt; margin: 0;">Robot Challenge team</p>
+      </article>
+      <article class="card">
+        <h3 style="color: #15803d;">Green</h3>
+        <p style="color: var(--muted); font-size: 10.5pt; margin: 0;">Robot Challenge team</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Team assignment</span>
+      <p><b>Due Sept 24</b> — present your initial prototype to the class (5 minutes per team at Nolop).</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">13</span></footer>
+</section>
+
+<!-- ===== 14 · GENERAL SAFETY ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Safety guidelines</p>
+    <h2>Work safely, <span class="accent">every time</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g4">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Ask first</h3>
+        <p>Follow instructor directions and ask before using unfamiliar tools.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>No food or drinks</h3>
+        <p>Keep them away from tools, electronics, and materials.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Tidy space</h3>
+        <p>Keep your workspace organized and clutter-free.</p>
+      </article>
+      <article class="card accent">
+        <span class="num">04</span>
+        <h3>Closed-toe shoes</h3>
+        <p>Wear them at all times in the lab.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">14</span></footer>
+</section>
+
+<!-- ===== 15 · HAND TOOLS & MATERIALS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Safety guidelines</p>
+    <h2>Hand tools <span class="accent">&amp; prototyping materials</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="margin-bottom: 4.5mm;">
+      <div class="phase">
+        <p class="plabel">Cutting</p>
+        <h3>Blades and mats</h3>
+        <ul>
+          <li>Cut away from your body and keep hands clear of blades</li>
+          <li>Use cutting mats for X-Acto and utility knives</li>
+          <li>Foam core, clay, and cardboard are safe to prototype with — but still use blades carefully</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <p class="plabel">In the lab</p>
+        <h3>Dress and behave for the shop</h3>
+        <ul>
+          <li>Return all tools to their designated location after use</li>
+          <li>Wear safety glasses when cutting, soldering, or using power tools</li>
+          <li>Gloves only for hot materials or chemicals — never around rotating tools</li>
+          <li>Tie back long hair and avoid loose clothing or jewelry near machines</li>
+        </ul>
+      </div>
+    </div>
+    <div class="assign">
+      <span class="alabel">Policy</span>
+      <p>Review Nolop's safety policy here: <span class="mono">nolop.org/safety</span></p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">15</span></footer>
+</section>
+
+<!-- ===== 16 · WHAT IS FOAM CORE ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Hand making</p>
+    <h2>What is <span class="accent">foam core?</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.92fr 1.08fr; grid-template-rows: 1fr;">
+      <div style="display: flex; flex-direction: column; gap: 4.5mm; justify-content: center; min-height: 0;">
+        <article class="card">
+          <h3>Light and rigid</h3>
+          <p>A Styrofoam core laminated between two layers of smooth paper.</p>
+        </article>
+        <article class="card">
+          <h3>Better than cardboard</h3>
+          <p>Easier to work with, and it produces neater, stronger models than corrugated cardboard.</p>
+        </article>
+        <article class="card accent">
+          <h3>Shape almost anything</h3>
+          <p>Most geometric shapes can easily be created in foam core.</p>
+        </article>
+      </div>
+      <figure class="tile" style="margin: 0;">
+        <img src="shots/foam-core-samples.jpg" alt="Samples of foam core board showing the foam core between two paper layers">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">16</span></footer>
+</section>
+
+<!-- ===== 17 · MOCKUPS & PLACEHOLDERS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Mockups</p>
+    <h2>Component placeholders <span class="accent">get feedback</span></h2>
+    <p class="s-sub">Before the electronics go in, mock up the body with simple stand-ins for the real parts.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g3">
+      <figure class="tile">
+        <img src="shots/component-placeholders.jpg" alt="Foam core blocks standing in for motors, battery, and circuit board inside a mockup">
+        <figcaption><b>Component placeholders</b>Blocks stand in for the real parts so you can test fit.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/exploded-view.jpg" alt="An exploded view diagram showing the layers of a device">
+        <figcaption><b>Exploded view</b>Plan how the layers and parts stack together.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/product-teardown.jpg" alt="Photos of a product's internal assembly during a teardown">
+        <figcaption><b>Teardown study</b>See how a real product is assembled inside.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">17</span></footer>
+</section>
+
+<!-- ===== 18 · CUTTING FOAM CORE ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Foam core technique</p>
+    <h2>Cutting: <span class="accent">sharp blade, three passes</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1.05fr 0.95fr; grid-template-rows: 1fr; margin-bottom: 4.5mm;">
+      <div class="phase">
+        <p class="plabel">How to cut</p>
+        <h3>Mat, ruler, fresh blade</h3>
+        <ul>
+          <li>Always cut on a cutting mat with a sharp X-Acto knife</li>
+          <li>Replace blades at the slightest hint of wear</li>
+          <li>Straight cuts are done with a metal ruler</li>
+          <li>Curves are cut carefully by hand</li>
+        </ul>
+      </div>
+      <figure class="tile" style="margin: 0;">
+        <img src="shots/cutting-foam-core.jpg" alt="Hands cutting foam core on a cutting mat with an X-Acto knife and metal ruler">
+      </figure>
+    </div>
+    <div class="journey" style="margin-top: 0;">
+      <div class="step"><b>Pass 1</b><span>Top paper layer</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>Pass 2</b><span>Through the foam</span></div>
+      <div class="arrow">→</div>
+      <div class="step hot"><b>Pass 3</b><span>Bottom paper layer</span></div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">18</span></footer>
+</section>
+
+<!-- ===== 19 · CORNERS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Foam core technique</p>
+    <h2>Corners: <span class="accent">four joints</span></h2>
+    <p class="s-sub">The rabbet joint hides the edge of the board and makes the strongest, cleanest corner.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; grid-template-rows: 1fr;">
+      <figure class="tile" style="margin: 0;">
+        <img src="shots/foam-core-corner.jpg" alt="A finished foam core corner joined with a rabbet cut">
+        <figcaption>A finished foam core corner</figcaption>
+      </figure>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 3mm; min-height: 0;">
+        <figure class="tile" style="margin: 0;"><img src="shots/butt-joint.jpg" alt="Diagram of a butt joint in foam core"><figcaption>Butt joint</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/folded-round.jpg" alt="Diagram of a folded round corner in foam core"><figcaption>Folded round</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/folded-sharp.jpg" alt="Diagram of a folded sharp corner in foam core"><figcaption>Folded sharp</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/rabbet-joint.jpg" alt="Diagram of a rabbet joint in foam core"><figcaption>Rabbet</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">19</span></footer>
+</section>
+
+<!-- ===== 20 · CURVES ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Foam core technique</p>
+    <h2>Curves: <span class="accent">cut the outside, notch the inside</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.92fr 1.08fr; grid-template-rows: 1fr;">
+      <div style="display: flex; flex-direction: column; gap: 4.5mm; justify-content: center; min-height: 0;">
+        <article class="card">
+          <h3>Outside</h3>
+          <p>Make cuts on the outside of the curve to release the paper layers.</p>
+        </article>
+        <article class="card accent">
+          <h3>Inside</h3>
+          <p>Cut V-notches on the inside so the board bends smoothly around the curve.</p>
+        </article>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <figure class="tile" style="margin: 0; flex: 1;">
+          <img src="shots/v-notches.jpg" alt="Diagram showing V-notches cut into foam core to form a curve">
+        </figure>
+        <figure class="tile" style="margin: 0; flex: 1;">
+          <img src="shots/foam-core-curves.jpg" alt="Two cylindrical foam core forms built with V-notch curves">
+        </figure>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">20</span></footer>
+</section>
+
+<!-- ===== 21 · EXAMPLE PROJECT: TRAIN TICKET KIOSK ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Example project</p>
+    <h2>Train ticket kiosk <span class="accent">in foam core</span></h2>
+    <p class="s-sub">A full-size model built with the same techniques you just saw — from a rough sketch to a finished kiosk.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; grid-template-rows: 1fr;">
+      <div style="display: flex; flex-direction: column; gap: 4.5mm; justify-content: center; min-height: 0;">
+        <article class="card">
+          <h3>What it takes</h3>
+          <p>Paper templates, precise cuts, rabbet joints, curved surfaces, and a clean finish.</p>
+        </article>
+        <article class="card">
+          <h3>Techniques used</h3>
+          <div class="chips" style="margin-top: 1mm;">
+            <span class="chip">Sketch</span>
+            <span class="chip">Templates</span>
+            <span class="chip">Rabbet joints</span>
+            <span class="chip">V-notches</span>
+            <span class="chip">Hot glue</span>
+            <span class="chip">Decals</span>
+          </div>
+        </article>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <figure class="tile" style="margin: 0; flex: 0 0 40mm;">
+          <img src="shots/train-station-kiosk.jpg" alt="A train station ticket kiosk in a station hall">
+        </figure>
+        <figure class="tile" style="margin: 0; flex: 1;">
+          <img src="shots/finished-kiosk.jpg" alt="A person using the finished foam core ticket kiosk model">
+        </figure>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">21</span></footer>
+</section>
+
+<!-- ===== 22 · KIOSK BUILD: STEPS 1-6 ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Kiosk build</p>
+    <h2>Steps 1–6: <span class="accent">sketch to first assembly</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="gallery g3">
+      <figure class="tile">
+        <img src="shots/kiosk-step-01-sketch.jpg" alt="A line sketch of the kiosk design">
+        <figcaption><b>1 · Sketch</b>Start with a rough drawing.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-02-templates.jpg" alt="Template patterns drawn on paper">
+        <figcaption><b>2 · Draw template patterns</b>Lay the parts out on paper.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-03-glue-cut.jpg" alt="A paper template being glued to foam core before cutting">
+        <figcaption><b>3 · Glue template, cut</b>Stick the template on foam core and cut.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-04-trim-rabbet.jpg" alt="Trimming a rabbet joint so the back of the board is hidden">
+        <figcaption><b>4 · Trim the rabbet</b>Hide the back of the board.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-05-rabbet-vslot.jpg" alt="Rabbet joints and a V-slot curved surface">
+        <figcaption><b>5 · Rabbet + V-slot</b>Join the edges and form the curve.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-06-hot-glue.jpg" alt="Attaching foam core with hot glue on a rabbet cut">
+        <figcaption><b>6 · Hot glue</b>Attach the pieces along the rabbet cut.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">22</span></footer>
+</section>
+
+<!-- ===== 23 · KIOSK BUILD: STEPS 7-12 ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Kiosk build</p>
+    <h2>Steps 7–12: <span class="accent">curves, supports, finish</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="gallery g3">
+      <figure class="tile">
+        <img src="shots/kiosk-step-07-curved-surface.jpg" alt="Attaching the curved surface with hot glue">
+        <figcaption><b>7 · Attach the curved surface</b>Hot glue along the seam.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-08-curved-corners.jpg" alt="Curved corners formed with three V-notches">
+        <figcaption><b>8 · Curved corners</b>Three V-notches per corner.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-09-internal-supports.jpg" alt="Internal supports added inside the model for strength">
+        <figcaption><b>9 · Internal supports</b>Add strength where it counts.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-10-curved-top.jpg" alt="Fitting the curved top with a rabbet joint">
+        <figcaption><b>10 · Curved top</b>Rabbet joint along the roof.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-11-back.jpg" alt="The back panel attached with hot glue">
+        <figcaption><b>11 · Attach the back</b>Hot glue the back panel.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/kiosk-step-12-decals.jpg" alt="Decals and a panel finishing the front of the kiosk">
+        <figcaption><b>12 · Decals + panel</b>Finish the front with graphics.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">23</span></footer>
+</section>
+
+<!-- ===== 24 · WHY CLAY ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Hand making</p>
+    <h2>Clay: <span class="accent">organic forms</span></h2>
+    <p class="s-sub">A naturally expressive, sculptural material — and the first step toward a 3D-printed part.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.9fr 1.1fr; grid-template-rows: 1fr;">
+      <div class="phase">
+        <p class="plabel">Why use clay?</p>
+        <h3>Sculpt, then scan</h3>
+        <ul>
+          <li>A naturally expressive and sculptural medium</li>
+          <li>Easily manipulated by hand and simple tools</li>
+          <li>The model-making material of choice for complex, organic forms</li>
+          <li>Clay models can be scanned and refined in software for 3D printing</li>
+        </ul>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 3mm; min-height: 0;">
+        <figure class="tile" style="margin: 0;"><img src="shots/modeling-clay.jpg" alt="A box of modeling clay"><figcaption>Modeling clay</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/helmet-product.jpg" alt="A finished bike helmet product"><figcaption>Example product</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/sculpted-helmet.jpg" alt="A sculpted helmet model on a mannequin head"><figcaption>Sculpted model</figcaption></figure>
+        <figure class="tile" style="margin: 0;"><img src="shots/sla-3d-printer.jpg" alt="A resin 3D printer printing a part"><figcaption>Refined and printed</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">24</span></footer>
+</section>
+
+<!-- ===== 25 · FROM CLAY TO 3D MODEL ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">From clay to 3D model</p>
+    <h2>Five steps <span class="accent">from sketch to scan</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="gallery" style="grid-template-columns: repeat(5, minmax(0, 1fr));">
+      <figure class="tile">
+        <img src="shots/helmet-sketches.jpg" alt="Pencil sketches of a helmet from several angles" style="aspect-ratio: 1 / 1;">
+        <figcaption><b>1 · Sketch model</b>Draw the form first.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/apply-clay-to-fixture.jpg" alt="Hands applying clay to a mannequin head fixture" style="aspect-ratio: 1 / 1;">
+        <figcaption><b>2 · Apply clay</b>Build up clay on the fixture.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/sculpting-clay.jpg" alt="Hands sculpting the clay model with small tools" style="aspect-ratio: 1 / 1;">
+        <figcaption><b>3 · Sculpt</b>Shape and smooth the model.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/handheld-3d-scanner.jpg" alt="A person scanning the model with a handheld 3D scanner" style="aspect-ratio: 1 / 1;">
+        <figcaption><b>4 · Scan</b>Digitize the model.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/scanned-mesh.jpg" alt="A wireframe mesh of the scanned model in software" style="aspect-ratio: 1 / 1;">
+        <figcaption><b>5 · Post-process</b>Clean up the digital model.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">25</span></footer>
+</section>
+
+<!-- ===== 26 · 3D SCANNING WITH YOUR PHONE ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">3D scanning with your phone</p>
+    <h2>Install Polycam, <span class="accent">scan your model</span></h2>
+    <p class="s-sub">Use your phone's camera to scan and digitize your clay model.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g3" style="margin-bottom: 4.5mm;">
+      <figure class="tile">
+        <img src="shots/polycam-scan.jpg" alt="A phone screen showing a 3D scan in the Polycam app">
+        <figcaption><b>Scan</b>Walk around your model and capture it.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/polycam-process.jpg" alt="The Polycam process screen with tools for the captured scan">
+        <figcaption><b>Process</b>Let the app build the 3D model.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/polycam-model.jpg" alt="A 3D model of an elephant being rotated in the Polycam app">
+        <figcaption><b>Rotate</b>Turn the model to prepare it for export.</figcaption>
+      </figure>
+    </div>
+    <div class="assign">
+      <span class="alabel">The workflow</span>
+      <p>Install the <b>Polycam</b> app → scan your model → rotate and crop it → export. The next slide converts it to STL.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">26</span></footer>
+</section>
+
+<!-- ===== 27 · CROP & CONVERT TO STL ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Export</p>
+    <h2>Crop, export, <span class="accent">convert to STL</span></h2>
+    <p class="s-sub">Clean up the scan, then convert it so it can be 3D printed.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g3" style="margin-bottom: 4.5mm;">
+      <figure class="tile">
+        <img src="shots/polycam-crop.jpg" alt="The Polycam crop tool selecting just the model in the scan">
+        <figcaption><b>Crop</b>Remove the desk and background around the model.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/blender-export.jpg" alt="A file export menu in 3D software">
+        <figcaption><b>Export</b>Save the model as a file you can convert.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/gltf-to-stl-converter.jpg" alt="A website that converts GLTF files to STL">
+        <figcaption><b>Convert</b>Turn it into an STL for 3D printing.</figcaption>
+      </figure>
+    </div>
+    <div class="assign">
+      <span class="alabel">Convert</span>
+      <p>Use <span class="mono">convert3d.org/gltf-to-stl</span> to convert your exported model to STL.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">27</span></footer>
+</section>
+
+<!-- ===== 28 · CLOSING ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="closing">
+      <div>
+        <p class="s-kicker">Before you go</p>
+        <h2>Questions?</h2>
+        <p class="s-sub" style="margin-top: 4mm;">Then it's time to sketch. Next class: present your initial prototype at Nolop and start turning your sketches into 2D designs.</p>
+        <p style="margin-top: 5mm; color: var(--muted); font-size: 10.5pt;"><b style="color: var(--ink);">Team assignment:</b> initial prototype presentation — due Sept 24, 5 minutes per team at Nolop.</p>
+      </div>
+      <div class="contact-card">
+        <p class="plabel">Where to find us</p>
+        <p><b>Office hours</b><br><span class="mono">go.tufts.edu/meet_tvdv</span></p>
+        <p><b>Email</b><br><span class="mono">thomas.van_de_velde@tufts.edu</span></p>
+        <p><b>Course materials</b><br>tvande08.github.io/ENT-164</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 2 · Hand Making &amp; Robot Challenge</span><span class="fnum">28</span></footer>
+</section>
+
+</body>
+</html>

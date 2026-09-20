@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 Class 9 · Final Project Kickoff — Slides</title>
+<meta name="theme-color" content="#f7f9fc">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --blue-deep: #1F6FD0;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --ink: #0d1526;
+    --text: #17203a;
+    --muted: #5f6b7a;
+    --muted-2: #3f4a5a;
+    --line: #e6eaf1;
+    --line-strong: #d5dce7;
+    --paper: #ffffff;
+    --paper-2: #f7f9fc;
+    --blue-tint: #f2f7fd;
+    --blue-tint-2: #eaf3fd;
+    --radius: 4mm;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: 297mm 167mm; margin: 0; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #e8ecf2;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    position: relative; overflow: hidden;
+    width: 297mm; height: 167mm;
+    padding: 13mm 16mm 15mm;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide > * { position: relative; z-index: 1; }
+  .slide-logo {
+    position: absolute; top: 12.4mm; right: 16mm; z-index: 2;
+    height: 5.2mm; width: auto;
+  }
+  .cover .slide-logo { top: 18mm; height: 7mm; }
+
+  .s-head { margin-bottom: 6.5mm; }
+  .s-kicker {
+    font-size: 8.5pt; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--blue-deep); font-weight: 700; margin: 0 0 2.4mm;
+  }
+  h2 { font-size: 24pt; line-height: 1.12; letter-spacing: -0.6px; font-weight: 700; margin: 0; color: var(--ink); }
+  .s-sub { color: var(--muted); font-size: 12pt; margin: 2.6mm 0 0; max-width: 210mm; }
+  h2 .accent { color: var(--blue-deep); }
+  .s-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .s-foot {
+    position: absolute; left: 16mm; right: 16mm; bottom: 5.5mm; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 7.5pt; color: #8a93a3; letter-spacing: 0.3px;
+    border-top: 1px solid var(--line); padding-top: 2.2mm;
+  }
+  .s-foot .fnum { color: var(--ink); font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 6mm 6mm 5.5mm;
+    box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    display: flex; flex-direction: column;
+  }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);
+    align-self: flex-start; margin-bottom: 3.4mm;
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 2mm; padding: 0.8mm 2.4mm;
+  }
+  .card h3 { margin: 0 0 1.8mm; font-size: 13.5pt; letter-spacing: -0.2px; color: var(--ink); }
+  .card p { margin: 0; color: var(--muted); font-size: 10.5pt; line-height: 1.45; }
+  .card.tight p { font-size: 10pt; }
+  .card .ico {
+    width: 9mm; height: 9mm; border-radius: 2.6mm; margin-bottom: 3.4mm;
+    background: var(--blue-tint-2); border: 1px solid #cfe1f7;
+    display: grid; place-items: center;
+  }
+  .card .ico svg { width: 4.6mm; height: 4.6mm; }
+  .card.accent { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- cover ---------- */
+  .cover { padding: 15mm 16mm 12mm; }
+  .cover .top { display: flex; align-items: center; gap: 4mm; margin-bottom: 7mm; }
+  .cover .mark {
+    width: 13mm; height: 13mm; border-radius: 3.6mm; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 2mm 6mm rgba(62, 142, 222, 0.28);
+  }
+  .cover .mark svg { width: 6.6mm; height: 6.6mm; }
+  .cover .course { font-weight: 700; font-size: 13pt; letter-spacing: -0.2px; color: var(--ink); }
+  .cover .course small { color: var(--muted); font-weight: 500; font-size: 10pt; }
+  .cover .cols { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr); gap: 10mm; flex: 1; min-height: 0; }
+  .cover .lede { display: flex; flex-direction: column; justify-content: center; }
+  .cover h1 { font-size: 40pt; line-height: 1.04; letter-spacing: -1.6px; margin: 0 0 5mm; font-weight: 700; color: var(--ink); }
+  .cover h1 .accent { color: var(--blue-deep); }
+  .cover .sub { color: var(--muted-2); font-size: 13pt; max-width: 150mm; margin: 0 0 6mm; }
+  .cover .pills { display: flex; flex-wrap: wrap; gap: 2.6mm; }
+  .pill {
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 1.6mm 4.4mm; font-size: 9.5pt; color: #46505f;
+    background: var(--paper);
+  }
+  .cover .shot {
+    border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong);
+    box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);
+    position: relative; min-height: 0;
+  }
+  .cover .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover .team {
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    border-top: 1px solid var(--line); margin-top: 7mm; padding-top: 4mm;
+    font-size: 9.5pt; color: var(--muted-2);
+  }
+  .cover .team b { color: var(--ink); font-weight: 600; }
+  .cover .team .tufts { color: var(--muted); }
+
+  /* ---------- discussion ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; flex: 1; }
+  .prompt {
+    position: relative;
+    border: 1px solid var(--line); border-radius: 5mm;
+    background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    padding: 8mm 7mm;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .prompt .q { font-size: 16pt; line-height: 1.3; letter-spacing: -0.3px; font-weight: 600; margin: 0; color: var(--ink); }
+  .prompt .qn { position: absolute; top: 6mm; left: 7mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--blue-deep); font-size: 10pt; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- gallery / mosaic ---------- */
+  .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 2.6mm; flex: 1; min-height: 0; }
+  .tile { position: relative; border-radius: 3mm; overflow: hidden; border: 1px solid var(--line); background: var(--paper); min-height: 0; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 1.8mm 3mm; font-size: 7.5pt; color: var(--muted-2);
+    background: rgba(255, 255, 255, 0.93); border-top: 1px solid var(--line);
+  }
+
+  .gallery { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .gallery.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gallery.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery .tile { display: flex; flex-direction: column; background: var(--paper); }
+  .gallery .tile img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+  .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
+  .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
+
+  /* ---------- structure ---------- */
+  .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
+  .phase.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .phase .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 1mm; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9.5pt; color: var(--muted); margin: 0 0 4mm; }
+  .phase h3 { margin: 0 0 3mm; font-size: 14pt; color: var(--ink); }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted); font-size: 10.5pt; padding-left: 5mm; position: relative; margin-bottom: 2.2mm; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--blue-deep); }
+  .assign { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); margin-top: 4mm; padding: 4.6mm 6mm; display: flex; align-items: center; gap: 6mm; }
+  .assign .alabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); white-space: nowrap; }
+  .assign p { margin: 0; color: var(--muted); font-size: 10.5pt; }
+  .assign p b { color: var(--ink); }
+
+  /* ---------- outline ---------- */
+  .outline { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5mm; flex: 1; min-height: 0; align-items: center; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5.5mm 6mm; display: flex; flex-direction: column; min-height: 0; }
+  .panel .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 3.6mm; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2.2mm; align-content: flex-start; }
+  .chip {
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 999px; padding: 1.4mm 3.6mm; font-size: 10pt; color: var(--muted-2);
+  }
+  .journey { display: flex; align-items: stretch; gap: 2.4mm; margin-top: 4mm; }
+  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.6mm 3mm; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .step b { display: block; font-size: 10.5pt; color: var(--ink); }
+  .step span { display: block; color: var(--muted); font-size: 8.5pt; margin-top: 0.8mm; }
+  .step.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .arrow { display: grid; place-items: center; color: var(--blue-deep); font-size: 14pt; }
+
+  /* ---------- rubrics ---------- */
+  .rubric { display: flex; flex-direction: column; gap: 5mm; flex: 1; justify-content: center; }
+  .rub-row { display: grid; grid-template-columns: 62mm minmax(0, 1fr) 16mm; align-items: center; gap: 6mm; }
+  .rub-label { color: var(--muted-2); font-size: 12pt; }
+  .rub-label small { display: block; color: var(--muted); font-size: 9pt; }
+  .bar { height: 3.4mm; border-radius: 999px; background: #edf1f6; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .rub-val { text-align: right; font-weight: 700; font-size: 16pt; color: var(--ink); }
+  .footnote { color: var(--muted); font-size: 9.5pt; margin-top: 3mm; }
+
+  /* ---------- reflections ---------- */
+  .refl { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 5mm; flex: 1; min-height: 0; }
+  .cycle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5mm 4mm; position: relative; }
+  .cyc .cn { position: absolute; top: 3.6mm; right: 4mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9pt; color: var(--blue-deep); font-weight: 700; }
+  .cyc h3 { margin: 0 0 1.6mm; font-size: 12.5pt; color: var(--ink); }
+  .cyc p { margin: 0; color: var(--muted); font-size: 9.5pt; }
+  .qs { list-style: none; margin: 0; padding: 0; }
+  .qs li { position: relative; padding-left: 7mm; margin-bottom: 3.4mm; color: var(--muted-2); font-size: 11pt; }
+  .qs li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--blue-deep); font-weight: 700; }
+  .qs li:last-child { margin-bottom: 0; }
+
+  /* ---------- kit / makerspace ---------- */
+  .kit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4mm; flex: 1; align-content: center; }
+  .kit .card { align-items: flex-start; }
+  .bigline { text-align: center; margin: auto 0; }
+  .bigline .kicker-sm { font-size: 9pt; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 4mm; }
+  .bigline h2 { font-size: 34pt; letter-spacing: -1.2px; margin: 0 0 5mm; color: var(--ink); }
+  .bigline p { color: var(--muted); font-size: 14pt; max-width: 190mm; margin: 0 auto 6mm; }
+  .bigline .url { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12pt; color: var(--blue-deep); }
+
+  /* ---------- closing ---------- */
+  .closing { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6mm; flex: 1; align-items: center; }
+  .closing h2 { font-size: 36pt; }
+  .contact-card { border: 1px solid var(--line-strong); border-radius: 5mm; background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 7mm; }
+  .contact-card .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 4mm; }
+  .contact-card p { margin: 0 0 3.4mm; color: var(--muted); font-size: 11pt; }
+  .contact-card p:last-child { margin-bottom: 0; }
+  .contact-card b { color: var(--ink); }
+
+  @media screen {
+    body { padding: 10mm 0; }
+    .slide { margin: 0 auto 10mm; box-shadow: 0 12px 40px rgba(13, 21, 38, 0.16); border-radius: 2mm; }
+  }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .slide { margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 01 · COVER ============ -->
+<section class="slide cover">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="top">
+    <span class="mark" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+        <path d="m18 15 4-4" />
+        <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+      </svg>
+    </span>
+    <div class="course">ENT-164 <small>· Intro to Making</small></div>
+  </div>
+  <div class="cols">
+    <div class="lede">
+      <p class="s-kicker">Class 9 · Week 9 · Fall 2026</p>
+      <h1>Final Project<br><span class="accent">Kickoff</span></h1>
+      <p class="sub">The Robo Challenge is in the books. Today we celebrate what you built, then launch the project you'll present on Demo Day — brainstorm ideas, pitch a concept, and get feedback from your peers.</p>
+      <div class="pills">
+        <span class="pill">Thu, Nov 5</span>
+        <span class="pill">JCC 301 / Nolop</span>
+        <span class="pill">Concept generation</span>
+        <span class="pill">Note-and-Vote</span>
+      </div>
+    </div>
+    <figure class="shot">
+      <img src="shots/final-project-box.jpg" alt="A black project box with dividers and a clear lid">
+    </figure>
+  </div>
+  <div class="team">
+    <span><b>Thomas Van de Velde</b> · Instructor &nbsp; · &nbsp; <b>Alexander Beattie</b> · TA &nbsp; · &nbsp; <b>Patrice Pinardo</b> · TA</span>
+    <span class="tufts">Tufts University · Gordon Institute</span>
+  </div>
+</section>
+
+<!-- ============ 02 · ROBO CHALLENGE AWARDS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Recap</p>
+    <h2>Robo Challenge <span class="accent">awards</span></h2>
+    <p class="s-sub">You designed, built, and raced working robots — here's how it ended.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.95fr 1.05fr; grid-template-rows: 1fr; gap: 8mm;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center;">
+        <article class="card accent">
+          <h3>The race</h3>
+          <p>Teams moved as many balls as possible between the two lines, with robots they built from scratch.</p>
+        </article>
+        <article class="card">
+          <h3>The results</h3>
+          <p>Scores are in, and the awards go out to the teams behind this semester's robots.</p>
+        </article>
+        <article class="card">
+          <h3>Carry it forward</h3>
+          <p>Reflect on what worked, what didn't, and what you'd do differently — then bring that into the final project.</p>
+        </article>
+      </div>
+      <div style="display: flex; min-height: 0; justify-content: center;">
+        <img src="shots/robo-challenge-scores.jpg" alt="Team scores tallied on a whiteboard after the Robo Challenge" style="height: 100%; width: auto; max-width: 100%; border-radius: 3mm; border: 1px solid var(--line);">
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">02</span></footer>
+</section>
+
+<!-- ============ 03 · MID-TERM REVIEWS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Due tomorrow</p>
+    <h2>Mid-term <span class="accent">self &amp; peer reviews</span></h2>
+    <p class="s-sub">Last call — no later than tomorrow at noon, Friday, Nov 6.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Midterm self review</h3>
+        <p>Reflect on your own contributions to the Robo Challenge: what you built, how you worked with your team, and what you would do differently.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Midterm peer reviews</h3>
+        <p>Give every teammate honest, specific feedback on the first half of the semester.</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Deadline</span>
+      <p><b>Tomorrow, Friday, Nov 6 at noon.</b> Links and instructions are on Canvas — don't leave it to the last minute.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">03</span></footer>
+</section>
+
+<!-- ============ 04 · ROADMAP ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Roadmap</p>
+    <h2>Five weeks <span class="accent">to Demo Day</span></h2>
+    <p class="s-sub">What happens between today and the final showcase.</p>
+  </header>
+  <div class="s-body" style="justify-content: center;">
+    <div class="journey" style="margin-top: 0;">
+      <div class="step hot"><b>WK9 · Kickoff</b><span>Nov 5 · Brainstorm &amp; Note-and-Vote</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>WK10 · Concept</b><span>Nov 12 · Sketch, mockup &amp; 5-minute pitch</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>WK11 · API integration</b><span>Nov 19 · Start making</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>WK12 · Make time</b><span>Dec 3 · Integrate &amp; test runs at Nolop</span></div>
+      <div class="arrow">→</div>
+      <div class="step hot"><b>WK13 · Demo Day</b><span>Dec 10 · Present the final product</span></div>
+    </div>
+    <div class="assign" style="margin-top: 6mm;">
+      <span class="alabel">Deliverable</span>
+      <p><b>Concept presentation</b> — 5 minutes per team: problem &amp; opportunity, proposed product concept with sketch and mockup, and next steps.</p>
+    </div>
+    <p class="footnote">No class Thu, Nov 26 (Thanksgiving). Build sessions happen at Nolop.</p>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ============ 05 · DEMO DAY ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Save the date</p>
+    <h2>Demo Day: <span class="accent">show what you built</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1fr 1.05fr; grid-template-rows: 1fr; gap: 9mm;">
+      <div style="display: flex; flex-direction: column; justify-content: center;">
+        <p style="color: var(--muted); font-size: 13pt; margin: 0 0 5mm;">Final presentations and live product demos, built by students with no prior experience. Open to the public — no registration required.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 2.6mm;">
+          <span class="pill">Thu, Dec 10</span>
+          <span class="pill">11:30 am</span>
+          <span class="pill">JCC 160</span>
+        </div>
+        <p class="footnote">Week 13 · the finish line for your final project.</p>
+      </div>
+      <div style="display: flex; min-height: 0; justify-content: center; align-items: center;">
+        <img src="shots/demo-day-poster.jpg" alt="Demo Day poster: final presentations and live product demos, open to the public" style="max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 3mm; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ============ 06 · PROJECT REQUIREMENTS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Final project requirements</p>
+    <h2>What your build <span class="accent">must include</span></h2>
+    <p class="s-sub">Your concept proposal has to show how you'll hit every one of these.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g4">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Laser cutting</h3>
+        <p>At least one part designed as a 2D cut — and the proposal says where it fits in the build.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>3D printing</h3>
+        <p>Printed parts where they make sense: mounts, brackets, and custom shapes.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Microcontroller + I/O</h3>
+        <p>A microcontroller with sensors and actuators, so the product senses the world and responds.</p>
+      </article>
+      <article class="card">
+        <span class="num">04</span>
+        <h3>Smart API integration</h3>
+        <p>AI or another external service wired into the device — a core maker skill.</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">The brief</span>
+      <p>Solves a unique problem — and fits in the project box: <b>40 × 25 × 25 cm</b>. Your proposal should clearly indicate which parts use each method and how they contribute to the design.</p>
+    </div>
+    <p class="footnote">** Cannot be an automatic plant-watering system :)</p>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ============ 07 · CONCEPT PRESENTATION ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Next class · Thu, Nov 12</p>
+    <h2>The 5-minute <span class="accent">concept pitch</span></h2>
+    <p class="s-sub">Every team presents its final project concept to the class.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Problem &amp; opportunity</h3>
+        <p>A clear articulation of the problem and why it matters.</p>
+      </article>
+      <article class="card accent">
+        <span class="num">02</span>
+        <h3>Proposed product concept</h3>
+        <p>A walkthrough of the concept and how it meets the final product requirements — bring sketches and a foam-core or other mockup.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Next steps</h3>
+        <p>What you will build and test in the second half of the semester.</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Working docs</span>
+      <p>Team folders for working docs and presentations: <span class="mono" style="color: var(--blue-deep);">go.tufts.edu/teams</span></p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ============ 08 · NOTE-AND-VOTE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">How we'll decide</p>
+    <h2>Note-and-Vote: <span class="accent">silent ideas, fast decision</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.78fr 1.22fr; gap: 8mm;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center;">
+        <article class="card">
+          <span class="num">01 · NOTE</span>
+          <h3>Ideas first, alone</h3>
+          <p>Everyone writes their own ideas quietly, one per note, so the loudest voice doesn't set the agenda.</p>
+        </article>
+        <article class="card">
+          <span class="num">02 · VOTE</span>
+          <h3>Vote with dots</h3>
+          <p>Post the notes, then vote in silence with round stickers. The heatmap shows where the team's energy really is.</p>
+        </article>
+        <p class="footnote">Voice for everyone, fast decision — then the team discusses the top ideas together.</p>
+      </div>
+      <div style="display: flex; min-height: 0; justify-content: center; align-items: center;">
+        <img src="shots/note-and-vote.jpg" alt="Illustration of the Note-and-Vote method: individuals write one idea per note, then the group votes with dot stickers" style="width: 100%; height: auto; border-radius: 3mm; border: 1px solid var(--line);">
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ============ 09 · BRAINSTORM AGENDA ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">In class today</p>
+    <h2>From sticky notes <span class="accent">to a team concept</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="phase">
+        <p class="plabel">Step 1</p>
+        <p class="ptime">Individually · 10 min · in silence</p>
+        <h3>Write ideas</h3>
+        <ul>
+          <li>Write 3 unique ideas</li>
+          <li>One idea per sticky note</li>
+          <li>Each idea must meet the criteria</li>
+        </ul>
+      </article>
+      <article class="phase hot">
+        <p class="plabel">Step 2</p>
+        <p class="ptime">As a team · 5 min · in silence</p>
+        <h3>Post &amp; vote</h3>
+        <ul>
+          <li>Post every idea on the team wall</li>
+          <li>Vote for your top 3 with round stickers — you can vote for your own</li>
+        </ul>
+      </article>
+      <article class="phase">
+        <p class="plabel">Step 3</p>
+        <p class="ptime">As a team · 20 min</p>
+        <h3>Discuss &amp; decide</h3>
+        <ul>
+          <li>Count the votes</li>
+          <li>Discuss the top 3 ideas</li>
+          <li>Decide what you'll pursue</li>
+        </ul>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Then</span>
+      <p><b>Go directly to Nolop</b> and start the concept presentation — sketch, mockup, and slides.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">09</span></footer>
+</section>
+
+<!-- ============ 10 · NEW PROJECT BOXES ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">New build</p>
+    <h2>New project <span class="accent">boxes</span></h2>
+    <p class="s-sub">Your team's final project starts with a fresh box of parts.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1.15fr 0.85fr; grid-template-rows: 1fr; gap: 8mm;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center;">
+        <article class="card accent">
+          <h3>Everything in one box</h3>
+          <p>Pick up your team's project box — the parts for the final build live here.</p>
+        </article>
+        <article class="card">
+          <h3>It has to fit back in</h3>
+          <p>The finished product must fit inside the box: <b>40 × 25 × 25 cm</b>. Plan for the size from day one.</p>
+        </article>
+      </div>
+      <div style="display: flex; min-height: 0; justify-content: center;">
+        <img src="shots/final-project-box.jpg" alt="A black project box with a clear lid and dividers" style="height: 100%; width: auto; max-width: 100%; border-radius: 3mm; border: 1px solid var(--line);">
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">10</span></footer>
+</section>
+
+<!-- ============ 11 · CLOSING ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="closing">
+      <div>
+        <p class="s-kicker">Before you go</p>
+        <h2>Questions?</h2>
+        <p class="s-sub" style="margin-top: 4mm;">Personal reflection due by the end of class — <span class="mono" style="font-size: 10.5pt; color: var(--blue-deep);">go.tufts.edu/reflect</span>. Next class: concept presentations, Thu, Nov 12.</p>
+      </div>
+      <div class="contact-card">
+        <p class="plabel">Where to find us</p>
+        <p><b>Office hours</b><br><span class="mono">go.tufts.edu/meet_tvdv</span></p>
+        <p><b>Email</b><br><span class="mono">thomas.van_de_velde@tufts.edu</span></p>
+        <p><b>Team folders</b><br><span class="mono">go.tufts.edu/teams</span></p>
+        <p><b>Course materials</b><br>tvande08.github.io/ENT-164</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · Final Project Kickoff</span><span class="fnum">11</span></footer>
+</section>
+
+</body>
+</html>

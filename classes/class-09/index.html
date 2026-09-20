@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 · Class 9 — Final Project Kickoff</title>
+<meta name="description" content="Class 9 of ENT-164 Intro to Making: Robo Challenge awards, mid-term reviews, the five-week roadmap to Demo Day, final project requirements, and the Note-and-Vote brainstorm.">
+<meta name="theme-color" content="#0a1020">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ENT-164 · Class 9 — Final Project Kickoff">
+<meta property="og:description" content="Launch the final project: brainstorm ideas, pitch a concept, and get peer feedback before Demo Day.">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --accent: #6FB3EC;
+    --ink: #0a1020;
+    --ink-2: #101a2b;
+    --ink-3: #241a13;
+    --text: #f2f2f5;
+    --muted: #9aa0b4;
+    --muted-2: #c3c7d6;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-strong: rgba(255, 255, 255, 0.20);
+    --card: rgba(255, 255, 255, 0.045);
+    --check: #7BC89A;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 16.5px;
+    line-height: 1.62;
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 55%, var(--ink-3) 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgba(62, 142, 222, 0.42); color: #fff; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10, 16, 32, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-weight: 700; letter-spacing: -0.2px; }
+  .brand:hover { text-decoration: none; }
+  .brand .mark-sm {
+    width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 4px 14px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .brand .mark-sm svg { width: 16px; height: 16px; }
+  .brand small { color: var(--muted); font-weight: 500; font-size: 13.5px; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { color: var(--muted-2); font-size: 14.5px; font-weight: 500; transition: color 0.18s ease; }
+  .nav-links a:hover { color: #fff; text-decoration: none; }
+  .nav-links a.nav-cta {
+    color: #fff; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 7px 16px; background: rgba(255, 255, 255, 0.05); transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .nav-links a.nav-cta:hover { border-color: rgba(111, 179, 236, 0.65); background: rgba(62, 142, 222, 0.16); }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 84px 0 30px; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(640px 320px at 16% 0%, rgba(62, 142, 222, 0.28), transparent 70%),
+      radial-gradient(560px 300px at 88% 6%, rgba(99, 73, 58, 0.32), transparent 72%);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; }
+  .kicker {
+    font-size: 12.5px; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 16px;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.6vw, 3rem);
+    line-height: 1.12; letter-spacing: -1px; font-weight: 700;
+    margin: 0 0 18px;
+  }
+  h1 .accent {
+    background: linear-gradient(100deg, #6FB3EC 10%, #9ecdf7 50%, #6FB3EC 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lead { color: var(--muted-2); font-size: 1.08rem; max-width: 700px; margin: 0 0 24px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .pill {
+    border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px;
+    padding: 7px 17px; font-size: 13.5px; color: #dfe2ee;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 26px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.1px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn-primary {
+    color: #fff; background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    box-shadow: 0 10px 30px rgba(62, 142, 222, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(62, 142, 222, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28); }
+  .btn-ghost { color: var(--text); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.05); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(111, 179, 236, 0.6); background: rgba(62, 142, 222, 0.14); }
+  .hero .note { margin: 20px 0 0; color: var(--muted); font-size: 13.5px; }
+
+  /* ---------- layout ---------- */
+  .class-layout { display: grid; grid-template-columns: 208px minmax(0, 1fr); gap: 44px; align-items: start; padding-top: 56px; }
+  .toc {
+    position: sticky; top: 88px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 18px 16px;
+  }
+  .toc h2 { font-size: 11.5px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--muted); margin: 0 0 10px; padding-left: 10px; font-weight: 700; }
+  .toc a { display: block; color: var(--muted-2); font-size: 14px; padding: 6px 10px; border-radius: 8px; transition: background 0.15s ease, color 0.15s ease; }
+  .toc a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); text-decoration: none; }
+  .section-block { padding-bottom: 62px; scroll-margin-top: 90px; }
+  .section-block > h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); letter-spacing: -0.5px; margin: 0 0 8px; }
+  .section-block .lede { color: var(--muted); margin: 0 0 24px; max-width: 74ch; }
+  .prose p { color: var(--muted-2); margin: 0 0 16px; max-width: 74ch; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 16px; }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 24px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .card:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; font-weight: 700; color: var(--accent);
+    display: inline-block; margin-bottom: 14px;
+    border: 1px solid rgba(111, 179, 236, 0.4); background: rgba(62, 142, 222, 0.12);
+    border-radius: 8px; padding: 3px 9px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.06rem; letter-spacing: -0.2px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+  .card li { margin-bottom: 6px; }
+  .card.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+
+  .callout {
+    border-left: 3px solid var(--tufts-blue);
+    background: rgba(62, 142, 222, 0.10);
+    border-radius: 0 12px 12px 0; padding: 18px 22px;
+    color: var(--muted-2); font-size: 14.5px; margin: 0 0 16px; max-width: 74ch;
+  }
+  .callout:last-child { margin-bottom: 0; }
+  .callout b { color: #fff; }
+  .callout.warm { border-color: #B07A5A; background: rgba(99, 73, 58, 0.22); }
+
+  /* ---------- discussion prompts ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .prompt {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 26px 26px 30px;
+  }
+  .prompt .qn { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt p { margin: 12px 0 0; font-size: 1.12rem; line-height: 1.35; letter-spacing: -0.2px; font-weight: 600; }
+  .prompt.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+
+  /* ---------- galleries ---------- */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .gallery figure.shot { display: flex; flex-direction: column; }
+  .gallery figure.shot img { flex: 1; min-height: 190px; }
+  figure.shot { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+  figure.shot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  figure.shot.tall img { aspect-ratio: 4 / 5; }
+  figure.shot figcaption { padding: 14px 18px 16px; font-size: 13.5px; color: var(--muted); }
+  figure.shot figcaption b { display: block; color: #fff; font-size: 14.5px; margin-bottom: 2px; }
+  .gallery .span-2 { grid-column: span 2; }
+  @media (max-width: 620px) { .gallery .span-2 { grid-column: auto; } }
+
+  .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .story-grid figure.shot img { aspect-ratio: 1 / 1; }
+
+  /* ---------- instructor ---------- */
+  .instructor {
+    display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 26px; align-items: start;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--card);
+    padding: 28px 30px; margin-bottom: 16px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .instructor:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .instructor .avatar {
+    width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+  .instructor h3 { margin: 0 0 2px; font-size: 1.24rem; letter-spacing: -0.3px; }
+  .instructor .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .instructor .bio { color: var(--muted-2); font-size: 15px; margin: 0 0 14px; max-width: 70ch; }
+  .instructor .contact { color: var(--muted); font-size: 14px; margin: 0; }
+  .people { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 6px; }
+  .person { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 22px 24px; }
+  .person .avatar-sm {
+    width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  }
+  .person h3 { margin: 0 0 2px; font-size: 1.02rem; }
+  .person .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .person p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  /* ---------- structure ---------- */
+  .phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 24px; }
+  .phase.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+  .phase .plabel { font-size: 12.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin: 0 0 4px; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+  .phase h3 { margin: 0 0 12px; font-size: 1.06rem; }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted-2); font-size: 14.5px; padding-left: 22px; position: relative; margin-bottom: 8px; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+
+  /* ---------- outline ---------- */
+  .outline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 24px; }
+  .panel h3 { margin: 0 0 14px; font-size: 1.02rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    border: 1px solid rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.12);
+    border-radius: 999px; padding: 5px 15px; font-size: 13.5px; color: var(--muted-2);
+  }
+  .journey { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .step { flex: 1 1 150px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, 0.03); padding: 14px 16px; text-align: center; }
+  .step b { display: block; font-size: 14.5px; }
+  .step span { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .step.accent { background: rgba(62, 142, 222, 0.14); border-color: rgba(111, 179, 236, 0.4); }
+  .arrow { color: var(--accent); font-size: 18px; }
+  @media (max-width: 700px) { .arrow { display: none; } }
+
+  /* ---------- grading ---------- */
+  .grade-list { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 13px; max-width: 74ch; }
+  .grade-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px 52px; align-items: center; gap: 16px; }
+  .grade-label { color: var(--muted-2); font-size: 14.5px; }
+  .grade-label small { display: block; color: var(--muted); font-size: 13px; }
+  .grade-bar { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+  .grade-bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .grade-weight { text-align: right; font-weight: 700; font-size: 15px; }
+
+  /* ---------- reflections ---------- */
+  .cycle { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin: 8px 0 16px; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 22px; position: relative; }
+  .cyc .cn { position: absolute; top: 18px; right: 20px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--accent); font-weight: 700; }
+  .cyc h3 { margin: 0 0 6px; font-size: 1.02rem; }
+  .cyc p { margin: 0; color: var(--muted); font-size: 14px; }
+  .questions { list-style: none; margin: 0; padding: 0; max-width: 74ch; }
+  .questions li { position: relative; padding-left: 28px; margin-bottom: 12px; color: var(--muted-2); font-size: 15px; }
+  .questions li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
+  .questions li:last-child { margin-bottom: 0; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot-brand { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 13.5px; }
+  .foot-brand .mark-xs {
+    width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+  }
+  .foot-brand .mark-xs svg { width: 14px; height: 14px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13.5px; }
+  .foot-links a { color: var(--muted); transition: color 0.18s ease; }
+  .foot-links a:hover { color: #fff; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22, 0.7, 0.28, 1) forwards; animation-delay: var(--d, 0s); }
+
+  @media (max-width: 880px) {
+    .class-layout { grid-template-columns: 1fr; gap: 28px; padding-top: 40px; }
+    .instructor { grid-template-columns: 1fr; gap: 18px; }
+    .instructor .avatar { width: 92px; height: 92px; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px; padding: 12px; }
+    .toc h2 { width: 100%; margin-bottom: 4px; }
+    .toc a { padding: 5px 11px; background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
+    .grade-row { grid-template-columns: minmax(0, 1fr) 70px; }
+    .grade-bar { display: none; }
+    .hero { padding: 68px 0 22px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .brand small { display: none; }
+    .brand, .nav-links a.nav-cta { white-space: nowrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { animation: none; opacity: 1; }
+    .btn, .card, .instructor { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>· Intro to Making</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#roadmap">Roadmap</a>
+      <a href="#requirements">Requirements</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About</a>
+      <a class="nav-cta" href="ENT-164-Class-9-Final-Project-Kickoff.pdf">Download slides</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker reveal">Class 9 · Week 9 · Fall 2026</p>
+    <h1 class="reveal" style="--d:.06s">Final Project <span class="accent">Kickoff</span></h1>
+    <p class="lead reveal" style="--d:.12s">The Robo Challenge is in the books. Today we hand out the awards, close out mid-term reviews, and launch the final project — brainstorm ideas, vote as a team, and pitch a concept you'll build for Demo Day.</p>
+    <div class="pills reveal" style="--d:.18s">
+      <span class="pill">Thu, Nov 5</span>
+      <span class="pill">JCC 301 / Nolop</span>
+      <span class="pill">Demo Day · Thu, Dec 10</span>
+      <span class="pill">Note-and-Vote</span>
+    </div>
+    <div class="cta-row reveal" style="--d:.24s">
+      <a class="btn btn-primary" href="ENT-164-Class-9-Final-Project-Kickoff.pdf">Download the slides (PDF)</a>
+      <a class="btn btn-ghost" href="#roadmap">See the five-week roadmap &darr;</a>
+    </div>
+    <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
+  </div>
+</header>
+
+<div class="wrap class-layout">
+
+  <aside class="toc reveal" style="--d:.36s">
+    <h2>On this page</h2>
+    <a href="#awards">Robo Challenge wrap-up</a>
+    <a href="#roadmap">Five weeks to Demo Day</a>
+    <a href="#requirements">Project requirements</a>
+    <a href="#pitch">The concept pitch</a>
+    <a href="#brainstorm">Note-and-Vote</a>
+    <a href="#due">What's due</a>
+  </aside>
+
+  <main class="content">
+
+    <section class="section-block" id="awards">
+      <h2>Robo Challenge wrap-up</h2>
+      <p class="lede">The race is over — robots built from scratch, a full scoreboard, and awards. One last piece of admin before the final project begins.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>The race</h3>
+          <p>Teams moved as many balls as possible between the two lines, with robots they designed and built from scratch.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>The awards</h3>
+          <p>Scores are in, and the awards go out to the teams behind this semester's robots.</p>
+        </div>
+        <div class="card">
+          <span class="num">03</span>
+          <h3>Carry it forward</h3>
+          <p>Reflect on what worked, what didn't, and what you'd do differently — then bring that into the final project.</p>
+        </div>
+        <figure class="shot">
+          <img src="shots/robo-challenge-scores.jpg" alt="Team scores tallied on a whiteboard after the Robo Challenge">
+          <figcaption><b>The scoreboard</b>The tally after the Robo Challenge — four team colors, four scores.</figcaption>
+        </figure>
+      </div>
+      <h3 style="font-size:1.05rem;margin:26px 0 10px;">Mid-term reviews — last call</h3>
+      <div class="cards">
+        <div class="card">
+          <h3>Midterm self review</h3>
+          <p>Reflect on your own contributions to the Robo Challenge: what you built, how you worked with your team, and what you would do differently.</p>
+        </div>
+        <div class="card">
+          <h3>Midterm peer reviews</h3>
+          <p>Give every teammate honest, specific feedback on the first half of the semester.</p>
+        </div>
+      </div>
+      <div class="callout"><b>Deadline:</b> no later than tomorrow at noon — Friday, Nov 6. Links and instructions are on Canvas; don't leave it to the last minute.</div>
+    </section>
+
+    <section class="section-block" id="roadmap">
+      <h2>Five weeks to Demo Day</h2>
+      <p class="lede">Every class from here moves you closer to a finished, demoable product.</p>
+      <div class="journey">
+        <div class="step accent"><b>WK9 · Kickoff</b><span>Nov 5 · Brainstorm &amp; Note-and-Vote</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><b>WK10 · Concept</b><span>Nov 12 · Sketch, mockup &amp; 5-minute pitch</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><b>WK11 · API integration</b><span>Nov 19 · Start making</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><b>WK12 · Make time</b><span>Dec 3 · Integrate &amp; test runs at Nolop</span></div>
+        <div class="arrow">→</div>
+        <div class="step accent"><b>WK13 · Demo Day</b><span>Dec 10 · Present the final product</span></div>
+      </div>
+      <div class="cards" style="margin-top:20px;">
+        <figure class="shot">
+          <img src="shots/demo-day-poster.jpg" alt="Demo Day poster: final presentations and live product demos, open to the public">
+        </figure>
+        <div class="card accent">
+          <h3>Demo Day</h3>
+          <p>Final presentations and live product demos, built by students with no prior experience. Open to the public — no registration required.</p>
+          <p style="margin-top:10px;"><b>Thu, Dec 10 · 11:30 am · JCC 160.</b> The finish line for your final project.</p>
+        </div>
+      </div>
+      <div class="callout"><b>Note:</b> no class Thu, Nov 26 — Thanksgiving break. Build sessions happen at Nolop.</div>
+    </section>
+
+    <section class="section-block" id="requirements">
+      <h2>What your final project must include</h2>
+      <p class="lede">Your concept proposal has to show how you'll hit every one of these — and which parts of the product use each method.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Solves a unique problem</h3>
+          <p>The proposal makes the case for the problem and why it matters.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Laser cutting</h3>
+          <p>At least one part designed as a 2D cut — and the proposal says where it fits in the build.</p>
+        </div>
+        <div class="card">
+          <span class="num">03</span>
+          <h3>3D printing</h3>
+          <p>Printed parts where they make sense: mounts, brackets, and custom shapes.</p>
+        </div>
+        <div class="card">
+          <span class="num">04</span>
+          <h3>Microcontroller + sensors/actuators</h3>
+          <p>A microcontroller with sensors and actuators, so the product senses the world and responds.</p>
+        </div>
+        <div class="card">
+          <span class="num">05</span>
+          <h3>Smart API integration</h3>
+          <p>AI or another external service wired into the device — a core maker skill.</p>
+        </div>
+        <figure class="shot">
+          <img src="shots/final-project-box.jpg" alt="A black project box with a clear lid and dividers">
+          <figcaption><b>Fit in the box</b>The finished product must fit inside the project box: 40 × 25 × 25 cm.</figcaption>
+        </figure>
+      </div>
+      <div class="callout warm"><b>One more rule:</b> it cannot be an automatic plant-watering system :)</div>
+    </section>
+
+    <section class="section-block" id="pitch">
+      <h2>The concept pitch</h2>
+      <p class="lede">Next class — Thu, Nov 12 — every team delivers a 5-minute presentation covering:</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Problem &amp; opportunity</h3>
+          <p>A clear articulation of the problem and why it matters.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">02</span>
+          <h3>Proposed product concept</h3>
+          <p>A walkthrough of the concept and how it meets the final product requirements — bring sketches and a foam-core or other mockup.</p>
+        </div>
+        <div class="card">
+          <span class="num">03</span>
+          <h3>Next steps</h3>
+          <p>What you will build and test in the second half of the semester.</p>
+        </div>
+      </div>
+      <div class="callout"><b>Working docs:</b> team folders for working docs and presentations live at <a href="https://go.tufts.edu/teams" target="_blank" rel="noopener">go.tufts.edu/teams</a>.</div>
+    </section>
+
+    <section class="section-block" id="brainstorm">
+      <h2>Note-and-Vote, then build</h2>
+      <p class="lede">A silent brainstorm gets every voice into the room, then narrows fast to the ideas the team actually wants.</p>
+      <div class="phases">
+        <div class="phase">
+          <p class="plabel">Step 1 · Note</p>
+          <p class="ptime">Individually · 10 min · in silence</p>
+          <h3>Write ideas</h3>
+          <ul>
+            <li>Write 3 unique ideas</li>
+            <li>One idea per sticky note</li>
+            <li>Each idea must meet the criteria</li>
+          </ul>
+        </div>
+        <div class="phase accent">
+          <p class="plabel">Step 2 · Vote</p>
+          <p class="ptime">As a team · 5 min · in silence</p>
+          <h3>Post &amp; vote</h3>
+          <ul>
+            <li>Post every idea on the team wall</li>
+            <li>Vote for your top 3 with round stickers — you can vote for your own</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Step 3 · Discuss</p>
+          <p class="ptime">As a team · 20 min</p>
+          <h3>Discuss &amp; decide</h3>
+          <ul>
+            <li>Count the votes</li>
+            <li>Discuss the top 3 ideas</li>
+            <li>Decide what you'll pursue</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="shot" style="max-width:860px; margin:16px 0 16px;">
+        <img src="shots/note-and-vote.jpg" alt="Illustration of the Note-and-Vote method: individuals write one idea per note, then the group votes with dot stickers" style="aspect-ratio:16/9;">
+        <figcaption><b>Note-and-Vote</b>Voice for everyone, fast decision.</figcaption>
+      </figure>
+      <div class="callout"><b>Then:</b> go directly to Nolop and start the concept presentation — sketch, mockup, and slides.</div>
+    </section>
+
+    <section class="section-block" id="due">
+      <h2>What's due &amp; next class</h2>
+      <p class="lede">Close out the first half of the semester, then get ready to pitch.</p>
+      <div class="cards">
+        <div class="card accent">
+          <h3>Tomorrow · Fri, Nov 6 · noon</h3>
+          <p>Midterm self review and midterm peer reviews — last call.</p>
+        </div>
+        <div class="card">
+          <h3>By the end of class today</h3>
+          <p>Personal reflection: <a href="https://go.tufts.edu/reflect">go.tufts.edu/reflect</a>.</p>
+        </div>
+        <div class="card">
+          <h3>Next class · Thu, Nov 12</h3>
+          <p>Final project concept presentations — 5 minutes per team.</p>
+        </div>
+      </div>
+      <div class="callout"><b>Questions?</b> Office hours: <a href="https://go.tufts.edu/meet_tvdv">go.tufts.edu/meet_tvdv</a> · <a href="mailto:thomas.van_de_velde@tufts.edu">thomas.van_de_velde@tufts.edu</a></div>
+    </section>
+
+    <section class="section-block" style="padding-bottom: 0;">
+      <div class="callout warm"><b>Next up:</b> bring your team's top three ideas to life as a concept — sketch, mockup, and a 5-minute pitch. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark-xs" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 · Intro to Making — Class 9, Fall 2026</span>
+    </div>
+    <div class="foot-links">
+      <a href="../../">All class materials</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About the instructor</a>
+      <a href="slides.html">Slide deck (web)</a>
+      <a href="ENT-164-Class-9-Final-Project-Kickoff.pdf">Download the slides</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 · Class 6 — Connectivity with AI</title>
+<meta name="description" content="Class 6 of ENT-164 Intro to Making: connect an ESP32 to WiFi, register it with Tufts IT, and build a smart light controlled from a phone browser — no app development required.">
+<meta name="theme-color" content="#0a1020">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ENT-164 · Class 6 — Connectivity with AI">
+<meta property="og:description" content="Get your microcontroller online: WiFi, Tufts device registration, and a smart light you control from the browser.">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --accent: #6FB3EC;
+    --ink: #0a1020;
+    --ink-2: #101a2b;
+    --ink-3: #241a13;
+    --text: #f2f2f5;
+    --muted: #9aa0b4;
+    --muted-2: #c3c7d6;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-strong: rgba(255, 255, 255, 0.20);
+    --card: rgba(255, 255, 255, 0.045);
+    --check: #7BC89A;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 16.5px;
+    line-height: 1.62;
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 55%, var(--ink-3) 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgba(62, 142, 222, 0.42); color: #fff; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10, 16, 32, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-weight: 700; letter-spacing: -0.2px; }
+  .brand:hover { text-decoration: none; }
+  .brand .mark-sm {
+    width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 4px 14px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .brand .mark-sm svg { width: 16px; height: 16px; }
+  .brand small { color: var(--muted); font-weight: 500; font-size: 13.5px; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { color: var(--muted-2); font-size: 14.5px; font-weight: 500; transition: color 0.18s ease; }
+  .nav-links a:hover { color: #fff; text-decoration: none; }
+  .nav-links a.nav-cta {
+    color: #fff; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 7px 16px; background: rgba(255, 255, 255, 0.05); transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .nav-links a.nav-cta:hover { border-color: rgba(111, 179, 236, 0.65); background: rgba(62, 142, 222, 0.16); }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 84px 0 30px; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(640px 320px at 16% 0%, rgba(62, 142, 222, 0.28), transparent 70%),
+      radial-gradient(560px 300px at 88% 6%, rgba(99, 73, 58, 0.32), transparent 72%);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; }
+  .kicker {
+    font-size: 12.5px; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 16px;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.6vw, 3rem);
+    line-height: 1.12; letter-spacing: -1px; font-weight: 700;
+    margin: 0 0 18px;
+  }
+  h1 .accent {
+    background: linear-gradient(100deg, #6FB3EC 10%, #9ecdf7 50%, #6FB3EC 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lead { color: var(--muted-2); font-size: 1.08rem; max-width: 700px; margin: 0 0 24px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .pill {
+    border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px;
+    padding: 7px 17px; font-size: 13.5px; color: #dfe2ee;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 26px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.1px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn-primary {
+    color: #fff; background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    box-shadow: 0 10px 30px rgba(62, 142, 222, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(62, 142, 222, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28); }
+  .btn-ghost { color: var(--text); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.05); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(111, 179, 236, 0.6); background: rgba(62, 142, 222, 0.14); }
+  .hero .note { margin: 20px 0 0; color: var(--muted); font-size: 13.5px; }
+
+  /* ---------- layout ---------- */
+  .class-layout { display: grid; grid-template-columns: 208px minmax(0, 1fr); gap: 44px; align-items: start; padding-top: 56px; }
+  .toc {
+    position: sticky; top: 88px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 18px 16px;
+  }
+  .toc h2 { font-size: 11.5px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--muted); margin: 0 0 10px; padding-left: 10px; font-weight: 700; }
+  .toc a { display: block; color: var(--muted-2); font-size: 14px; padding: 6px 10px; border-radius: 8px; transition: background 0.15s ease, color 0.15s ease; }
+  .toc a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); text-decoration: none; }
+  .section-block { padding-bottom: 62px; scroll-margin-top: 90px; }
+  .section-block > h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); letter-spacing: -0.5px; margin: 0 0 8px; }
+  .section-block .lede { color: var(--muted); margin: 0 0 24px; max-width: 74ch; }
+  .prose p { color: var(--muted-2); margin: 0 0 16px; max-width: 74ch; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 16px; }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 24px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .card:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; font-weight: 700; color: var(--accent);
+    display: inline-block; margin-bottom: 14px;
+    border: 1px solid rgba(111, 179, 236, 0.4); background: rgba(62, 142, 222, 0.12);
+    border-radius: 8px; padding: 3px 9px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.06rem; letter-spacing: -0.2px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+  .card li { margin-bottom: 6px; }
+  .card.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+
+  .callout {
+    border-left: 3px solid var(--tufts-blue);
+    background: rgba(62, 142, 222, 0.10);
+    border-radius: 0 12px 12px 0; padding: 18px 22px;
+    color: var(--muted-2); font-size: 14.5px; margin: 0 0 16px; max-width: 74ch;
+  }
+  .callout:last-child { margin-bottom: 0; }
+  .callout b { color: #fff; }
+  .callout.warm { border-color: #B07A5A; background: rgba(99, 73, 58, 0.22); }
+
+  /* ---------- discussion prompts ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .prompt {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 26px 26px 30px;
+  }
+  .prompt .qn { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt p { margin: 12px 0 0; font-size: 1.12rem; line-height: 1.35; letter-spacing: -0.2px; font-weight: 600; }
+  .prompt.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+
+  /* ---------- galleries ---------- */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .gallery figure.shot { display: flex; flex-direction: column; }
+  .gallery figure.shot img { flex: 1; min-height: 190px; }
+  figure.shot { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+  figure.shot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  figure.shot.tall img { aspect-ratio: 4 / 5; }
+  figure.shot figcaption { padding: 14px 18px 16px; font-size: 13.5px; color: var(--muted); }
+  figure.shot figcaption b { display: block; color: #fff; font-size: 14.5px; margin-bottom: 2px; }
+  .gallery .span-2 { grid-column: span 2; }
+  @media (max-width: 620px) { .gallery .span-2 { grid-column: auto; } }
+
+  .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .story-grid figure.shot img { aspect-ratio: 1 / 1; }
+
+  /* ---------- instructor ---------- */
+  .instructor {
+    display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 26px; align-items: start;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--card);
+    padding: 28px 30px; margin-bottom: 16px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .instructor:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .instructor .avatar {
+    width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+  .instructor h3 { margin: 0 0 2px; font-size: 1.24rem; letter-spacing: -0.3px; }
+  .instructor .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .instructor .bio { color: var(--muted-2); font-size: 15px; margin: 0 0 14px; max-width: 70ch; }
+  .instructor .contact { color: var(--muted); font-size: 14px; margin: 0; }
+  .people { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 6px; }
+  .person { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 22px 24px; }
+  .person .avatar-sm {
+    width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  }
+  .person h3 { margin: 0 0 2px; font-size: 1.02rem; }
+  .person .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .person p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  /* ---------- structure ---------- */
+  .phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 24px; }
+  .phase.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+  .phase .plabel { font-size: 12.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin: 0 0 4px; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+  .phase h3 { margin: 0 0 12px; font-size: 1.06rem; }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted-2); font-size: 14.5px; padding-left: 22px; position: relative; margin-bottom: 8px; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+
+  /* ---------- outline ---------- */
+  .outline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 24px; }
+  .panel h3 { margin: 0 0 14px; font-size: 1.02rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    border: 1px solid rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.12);
+    border-radius: 999px; padding: 5px 15px; font-size: 13.5px; color: var(--muted-2);
+  }
+  .journey { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .step { flex: 1 1 150px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, 0.03); padding: 14px 16px; text-align: center; }
+  .step b { display: block; font-size: 14.5px; }
+  .step span { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .step.accent { background: rgba(62, 142, 222, 0.14); border-color: rgba(111, 179, 236, 0.4); }
+  .arrow { color: var(--accent); font-size: 18px; }
+  @media (max-width: 700px) { .arrow { display: none; } }
+
+  /* ---------- grading ---------- */
+  .grade-list { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 13px; max-width: 74ch; }
+  .grade-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px 52px; align-items: center; gap: 16px; }
+  .grade-label { color: var(--muted-2); font-size: 14.5px; }
+  .grade-label small { display: block; color: var(--muted); font-size: 13px; }
+  .grade-bar { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+  .grade-bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .grade-weight { text-align: right; font-weight: 700; font-size: 15px; }
+
+  /* ---------- reflections ---------- */
+  .cycle { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin: 8px 0 16px; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 22px; position: relative; }
+  .cyc .cn { position: absolute; top: 18px; right: 20px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--accent); font-weight: 700; }
+  .cyc h3 { margin: 0 0 6px; font-size: 1.02rem; }
+  .cyc p { margin: 0; color: var(--muted); font-size: 14px; }
+  .questions { list-style: none; margin: 0; padding: 0; max-width: 74ch; }
+  .questions li { position: relative; padding-left: 28px; margin-bottom: 12px; color: var(--muted-2); font-size: 15px; }
+  .questions li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
+  .questions li:last-child { margin-bottom: 0; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot-brand { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 13.5px; }
+  .foot-brand .mark-xs {
+    width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+  }
+  .foot-brand .mark-xs svg { width: 14px; height: 14px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13.5px; }
+  .foot-links a { color: var(--muted); transition: color 0.18s ease; }
+  .foot-links a:hover { color: #fff; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22, 0.7, 0.28, 1) forwards; animation-delay: var(--d, 0s); }
+
+  @media (max-width: 880px) {
+    .class-layout { grid-template-columns: 1fr; gap: 28px; padding-top: 40px; }
+    .instructor { grid-template-columns: 1fr; gap: 18px; }
+    .instructor .avatar { width: 92px; height: 92px; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px; padding: 12px; }
+    .toc h2 { width: 100%; margin-bottom: 4px; }
+    .toc a { padding: 5px 11px; background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
+    .grade-row { grid-template-columns: minmax(0, 1fr) 70px; }
+    .grade-bar { display: none; }
+    .hero { padding: 68px 0 22px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .brand small { display: none; }
+    .brand, .nav-links a.nav-cta { white-space: nowrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { animation: none; opacity: 1; }
+    .btn, .card, .instructor { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>· Intro to Making</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#connect">Connectivity</a>
+      <a href="#build">Build it</a>
+      <a href="#register">Register it</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About</a>
+      <a class="nav-cta" href="ENT-164-Class-6-Connectivity-with-AI.pdf">Download slides</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker reveal">Class 6 · Week 6 · Fall 2026</p>
+    <h1 class="reveal" style="--d:.06s">Connectivity <span class="accent">with AI</span></h1>
+    <p class="lead reveal" style="--d:.12s">Your ESP32 can serve a web page your phone opens — no app required. Today we get it on WiFi, register it with Tufts, and build a smart light you control from the browser.</p>
+    <div class="pills reveal" style="--d:.18s">
+      <span class="pill">Thu, Oct 15</span>
+      <span class="pill">JCC 301 / Nolop</span>
+      <span class="pill">No programming required</span>
+      <span class="pill">Individual assignment due</span>
+    </div>
+    <div class="cta-row reveal" style="--d:.24s">
+      <a class="btn btn-primary" href="ENT-164-Class-6-Connectivity-with-AI.pdf">Download the slides (PDF)</a>
+      <a class="btn btn-ghost" href="#learn">What you'll learn &darr;</a>
+    </div>
+    <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
+  </div>
+</header>
+
+<div class="wrap class-layout">
+
+  <aside class="toc reveal" style="--d:.36s">
+    <h2>On this page</h2>
+    <a href="#recap">Recap</a>
+    <a href="#learn">What you'll learn</a>
+    <a href="#connect">Connectivity options</a>
+    <a href="#build">Build a smart light</a>
+    <a href="#register">Register your device</a>
+    <a href="#how">How it works</a>
+    <a href="#try">Other things to try</a>
+    <a href="#next">What's next</a>
+  </aside>
+
+  <main class="content">
+
+    <section class="section-block" id="recap">
+      <h2>Recap</h2>
+      <p class="lede">Before we go wireless — the three things you should have from last class.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Electronics kit</h3>
+          <p>You've received your electronics kit — the parts you'll wire up in class today.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Thonny + MicroPython</h3>
+          <p>Thonny is installed on your laptop and MicroPython is deployed to your ESP32. Setup guide: <a href="https://go.tufts.edu/esp32" target="_blank" rel="noopener">go.tufts.edu/esp32</a>.</p>
+        </div>
+        <div class="card">
+          <span class="num">03</span>
+          <h3>AI-assisted electronics</h3>
+          <p>You can already build basic electronics projects with the help of AI — that's the skill we build on today.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="learn">
+      <h2>What you'll learn today</h2>
+      <p class="lede">Connect, reach out, and build — the three things we do in class today.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Connect to your microcontroller</h3>
+          <p>Reach your device from a phone and from a web browser — no native app needed.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Connect to external services</h3>
+          <p>Give your device internet access, higher data rates, and cloud services.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">03</span>
+          <h3>Build a Smart Light</h3>
+          <p>Put it all together: an RGB light you control from your phone's browser.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="connect">
+      <h2>Connectivity options</h2>
+      <p class="lede">Bluetooth or WiFi — both work, but only one skips app development entirely.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>Bluetooth</h3>
+          <p>Low-power, short-range, device-to-device communication — like connecting to a phone app. It requires a native mobile app for user interaction.</p>
+          <div class="callout warm" style="margin-top:16px;"><b>This is hard.</b> You'd have to build and ship an app.</div>
+        </div>
+        <div class="card accent">
+          <h3>WiFi</h3>
+          <p>Internet access, higher data rates, and integration with cloud services. Users interact through a simple web browser interface — no app development needed.</p>
+          <div class="callout" style="margin-top:16px;"><b>Today's approach.</b> The browser is your user interface.</div>
+        </div>
+      </div>
+      <h3 style="font-size:1.05rem;margin:30px 0 10px;">Client, server, or hybrid</h3>
+      <p class="prose" style="color:var(--muted);margin:0 0 16px;max-width:74ch;">Three pieces make the system work: your device, the services it reaches over WiFi, and the browser you control it from.</p>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/esp32-wrover-board.jpg" alt="An ESP32 WROVER microcontroller board" style="aspect-ratio: 4 / 5; object-fit: contain; background: #fff;">
+          <figcaption><b>The device</b>An ESP32 WROVER running MicroPython — the thing that gets online.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/cloud-api.jpg" alt="A cloud icon labelled API with connected nodes" style="aspect-ratio: 4 / 5; object-fit: contain; background: #fff;">
+          <figcaption><b>External services</b>Over WiFi, your device can reach APIs and cloud services.</figcaption>
+        </figure>
+        <figure class="shot tall">
+          <img src="shots/phone-rgb-control.jpg" alt="Phone browser showing an RGB LED control page with a color picker and sliders" style="aspect-ratio: 4 / 5; object-fit: contain; background: #0f1218;">
+          <figcaption><b>The browser UI</b>No app to install — the device serves a page your phone opens.</figcaption>
+        </figure>
+      </div>
+      <div class="callout" style="margin-top:16px;"><b>Client</b> — your device reaches out to a service. <b>Server</b> — your device serves a page. <b>Hybrid</b> — the Smart Light is both.</div>
+    </section>
+
+    <section class="section-block" id="build">
+      <h2>Build a smart light</h2>
+      <p class="lede">One RGB LED — three colors in a single package, sharing a common anode (+).</p>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/rgb-led-common-anode.jpg" alt="Diagram of an RGB LED with red, green, and blue channels sharing a common anode" style="object-fit: contain; background: #fff;">
+          <figcaption><b>RGB LED · common anode</b>Red, green, and blue channels share one common anode (+).</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/esp32-wired-breadboard.jpg" alt="An ESP32 wired to an RGB LED on a breadboard, lit purple" style="object-position: center 62%;">
+          <figcaption><b>On the breadboard</b>Each channel gets its own pin — the web page mixes them into any color.</figcaption>
+        </figure>
+      </div>
+
+      <h3 style="font-size:1.05rem;margin:30px 0 10px;">The prompt</h3>
+      <div class="callout"><b>No programming required.</b> Describe the project and let AI write the MicroPython: <span class="mono" style="font-size:13.5px;">“I want to use an ESP32 WROVER with MicroPython to measure the distance with a HC-SR04 sensor and show it on my phone using the Tufts_Wireless open wifi hotspot. Print my ESP32 MAC address on startup.”</span></div>
+      <div class="cards">
+        <div class="card">
+          <h3>The board &amp; language</h3>
+          <p>ESP32 WROVER, MicroPython.</p>
+        </div>
+        <div class="card">
+          <h3>The component</h3>
+          <p>HC-SR04 distance sensor.</p>
+        </div>
+        <div class="card">
+          <h3>The goal</h3>
+          <p>Measure distance and show it on your phone.</p>
+        </div>
+        <div class="card">
+          <h3>The connection</h3>
+          <p>The Tufts_Wireless open WiFi hotspot.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:16px;">The MAC line is extra: it prints the address you'll register with Tufts IT — see the next section.</div>
+    </section>
+
+    <section class="section-block" id="register">
+      <h2>Register your device</h2>
+      <p class="lede">Tufts_Wireless needs your device's MAC address before it will let it join. This is a one-time step.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Get your MAC address</h3>
+          <p>Run the code and copy your device's MAC address from the Thonny console — it looks like <span class="mono">6c:c8:40:77:e0:9c</span>, but with your own numbers and letters.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Expect an error</h3>
+          <p>The rest of the code will fail at this point — you can't reach WiFi yet. That's expected.</p>
+        </div>
+        <div class="card">
+          <span class="num">03</span>
+          <h3>Register it</h3>
+          <p>Go to <a href="https://device-registration.it.tufts.edu" target="_blank" rel="noopener">device-registration.it.tufts.edu</a>.</p>
+        </div>
+        <div class="card">
+          <span class="num">04</span>
+          <h3>Paste your MAC</h3>
+          <p>Clear the default MAC address, then copy your ESP32's MAC from Thonny into the field.</p>
+        </div>
+      </div>
+      <div class="gallery" style="margin-top:16px;">
+        <figure class="shot">
+          <img src="shots/tufts-registration-default-mac.jpg" alt="Tufts device registration form showing the default Mac/Apple Computers MAC address that needs to be cleared" style="aspect-ratio: 1600 / 658; object-fit: contain; background: #fff;">
+          <figcaption><b>1 · The default MAC</b>Clear the pre-filled address first.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/tufts-device-registration.jpg" alt="Tufts device registration form with the ESP32 MAC address filled in and Device Type set to Other Mobile Devices" style="aspect-ratio: 1600 / 658; object-fit: contain; background: #fff;">
+          <figcaption><b>2 · Your device's MAC</b>Description: ESP32 Device · Type: Other Mobile Devices · SUBMIT.</figcaption>
+        </figure>
+      </div>
+      <div class="callout" style="margin-top:16px;"><b>Use the IP address, not the MAC.</b> Once registered, type the IP address from the Thonny console into your phone's browser (e.g. <span class="mono">http://192.168.6.134</span>). The MAC address (<span class="mono">6c:c8:40:77:e0:9c</span>) will not open a web page — it was only needed for registration. It may take a few minutes before your registration is active.</div>
+    </section>
+
+    <section class="section-block" id="how">
+      <h2>How it works</h2>
+      <p class="lede">Every tap on your phone becomes a request the ESP32 answers.</p>
+      <div class="cycle">
+        <div class="cyc"><span class="cn">1</span><h3>A web server starts</h3><p>Your ESP32 runs a web server that renders a web page — no separate computer needed.</p></div>
+        <div class="cyc"><span class="cn">2</span><h3>The page gets an address</h3><p>The page is accessible at the device's IP address, assigned automatically when it joins Tufts_Wireless.</p></div>
+        <div class="cyc"><span class="cn">3</span><h3>Your phone renders it</h3><p>Your phone's browser renders the HTML that the ESP32's web server generates.</p></div>
+        <div class="cyc"><span class="cn">4</span><h3>Requests round-trip</h3><p>Interacting with the page sends a request to the ESP32 (e.g. <span class="mono">http://10.243.94.14/</span>). It reads the request, calls the sensor, and passes the data back.</p></div>
+      </div>
+    </section>
+
+    <section class="section-block" id="try">
+      <h2>Other things to try</h2>
+      <p class="lede">Once your device is online, the browser becomes a remote control for anything you build.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Visualize sensor data</h3>
+          <p>A dashboard with temperature history charts.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Control devices from your phone</h3>
+          <p>A virtual joystick to control motors, or a virtual switch to turn something on or off.</p>
+        </div>
+        <div class="card">
+          <span class="num">03</span>
+          <h3>Manage settings on the phone</h3>
+          <p>Save them to the device: set a thermostat temperature, or set an alarm clock.</p>
+        </div>
+        <div class="card">
+          <span class="num">04</span>
+          <h3>Device state visualization</h3>
+          <p>See the status of an LED (on/off) or the current servo angle.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="next" style="padding-bottom: 0;">
+      <div class="callout warm"><b>Next week:</b> Robo Challenge making time — integrate everything you've learned into a working robot. <b>Individual assignment:</b> electronics project — present a working circuit. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark-xs" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 · Intro to Making — Class 6, Fall 2026</span>
+    </div>
+    <div class="foot-links">
+      <a href="../../">All class materials</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About the instructor</a>
+      <a href="slides.html">Slide deck (web)</a>
+      <a href="ENT-164-Class-6-Connectivity-with-AI.pdf">Download the slides</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

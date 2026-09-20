@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 Class 4 · 3D Printing — Slides</title>
+<meta name="theme-color" content="#f7f9fc">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --blue-deep: #1F6FD0;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --ink: #0d1526;
+    --text: #17203a;
+    --muted: #5f6b7a;
+    --muted-2: #3f4a5a;
+    --line: #e6eaf1;
+    --line-strong: #d5dce7;
+    --paper: #ffffff;
+    --paper-2: #f7f9fc;
+    --blue-tint: #f2f7fd;
+    --blue-tint-2: #eaf3fd;
+    --radius: 4mm;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: 297mm 167mm; margin: 0; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #e8ecf2;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    position: relative; overflow: hidden;
+    width: 297mm; height: 167mm;
+    padding: 13mm 16mm 15mm;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide > * { position: relative; z-index: 1; }
+  .slide-logo {
+    position: absolute; top: 12.4mm; right: 16mm; z-index: 2;
+    height: 5.2mm; width: auto;
+  }
+  .cover .slide-logo { top: 18mm; height: 7mm; }
+
+  .s-head { margin-bottom: 6.5mm; }
+  .s-kicker {
+    font-size: 8.5pt; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--blue-deep); font-weight: 700; margin: 0 0 2.4mm;
+  }
+  h2 { font-size: 24pt; line-height: 1.12; letter-spacing: -0.6px; font-weight: 700; margin: 0; color: var(--ink); }
+  .s-sub { color: var(--muted); font-size: 12pt; margin: 2.6mm 0 0; max-width: 210mm; }
+  h2 .accent { color: var(--blue-deep); }
+  .s-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .s-foot {
+    position: absolute; left: 16mm; right: 16mm; bottom: 5.5mm; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 7.5pt; color: #8a93a3; letter-spacing: 0.3px;
+    border-top: 1px solid var(--line); padding-top: 2.2mm;
+  }
+  .s-foot .fnum { color: var(--ink); font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 6mm 6mm 5.5mm;
+    box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    display: flex; flex-direction: column;
+  }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);
+    align-self: flex-start; margin-bottom: 3.4mm;
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 2mm; padding: 0.8mm 2.4mm;
+  }
+  .card h3 { margin: 0 0 1.8mm; font-size: 13.5pt; letter-spacing: -0.2px; color: var(--ink); }
+  .card p { margin: 0; color: var(--muted); font-size: 10.5pt; line-height: 1.45; }
+  .card.tight p { font-size: 10pt; }
+  .card .ico {
+    width: 9mm; height: 9mm; border-radius: 2.6mm; margin-bottom: 3.4mm;
+    background: var(--blue-tint-2); border: 1px solid #cfe1f7;
+    display: grid; place-items: center;
+  }
+  .card .ico svg { width: 4.6mm; height: 4.6mm; }
+  .card.accent { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- cover ---------- */
+  .cover { padding: 15mm 16mm 12mm; }
+  .cover .top { display: flex; align-items: center; gap: 4mm; margin-bottom: 7mm; }
+  .cover .mark {
+    width: 13mm; height: 13mm; border-radius: 3.6mm; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 2mm 6mm rgba(62, 142, 222, 0.28);
+  }
+  .cover .mark svg { width: 6.6mm; height: 6.6mm; }
+  .cover .course { font-weight: 700; font-size: 13pt; letter-spacing: -0.2px; color: var(--ink); }
+  .cover .course small { color: var(--muted); font-weight: 500; font-size: 10pt; }
+  .cover .cols { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr); gap: 10mm; flex: 1; min-height: 0; }
+  .cover .lede { display: flex; flex-direction: column; justify-content: center; }
+  .cover h1 { font-size: 40pt; line-height: 1.04; letter-spacing: -1.6px; margin: 0 0 5mm; font-weight: 700; color: var(--ink); }
+  .cover h1 .accent { color: var(--blue-deep); }
+  .cover .sub { color: var(--muted-2); font-size: 13pt; max-width: 150mm; margin: 0 0 6mm; }
+  .cover .pills { display: flex; flex-wrap: wrap; gap: 2.6mm; }
+  .pill {
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 1.6mm 4.4mm; font-size: 9.5pt; color: #46505f;
+    background: var(--paper);
+  }
+  .cover .shot {
+    border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong);
+    box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);
+    position: relative; min-height: 0;
+  }
+  .cover .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover .team {
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    border-top: 1px solid var(--line); margin-top: 7mm; padding-top: 4mm;
+    font-size: 9.5pt; color: var(--muted-2);
+  }
+  .cover .team b { color: var(--ink); font-weight: 600; }
+  .cover .team .tufts { color: var(--muted); }
+
+  /* ---------- discussion ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; flex: 1; }
+  .prompt {
+    position: relative;
+    border: 1px solid var(--line); border-radius: 5mm;
+    background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    padding: 8mm 7mm;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .prompt .q { font-size: 16pt; line-height: 1.3; letter-spacing: -0.3px; font-weight: 600; margin: 0; color: var(--ink); }
+  .prompt .qn { position: absolute; top: 6mm; left: 7mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--blue-deep); font-size: 10pt; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- gallery / mosaic ---------- */
+  .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 2.6mm; flex: 1; min-height: 0; }
+  .tile { position: relative; border-radius: 3mm; overflow: hidden; border: 1px solid var(--line); background: var(--paper); min-height: 0; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 1.8mm 3mm; font-size: 7.5pt; color: var(--muted-2);
+    background: rgba(255, 255, 255, 0.93); border-top: 1px solid var(--line);
+  }
+
+  .gallery { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .gallery.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gallery.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery .tile { display: flex; flex-direction: column; background: var(--paper); }
+  .gallery .tile img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+  .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
+  .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
+
+  /* ---------- structure ---------- */
+  .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
+  .phase.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .phase .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 1mm; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9.5pt; color: var(--muted); margin: 0 0 4mm; }
+  .phase h3 { margin: 0 0 3mm; font-size: 14pt; color: var(--ink); }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted); font-size: 10.5pt; padding-left: 5mm; position: relative; margin-bottom: 2.2mm; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--blue-deep); }
+  .assign { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); margin-top: 4mm; padding: 4.6mm 6mm; display: flex; align-items: center; gap: 6mm; }
+  .assign .alabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); white-space: nowrap; }
+  .assign p { margin: 0; color: var(--muted); font-size: 10.5pt; }
+  .assign p b { color: var(--ink); }
+
+  /* ---------- outline ---------- */
+  .outline { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5mm; flex: 1; min-height: 0; align-items: center; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5.5mm 6mm; display: flex; flex-direction: column; min-height: 0; }
+  .panel .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 3.6mm; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2.2mm; align-content: flex-start; }
+  .chip {
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 999px; padding: 1.4mm 3.6mm; font-size: 10pt; color: var(--muted-2);
+  }
+  .journey { display: flex; align-items: stretch; gap: 2.4mm; margin-top: 4mm; }
+  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.6mm 3mm; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .step b { display: block; font-size: 10.5pt; color: var(--ink); }
+  .step span { display: block; color: var(--muted); font-size: 8.5pt; margin-top: 0.8mm; }
+  .step.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .arrow { display: grid; place-items: center; color: var(--blue-deep); font-size: 14pt; }
+
+  /* ---------- rubrics ---------- */
+  .rubric { display: flex; flex-direction: column; gap: 5mm; flex: 1; justify-content: center; }
+  .rub-row { display: grid; grid-template-columns: 62mm minmax(0, 1fr) 16mm; align-items: center; gap: 6mm; }
+  .rub-label { color: var(--muted-2); font-size: 12pt; }
+  .rub-label small { display: block; color: var(--muted); font-size: 9pt; }
+  .bar { height: 3.4mm; border-radius: 999px; background: #edf1f6; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .rub-val { text-align: right; font-weight: 700; font-size: 16pt; color: var(--ink); }
+  .footnote { color: var(--muted); font-size: 9.5pt; margin-top: 3mm; }
+
+  /* ---------- reflections ---------- */
+  .refl { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 5mm; flex: 1; min-height: 0; }
+  .cycle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5mm 4mm; position: relative; }
+  .cyc .cn { position: absolute; top: 3.6mm; right: 4mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9pt; color: var(--blue-deep); font-weight: 700; }
+  .cyc h3 { margin: 0 0 1.6mm; font-size: 12.5pt; color: var(--ink); }
+  .cyc p { margin: 0; color: var(--muted); font-size: 9.5pt; }
+  .qs { list-style: none; margin: 0; padding: 0; }
+  .qs li { position: relative; padding-left: 7mm; margin-bottom: 3.4mm; color: var(--muted-2); font-size: 11pt; }
+  .qs li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--blue-deep); font-weight: 700; }
+  .qs li:last-child { margin-bottom: 0; }
+
+  /* ---------- kit / makerspace ---------- */
+  .kit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4mm; flex: 1; align-content: center; }
+  .kit .card { align-items: flex-start; }
+  .bigline { text-align: center; margin: auto 0; }
+  .bigline .kicker-sm { font-size: 9pt; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 4mm; }
+  .bigline h2 { font-size: 34pt; letter-spacing: -1.2px; margin: 0 0 5mm; color: var(--ink); }
+  .bigline p { color: var(--muted); font-size: 14pt; max-width: 190mm; margin: 0 auto 6mm; }
+  .bigline .url { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12pt; color: var(--blue-deep); }
+
+  /* ---------- closing ---------- */
+  .closing { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6mm; flex: 1; align-items: center; }
+  .closing h2 { font-size: 36pt; }
+  .contact-card { border: 1px solid var(--line-strong); border-radius: 5mm; background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 7mm; }
+  .contact-card .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 4mm; }
+  .contact-card p { margin: 0 0 3.4mm; color: var(--muted); font-size: 11pt; }
+  .contact-card p:last-child { margin-bottom: 0; }
+  .contact-card b { color: var(--ink); }
+
+  @media screen {
+    body { padding: 10mm 0; }
+    .slide { margin: 0 auto 10mm; box-shadow: 0 12px 40px rgba(13, 21, 38, 0.16); border-radius: 2mm; }
+  }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .slide { margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 01 · COVER ============ -->
+<section class="slide cover">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="top">
+    <span class="mark" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+        <path d="m18 15 4-4" />
+        <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+      </svg>
+    </span>
+    <div class="course">ENT-164 <small>· Intro to Making</small></div>
+  </div>
+  <div class="cols">
+    <div class="lede">
+      <p class="s-kicker">Class 4 · Week 4 · Fall 2026</p>
+      <h1>3D <span class="accent">Printing</span></h1>
+      <p class="sub">From model to machine part: design in Onshape, prepare in PrusaSlicer, and print the functional parts your robot needs.</p>
+      <div class="pills">
+        <span class="pill">Thu, Oct 1</span>
+        <span class="pill">JCC 301 / Nolop</span>
+        <span class="pill">Design → Prepare → Print</span>
+        <span class="pill">Individual print due next week</span>
+      </div>
+    </div>
+    <figure class="shot">
+      <img src="shots/3d-print-in-progress.jpg" alt="A 3D printer laying down a yellow printed part">
+    </figure>
+  </div>
+  <div class="team">
+    <span><b>Thomas Van de Velde</b> · Instructor &nbsp; · &nbsp; <b>Alexander Beattie</b> · TA &nbsp; · &nbsp; <b>Patrice Pinardo</b> · TA</span>
+    <span class="tufts">Tufts University · Gordon Institute</span>
+  </div>
+</section>
+
+<!-- ============ 02 · ROBO CHALLENGE ROADMAP ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Robo Challenge</p>
+    <h2>Six steps, <span class="accent">one working robot</span></h2>
+    <p class="s-sub">The path from sketch to race — today we're on step three.</p>
+  </header>
+  <div class="s-body" style="justify-content: center;">
+    <div class="journey">
+      <div class="step"><b>Sketch &amp; Prototype</b><span>Week 2 · sketches + mockup</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>Laser Cutting</b><span>Week 3 · laser-cut parts</span></div>
+      <div class="arrow">→</div>
+      <div class="step hot"><b>3D Printing</b><span>Week 4 · today</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>Electronics</b><span>Week 5 · motors + sensors</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>Connectivity</b><span>Week 6 · wireless control</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>Assemble &amp; Race</b><span>Weeks 7–8 · race day</span></div>
+    </div>
+    <div class="assign">
+      <span class="alabel">Today</span>
+      <p><b>Model 3D parts</b> — mounts, brackets, and custom components &nbsp; · &nbsp; <b>3D print functional parts</b> for your robot and its dispenser.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">02</span></footer>
+</section>
+
+<!-- ============ 03 · ROBO CHALLENGE CONTEXT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Robo Challenge</p>
+    <h2>Today we print <span class="accent">the parts</span></h2>
+    <p class="s-sub">Your robot — plus a supporting dispenser — moves as many balls as possible between two lines. The custom pieces come off the printer.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g2">
+      <figure class="tile">
+        <img src="shots/smart-cart-designs.jpg" alt="Three smart shopping cart designs with screens, baskets, and scanners" style="aspect-ratio: 16 / 9;">
+        <figcaption><b>Form follows function</b>A basket, wheels, a screen, and a scanner all share one frame.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/smart-cart-display.jpg" alt="A shopper using a cart display to review items and totals" style="aspect-ratio: 16 / 9;">
+        <figcaption><b>Parts have jobs</b>A cart that scans items, shows the running total, and checks you out.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">03</span></footer>
+</section>
+
+<!-- ============ 04 · THE MAKING CYCLE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The making cycle</p>
+    <h2>Where 3D printing <span class="accent">fits</span></h2>
+    <p class="s-sub">Sketch, mock up, design, fabricate, assemble, program, test — then loop back around.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1.02fr 0.98fr; grid-template-rows: 1fr;">
+      <div style="border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 3mm; display: flex; min-height: 0;">
+        <img src="shots/making-cycle.jpg" alt="Hand-drawn making cycle: sketch, mockup, 2D design, laser cut, assemble, program, test — plus the 3D branch of design, slice, print" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="card tight" style="flex: 1; padding: 4mm 5mm; justify-content: center;">
+          <span class="num" style="margin-bottom: 2.2mm;">2D</span>
+          <h3>Laser-cut branch</h3>
+          <p>Component sketch → 2D design → flat parts, cut and assembled.</p>
+        </article>
+        <article class="card tight accent" style="flex: 1; padding: 4mm 5mm; justify-content: center;">
+          <span class="num" style="margin-bottom: 2.2mm;">3D</span>
+          <h3>Printed branch</h3>
+          <p>Design (3D) → slice → fabricate: parts with height, curves, and internal detail.</p>
+        </article>
+        <article class="card tight" style="flex: 1; padding: 4mm 5mm; justify-content: center;">
+          <span class="num" style="margin-bottom: 2.2mm;">→</span>
+          <h3>The loop closes</h3>
+          <p>Assemble, program, and test — then measure and feed the next iteration.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ============ 05 · INSIDE THE PRINTER ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">How it works</p>
+    <h2>Inside a <span class="accent">3D printer</span></h2>
+    <p class="s-sub">Four parts do the work — everything else supports them.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.78fr 1.22fr; grid-template-rows: 1fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <div style="border: 1px solid var(--line); border-radius: 3mm; overflow: hidden; flex: 1.35; min-height: 0;">
+          <img src="shots/prusa-mk4-printer.jpg" alt="A Prusa MK4 printer with filament spools above it" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="border: 1px solid var(--line); border-radius: 3mm; overflow: hidden; flex: 1; min-height: 0;">
+          <img src="shots/nozzle-closeup.jpg" alt="Close-up of a print head and nozzle printing on the bed" style="width: 100%; height: 100%; object-fit: cover; object-position: center 45%;">
+        </div>
+      </div>
+      <div class="grid g2" style="grid-auto-rows: 1fr;">
+        <article class="card tight">
+          <span class="num">01</span>
+          <h3>Filament</h3>
+          <p>The plastic feedstock, spooled above the printer and fed into the hot end.</p>
+        </article>
+        <article class="card tight">
+          <span class="num">02</span>
+          <h3>Nozzle</h3>
+          <p>Melts the filament and lays it down, layer by layer — ours is 0.4 mm.</p>
+        </article>
+        <article class="card tight">
+          <span class="num">03</span>
+          <h3>Motors</h3>
+          <p>Move the toolhead and the bed along the axes while the part builds.</p>
+        </article>
+        <article class="card tight">
+          <span class="num">04</span>
+          <h3>Heated bed</h3>
+          <p>The build surface that the first layer sticks to.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ============ 06 · TEMPERATURE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="bigline">
+      <p class="kicker-sm">Nozzle temperature</p>
+      <h2>~220 °C <span class="accent">/</span> ~428 °F</h2>
+      <p>That's how hot the nozzle runs to melt filament. It is a burn risk — let the nozzle and heated bed cool before you reach in, and keep hands clear while a print is running.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ============ 07 · MATERIALS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Materials</p>
+    <h2>Lots of <span class="accent">filament options</span></h2>
+    <p class="s-sub">PLA is the profile our printers run — but the material you pick changes how a part behaves.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 1.08fr 0.92fr;">
+      <div style="border: 1px solid var(--line-strong); border-radius: 5mm; overflow: hidden; box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); min-height: 0; align-self: stretch;">
+        <img src="shots/filament-materials-guide.jpg" alt="A 3D printing materials guide listing dozens of filaments with property filters" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+      <div class="panel">
+        <p class="plabel">Browse by property</p>
+        <div class="chips">
+          <span class="chip">Chemically resistant</span>
+          <span class="chip">Composite</span>
+          <span class="chip">Dissolvable</span>
+          <span class="chip">Elastic</span>
+          <span class="chip">Fatigue resistant</span>
+          <span class="chip">Flexible</span>
+          <span class="chip">Heat resistant</span>
+          <span class="chip">Impact resistant</span>
+          <span class="chip">Rigid</span>
+          <span class="chip">Soft</span>
+          <span class="chip">UV resistant</span>
+          <span class="chip">Water resistant</span>
+        </div>
+        <p class="footnote">Materials guides compare dozens of filaments side by side before you commit a spool.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ============ 08 · PRODUCTION PROCESS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Production process</p>
+    <h2>Design, prepare, <span class="accent">print</span></h2>
+    <p class="s-sub">Three tools, three steps — the same loop for every part you make this term.</p>
+  </header>
+  <div class="s-body" style="justify-content: center;">
+    <div class="strip" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+      <div class="phase">
+        <p class="plabel">Step 1 · Design</p>
+        <p class="ptime">Onshape</p>
+        <h3>Model the part</h3>
+        <ul>
+          <li>Sketch and extrude in the browser</li>
+          <li>Export the part as an STL</li>
+        </ul>
+      </div>
+      <div class="phase hot">
+        <p class="plabel">Step 2 · Prepare</p>
+        <p class="ptime">PrusaSlicer</p>
+        <h3>Slice the model</h3>
+        <ul>
+          <li>Import the STL and arrange it on the bed</li>
+          <li>Slice it into G-code</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <p class="plabel">Step 3 · Print</p>
+        <p class="ptime">Prusa MK4</p>
+        <h3>Run the printer</h3>
+        <ul>
+          <li>Save the G-code to a USB drive</li>
+          <li>Load and print at Nolop</li>
+        </ul>
+      </div>
+    </div>
+    <div class="assign">
+      <span class="alabel">Sign up</span>
+      <p><b>Onshape</b> — <span class="mono" style="font-size: 9.5pt;">onshape.com/en/education/sign-up</span> with your Tufts account &nbsp; · &nbsp; <b>PrusaSlicer</b> — <span class="mono" style="font-size: 9.5pt;">prusa3d.com/page/prusaslicer_424</span></p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ============ 09 · MODEL IN ONSHAPE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Step 1 · Design</p>
+    <h2>Model the part <span class="accent">in Onshape</span></h2>
+    <p class="s-sub">Build the part on screen from sketches and features, then export it as an STL for the slicer.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1.12fr 0.88fr; grid-template-rows: 1fr;">
+      <div style="border: 1px solid var(--line-strong); border-radius: 5mm; overflow: hidden; box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); min-height: 0; background: var(--paper);">
+        <img src="shots/onshape-export-stl.jpg" alt="Onshape CAD window showing a part, its feature list, and the export menu" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="card tight" style="flex: 1; justify-content: center; padding: 4mm 5mm;">
+          <span class="num" style="margin-bottom: 2.2mm;">01</span>
+          <h3>Sketch</h3>
+          <p>Start with a 2D profile and dimension it.</p>
+        </article>
+        <article class="card tight" style="flex: 1; justify-content: center; padding: 4mm 5mm;">
+          <span class="num" style="margin-bottom: 2.2mm;">02</span>
+          <h3>Build features</h3>
+          <p>Extrude, boolean, fillet, and chamfer.</p>
+        </article>
+        <article class="card tight" style="flex: 1; justify-content: center; padding: 4mm 5mm;">
+          <span class="num" style="margin-bottom: 2.2mm;">03</span>
+          <h3>Export</h3>
+          <p>Export the finished part as an STL.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">09</span></footer>
+</section>
+
+<!-- ============ 10 · IMPORT AND ARRANGE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Step 2 · Prepare</p>
+    <h2>Import and <span class="accent">arrange</span></h2>
+    <p class="s-sub">Drop the STL into PrusaSlicer, then move, scale, rotate, place on face, and add support before you slice.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g2">
+      <figure class="tile">
+        <img src="shots/prusaslicer-import.jpg" alt="PrusaSlicer's Plater view with the import toolbar" style="aspect-ratio: 16 / 9;">
+        <figcaption><b>Import the STL</b>Open the file you exported from Onshape.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/prusaslicer-plate.jpg" alt="A green part placed on the PrusaSlicer build plate with move, scale, and rotate tools visible" style="aspect-ratio: 16 / 9;">
+        <figcaption><b>Arrange it</b>Place the part on a face and add support where it overhangs.</figcaption>
+      </figure>
+    </div>
+    <p class="footnote" style="text-align: center;">PrusaSlicer — <span class="mono">prusa3d.com/page/prusaslicer_424</span></p>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">10</span></footer>
+</section>
+
+<!-- ============ 11 · SLICE AND EXPORT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Step 3 · Print</p>
+    <h2>Slice, check, <span class="accent">export</span></h2>
+    <p class="s-sub">The slicer tells you what the print will cost in time and filament before you commit — then save the G-code to a USB drive and print at Nolop.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g2">
+      <figure class="tile">
+        <img src="shots/prusaslicer-settings.jpg" alt="PrusaSlicer print settings showing the 0.20 mm SPEED profile, Prusa PLA filament, and Original Prusa MK4 0.4 nozzle" style="aspect-ratio: 16 / 9;">
+        <figcaption><b>Check the profile</b>Print settings, filament, printer, supports, and infill.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/prusaslicer-export-gcode.jpg" alt="PrusaSlicer sliced info showing filament used, cost, and estimated printing time, with the Export G-code button" style="aspect-ratio: 16 / 9;">
+        <figcaption><b>Slice and export</b>Read the filament and time estimate, then export the G-code.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">11</span></footer>
+</section>
+
+<!-- ============ 12 · TIPS AND TRICKS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Tips &amp; tricks</p>
+    <h2>Print without <span class="accent">the drama</span></h2>
+    <p class="s-sub">Seven habits that keep the printers — and your prints — in one piece.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <div class="phase">
+        <p class="plabel">While you print</p>
+        <h3>At the printer</h3>
+        <ul>
+          <li>Do not leave your print unattended</li>
+          <li>Check the filament so you won't run out</li>
+          <li>Remove your print promptly when it finishes</li>
+          <li>Leave a clean working bed behind</li>
+        </ul>
+      </div>
+      <div class="phase hot">
+        <p class="plabel">In your design</p>
+        <h3>Support &amp; alternatives</h3>
+        <ul>
+          <li>Think about support placement during design</li>
+          <li>Throw support material in the trash</li>
+          <li>Consider laser cutting as a faster, cheaper option</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">12</span></footer>
+</section>
+
+<!-- ============ 13 · INDIVIDUAL ASSIGNMENT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Individual assignment</p>
+    <h2>Print something <span class="accent">interesting</span></h2>
+    <p class="s-sub">5 points · due next week</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 1.1fr 0.9fr; grid-template-rows: 1fr;">
+      <div class="phase" style="justify-content: center;">
+        <p class="plabel">The brief</p>
+        <p class="ptime">3D print · 5 pt</p>
+        <h3>Design and fabricate an object</h3>
+        <ul>
+          <li>Design and fabricate an interesting object using 3D printing</li>
+          <li>Learn the digital-to-physical workflow</li>
+          <li>Experiment with form, function, and creativity</li>
+          <li>Bring the finished object to class for presentation and discussion</li>
+        </ul>
+      </div>
+      <div style="border: 1px solid var(--line-strong); border-radius: 5mm; overflow: hidden; box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); min-height: 0;">
+        <img src="shots/printed-robot-model.jpg" alt="A detailed robot model built from many separate parts" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">13</span></footer>
+</section>
+
+<!-- ============ 14 · MID-POINT ASSEMBLY CHECK ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Team assignment</p>
+    <h2>Mid-point <span class="accent">assembly check</span></h2>
+    <p class="s-sub">A checkpoint that verifies your team has a physically assembled, structurally sound robot — and dispenser if applicable — with all electronics in place before you start writing software.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3" style="grid-auto-rows: 1fr;">
+      <article class="card">
+        <h3>Assembled, not wired</h3>
+        <p>You don't need every component wired yet — but you should have a plan for routing the wires.</p>
+      </article>
+      <article class="card">
+        <h3>Progress, not perfection</h3>
+        <p>A solid frame, clean wiring, and a couple of known issues is exactly where you should be.</p>
+      </article>
+      <article class="card">
+        <h3>Catch it now</h3>
+        <p>The goal is to find mechanical and integration problems while there is still time to fix them.</p>
+      </article>
+    </div>
+    <p class="footnote">A “finished” robot held together with tape and optimism is not the goal — show us where you are and your clear-eyed plan for where you're going.</p>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">14</span></footer>
+</section>
+
+<!-- ============ 15 · DEMONSTRATE AND SUBMIT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Mid-point assembly check</p>
+    <h2>What to show, <span class="accent">what to submit</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.78fr 1.22fr;">
+      <div class="phase" style="justify-content: center;">
+        <p class="plabel">Demonstrate at Nolop</p>
+        <h3>Bring the build</h3>
+        <ul>
+          <li>Your fully assembled robot</li>
+          <li>One supporting dispenser, if applicable</li>
+        </ul>
+      </div>
+      <div class="phase" style="justify-content: center;">
+        <p class="plabel">Submit in Canvas</p>
+        <h3>Photos + self-assessment</h3>
+        <ul>
+          <li>At least 3 photos of the build from different angles</li>
+          <li>Current state — what is physically complete and wired? Be specific</li>
+          <li>Known issues — what problems remain unresolved?</li>
+          <li>Plan forward — what will you prioritize in the remaining time?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">15</span></footer>
+</section>
+
+<!-- ============ 16 · ASSEMBLY CRITERIA ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Assembly criterion</p>
+    <h2>What we're <span class="accent">looking at</span></h2>
+    <p class="s-sub">Prioritize these — see the assignment for details.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3" style="grid-auto-rows: 1fr;">
+      <article class="card" style="justify-content: center;"><h3>Structural integrity</h3></article>
+      <article class="card" style="justify-content: center;"><h3>Drivetrain &amp; mobility</h3></article>
+      <article class="card" style="justify-content: center;"><h3>Power system</h3></article>
+      <article class="card" style="justify-content: center;"><h3>Sensor placement</h3></article>
+      <article class="card" style="justify-content: center;"><h3>Serviceability</h3></article>
+      <article class="card" style="justify-content: center;"><h3>Design intent</h3></article>
+      <article class="card" style="justify-content: center;"><h3>Electronics mounting</h3></article>
+      <article class="card" style="justify-content: center;"><h3>Wiring &amp; connections</h3></article>
+      <article class="card" style="justify-content: center;"><h3>Wire management</h3></article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Prioritize these</span>
+      <p>See the assignment for the details behind each criterion.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">16</span></footer>
+</section>
+
+<!-- ============ 17 · COMMON PITFALLS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Common pitfalls</p>
+    <h2>Don't build it <span class="accent">this way</span></h2>
+    <p class="s-sub">Five shortcuts that cost teams time on race day.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-auto-rows: 1fr;">
+      <article class="card tight">
+        <h3>Hot glue as a structural joint</h3>
+        <p>It fails under stress. Use mechanical fasteners for load-bearing connections.</p>
+      </article>
+      <article class="card tight">
+        <h3>Tape-mounted electronics</h3>
+        <p>Masking tape releases mid-run. Use standoffs, screws, double-sided tape, or adhesive-backed Velcro.</p>
+      </article>
+      <article class="card tight">
+        <h3>Wires through the drivetrain</h3>
+        <p>A cable touching a spinning wheel will eventually get caught and ripped out.</p>
+      </article>
+      <article class="card tight">
+        <h3>No slack in sensor wires</h3>
+        <p>If a sensor moves, its wires need strain relief and enough length to handle the motion.</p>
+      </article>
+      <article class="card tight">
+        <h3>An inaccessible battery</h3>
+        <p>If swapping a battery requires partial disassembly, you'll waste valuable testing time later.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">17</span></footer>
+</section>
+
+<!-- ============ 18 · CLOSING ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="closing">
+      <div>
+        <p class="s-kicker">Before you go</p>
+        <h2>Questions?</h2>
+        <p class="s-sub" style="margin-top: 4mm;">Then go make something. Next week: microcontrollers — we wire motors and sensors, program movement, and you bring your 3D print to class.</p>
+      </div>
+      <div class="contact-card">
+        <p class="plabel">Where to find us</p>
+        <p><b>Office hours</b><br><span class="mono">go.tufts.edu/meet_tvdv</span></p>
+        <p><b>Email</b><br><span class="mono">thomas.van_de_velde@tufts.edu</span></p>
+        <p><b>Course materials</b><br>tvande08.github.io/ENT-164</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 4 · 3D Printing</span><span class="fnum">18</span></footer>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 Class 11 · Intelligent Devices with AI — Slides</title>
+<meta name="theme-color" content="#f7f9fc">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --blue-deep: #1F6FD0;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --ink: #0d1526;
+    --text: #17203a;
+    --muted: #5f6b7a;
+    --muted-2: #3f4a5a;
+    --line: #e6eaf1;
+    --line-strong: #d5dce7;
+    --paper: #ffffff;
+    --paper-2: #f7f9fc;
+    --blue-tint: #f2f7fd;
+    --blue-tint-2: #eaf3fd;
+    --radius: 4mm;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: 297mm 167mm; margin: 0; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #e8ecf2;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    position: relative; overflow: hidden;
+    width: 297mm; height: 167mm;
+    padding: 13mm 16mm 15mm;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide > * { position: relative; z-index: 1; }
+  .slide-logo {
+    position: absolute; top: 12.4mm; right: 16mm; z-index: 2;
+    height: 5.2mm; width: auto;
+  }
+  .cover .slide-logo { top: 18mm; height: 7mm; }
+
+  .s-head { margin-bottom: 6.5mm; }
+  .s-kicker {
+    font-size: 8.5pt; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--blue-deep); font-weight: 700; margin: 0 0 2.4mm;
+  }
+  h2 { font-size: 24pt; line-height: 1.12; letter-spacing: -0.6px; font-weight: 700; margin: 0; color: var(--ink); }
+  .s-sub { color: var(--muted); font-size: 12pt; margin: 2.6mm 0 0; max-width: 210mm; }
+  h2 .accent { color: var(--blue-deep); }
+  .s-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .s-foot {
+    position: absolute; left: 16mm; right: 16mm; bottom: 5.5mm; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 7.5pt; color: #8a93a3; letter-spacing: 0.3px;
+    border-top: 1px solid var(--line); padding-top: 2.2mm;
+  }
+  .s-foot .fnum { color: var(--ink); font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 6mm 6mm 5.5mm;
+    box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    display: flex; flex-direction: column;
+  }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);
+    align-self: flex-start; margin-bottom: 3.4mm;
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 2mm; padding: 0.8mm 2.4mm;
+  }
+  .card h3 { margin: 0 0 1.8mm; font-size: 13.5pt; letter-spacing: -0.2px; color: var(--ink); }
+  .card p { margin: 0; color: var(--muted); font-size: 10.5pt; line-height: 1.45; }
+  .card.tight p { font-size: 10pt; }
+  .card .ico {
+    width: 9mm; height: 9mm; border-radius: 2.6mm; margin-bottom: 3.4mm;
+    background: var(--blue-tint-2); border: 1px solid #cfe1f7;
+    display: grid; place-items: center;
+  }
+  .card .ico svg { width: 4.6mm; height: 4.6mm; }
+  .card.accent { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- cover ---------- */
+  .cover { padding: 15mm 16mm 12mm; }
+  .cover .top { display: flex; align-items: center; gap: 4mm; margin-bottom: 7mm; }
+  .cover .mark {
+    width: 13mm; height: 13mm; border-radius: 3.6mm; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 2mm 6mm rgba(62, 142, 222, 0.28);
+  }
+  .cover .mark svg { width: 6.6mm; height: 6.6mm; }
+  .cover .course { font-weight: 700; font-size: 13pt; letter-spacing: -0.2px; color: var(--ink); }
+  .cover .course small { color: var(--muted); font-weight: 500; font-size: 10pt; }
+  .cover .cols { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr); gap: 10mm; flex: 1; min-height: 0; }
+  .cover .lede { display: flex; flex-direction: column; justify-content: center; }
+  .cover h1 { font-size: 40pt; line-height: 1.04; letter-spacing: -1.6px; margin: 0 0 5mm; font-weight: 700; color: var(--ink); }
+  .cover h1 .accent { color: var(--blue-deep); }
+  .cover .sub { color: var(--muted-2); font-size: 13pt; max-width: 150mm; margin: 0 0 6mm; }
+  .cover .pills { display: flex; flex-wrap: wrap; gap: 2.6mm; }
+  .pill {
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 1.6mm 4.4mm; font-size: 9.5pt; color: #46505f;
+    background: var(--paper);
+  }
+  .cover .shot {
+    border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong);
+    box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);
+    position: relative; min-height: 0;
+  }
+  .cover .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover .team {
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    border-top: 1px solid var(--line); margin-top: 7mm; padding-top: 4mm;
+    font-size: 9.5pt; color: var(--muted-2);
+  }
+  .cover .team b { color: var(--ink); font-weight: 600; }
+  .cover .team .tufts { color: var(--muted); }
+
+  /* ---------- discussion ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; flex: 1; }
+  .prompt {
+    position: relative;
+    border: 1px solid var(--line); border-radius: 5mm;
+    background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    padding: 8mm 7mm;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .prompt .q { font-size: 16pt; line-height: 1.3; letter-spacing: -0.3px; font-weight: 600; margin: 0; color: var(--ink); }
+  .prompt .qn { position: absolute; top: 6mm; left: 7mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--blue-deep); font-size: 10pt; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- gallery / mosaic ---------- */
+  .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 2.6mm; flex: 1; min-height: 0; }
+  .tile { position: relative; border-radius: 3mm; overflow: hidden; border: 1px solid var(--line); background: var(--paper); min-height: 0; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 1.8mm 3mm; font-size: 7.5pt; color: var(--muted-2);
+    background: rgba(255, 255, 255, 0.93); border-top: 1px solid var(--line);
+  }
+
+  .gallery { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .gallery.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gallery.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery .tile { display: flex; flex-direction: column; background: var(--paper); }
+  .gallery .tile img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+  .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
+  .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
+
+  /* ---------- structure ---------- */
+  .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
+  .phase.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .phase .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 1mm; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9.5pt; color: var(--muted); margin: 0 0 4mm; }
+  .phase h3 { margin: 0 0 3mm; font-size: 14pt; color: var(--ink); }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted); font-size: 10.5pt; padding-left: 5mm; position: relative; margin-bottom: 2.2mm; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--blue-deep); }
+  .assign { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); margin-top: 4mm; padding: 4.6mm 6mm; display: flex; align-items: center; gap: 6mm; }
+  .assign .alabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); white-space: nowrap; }
+  .assign p { margin: 0; color: var(--muted); font-size: 10.5pt; }
+  .assign p b { color: var(--ink); }
+
+  /* ---------- outline ---------- */
+  .outline { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5mm; flex: 1; min-height: 0; align-items: center; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5.5mm 6mm; display: flex; flex-direction: column; min-height: 0; }
+  .panel .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 3.6mm; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2.2mm; align-content: flex-start; }
+  .chip {
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 999px; padding: 1.4mm 3.6mm; font-size: 10pt; color: var(--muted-2);
+  }
+  .journey { display: flex; align-items: stretch; gap: 2.4mm; margin-top: 4mm; }
+  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.6mm 3mm; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .step b { display: block; font-size: 10.5pt; color: var(--ink); }
+  .step span { display: block; color: var(--muted); font-size: 8.5pt; margin-top: 0.8mm; }
+  .step.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .arrow { display: grid; place-items: center; color: var(--blue-deep); font-size: 14pt; }
+
+  /* ---------- rubrics ---------- */
+  .rubric { display: flex; flex-direction: column; gap: 5mm; flex: 1; justify-content: center; }
+  .rub-row { display: grid; grid-template-columns: 62mm minmax(0, 1fr) 16mm; align-items: center; gap: 6mm; }
+  .rub-label { color: var(--muted-2); font-size: 12pt; }
+  .rub-label small { display: block; color: var(--muted); font-size: 9pt; }
+  .bar { height: 3.4mm; border-radius: 999px; background: #edf1f6; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .rub-val { text-align: right; font-weight: 700; font-size: 16pt; color: var(--ink); }
+  .footnote { color: var(--muted); font-size: 9.5pt; margin-top: 3mm; }
+
+  /* ---------- reflections ---------- */
+  .refl { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 5mm; flex: 1; min-height: 0; }
+  .cycle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5mm 4mm; position: relative; }
+  .cyc .cn { position: absolute; top: 3.6mm; right: 4mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9pt; color: var(--blue-deep); font-weight: 700; }
+  .cyc h3 { margin: 0 0 1.6mm; font-size: 12.5pt; color: var(--ink); }
+  .cyc p { margin: 0; color: var(--muted); font-size: 9.5pt; }
+  .qs { list-style: none; margin: 0; padding: 0; }
+  .qs li { position: relative; padding-left: 7mm; margin-bottom: 3.4mm; color: var(--muted-2); font-size: 11pt; }
+  .qs li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--blue-deep); font-weight: 700; }
+  .qs li:last-child { margin-bottom: 0; }
+
+  /* ---------- kit / makerspace ---------- */
+  .kit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4mm; flex: 1; align-content: center; }
+  .kit .card { align-items: flex-start; }
+  .bigline { text-align: center; margin: auto 0; }
+  .bigline .kicker-sm { font-size: 9pt; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 4mm; }
+  .bigline h2 { font-size: 34pt; letter-spacing: -1.2px; margin: 0 0 5mm; color: var(--ink); }
+  .bigline p { color: var(--muted); font-size: 14pt; max-width: 190mm; margin: 0 auto 6mm; }
+  .bigline .url { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12pt; color: var(--blue-deep); }
+
+  /* ---------- closing ---------- */
+  .closing { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6mm; flex: 1; align-items: center; }
+  .closing h2 { font-size: 36pt; }
+  .contact-card { border: 1px solid var(--line-strong); border-radius: 5mm; background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 7mm; }
+  .contact-card .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 4mm; }
+  .contact-card p { margin: 0 0 3.4mm; color: var(--muted); font-size: 11pt; }
+  .contact-card p:last-child { margin-bottom: 0; }
+  .contact-card b { color: var(--ink); }
+
+  @media screen {
+    body { padding: 10mm 0; }
+    .slide { margin: 0 auto 10mm; box-shadow: 0 12px 40px rgba(13, 21, 38, 0.16); border-radius: 2mm; }
+  }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .slide { margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 01 · COVER ============ -->
+<section class="slide cover">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="top">
+    <span class="mark" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+        <path d="m18 15 4-4" />
+        <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+      </svg>
+    </span>
+    <div class="course">ENT-164 <small>· Intro to Making</small></div>
+  </div>
+  <div class="cols">
+    <div class="lede">
+      <p class="s-kicker">Class 11 · Week 11 · Fall 2026</p>
+      <h1>Intelligent Devices<br><span class="accent">with AI</span></h1>
+      <p class="sub">How a voice-driven “poetic light” came together with an ESP32, cloud APIs, and Claude — and what that build teaches about working with AI.</p>
+      <div class="pills">
+        <span class="pill">Thu, Nov 19</span>
+        <span class="pill">Case study: the poetic light</span>
+        <span class="pill">Human vs AI roles</span>
+        <span class="pill">No programming required</span>
+      </div>
+    </div>
+    <figure class="shot">
+      <img src="shots/esp32-wrover-board.jpg" alt="An ESP32 WROVER development board with pin headers and a camera connector" style="object-fit: contain; background: var(--blue-tint); padding: 5mm;">
+    </figure>
+  </div>
+  <div class="team">
+    <span><b>Thomas Van de Velde</b> · Instructor &nbsp; · &nbsp; <b>Alexander Beattie</b> · TA &nbsp; · &nbsp; <b>Patrice Pinardo</b> · TA</span>
+    <span class="tufts">Tufts University · Gordon Institute</span>
+  </div>
+</section>
+
+<!-- ============ 02 · FINAL PROJECT CONCEPTS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="bigline">
+      <p class="kicker-sm">Final project concepts</p>
+      <h2>Adding AI to a device <span class="accent">to do smart things</span></h2>
+      <p>No programming required — connect your device to cloud APIs and AI services, then describe what you want it to do.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">02</span></footer>
+</section>
+
+<!-- ============ 03 · CONNECT AN ESP32 TO CLOUD APIS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Connecting to the cloud</p>
+    <h2>Connect an ESP32 to <span class="accent">cloud APIs</span></h2>
+    <p class="s-sub">An API (application programming interface) is how your board asks another service to hand back data or do something.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 1.42fr 0.58fr; gap: 6mm;">
+      <div class="panel" style="justify-content: center;">
+        <p class="plabel">Example APIs</p>
+        <div class="chips">
+          <span class="chip">Weather</span>
+          <span class="chip">Music</span>
+          <span class="chip">AI chat</span>
+        </div>
+        <p style="color: var(--muted); font-size: 11pt; margin: 5mm 0 0;">Over Wi-Fi, your board sends a request and gets an answer back — a forecast, a song, or a reply from a model. The same pattern works for almost any service you can find.</p>
+      </div>
+      <figure style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); height: 100%; min-height: 0; margin: 0;">
+        <img src="shots/esp32-wrover-board.jpg" alt="An ESP32 WROVER development board" style="width: 100%; height: 100%; object-fit: contain; background: var(--blue-tint); padding: 4mm; display: block;">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">03</span></footer>
+</section>
+
+<!-- ============ 04 · HIGH-LEVEL STEPS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">High-level steps</p>
+    <h2>Find an API, get a key, <span class="accent">make requests</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Find an API</h3>
+        <p>Pick the service that meets your needs — weather, music, AI chat, or something else entirely.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Register for a key</h3>
+        <p>Sign up with the API to obtain an API key tied to your account.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Make requests</h3>
+        <p>Use the API key to send requests — and get data or actions back.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ============ 05 · CASE STUDY: THE POETIC LIGHT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Case study</p>
+    <h2>The poetic light: <span class="accent">one sentence becomes a device</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 1.08fr 0.92fr;">
+      <div class="panel" style="justify-content: center;">
+        <p class="plabel">The original idea</p>
+        <p style="font-size: 15pt; line-height: 1.38; color: var(--ink); font-weight: 600; margin: 0;">“I want to say a word, and my poetic light will recite a related poem while changing to a color that represents it.”</p>
+        <p style="color: var(--muted); font-size: 10.5pt; margin: 5mm 0 0;">Built with an ESP32, cloud APIs, and Claude as the coding partner.</p>
+      </div>
+      <figure style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); height: 100%; min-height: 0; margin: 0;">
+        <img src="shots/poetic-typewriter.jpg" alt="A vintage typewriter with glowing butterflies rising from the page" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ============ 06 · THE JOURNEY ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The journey</p>
+    <h2>From idea to <span class="accent">working light</span></h2>
+    <p class="s-sub">The real build, in the order it happened.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3" style="gap: 4mm;">
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">01</span> Describe the idea</h3>
+        <p style="font-size: 9.5pt;">Start with one sentence: say a word, get a poem and a color.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">02</span> Recording won't save</h3>
+        <p style="font-size: 9.5pt;">The voice recording can't be written to memory.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">03</span> SD card struggles</h3>
+        <p style="font-size: 9.5pt;">Getting the SD card to work takes many attempts.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">04</span> Firmware switch</h3>
+        <p style="font-size: 9.5pt;">New ESP32 firmware unlocks the full amount of RAM available.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">05</span> Pulse red like HAL</h3>
+        <p style="font-size: 9.5pt;">Test and enhance: pulse red like HAL 9000.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">06</span> Color switching works</h3>
+        <p style="font-size: 9.5pt;">The first feature lands — the light responds to a word.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">07</span> Add a spoken poem</h3>
+        <p style="font-size: 9.5pt;">Feature enhancement: recite the poem out loud.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">08</span> Fix the audio</h3>
+        <p style="font-size: 9.5pt;">The small speaker sounds poor, so a DFPlayer Mini MP3 module joins the build.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 5mm 4mm;">
+        <h3 style="font-size: 11.5pt; margin-bottom: 1.4mm;"><span class="mono" style="color: var(--blue-deep); font-size: 9pt;">09</span> Ran out of context</h3>
+        <p style="font-size: 9.5pt;">The chat runs out of context before the build is finished.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ============ 07 · CLAUDE RIDE-ALONG ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Claude ride-along</p>
+    <h2>Read the build <span class="accent">conversation</span></h2>
+    <p class="s-sub">The whole project was built with Claude as a coding partner. Both parts of the conversation are public.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Part 1</h3>
+        <p style="margin-bottom: 2.4mm;">The conversation, start to finish.</p>
+        <a class="mono" href="https://claude.ai/share/9bbc45ed-c6c8-4f0e-aac4-7bfd5f31903c" style="font-size: 9pt; color: var(--blue-deep); text-decoration: none; word-break: break-all;">https://claude.ai/share/9bbc45ed-c6c8-4f0e-aac4-7bfd5f31903c</a>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Part 2</h3>
+        <p style="margin-bottom: 2.4mm;">The conversation, continued.</p>
+        <a class="mono" href="https://claude.ai/share/1a778197-0943-43d6-b83e-06c0389232d5" style="font-size: 9pt; color: var(--blue-deep); text-decoration: none; word-break: break-all;">https://claude.ai/share/1a778197-0943-43d6-b83e-06c0389232d5</a>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ============ 08 · THE ENGINEERING MINDSET ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Patterns that worked</p>
+    <h2>The engineering mindset <span class="accent">(by Claude)</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g4" style="gap: 3.6mm; align-content: center;">
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <h3 style="font-size: 10.5pt; margin-bottom: 1.2mm;">Incremental development</h3>
+        <p style="font-size: 9pt;">Started simple, added complexity gradually.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <h3 style="font-size: 10.5pt; margin-bottom: 1.2mm;">Problem decomposition</h3>
+        <p style="font-size: 9pt;">Broke the system into manageable components.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <h3 style="font-size: 10.5pt; margin-bottom: 1.2mm;">Iterative debugging</h3>
+        <p style="font-size: 9pt;">Tested, identified issues, refined solutions.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <h3 style="font-size: 10.5pt; margin-bottom: 1.2mm;">Constraint recognition</h3>
+        <p style="font-size: 9pt;">Understood hardware and software limits, then adapted.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <h3 style="font-size: 10.5pt; margin-bottom: 1.2mm;">Design tradeoffs</h3>
+        <p style="font-size: 9pt;">Made informed decisions when multiple solutions existed.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <h3 style="font-size: 10.5pt; margin-bottom: 1.2mm;">Documentation review</h3>
+        <p style="font-size: 9pt;">Referenced existing code to learn hardware capabilities.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <h3 style="font-size: 10.5pt; margin-bottom: 1.2mm;">Resource management</h3>
+        <p style="font-size: 9pt;">Solved memory issues by upgrading firmware.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <h3 style="font-size: 10.5pt; margin-bottom: 1.2mm;">Feedback-driven development</h3>
+        <p style="font-size: 9pt;">Used test results to guide the next step.</p>
+      </article>
+    </div>
+    <p class="footnote">Read the full analysis: <a class="mono" href="https://claude.ai/public/artifacts/a3f738cb-3b58-4cd5-9e85-6dd64541d943" style="font-size: 9pt; color: var(--blue-deep); text-decoration: none; word-break: break-all;">https://claude.ai/public/artifacts/a3f738cb-3b58-4cd5-9e85-6dd64541d943</a></p>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ============ 09 · YOUR ROLE VS AI ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Your role vs AI</p>
+    <h2>Who does what <span class="accent">in the build</span></h2>
+  </header>
+  <div class="s-body">
+    <div style="display: grid; gap: 2.2mm; align-content: center; flex: 1;">
+      <div style="display: grid; grid-template-columns: 42mm minmax(0, 1fr) minmax(0, 1fr); gap: 4mm; padding: 0 4mm 1mm;">
+        <span style="font-size: 8.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 700;">Area</span>
+        <span style="font-size: 8.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--tufts-brown); font-weight: 700;">Human · Engineer</span>
+        <span style="font-size: 8.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700;">AI · Assistant</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 42mm minmax(0, 1fr) minmax(0, 1fr); gap: 4mm; align-items: center; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 2.6mm 4mm; box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);">
+        <span style="font-weight: 600; font-size: 10pt; color: var(--ink);">Problem framing</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Defines the goal, hardware, and constraints</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Translates intent into architecture and a code plan</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 42mm minmax(0, 1fr) minmax(0, 1fr); gap: 4mm; align-items: center; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 2.6mm 4mm; box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);">
+        <span style="font-weight: 600; font-size: 10pt; color: var(--ink);">Design &amp; decisions</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Chooses the trade-offs, simplifies the system</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Suggests multiple implementation options</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 42mm minmax(0, 1fr) minmax(0, 1fr); gap: 4mm; align-items: center; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 2.6mm 4mm; box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);">
+        <span style="font-weight: 600; font-size: 10pt; color: var(--ink);">Diagnostics</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Runs tests, identifies root causes</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Generates diagnostic tools and fixes</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 42mm minmax(0, 1fr) minmax(0, 1fr); gap: 4mm; align-items: center; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 2.6mm 4mm; box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);">
+        <span style="font-weight: 600; font-size: 10pt; color: var(--ink);">Integration</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Manages timing, pin mapping, and system flow</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Produces working code and module connections</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 42mm minmax(0, 1fr) minmax(0, 1fr); gap: 4mm; align-items: center; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 2.6mm 4mm; box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);">
+        <span style="font-weight: 600; font-size: 10pt; color: var(--ink);">Validation</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Tests and interprets the results</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Refines code based on feedback</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 42mm minmax(0, 1fr) minmax(0, 1fr); gap: 4mm; align-items: center; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 2.6mm 4mm; box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);">
+        <span style="font-weight: 600; font-size: 10pt; color: var(--ink);">Optimization</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Balances performance, cost, and usability</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Automates tuning, surfaces data-driven insights</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 42mm minmax(0, 1fr) minmax(0, 1fr); gap: 4mm; align-items: center; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 2.6mm 4mm; box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);">
+        <span style="font-weight: 600; font-size: 10pt; color: var(--ink);">Documentation</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Summarizes lessons and decisions</span>
+        <span style="font-size: 9.5pt; color: var(--muted);">Formats results, diagrams, and reports</span>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">09</span></footer>
+</section>
+
+<!-- ============ 10 · WHERE HUMANS EXCEL ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Human strengths</p>
+    <h2>Where humans <span class="accent">excel</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4mm;">
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Systems thinking &amp; constraint recognition</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li style="margin-bottom: 1mm;">Detected pin-sharing conflicts that AI initially missed</li>
+          <li>Caught logical errors AI couldn't infer from code alone</li>
+        </ul>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Diagnostic reasoning</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li style="margin-bottom: 1mm;">Found that low memory was a firmware issue, not a coding issue</li>
+          <li style="margin-bottom: 1mm;">Designed and ran diagnostic tools to confirm issues empirically</li>
+          <li>Validated AI suggestions against physical hardware behavior</li>
+        </ul>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Design judgment &amp; simplification</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li>Eliminated SD card complexity once the firmware upgrade removed the constraint</li>
+        </ul>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Performance &amp; tradeoff optimization</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li style="margin-bottom: 1mm;">Quantified “too slow” as “7 seconds” — a measurable metric</li>
+          <li>Applied multi-criteria decision matrices (cost, latency, quality)</li>
+        </ul>
+      </article>
+      <article class="card tight" style="grid-column: 1 / -1; padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Engineering integrity</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li style="margin-bottom: 1mm;">Maintained pin mapping documentation and version control through iterations</li>
+          <li>Directed the AI to restore baseline configurations when code drift occurred</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">10</span></footer>
+</section>
+
+<!-- ============ 11 · WHERE AI EXCELS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">AI strengths</p>
+    <h2>Where AI <span class="accent">excels</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4mm;">
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Rapid implementation</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li style="margin-bottom: 1mm;">Produced over 1,200 lines of functional MicroPython in a few hours</li>
+          <li style="margin-bottom: 1mm;">Generated drivers, API calls, and WAV header logic quickly and accurately</li>
+          <li>Integrated the Whisper, GPT, and TTS APIs seamlessly</li>
+        </ul>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Breadth of knowledge</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li style="margin-bottom: 1mm;">Provided hardware-specific setup for ESP32, I2S, SPI, and PWM</li>
+          <li>Suggested valid code alternatives when one failed (buffer handling, threading)</li>
+        </ul>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Debugging assistance</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li style="margin-bottom: 1mm;">Offered step-by-step fixes for exceptions and syntax errors</li>
+          <li>Generated diagnostic snippets for the SD card, microphone, and speaker</li>
+        </ul>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Documentation &amp; teaching</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 9.5pt; line-height: 1.4;">
+          <li style="margin-bottom: 1mm;">Explained underlying causes, like MicroPython subset differences</li>
+          <li>Created diagrams, summaries, and performance tables automatically</li>
+        </ul>
+      </article>
+      <article class="card tight accent" style="grid-column: 1 / -1; padding: 4.6mm 5mm 4.2mm;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Acceleration factor</h3>
+        <p style="font-size: 10pt;">Compressed a 24–35 hour traditional build into 4.5 hours total — roughly a 5–8× faster development cycle.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">11</span></footer>
+</section>
+
+<!-- ============ 12 · BEST PRACTICES ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Working together</p>
+    <h2>Best practices for <span class="accent">human–AI collaboration</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g4" style="gap: 3.6mm;">
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">01</span>
+        <h3 style="font-size: 11pt; margin-bottom: 1.2mm;">Be specific</h3>
+        <p style="font-size: 9pt;">Clear prompts yield relevant, hardware-aware results.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">02</span>
+        <h3 style="font-size: 11pt; margin-bottom: 1.2mm;">Show evidence</h3>
+        <p style="font-size: 9pt;">Share code, errors, or logs so AI can reason, not guess.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">03</span>
+        <h3 style="font-size: 11pt; margin-bottom: 1.2mm;">Iterate rapidly</h3>
+        <p style="font-size: 9pt;">Short prompt–test–refine loops beat long single prompts.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">04</span>
+        <h3 style="font-size: 11pt; margin-bottom: 1.2mm;">Validate everything</h3>
+        <p style="font-size: 9pt;">Run, test, and verify before integrating it into your system.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">05</span>
+        <h3 style="font-size: 11pt; margin-bottom: 1.2mm;">Keep context updated</h3>
+        <p style="font-size: 9pt;">Remind AI of constraints after each major change.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">06</span>
+        <h3 style="font-size: 11pt; margin-bottom: 1.2mm;">Use diagnostics early</h3>
+        <p style="font-size: 9pt;">Build quick test scripts to confirm hardware and firmware state.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">07</span>
+        <h3 style="font-size: 11pt; margin-bottom: 1.2mm;">Simplify continuously</h3>
+        <p style="font-size: 9pt;">Remove unnecessary layers once constraints are resolved.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4.6mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">08</span>
+        <h3 style="font-size: 11pt; margin-bottom: 1.2mm;">Reflect &amp; document</h3>
+        <p style="font-size: 9pt;">Capture what worked and why — AI learns context, you keep the insight.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">12</span></footer>
+</section>
+
+<!-- ============ 13 · CLOSING ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="closing">
+      <div>
+        <p class="s-kicker">Before you go</p>
+        <h2>Remember</h2>
+        <p class="s-sub" style="margin-top: 4mm;">Submit a self-reflection before end of day — and bring what the poetic light taught you to your final project.</p>
+      </div>
+      <div class="contact-card">
+        <p class="plabel">Where to find it</p>
+        <p><b>Self-reflection</b><br><a class="mono" href="https://go.tufts.edu/reflect" style="font-size: 10pt; color: var(--blue-deep); text-decoration: none;">go.tufts.edu/reflect</a></p>
+        <p><b>Office hours</b><br><a class="mono" href="https://go.tufts.edu/meet_tvdv" style="font-size: 10pt; color: var(--blue-deep); text-decoration: none;">go.tufts.edu/meet_tvdv</a></p>
+        <p><b>Course materials</b><br>tvande08.github.io/ENT-164</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 11 · Intelligent Devices with AI</span><span class="fnum">13</span></footer>
+</section>
+
+</body>
+</html>

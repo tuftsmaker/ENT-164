@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 · Class 5 — Electronics</title>
+<meta name="description" content="Class 5 of ENT-164 Intro to Making: wiring electronics for the Robo Challenge — the ESP32 kit, breadboard basics, MicroPython, AI-assisted coding, and the individual electronics project.">
+<meta name="theme-color" content="#0a1020">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ENT-164 · Class 5 — Electronics">
+<meta property="og:description" content="Wire motors, sensors, and controls on the breadboard, install MicroPython, and make AI your coding partner.">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --accent: #6FB3EC;
+    --ink: #0a1020;
+    --ink-2: #101a2b;
+    --ink-3: #241a13;
+    --text: #f2f2f5;
+    --muted: #9aa0b4;
+    --muted-2: #c3c7d6;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-strong: rgba(255, 255, 255, 0.20);
+    --card: rgba(255, 255, 255, 0.045);
+    --check: #7BC89A;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 16.5px;
+    line-height: 1.62;
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 55%, var(--ink-3) 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgba(62, 142, 222, 0.42); color: #fff; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10, 16, 32, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-weight: 700; letter-spacing: -0.2px; }
+  .brand:hover { text-decoration: none; }
+  .brand .mark-sm {
+    width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 4px 14px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .brand .mark-sm svg { width: 16px; height: 16px; }
+  .brand small { color: var(--muted); font-weight: 500; font-size: 13.5px; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { color: var(--muted-2); font-size: 14.5px; font-weight: 500; transition: color 0.18s ease; }
+  .nav-links a:hover { color: #fff; text-decoration: none; }
+  .nav-links a.nav-cta {
+    color: #fff; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 7px 16px; background: rgba(255, 255, 255, 0.05); transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .nav-links a.nav-cta:hover { border-color: rgba(111, 179, 236, 0.65); background: rgba(62, 142, 222, 0.16); }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 84px 0 30px; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(640px 320px at 16% 0%, rgba(62, 142, 222, 0.28), transparent 70%),
+      radial-gradient(560px 300px at 88% 6%, rgba(99, 73, 58, 0.32), transparent 72%);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; }
+  .kicker {
+    font-size: 12.5px; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 16px;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.6vw, 3rem);
+    line-height: 1.12; letter-spacing: -1px; font-weight: 700;
+    margin: 0 0 18px;
+  }
+  h1 .accent {
+    background: linear-gradient(100deg, #6FB3EC 10%, #9ecdf7 50%, #6FB3EC 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lead { color: var(--muted-2); font-size: 1.08rem; max-width: 700px; margin: 0 0 24px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .pill {
+    border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px;
+    padding: 7px 17px; font-size: 13.5px; color: #dfe2ee;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 26px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.1px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn-primary {
+    color: #fff; background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    box-shadow: 0 10px 30px rgba(62, 142, 222, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(62, 142, 222, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28); }
+  .btn-ghost { color: var(--text); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.05); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(111, 179, 236, 0.6); background: rgba(62, 142, 222, 0.14); }
+  .hero .note { margin: 20px 0 0; color: var(--muted); font-size: 13.5px; }
+
+  /* ---------- layout ---------- */
+  .class-layout { display: grid; grid-template-columns: 208px minmax(0, 1fr); gap: 44px; align-items: start; padding-top: 56px; }
+  .toc {
+    position: sticky; top: 88px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 18px 16px;
+  }
+  .toc h2 { font-size: 11.5px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--muted); margin: 0 0 10px; padding-left: 10px; font-weight: 700; }
+  .toc a { display: block; color: var(--muted-2); font-size: 14px; padding: 6px 10px; border-radius: 8px; transition: background 0.15s ease, color 0.15s ease; }
+  .toc a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); text-decoration: none; }
+  .section-block { padding-bottom: 62px; scroll-margin-top: 90px; }
+  .section-block > h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); letter-spacing: -0.5px; margin: 0 0 8px; }
+  .section-block .lede { color: var(--muted); margin: 0 0 24px; max-width: 74ch; }
+  .prose p { color: var(--muted-2); margin: 0 0 16px; max-width: 74ch; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 16px; }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 24px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .card:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; font-weight: 700; color: var(--accent);
+    display: inline-block; margin-bottom: 14px;
+    border: 1px solid rgba(111, 179, 236, 0.4); background: rgba(62, 142, 222, 0.12);
+    border-radius: 8px; padding: 3px 9px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.06rem; letter-spacing: -0.2px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+  .card li { margin-bottom: 6px; }
+  .card.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+
+  .callout {
+    border-left: 3px solid var(--tufts-blue);
+    background: rgba(62, 142, 222, 0.10);
+    border-radius: 0 12px 12px 0; padding: 18px 22px;
+    color: var(--muted-2); font-size: 14.5px; margin: 0 0 16px; max-width: 74ch;
+  }
+  .callout:last-child { margin-bottom: 0; }
+  .callout b { color: #fff; }
+  .callout.warm { border-color: #B07A5A; background: rgba(99, 73, 58, 0.22); }
+
+  /* ---------- discussion prompts ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .prompt {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 26px 26px 30px;
+  }
+  .prompt .qn { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt p { margin: 12px 0 0; font-size: 1.12rem; line-height: 1.35; letter-spacing: -0.2px; font-weight: 600; }
+  .prompt.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+
+  /* ---------- galleries ---------- */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .gallery figure.shot { display: flex; flex-direction: column; }
+  .gallery figure.shot img { flex: 1; min-height: 190px; }
+  figure.shot { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+  figure.shot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  figure.shot.tall img { aspect-ratio: 4 / 5; }
+  figure.shot figcaption { padding: 14px 18px 16px; font-size: 13.5px; color: var(--muted); }
+  figure.shot figcaption b { display: block; color: #fff; font-size: 14.5px; margin-bottom: 2px; }
+  .gallery .span-2 { grid-column: span 2; }
+  @media (max-width: 620px) { .gallery .span-2 { grid-column: auto; } }
+
+  .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .story-grid figure.shot img { aspect-ratio: 1 / 1; }
+
+  /* ---------- instructor ---------- */
+  .instructor {
+    display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 26px; align-items: start;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--card);
+    padding: 28px 30px; margin-bottom: 16px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .instructor:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .instructor .avatar {
+    width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+  .instructor h3 { margin: 0 0 2px; font-size: 1.24rem; letter-spacing: -0.3px; }
+  .instructor .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .instructor .bio { color: var(--muted-2); font-size: 15px; margin: 0 0 14px; max-width: 70ch; }
+  .instructor .contact { color: var(--muted); font-size: 14px; margin: 0; }
+  .people { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 6px; }
+  .person { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 22px 24px; }
+  .person .avatar-sm {
+    width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  }
+  .person h3 { margin: 0 0 2px; font-size: 1.02rem; }
+  .person .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .person p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  /* ---------- structure ---------- */
+  .phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 24px; }
+  .phase.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+  .phase .plabel { font-size: 12.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin: 0 0 4px; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+  .phase h3 { margin: 0 0 12px; font-size: 1.06rem; }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted-2); font-size: 14.5px; padding-left: 22px; position: relative; margin-bottom: 8px; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+
+  /* ---------- outline ---------- */
+  .outline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 24px; }
+  .panel h3 { margin: 0 0 14px; font-size: 1.02rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    border: 1px solid rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.12);
+    border-radius: 999px; padding: 5px 15px; font-size: 13.5px; color: var(--muted-2);
+  }
+  .journey { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .step { flex: 1 1 150px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, 0.03); padding: 14px 16px; text-align: center; }
+  .step b { display: block; font-size: 14.5px; }
+  .step span { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .step.accent { background: rgba(62, 142, 222, 0.14); border-color: rgba(111, 179, 236, 0.4); }
+  .arrow { color: var(--accent); font-size: 18px; }
+  @media (max-width: 700px) { .arrow { display: none; } }
+
+  /* ---------- grading ---------- */
+  .grade-list { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 13px; max-width: 74ch; }
+  .grade-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px 52px; align-items: center; gap: 16px; }
+  .grade-label { color: var(--muted-2); font-size: 14.5px; }
+  .grade-label small { display: block; color: var(--muted); font-size: 13px; }
+  .grade-bar { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+  .grade-bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .grade-weight { text-align: right; font-weight: 700; font-size: 15px; }
+
+  /* ---------- reflections ---------- */
+  .cycle { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin: 8px 0 16px; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 22px; position: relative; }
+  .cyc .cn { position: absolute; top: 18px; right: 20px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--accent); font-weight: 700; }
+  .cyc h3 { margin: 0 0 6px; font-size: 1.02rem; }
+  .cyc p { margin: 0; color: var(--muted); font-size: 14px; }
+  .questions { list-style: none; margin: 0; padding: 0; max-width: 74ch; }
+  .questions li { position: relative; padding-left: 28px; margin-bottom: 12px; color: var(--muted-2); font-size: 15px; }
+  .questions li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
+  .questions li:last-child { margin-bottom: 0; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot-brand { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 13.5px; }
+  .foot-brand .mark-xs {
+    width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+  }
+  .foot-brand .mark-xs svg { width: 14px; height: 14px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13.5px; }
+  .foot-links a { color: var(--muted); transition: color 0.18s ease; }
+  .foot-links a:hover { color: #fff; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22, 0.7, 0.28, 1) forwards; animation-delay: var(--d, 0s); }
+
+  @media (max-width: 880px) {
+    .class-layout { grid-template-columns: 1fr; gap: 28px; padding-top: 40px; }
+    .instructor { grid-template-columns: 1fr; gap: 18px; }
+    .instructor .avatar { width: 92px; height: 92px; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px; padding: 12px; }
+    .toc h2 { width: 100%; margin-bottom: 4px; }
+    .toc a { padding: 5px 11px; background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
+    .grade-row { grid-template-columns: minmax(0, 1fr) 70px; }
+    .grade-bar { display: none; }
+    .hero { padding: 68px 0 22px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .brand small { display: none; }
+    .brand, .nav-links a.nav-cta { white-space: nowrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { animation: none; opacity: 1; }
+    .btn, .card, .instructor { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>· Intro to Making</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#roadmap">Roadmap</a>
+      <a href="#kit">Kit &amp; board</a>
+      <a href="#micropython">MicroPython &amp; AI</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About</a>
+      <a class="nav-cta" href="ENT-164-Class-5-Electronics.pdf">Download slides</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker reveal">Class 5 · Week 5 · Fall 2026</p>
+    <h1 class="reveal" style="--d:.06s">Electronics</h1>
+    <p class="lead reveal" style="--d:.12s">Today your robot gets a brain. We wire motors, sensors, and controls on the breadboard, install MicroPython, and make AI our coding partner.</p>
+    <div class="pills reveal" style="--d:.18s">
+      <span class="pill">Thu, Oct 8</span>
+      <span class="pill">JCC 301 / Nolop</span>
+      <span class="pill">Robo Challenge</span>
+      <span class="pill">Bring your ESP32 kit</span>
+    </div>
+    <div class="cta-row reveal" style="--d:.24s">
+      <a class="btn btn-primary" href="ENT-164-Class-5-Electronics.pdf">Download the slides (PDF)</a>
+      <a class="btn btn-ghost" href="#kit">What's in the kit &darr;</a>
+    </div>
+    <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
+  </div>
+</header>
+
+<div class="wrap class-layout">
+
+  <aside class="toc reveal" style="--d:.36s">
+    <h2>On this page</h2>
+    <a href="#roadmap">Robo Challenge roadmap</a>
+    <a href="#kit">Your kit &amp; board</a>
+    <a href="#wiring">Wiring basics</a>
+    <a href="#micropython">MicroPython &amp; AI</a>
+    <a href="#components">Components &amp; wiring</a>
+    <a href="#assignment">Assignment</a>
+  </aside>
+
+  <main class="content">
+
+    <section class="section-block" id="roadmap">
+      <h2>Robo Challenge roadmap</h2>
+      <p class="lede">Seven weeks from sketch to race day. Today is <strong>WK4 — Electronics</strong>: wire motors, sensors, and controls, then program basic movements with MicroPython and AI.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">WK1</span>
+          <h3>Sketch &amp; Prototype</h3>
+          <p>Rapidly sketch concept variations and build a foam core mockup to test form and mechanics.</p>
+        </div>
+        <div class="card">
+          <span class="num">WK2</span>
+          <h3>Laser Cutting</h3>
+          <p>Create a laser-ready 2D design file from a sketch and laser cut structural components.</p>
+        </div>
+        <div class="card">
+          <span class="num">WK3</span>
+          <h3>3D Printing</h3>
+          <p>Model 3D parts and 3D print functional parts for your project.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">WK4</span>
+          <h3>Electronics</h3>
+          <p>Wire motors, sensors, and controls on a breadboard and program basic movements using MicroPython and AI.</p>
+        </div>
+        <div class="card">
+          <span class="num">WK5</span>
+          <h3>Connectivity</h3>
+          <p>Connect a microcontroller to a wireless network and build a remote control interface.</p>
+        </div>
+        <div class="card">
+          <span class="num">WK6</span>
+          <h3>Final Testing</h3>
+          <p>Final integration and test runs.</p>
+        </div>
+        <div class="card">
+          <span class="num">WK7</span>
+          <h3>Race!</h3>
+          <p>Demonstrate the robot with mechanical systems and motors mounted.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px;"><b>Where you are:</b> sketch, mockup, design, and fabrication are behind you. The rest of the build is assemble &rarr; run wires &rarr; test the wiring &rarr; program &rarr; test again.</div>
+    </section>
+
+    <section class="section-block" id="kit">
+      <h2>Your kit &amp; board</h2>
+      <p class="lede">Freenove FNK0046 Super Starter Kit for ESP32 WROVER — everything you need for the electronics project.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>The brain</h3>
+          <p>ESP32-WROVER board, GPIO extension board, and a solderless breadboard.</p>
+        </div>
+        <div class="card">
+          <h3>The basics</h3>
+          <p>Jumper wires, LEDs, resistors (220&Omega;, 1K, 10K), push buttons, USB cable.</p>
+        </div>
+        <div class="card">
+          <h3>The fun stuff</h3>
+          <p>LCD and 7-segment displays, buzzers, joystick, potentiometers, servo, TT motor + wheel, motor driver, ultrasonic sensor, camera.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px;"><b>No paper tutorial.</b> The download link for the tutorial and code is on the box.</div>
+      <div class="gallery" style="margin-top:20px;">
+        <figure class="shot">
+          <img src="shots/kit-contents.jpg" alt="The Freenove ESP32 starter kit contents laid out: board, breadboard, wires, LEDs, resistors, sensors, servo, motors, and displays">
+          <figcaption><b>The kit</b>Board, breadboard, wires, components, sensors, motors, and displays.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/esp32-board.jpg" alt="Annotated ESP32-WROVER board with its specifications: processor, memory, Wi-Fi, Bluetooth, camera, and GPIO pins">
+          <figcaption><b>ESP32-WROVER</b>Dual-core 32-bit, 80–240 MHz, 520 KB SRAM, 8 MB PSRAM, 4 MB flash, Wi-Fi + Bluetooth 4.2 LE, onboard camera.</figcaption>
+        </figure>
+      </div>
+      <div class="panel" style="margin-top:20px;">
+        <h3>Why it's the brain of your robot</h3>
+        <div class="chips">
+          <span class="chip">Dual-core 32-bit · 80–240 MHz</span>
+          <span class="chip">520 KB SRAM</span>
+          <span class="chip">8 MB PSRAM</span>
+          <span class="chip">4 MB flash</span>
+          <span class="chip">2.4 GHz Wi-Fi</span>
+          <span class="chip">Bluetooth 4.2 LE</span>
+          <span class="chip">Onboard camera</span>
+          <span class="chip">GPIO pins</span>
+          <span class="chip">SD card slot</span>
+          <span class="chip">Code uploader</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="wiring">
+      <h2>Wiring basics</h2>
+      <p class="lede">No soldering — push parts and wires into the holes and they connect. Learn the breadboard rules before you plug anything in.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>Rows</h3>
+          <p>Each row of five holes is connected horizontally, and the center channel separates the two sides.</p>
+        </div>
+        <div class="card">
+          <h3>Power rails</h3>
+          <p>The vertical rails along the edges carry 5V, 3.3V, and GND to every row.</p>
+        </div>
+        <div class="card accent">
+          <h3>Pin rows</h3>
+          <p>Your ESP32 plugs into the GPIO extension board: any of the horizontal holes in a pin's row connects to that pin — for example, pin 34.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px;"><b>Before you wire:</b> remove the pre-installed demo parts from the breadboard, seat the ESP32 and extension board across the center channel, and read the pin labels — 5V, 3V3, GND, and the numbered GPIO pins.</div>
+      <div class="gallery" style="margin-top:20px;">
+        <figure class="shot">
+          <img src="shots/breadboard.jpg" alt="A white solderless breadboard showing rows of holes and the center channel">
+          <figcaption><b>Solderless breadboard</b>Rows of five connected holes, with power rails along the edges.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/jumper-wires.jpg" alt="Bundles of male-to-male, male-to-female, and female-to-female jumper wires">
+          <figcaption><b>Jumper wires</b>Male–male, male–female, and female–female — match the colors to your diagram.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/prep-remove-parts.jpg" alt="Two breadboards side by side: the left one carries a pre-installed demo circuit, the right one is empty">
+          <figcaption><b>Step 1 · Clear it out</b>Pull the pre-installed demo parts before you build your own circuit.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/prep-seat-board.jpg" alt="An ESP32 board seated on a breadboard with pin labels visible: 5V, 3V3, GND, and numbered GPIO pins">
+          <figcaption><b>Step 2 · Seat the board</b>Clip the ESP32 across the center channel and check the pin labels.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-block" id="micropython">
+      <h2>MicroPython &amp; AI</h2>
+      <p class="lede">Your ESP32 runs MicroPython — a tiny version of Python. Install it once, then let AI help you write the code.</p>
+      <div class="callout"><b>One-time setup:</b> follow the instructions at <a href="https://go.tufts.edu/esp32">go.tufts.edu/esp32</a> to put the snake on the plane — flash MicroPython onto your ESP32, then connect with Thonny.</div>
+      <div class="outline-grid">
+        <div class="panel">
+          <h3>Your first program — blink.py</h3>
+          <pre class="mono" style="margin:0; white-space:pre-wrap; color:var(--muted-2); font-size:13.5px; line-height:1.7;">from machine import Pin
+import time
+
+led = Pin(2, Pin.OUT)
+
+while True:
+    led.on()        # Turn LED on
+    time.sleep(1)   # Wait 1 second
+    led.off()       # Turn LED off
+    time.sleep(1)   # Wait 1 second</pre>
+          <p style="margin:16px 0 0; color:var(--muted); font-size:14.5px;">Challenge: can you make it blink faster or slower?</p>
+        </div>
+        <div class="panel">
+          <h3>Ask AI for the next step</h3>
+          <p style="margin:0 0 12px; color:var(--muted); font-size:14.5px;">Go to <a href="https://claude.ai">claude.ai</a> and enter this prompt:</p>
+          <p class="mono" style="margin:0; color:var(--muted-2); font-size:13.5px; line-height:1.7;">I have an ESP32 WROVER with MicroPython and an SG90 servo.<br><br>I want to move the servo arm from 0 to 180 degrees and back.<br><br>Generate the code and provide beginner-friendly wiring instructions.</p>
+        </div>
+      </div>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/thonny-blink.jpg" alt="The Thonny editor connected to the MicroPython device, showing the blink program">
+          <figcaption><b>Thonny</b>Run your code straight on the board — no compiling, no upload dance.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/ai-prompt-claude.jpg" alt="The Claude chat screen with the ESP32 and SG90 servo prompt typed in">
+          <figcaption><b>AI as a coding partner</b>Describe your parts and your goal; ask for beginner-friendly wiring.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/snakes-on-a-plane.jpg" alt="A movie still of a man holding a snake while on the phone — the class joke for putting MicroPython on the board">
+          <figcaption><b>Put the snake on the plane</b>The MicroPython snake needs a plane — your ESP32 board.</figcaption>
+        </figure>
+      </div>
+      <h3 style="font-size:1.05rem;margin:30px 0 10px;">At Nolop: wire your robot one part at a time</h3>
+      <div class="cards">
+        <div class="card">
+          <h3>Today at Nolop</h3>
+          <ul>
+            <li>Mechanical assembly review</li>
+            <li>Use AI to wire robot components one by one</li>
+            <li>Mount parts and run wires after functional testing</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Tips</h3>
+          <ul>
+            <li>Do not generate all the code and wiring in one prompt</li>
+            <li>Add components step by step — test and verify with each iteration</li>
+            <li>Provide detailed model numbers for the parts</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>Name your parts exactly</h3>
+          <ul>
+            <li><span class="mono" style="font-size:13px;">DC Gearbox Motor — "TT Motor"</span></li>
+            <li><span class="mono" style="font-size:13px;">BOJACK L298N Motor DC Dual H-Bridge Motor Driver</span></li>
+            <li><span class="mono" style="font-size:13px;">KY-023 Control Stick</span></li>
+            <li><span class="mono" style="font-size:13px;">SG90 9g Micro Servo Motor</span></li>
+            <li><span class="mono" style="font-size:13px;">Freenove ESP32 WROOM</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="components">
+      <h2>Components &amp; the wiring map</h2>
+      <p class="lede">Every part has a job: inputs read the world, outputs move it.</p>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/potentiometer.jpg" alt="A rotary potentiometer with three pins">
+          <figcaption><b>Potentiometer</b>Left pin &rarr; GND · Middle pin (wiper) &rarr; ESP32 · Right pin &rarr; 3V3.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/joystick.jpg" alt="A KY-023 joystick module with X and Y axes and a push button">
+          <figcaption><b>KY-023 joystick</b>GND &rarr; GND · +5V &rarr; 3V3 · VRx and VRy &rarr; ESP32 · SW (button) &rarr; ESP32.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/servo-sg90.jpg" alt="An SG90 micro servo with its arm and the three-wire connector">
+          <figcaption><b>SG90 servo</b>Brown/Black &rarr; GND · Red &rarr; 5V · Orange/Yellow &rarr; ESP32. Rotates about 180°.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/tt-motor.jpg" alt="A TT gearbox DC motor with a yellow wheel and red and black wires">
+          <figcaption><b>TT Motor</b>DC gearbox motor + wheel — wired through the driver, not straight to the ESP32.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/l298n-driver.jpg" alt="An L298N dual H-bridge motor driver board with heatsink and terminal blocks">
+          <figcaption><b>L298N driver</b>12V &rarr; battery pack · 5V &rarr; logic · GND &rarr; common · IN1–IN4 &rarr; ESP32 · OUT1/OUT2 and OUT3/OUT4 &rarr; left and right motors.</figcaption>
+        </figure>
+        <figure class="shot" style="grid-column: 1 / -1;">
+          <img src="shots/wiring-map.jpg" alt="A complete Fritzing wiring diagram of the robot: ESP32, L298N driver, two DC motors, two servos, two joysticks, and a large joystick">
+          <figcaption><b>The full wiring map</b>Two servos, two DC motors, two joysticks, one driver, one brain. Wire from a diagram, never from memory — and ask AI to explain any wire you don't recognize.</figcaption>
+        </figure>
+      </div>
+      <h3 style="font-size:1.05rem;margin:30px 0 10px;">Robots under construction</h3>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/robot-wired.jpg" alt="A tracked robot wired with many jumper wires next to a WALL-E toy">
+          <figcaption><b>Wire by wire</b>The robot takes shape.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/l298n-installed.jpg" alt="An L298N motor driver wired to motors and a battery pack">
+          <figcaption><b>Motor driver</b>Powered and wired in place.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/lab-test-rig.jpg" alt="A test rig on the bench with a breadboard, servo, arm, and battery pack">
+          <figcaption><b>Test rig</b>Test each part before mounting.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-block" id="assignment">
+      <h2>Assignment &amp; reflection</h2>
+      <p class="lede">Design and build a fun electronics project using your ESP32 kit — with AI as your coding partner.</p>
+      <div class="cards">
+        <div class="card accent">
+          <h3>Requirements</h3>
+          <ul>
+            <li>At least 1 input (sensor, button, etc.) + 1 output (LED, display, buzzer, etc.)</li>
+            <li>AI-generated MicroPython code, tested and refined</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>The process — all in ONE chat</h3>
+          <ul>
+            <li><b>Brainstorm:</b> attach the parts list image, ask AI for project ideas</li>
+            <li><b>Build:</b> get wiring instructions and code from AI</li>
+            <li><b>Test &amp; iterate:</b> describe problems, share errors, refine with AI's help</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cards" style="margin-top:16px;">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Your AI conversation</h3>
+          <p>A link to your chat — one continuous conversation, start to finish.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Video demo</h3>
+          <p>A demo of the working project with a voice-over explanation.</p>
+        </div>
+        <div class="card">
+          <span class="num">03</span>
+          <h3>Written reflection</h3>
+          <p>A written reflection on the process.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px;"><b>Demo:</b> bring your electronics project to class for a demo.</div>
+      <div class="callout"><b>Grading:</b> you're graded on collaboration and learning, <b>not</b> coding skills. Keep one chat, iterate often, and ask lots of questions!</div>
+      <div class="callout"><b>By the end of class:</b> complete your personal reflection for today's class at <a href="https://go.tufts.edu/reflect">go.tufts.edu/reflect</a>.</div>
+    </section>
+
+    <section class="section-block" style="padding-bottom: 0;">
+      <div class="callout warm"><b>Next week:</b> Connectivity — connect your microcontroller to a wireless network and build a remote control interface. Questions? Office hours: <a href="https://go.tufts.edu/meet_tvdv">go.tufts.edu/meet_tvdv</a>.</div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark-xs" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 · Intro to Making — Class 5, Fall 2026</span>
+    </div>
+    <div class="foot-links">
+      <a href="../../">All class materials</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About the instructor</a>
+      <a href="slides.html">Slide deck (web)</a>
+      <a href="ENT-164-Class-5-Electronics.pdf">Download the slides</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 · Class 2 — Hand Making and Robot Challenge Kickoff</title>
+<meta name="description" content="Class 2 of ENT-164 Intro to Making: the Robot Challenge rules, the electronics kit, project teams, foam core and clay hand-making techniques, and phone-based 3D scanning.">
+<meta name="theme-color" content="#0a1020">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ENT-164 · Class 2 — Hand Making and Robot Challenge Kickoff">
+<meta property="og:description" content="Kick off the Robot Challenge: rules, kit, teams, and the foam core and clay skills you'll use to prototype.">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --accent: #6FB3EC;
+    --ink: #0a1020;
+    --ink-2: #101a2b;
+    --ink-3: #241a13;
+    --text: #f2f2f5;
+    --muted: #9aa0b4;
+    --muted-2: #c3c7d6;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-strong: rgba(255, 255, 255, 0.20);
+    --card: rgba(255, 255, 255, 0.045);
+    --check: #7BC89A;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 16.5px;
+    line-height: 1.62;
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 55%, var(--ink-3) 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgba(62, 142, 222, 0.42); color: #fff; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10, 16, 32, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-weight: 700; letter-spacing: -0.2px; }
+  .brand:hover { text-decoration: none; }
+  .brand .mark-sm {
+    width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 4px 14px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .brand .mark-sm svg { width: 16px; height: 16px; }
+  .brand small { color: var(--muted); font-weight: 500; font-size: 13.5px; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { color: var(--muted-2); font-size: 14.5px; font-weight: 500; transition: color 0.18s ease; }
+  .nav-links a:hover { color: #fff; text-decoration: none; }
+  .nav-links a.nav-cta {
+    color: #fff; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 7px 16px; background: rgba(255, 255, 255, 0.05); transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .nav-links a.nav-cta:hover { border-color: rgba(111, 179, 236, 0.65); background: rgba(62, 142, 222, 0.16); }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 84px 0 30px; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(640px 320px at 16% 0%, rgba(62, 142, 222, 0.28), transparent 70%),
+      radial-gradient(560px 300px at 88% 6%, rgba(99, 73, 58, 0.32), transparent 72%);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 74% 70% at 50% 0%, #000 30%, transparent 80%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; }
+  .kicker {
+    font-size: 12.5px; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 16px;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.6vw, 3rem);
+    line-height: 1.12; letter-spacing: -1px; font-weight: 700;
+    margin: 0 0 18px;
+  }
+  h1 .accent {
+    background: linear-gradient(100deg, #6FB3EC 10%, #9ecdf7 50%, #6FB3EC 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lead { color: var(--muted-2); font-size: 1.08rem; max-width: 700px; margin: 0 0 24px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .pill {
+    border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px;
+    padding: 7px 17px; font-size: 13.5px; color: #dfe2ee;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 26px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.1px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn-primary {
+    color: #fff; background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    box-shadow: 0 10px 30px rgba(62, 142, 222, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(62, 142, 222, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28); }
+  .btn-ghost { color: var(--text); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.05); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(111, 179, 236, 0.6); background: rgba(62, 142, 222, 0.14); }
+  .hero .note { margin: 20px 0 0; color: var(--muted); font-size: 13.5px; }
+
+  /* ---------- layout ---------- */
+  .class-layout { display: grid; grid-template-columns: 208px minmax(0, 1fr); gap: 44px; align-items: start; padding-top: 56px; }
+  .toc {
+    position: sticky; top: 88px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 18px 16px;
+  }
+  .toc h2 { font-size: 11.5px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--muted); margin: 0 0 10px; padding-left: 10px; font-weight: 700; }
+  .toc a { display: block; color: var(--muted-2); font-size: 14px; padding: 6px 10px; border-radius: 8px; transition: background 0.15s ease, color 0.15s ease; }
+  .toc a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); text-decoration: none; }
+  .section-block { padding-bottom: 62px; scroll-margin-top: 90px; }
+  .section-block > h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); letter-spacing: -0.5px; margin: 0 0 8px; }
+  .section-block .lede { color: var(--muted); margin: 0 0 24px; max-width: 74ch; }
+  .prose p { color: var(--muted-2); margin: 0 0 16px; max-width: 74ch; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 16px; }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 24px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .card:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; font-weight: 700; color: var(--accent);
+    display: inline-block; margin-bottom: 14px;
+    border: 1px solid rgba(111, 179, 236, 0.4); background: rgba(62, 142, 222, 0.12);
+    border-radius: 8px; padding: 3px 9px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.06rem; letter-spacing: -0.2px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+  .card li { margin-bottom: 6px; }
+  .card.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+
+  .callout {
+    border-left: 3px solid var(--tufts-blue);
+    background: rgba(62, 142, 222, 0.10);
+    border-radius: 0 12px 12px 0; padding: 18px 22px;
+    color: var(--muted-2); font-size: 14.5px; margin: 0 0 16px; max-width: 74ch;
+  }
+  .callout:last-child { margin-bottom: 0; }
+  .callout b { color: #fff; }
+  .callout.warm { border-color: #B07A5A; background: rgba(99, 73, 58, 0.22); }
+
+  /* ---------- discussion prompts ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .prompt {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); padding: 26px 26px 30px;
+  }
+  .prompt .qn { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt p { margin: 12px 0 0; font-size: 1.12rem; line-height: 1.35; letter-spacing: -0.2px; font-weight: 600; }
+  .prompt.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+
+  /* ---------- galleries ---------- */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .gallery figure.shot { display: flex; flex-direction: column; }
+  .gallery figure.shot img { flex: 1; min-height: 190px; }
+  figure.shot { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+  figure.shot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  figure.shot.tall img { aspect-ratio: 4 / 5; }
+  figure.shot figcaption { padding: 14px 18px 16px; font-size: 13.5px; color: var(--muted); }
+  figure.shot figcaption b { display: block; color: #fff; font-size: 14.5px; margin-bottom: 2px; }
+  .gallery .span-2 { grid-column: span 2; }
+  @media (max-width: 620px) { .gallery .span-2 { grid-column: auto; } }
+
+  .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .story-grid figure.shot img { aspect-ratio: 1 / 1; }
+
+  /* ---------- instructor ---------- */
+  .instructor {
+    display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 26px; align-items: start;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--card);
+    padding: 28px 30px; margin-bottom: 16px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .instructor:hover { border-color: rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.06); }
+  .instructor .avatar {
+    width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+  .instructor h3 { margin: 0 0 2px; font-size: 1.24rem; letter-spacing: -0.3px; }
+  .instructor .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .instructor .bio { color: var(--muted-2); font-size: 15px; margin: 0 0 14px; max-width: 70ch; }
+  .instructor .contact { color: var(--muted); font-size: 14px; margin: 0; }
+  .people { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 6px; }
+  .person { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 22px 24px; }
+  .person .avatar-sm {
+    width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+    border: 2px solid rgba(111, 179, 236, 0.45);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  }
+  .person h3 { margin: 0 0 2px; font-size: 1.02rem; }
+  .person .role { color: var(--accent); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
+  .person p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  /* ---------- structure ---------- */
+  .phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 24px; }
+  .phase.accent { background: rgba(62, 142, 222, 0.10); border-color: rgba(111, 179, 236, 0.35); }
+  .phase .plabel { font-size: 12.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin: 0 0 4px; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+  .phase h3 { margin: 0 0 12px; font-size: 1.06rem; }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted-2); font-size: 14.5px; padding-left: 22px; position: relative; margin-bottom: 8px; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+
+  /* ---------- outline ---------- */
+  .outline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 24px; }
+  .panel h3 { margin: 0 0 14px; font-size: 1.02rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    border: 1px solid rgba(111, 179, 236, 0.35); background: rgba(62, 142, 222, 0.12);
+    border-radius: 999px; padding: 5px 15px; font-size: 13.5px; color: var(--muted-2);
+  }
+  .journey { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .step { flex: 1 1 150px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, 0.03); padding: 14px 16px; text-align: center; }
+  .step b { display: block; font-size: 14.5px; }
+  .step span { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .step.accent { background: rgba(62, 142, 222, 0.14); border-color: rgba(111, 179, 236, 0.4); }
+  .arrow { color: var(--accent); font-size: 18px; }
+  @media (max-width: 700px) { .arrow { display: none; } }
+
+  /* ---------- grading ---------- */
+  .grade-list { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 13px; max-width: 74ch; }
+  .grade-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px 52px; align-items: center; gap: 16px; }
+  .grade-label { color: var(--muted-2); font-size: 14.5px; }
+  .grade-label small { display: block; color: var(--muted); font-size: 13px; }
+  .grade-bar { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+  .grade-bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .grade-weight { text-align: right; font-weight: 700; font-size: 15px; }
+
+  /* ---------- reflections ---------- */
+  .cycle { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin: 8px 0 16px; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 22px; position: relative; }
+  .cyc .cn { position: absolute; top: 18px; right: 20px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--accent); font-weight: 700; }
+  .cyc h3 { margin: 0 0 6px; font-size: 1.02rem; }
+  .cyc p { margin: 0; color: var(--muted); font-size: 14px; }
+  .questions { list-style: none; margin: 0; padding: 0; max-width: 74ch; }
+  .questions li { position: relative; padding-left: 28px; margin-bottom: 12px; color: var(--muted-2); font-size: 15px; }
+  .questions li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
+  .questions li:last-child { margin-bottom: 0; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot-brand { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 13.5px; }
+  .foot-brand .mark-xs {
+    width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+  }
+  .foot-brand .mark-xs svg { width: 14px; height: 14px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13.5px; }
+  .foot-links a { color: var(--muted); transition: color 0.18s ease; }
+  .foot-links a:hover { color: #fff; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22, 0.7, 0.28, 1) forwards; animation-delay: var(--d, 0s); }
+
+  @media (max-width: 880px) {
+    .class-layout { grid-template-columns: 1fr; gap: 28px; padding-top: 40px; }
+    .instructor { grid-template-columns: 1fr; gap: 18px; }
+    .instructor .avatar { width: 92px; height: 92px; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px; padding: 12px; }
+    .toc h2 { width: 100%; margin-bottom: 4px; }
+    .toc a { padding: 5px 11px; background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
+    .grade-row { grid-template-columns: minmax(0, 1fr) 70px; }
+    .grade-bar { display: none; }
+    .hero { padding: 68px 0 22px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .brand small { display: none; }
+    .brand, .nav-links a.nav-cta { white-space: nowrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { animation: none; opacity: 1; }
+    .btn, .card, .instructor { transition: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>· Intro to Making</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#challenge">The challenge</a>
+      <a href="#kit">Your kit</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About</a>
+      <a class="nav-cta" href="ENT-164-Class-2-Hand-Making-and-Robot-Challenge.pdf">Download slides</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker reveal">Class 2 · Week 2 · Fall 2026</p>
+    <h1 class="reveal" style="--d:.06s">Hand Making <span class="accent">&amp; Robot Challenge Kickoff</span></h1>
+    <p class="lead reveal" style="--d:.12s">Today we kick off the Robot Challenge: the rules, your team, the electronics in your kit, and the hand-making skills — foam core and clay — you'll use to prototype your robot.</p>
+    <div class="pills reveal" style="--d:.18s">
+      <span class="pill">Thu, Sep 17</span>
+      <span class="pill">JCC 301 / Nolop</span>
+      <span class="pill">Robot Challenge kickoff</span>
+      <span class="pill">Teams announced today</span>
+    </div>
+    <div class="cta-row reveal" style="--d:.24s">
+      <a class="btn btn-primary" href="ENT-164-Class-2-Hand-Making-and-Robot-Challenge.pdf">Download the slides (PDF)</a>
+      <a class="btn btn-ghost" href="#challenge">See the challenge &darr;</a>
+    </div>
+    <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
+  </div>
+</header>
+
+<div class="wrap class-layout">
+
+  <aside class="toc reveal" style="--d:.36s">
+    <h2>On this page</h2>
+    <a href="#challenge">The Robot Challenge</a>
+    <a href="#kit">What's in your kit</a>
+    <a href="#workshops">Workshops &amp; key dates</a>
+    <a href="#teams">Your team</a>
+    <a href="#handmaking">Foam core techniques</a>
+    <a href="#clay">Clay &amp; 3D scanning</a>
+  </aside>
+
+  <main class="content">
+
+    <section class="section-block" id="challenge">
+      <h2>The Robot Challenge</h2>
+      <p class="lede">Design, build, and program a robot that moves as many balls as possible across the finish line in 5 minutes.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>Scoring</h3>
+          <ul>
+            <li>1 point per ball moved across the line</li>
+            <li>Maximum 10 balls per trip</li>
+            <li>Balls are dropped off in a standard container</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>The course</h3>
+          <ul>
+            <li>Move as many balls as possible in 5 minutes</li>
+            <li>Loading and drop-off zones are 10 feet (~3 meters) apart</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>Your robot</h3>
+          <ul>
+            <li>Designed, built, and programmed by your team</li>
+            <li>You cannot touch the balls or robot during the race</li>
+            <li>Robot and loading mechanism must fit in your team's project box</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:16px;"><b>This is about more than winning.</b> You'll experiment with ideas quickly, build foundational skills in sketching, prototyping, electronics, and coding, learn to collaborate in a team, and discover creative solutions to open-ended problems. At the end you'll have a robot to show off — and the maker skills for your final team project.</div>
+    </section>
+
+    <section class="section-block" id="kit">
+      <h2>What's in your kit</h2>
+      <p class="lede">Drive, support, and control — everything you need is in your team's kit.</p>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/dc-motor.jpg" alt="A yellow DC gearbox motor">
+          <figcaption><b>DC gearbox motor · 2x</b>Your powered wheels, with 3mm mounting holes.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/dc-motor-and-wheel.jpg" alt="A DC gearbox motor with a wheel attached">
+          <figcaption><b>Motor + wheel</b>One motor per side drives the robot.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/caster-wheel.jpg" alt="A small caster wheel">
+          <figcaption><b>Caster wheel</b>Free-rolling support so the robot can pivot.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/delivery-robot-in-the-wild.jpg" alt="A delivery robot driving outdoors">
+          <figcaption><b>In the wild</b>Powered wheels plus casters — the same combo delivery robots use.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/micro-servo.jpg" alt="A small blue SG90 micro servo motor">
+          <figcaption><b>SG90 9g micro servo</b>Rotates to a precise angle — steering, grippers, and dispensers.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/servos-wired.jpg" alt="A servo motor wired to a circuit board">
+          <figcaption><b>Wired up</b>Servos connect to the breadboard.</figcaption>
+        </figure>
+        <figure class="shot span-2">
+          <img src="shots/wiring-diagram.jpg" alt="A wiring diagram showing an ESP32, motor driver, breadboard, joystick, servos, motors, and battery pack">
+          <figcaption><b>The rest of the electronics</b>Motor driver, breadboard, joystick, battery pack, and the ESP32 microcontroller — keep the USB-C port accessible to upload code.</figcaption>
+        </figure>
+      </div>
+      <div class="callout" style="margin-top:16px;"><b>Build notes:</b> during early design you don't need exact connections — just allocate space to mount each component and route the wires. Search for data sheets online to verify dimensions, or measure the parts yourself. Tip: hide the wires for a better finish.</div>
+    </section>
+
+    <section class="section-block" id="workshops">
+      <h2>Workshops &amp; key dates</h2>
+      <p class="lede">Workshops build the skills you'll apply in your project — and you don't have to wait for one to try something new. Learn from others, research online, or ask Nolop staff.</p>
+      <div class="phases">
+        <div class="phase accent">
+          <p class="plabel">Today · Sep 17</p>
+          <h3>Prototype</h3>
+          <ul>
+            <li>Sketch</li>
+            <li>Foam core</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Sep 24</p>
+          <h3>Laser cutting</h3>
+          <ul>
+            <li>2D design</li>
+            <li>Laser cutting</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Oct 1</p>
+          <h3>3D printing</h3>
+          <ul>
+            <li>Digital sculpting</li>
+            <li>3D design</li>
+            <li>Slicing</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Oct 8</p>
+          <h3>Devices</h3>
+          <ul>
+            <li>Micro controller</li>
+            <li>MicroPython</li>
+            <li>Motors</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Oct 15</p>
+          <h3>Connectivity</h3>
+          <ul>
+            <li>Networking</li>
+            <li>Remote control</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Oct 22</p>
+          <h3>Final build</h3>
+          <ul>
+            <li>Finalize</li>
+            <li>Test</li>
+          </ul>
+        </div>
+        <div class="phase accent">
+          <p class="plabel">Oct 29</p>
+          <h3>Challenge!</h3>
+          <ul>
+            <li>Race day</li>
+            <li>Put your robot to the test</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="teams">
+      <h2>Your team</h2>
+      <p class="lede">You'll work in these teams for the whole Robot Challenge.</p>
+      <div class="people">
+        <div class="person">
+          <h3 style="color:#e8a13c;">Orange</h3>
+          <p class="role">Robot Challenge team</p>
+        </div>
+        <div class="person">
+          <h3 style="color:#6FB3EC;">Blue</h3>
+          <p class="role">Robot Challenge team</p>
+        </div>
+        <div class="person">
+          <h3 style="color:#e06a6a;">Red</h3>
+          <p class="role">Robot Challenge team</p>
+        </div>
+        <div class="person">
+          <h3 style="color:#7BC89A;">Green</h3>
+          <p class="role">Robot Challenge team</p>
+        </div>
+      </div>
+      <div class="callout warm" style="margin-top:16px;"><b>Team assignment — due Thu, Sep 24.</b> Present your initial prototype to the class: 5 minutes per team at Nolop.</div>
+    </section>
+
+    <section class="section-block" id="handmaking">
+      <h2>Hand making with foam core</h2>
+      <p class="lede">Foam core is a Styrofoam core laminated between two smooth paper layers — lightweight but rigid, and easier to work with than corrugated cardboard.</p>
+      <div class="prose">
+        <p>You'll start with quick sketches, lay out paper templates, and cut on a mat with a sharp X-Acto knife — always in at least three passes: top paper, foam, then bottom paper. Straight cuts run along a metal ruler; curves are cut by hand.</p>
+        <p>Corners are where the craft shows: the butt joint, folded round, folded sharp, and rabbet. The rabbet hides the edge of the board and makes the strongest corner. For curves, cut the outside and add V-notches on the inside so the board bends smoothly.</p>
+      </div>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/foam-core-samples.jpg" alt="Samples of foam core board formed into cones and cylinders">
+          <figcaption><b>Foam core</b>Light, rigid, and easy to shape.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/cutting-foam-core.jpg" alt="Hands cutting foam core on a cutting mat with an X-Acto knife">
+          <figcaption><b>Cutting</b>Sharp blade, cutting mat, metal ruler.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/kiosk-step-02-templates.jpg" alt="Template patterns drawn on paper">
+          <figcaption><b>Templates</b>Draw the parts on paper before you cut.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/kiosk-step-04-trim-rabbet.jpg" alt="Trimming a rabbet joint to hide the back of the board">
+          <figcaption><b>Rabbet joints</b>Strong corners that hide the board's edge.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/kiosk-step-08-curved-corners.jpg" alt="Curved corners formed with three V-notches">
+          <figcaption><b>Curves</b>Cuts outside, V-notches inside.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/kiosk-step-12-decals.jpg" alt="Decals and a panel finishing the front of the kiosk">
+          <figcaption><b>Finish</b>Decals and panels make the mockup read clearly.</figcaption>
+        </figure>
+        <figure class="shot span-2">
+          <img src="shots/finished-kiosk.jpg" alt="A person using the finished foam core ticket kiosk model">
+          <figcaption><b>Example project: train ticket kiosk</b>A full-size foam core model built with the same techniques — sketch, templates, rabbet joints, and hot glue.</figcaption>
+        </figure>
+      </div>
+      <div class="callout warm" style="margin-top:16px;"><b>Safety first.</b> Cut away from your body and keep hands clear of blades. Wear safety glasses when cutting, soldering, or using power tools. Gloves only for hot materials or chemicals — never around rotating tools. Tie back long hair and avoid loose clothing or jewelry near machines. Read Nolop's safety policy at <a href="https://nolop.org/safety" target="_blank" rel="noopener">nolop.org/safety</a>.</div>
+    </section>
+
+    <section class="section-block" id="clay">
+      <h2>Clay &amp; 3D scanning</h2>
+      <p class="lede">For complex, organic forms, clay is faster than CAD — sculpt by hand, then digitize.</p>
+      <div class="prose">
+        <p>Clay is a naturally expressive, sculptural medium: easy to manipulate by hand and with simple tools, and the model-making material of choice for organic shapes. Start with a sketch, apply clay to a fixture, and sculpt the form.</p>
+        <p>Then scan the model with your phone using the Polycam app. Rotate and crop the scan, export it, and convert it to STL for 3D printing at <a href="https://convert3d.org/gltf-to-stl" target="_blank" rel="noopener">convert3d.org/gltf-to-stl</a>.</p>
+      </div>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/helmet-sketches.jpg" alt="Pencil sketches of a helmet from several angles">
+          <figcaption><b>1 · Sketch</b>Draw the form first.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/apply-clay-to-fixture.jpg" alt="Hands applying clay to a mannequin head fixture">
+          <figcaption><b>2 · Apply clay</b>Build up clay on the fixture.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/sculpting-clay.jpg" alt="Hands sculpting the clay model with small tools">
+          <figcaption><b>3 · Sculpt</b>Shape and smooth the model.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/handheld-3d-scanner.jpg" alt="A person scanning the model with a handheld 3D scanner">
+          <figcaption><b>4 · Scan</b>Digitize the model with your phone.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/scanned-mesh.jpg" alt="A wireframe mesh of the scanned model in software">
+          <figcaption><b>5 · Post-process</b>Clean up the digital model.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/polycam-crop.jpg" alt="The Polycam crop tool selecting just the model in the scan">
+          <figcaption><b>Crop</b>Remove the background around the model.</figcaption>
+        </figure>
+        <figure class="shot span-2">
+          <img src="shots/gltf-to-stl-converter.jpg" alt="A website that converts GLTF files to STL">
+          <figcaption><b>Convert to STL</b>Turn your exported model into an STL, ready for 3D printing.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-block" style="padding-bottom: 0;">
+      <div class="callout warm"><b>Next week:</b> present your initial prototype at Nolop (5 minutes per team) and start From Physical to Digital — 2D design and laser cutting. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark-xs" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 · Intro to Making — Class 2, Fall 2026</span>
+    </div>
+    <div class="foot-links">
+      <a href="../../">All class materials</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About the instructor</a>
+      <a href="slides.html">Slide deck (web)</a>
+      <a href="ENT-164-Class-2-Hand-Making-and-Robot-Challenge.pdf">Download the slides</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
