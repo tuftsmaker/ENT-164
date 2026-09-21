@@ -159,8 +159,20 @@ h1 .accent { color: var(--blue-deep); }
 }
 .make-strip figcaption { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
 .make-strip figcaption b { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 1px; }
-.materials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
-.materials .guide-card { padding: 26px; }
+.guides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+.guide-card.syllabus-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 30px; align-items: center; padding: 30px 34px; }
+.syllabus-card .mark-md {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+  display: grid; place-items: center;
+  box-shadow: 0 6px 16px rgba(62, 142, 222, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+.syllabus-card .mark-md svg { width: 27px; height: 27px; }
+.syllabus-body h3 { margin: 0 0 4px; font-size: 1.35rem; letter-spacing: -0.3px; color: var(--ink); }
+.syllabus-body .sub { margin: 0 0 12px; color: var(--blue-deep); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.syllabus-body > p { margin: 0 0 14px; color: var(--muted); font-size: 15px; max-width: 72ch; }
+.syllabus-body .tags { margin: 0; }
+.syllabus-actions { display: flex; flex-direction: column; gap: 10px; }
 .deck-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
 .deck-card {
   display: grid; grid-template-columns: 40% minmax(0, 1fr);
@@ -539,7 +551,9 @@ footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44
   .section { padding-top: 64px; }
   .section.tight { padding-top: 48px; }
   .hero-split { grid-template-columns: 1fr; gap: 28px; }
-  .materials { grid-template-columns: 1fr; }
+  .guides { grid-template-columns: 1fr; }
+  .guide-card.syllabus-card { grid-template-columns: 1fr; gap: 20px; }
+  .syllabus-actions { flex-direction: row; flex-wrap: wrap; }
   .deck-grid { grid-template-columns: 1fr; }
   .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .make-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
