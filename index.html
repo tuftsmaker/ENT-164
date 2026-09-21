@@ -5,301 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ENT-164 · Intro to Making — Guides &amp; Syllabus</title>
 <meta name="description" content="The syllabus and step-by-step, beginner-friendly guides for making with AI in ENT-164.">
-<meta name="theme-color" content="#0a1020">
+<meta name="theme-color" content="#f7f9fc">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ENT-164 · Intro to Making — Guides &amp; Syllabus">
 <meta property="og:description" content="The syllabus and step-by-step, beginner-friendly guides for making with AI in ENT-164.">
-<meta property="og:url" content="https://tvande08.github.io/ENT-164/">
-<meta property="og:image" content="https://tvande08.github.io/ENT-164/opencode-deepseek-guide-mac/shots/app-00-start-crop.png">
-<style>
-  :root {
-    --tufts-blue: #3E8EDE;
-    --jumbo-blue: #002E6D;
-    --tufts-brown: #63493A;
-    --bessie-brown: #3D2E25;
-    --candle: #F2EDE7;
-    --accent: #6FB3EC;
-    --ink: #0a1020;
-    --ink-2: #101a2b;
-    --ink-3: #241a13;
-    --text: #f2f2f5;
-    --muted: #9aa0b4;
-    --muted-2: #c3c7d6;
-    --line: rgba(255, 255, 255, 0.10);
-    --line-strong: rgba(255, 255, 255, 0.20);
-    --card: rgba(255, 255, 255, 0.045);
-    --check: #7BC89A;
-    --radius: 16px;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    color: var(--text);
-    font-size: 16.5px;
-    line-height: 1.62;
-    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 55%, var(--ink-3) 100%);
-    background-attachment: fixed;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-  ::selection { background: rgba(62, 142, 222, 0.42); color: #fff; }
-  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
-  a { color: var(--accent); text-decoration: none; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
-  section[id] { scroll-margin-top: 92px; }
-
-  /* ---------- nav ---------- */
-  .nav {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(10, 16, 32, 0.72);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
-  .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-weight: 700; letter-spacing: -0.2px; }
-  .brand .mark-sm {
-    width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto;
-    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
-    display: grid; place-items: center;
-    box-shadow: 0 4px 14px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  }
-  .brand .mark-sm svg { width: 16px; height: 16px; }
-  .brand small { color: var(--muted); font-weight: 500; font-size: 13.5px; }
-  .nav-links { display: flex; align-items: center; gap: 26px; }
-  .nav-links a { color: var(--muted-2); font-size: 14.5px; font-weight: 500; transition: color 0.18s ease; }
-  .nav-links a:hover { color: #fff; }
-  .nav-links a.nav-cta {
-    color: #fff; border: 1px solid var(--line-strong); border-radius: 999px;
-    padding: 7px 16px; background: rgba(255, 255, 255, 0.05); transition: border-color 0.18s ease, background 0.18s ease;
-  }
-  .nav-links a.nav-cta:hover { border-color: rgba(111, 179, 236, 0.65); background: rgba(62, 142, 222, 0.16); }
-
-  /* ---------- hero ---------- */
-  .hero { position: relative; overflow: hidden; text-align: center; padding: 104px 0 84px; }
-  .hero::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background:
-      radial-gradient(640px 340px at 18% 0%, rgba(62, 142, 222, 0.30), transparent 70%),
-      radial-gradient(560px 320px at 86% 8%, rgba(99, 73, 58, 0.34), transparent 72%);
-  }
-  .hero::after {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-    background-size: 44px 44px;
-    -webkit-mask-image: radial-gradient(ellipse 70% 62% at 50% 0%, #000 30%, transparent 78%);
-    mask-image: radial-gradient(ellipse 70% 62% at 50% 0%, #000 30%, transparent 78%);
-  }
-  .hero > .wrap { position: relative; z-index: 1; }
-  .mark-lg {
-    width: 68px; height: 68px; margin: 0 auto 26px; border-radius: 19px;
-    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
-    display: grid; place-items: center;
-    box-shadow: 0 14px 40px rgba(62, 142, 222, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  }
-  .mark-lg svg { width: 34px; height: 34px; }
-  .kicker {
-    font-size: 12.5px; letter-spacing: 2.6px; text-transform: uppercase;
-    color: var(--accent); font-weight: 700; margin: 0 0 16px;
-  }
-  h1 {
-    font-size: clamp(2.15rem, 5.4vw, 3.55rem);
-    line-height: 1.12; letter-spacing: -1.2px; font-weight: 700;
-    margin: 0 0 20px;
-  }
-  h1 .accent {
-    background: linear-gradient(100deg, #6FB3EC 10%, #9ecdf7 50%, #6FB3EC 90%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .hero .lead {
-    color: var(--muted-2); font-size: 1.13rem; max-width: 660px; margin: 0 auto 28px;
-  }
-  .pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 34px; }
-  .pill {
-    border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px;
-    padding: 7px 17px; font-size: 13.5px; color: #dfe2ee;
-    background: rgba(255, 255, 255, 0.05);
-  }
-  .cta-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 9px;
-    padding: 14px 28px; border-radius: 999px;
-    font-size: 15.5px; font-weight: 600; letter-spacing: 0.1px;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-  }
-  .btn-primary {
-    color: #fff; background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
-    box-shadow: 0 10px 30px rgba(62, 142, 222, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.28);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(62, 142, 222, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28); }
-  .btn-ghost {
-    color: var(--text); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.05);
-  }
-  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(111, 179, 236, 0.6); background: rgba(62, 142, 222, 0.14); }
-  .btn-sm { padding: 10px 20px; font-size: 14px; }
-  .hero .note { margin: 22px 0 0; color: var(--muted); font-size: 13.5px; }
-
-  /* ---------- sections ---------- */
-  .section { padding: 84px 0 0; }
-  .section-head { max-width: 660px; margin: 0 auto 44px; text-align: center; }
-  .section-head .kicker { margin-bottom: 12px; }
-  h2 { font-size: clamp(1.55rem, 3.1vw, 2.15rem); line-height: 1.2; letter-spacing: -0.6px; margin: 0 0 12px; }
-  .section-head p { color: var(--muted); margin: 0; }
-
-  /* ---------- guides ---------- */
-  .guide-list { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 18px; align-items: stretch; }
-  .guide-card {
-    display: flex; flex-direction: column;
-    border: 1px solid var(--line); border-radius: var(--radius);
-    background: var(--card); padding: 30px;
-    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  }
-  .guide-card:hover {
-    transform: translateY(-3px); border-color: rgba(111, 179, 236, 0.45);
-    background: rgba(62, 142, 222, 0.08); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
-  }
-  .guide-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-  .guide-head .mark-md {
-    width: 46px; height: 46px; border-radius: 13px; flex: 0 0 auto;
-    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
-    display: grid; place-items: center;
-    box-shadow: 0 6px 18px rgba(62, 142, 222, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.32);
-  }
-  .guide-head .mark-md svg { width: 23px; height: 23px; }
-  .guide-head h3 { margin: 0; font-size: 1.22rem; letter-spacing: -0.3px; }
-  .guide-head .sub { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
-  .guide-card > p { margin: 0 0 22px; color: var(--muted-2); font-size: 15px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0 0 24px; padding: 0; }
-  .tags li {
-    border: 1px solid var(--line); border-radius: 999px;
-    padding: 4px 13px; font-size: 12.5px; color: var(--muted-2);
-    background: rgba(255, 255, 255, 0.04);
-  }
-  .guide-actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; }
-  .os-icon { width: 16px; height: 16px; filter: brightness(0) invert(1); }
-  .pdf-links { margin: 14px 0 0; color: var(--muted); font-size: 13.5px; }
-  .soon-card {
-    border: 1px dashed rgba(255, 255, 255, 0.22); border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.02);
-    padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center;
-  }
-  .soon-card .plus {
-    width: 46px; height: 46px; border-radius: 13px; margin-bottom: 18px;
-    border: 1px dashed rgba(111, 179, 236, 0.5); color: var(--accent);
-    display: grid; place-items: center; font-size: 22px; font-weight: 400; line-height: 1;
-  }
-  .soon-card h3 { margin: 0 0 8px; font-size: 1.05rem; color: var(--muted-2); }
-  .soon-card p { margin: 0; color: var(--muted); font-size: 14px; max-width: 260px; }
-  .soon-card.wide { grid-column: 1 / -1; flex-direction: row; gap: 16px; text-align: left; padding: 22px 30px; }
-  .soon-card.wide .plus { width: 38px; height: 38px; border-radius: 11px; font-size: 19px; margin: 0; flex: 0 0 auto; }
-  .soon-card.wide h3 { margin: 0 0 2px; }
-  .soon-card.wide p { max-width: none; }
-
-  /* ---------- inside cards ---------- */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(236px, 1fr)); gap: 16px; }
-  .card {
-    position: relative; border: 1px solid var(--line); border-radius: var(--radius);
-    background: var(--card); padding: 26px 24px;
-    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  }
-  .card:hover {
-    transform: translateY(-4px); border-color: rgba(111, 179, 236, 0.45);
-    background: rgba(62, 142, 222, 0.08); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
-  }
-  .card .num {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 13px; font-weight: 700; color: var(--accent);
-    display: inline-block; margin-bottom: 14px;
-    border: 1px solid rgba(111, 179, 236, 0.4); background: rgba(62, 142, 222, 0.12);
-    border-radius: 8px; padding: 3px 9px;
-  }
-  .card h3 { margin: 0 0 8px; font-size: 1.06rem; letter-spacing: -0.2px; }
-  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
-
-  /* ---------- before you start ---------- */
-  .need { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; align-items: stretch; }
-  .panel {
-    border: 1px solid var(--line); border-radius: var(--radius);
-    background: var(--card); padding: 30px 30px 26px;
-  }
-  .panel h3 { margin: 0 0 16px; font-size: 1.12rem; letter-spacing: -0.2px; }
-  .checklist { list-style: none; margin: 0; padding: 0; }
-  .checklist li {
-    position: relative; padding-left: 30px; margin-bottom: 13px; color: var(--muted-2); font-size: 15px;
-  }
-  .checklist li:last-child { margin-bottom: 0; }
-  .checklist li::before {
-    content: "✓"; position: absolute; left: 0; top: 0;
-    color: var(--check); font-weight: 700;
-  }
-  .checklist b { color: #fff; }
-  .callout {
-    border-left: 3px solid var(--tufts-blue);
-    background: rgba(62, 142, 222, 0.10);
-    border-radius: 0 12px 12px 0; padding: 18px 22px;
-    color: var(--muted-2); font-size: 14.5px; margin: 0 0 16px;
-  }
-  .callout:last-child { margin-bottom: 0; }
-  .callout b { color: #fff; }
-  .callout.warm { border-color: #B07A5A; background: rgba(99, 73, 58, 0.22); }
-
-  /* ---------- cta band ---------- */
-  .cta-band {
-    position: relative; overflow: hidden; text-align: center;
-    margin-top: 84px; padding: 66px 28px;
-    border: 1px solid var(--line); border-radius: 24px;
-    background:
-      radial-gradient(640px 240px at 50% -30%, rgba(62, 142, 222, 0.30), transparent 72%),
-      rgba(255, 255, 255, 0.03);
-  }
-  .cta-band h2 { margin-bottom: 10px; }
-  .cta-band p { color: var(--muted); max-width: 520px; margin: 0 auto 30px; }
-
-  /* ---------- footer ---------- */
-  footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44px; }
-  .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
-  .foot-brand { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 13.5px; }
-  .foot-brand .mark-xs {
-    width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
-    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
-    display: grid; place-items: center;
-  }
-  .foot-brand .mark-xs svg { width: 14px; height: 14px; }
-  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13.5px; }
-  .foot-links a { color: var(--muted); transition: color 0.18s ease; }
-  .foot-links a:hover { color: #fff; }
-
-  /* ---------- motion ---------- */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .reveal { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22, 0.7, 0.28, 1) forwards; animation-delay: var(--d, 0s); }
-
-  @media (max-width: 880px) {
-    .guide-list { grid-template-columns: 1fr; }
-    .soon-card.wide { flex-direction: column; text-align: center; }
-    .need { grid-template-columns: 1fr; }
-    .hero { padding: 76px 0 64px; }
-    .section { padding-top: 66px; }
-    .nav-links a:not(.nav-cta) { display: none; }
-    .brand small { display: none; }
-    .brand, .nav-links a.nav-cta { white-space: nowrap; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .reveal { animation: none; opacity: 1; }
-    .btn, .card, .guide-card { transition: none; }
-  }
-</style>
+<meta property="og:url" content="https://tuftsmaker.github.io/ENT-164/">
+<meta property="og:image" content="https://tuftsmaker.github.io/ENT-164/opencode-deepseek-guide-mac/shots/app-00-start-crop.png">
+<link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
+<body class="page-hub">
 
 <nav class="nav">
   <div class="wrap nav-inner">
@@ -409,12 +123,34 @@
           </div>
           <p class="pdf-links">Download the PDF: <a href="opencode-deepseek-guide-mac/opencode-deepseek-v4.1-flash-setup.pdf">macOS</a> · <a href="opencode-deepseek-guide-win/opencode-deepseek-v4.1-flash-setup.pdf">Windows</a></p>
         </article>
-        <aside class="soon-card wide reveal" style="--d:.15s">
-          <span class="plus" aria-hidden="true">+</span>
-          <div>
-            <h3>More materials coming</h3>
-            <p>New guides and class resources will appear here as the term goes on.</p>
+        <article class="guide-card reveal" style="--d:.15s">
+          <div class="guide-head">
+            <span class="mark-md" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+              </svg>
+            </span>
+            <div>
+              <h3>Add your class tools to opencode</h3>
+              <p class="sub">One-time setup · about 2 minutes</p>
+            </div>
           </div>
+          <p>Turn on the class skills in opencode — including the wiring-diagram maker we use in class. Paste one sentence and let opencode do it; nothing to install, and nothing can break.</p>
+          <ul class="tags">
+            <li>About 2 minutes</li>
+            <li>You only do it once</li>
+            <li>Wiring diagrams</li>
+            <li>Beginner friendly</li>
+          </ul>
+          <div class="guide-actions">
+            <a class="btn btn-primary btn-sm" href="handouts/add-class-tools.html">Read the instructions &rarr;</a>
+            <a class="btn btn-ghost btn-sm" href="handouts/add-class-tools.pdf">Download the PDF</a>
+          </div>
+        </article>
+        <aside class="soon-card reveal" style="--d:.2s">
+          <span class="plus" aria-hidden="true">+</span>
+          <h3>More materials coming</h3>
+          <p>New guides and class resources will appear here as the term goes on.</p>
         </aside>
       </div>
     </div>
@@ -715,6 +451,7 @@
       <a href="about/">About the instructor</a>
       <a href="opencode-deepseek-guide-mac/guide.html">OpenCode guide (macOS)</a>
       <a href="opencode-deepseek-guide-win/guide.html">OpenCode guide (Windows)</a>
+      <a href="handouts/add-class-tools.html">Class tools for opencode</a>
       <a href="https://opencode.ai/docs" target="_blank" rel="noopener">OpenCode docs</a>
       <a href="https://openrouter.ai" target="_blank" rel="noopener">OpenRouter</a>
     </div>
