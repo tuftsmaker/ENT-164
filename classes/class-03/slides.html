@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 Class 3 · Laser Cutting — Slides</title>
+<meta name="theme-color" content="#f7f9fc">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --blue-deep: #1F6FD0;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --ink: #0d1526;
+    --text: #17203a;
+    --muted: #5f6b7a;
+    --muted-2: #3f4a5a;
+    --line: #e6eaf1;
+    --line-strong: #d5dce7;
+    --paper: #ffffff;
+    --paper-2: #f7f9fc;
+    --blue-tint: #f2f7fd;
+    --blue-tint-2: #eaf3fd;
+    --radius: 4mm;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: 297mm 167mm; margin: 0; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #e8ecf2;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    position: relative; overflow: hidden;
+    width: 297mm; height: 167mm;
+    padding: 13mm 16mm 15mm;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide > * { position: relative; z-index: 1; }
+  .slide-logo {
+    position: absolute; top: 12.4mm; right: 16mm; z-index: 2;
+    height: 5.2mm; width: auto;
+  }
+  .cover .slide-logo { top: 18mm; height: 7mm; }
+
+  .s-head { margin-bottom: 6.5mm; }
+  .s-kicker {
+    font-size: 8.5pt; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--blue-deep); font-weight: 700; margin: 0 0 2.4mm;
+  }
+  h2 { font-size: 24pt; line-height: 1.12; letter-spacing: -0.6px; font-weight: 700; margin: 0; color: var(--ink); }
+  .s-sub { color: var(--muted); font-size: 12pt; margin: 2.6mm 0 0; max-width: 210mm; }
+  h2 .accent { color: var(--blue-deep); }
+  .s-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .s-foot {
+    position: absolute; left: 16mm; right: 16mm; bottom: 5.5mm; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 7.5pt; color: #8a93a3; letter-spacing: 0.3px;
+    border-top: 1px solid var(--line); padding-top: 2.2mm;
+  }
+  .s-foot .fnum { color: var(--ink); font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 6mm 6mm 5.5mm;
+    box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    display: flex; flex-direction: column;
+  }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);
+    align-self: flex-start; margin-bottom: 3.4mm;
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 2mm; padding: 0.8mm 2.4mm;
+  }
+  .card h3 { margin: 0 0 1.8mm; font-size: 13.5pt; letter-spacing: -0.2px; color: var(--ink); }
+  .card p { margin: 0; color: var(--muted); font-size: 10.5pt; line-height: 1.45; }
+  .card.tight p { font-size: 10pt; }
+  .card .ico {
+    width: 9mm; height: 9mm; border-radius: 2.6mm; margin-bottom: 3.4mm;
+    background: var(--blue-tint-2); border: 1px solid #cfe1f7;
+    display: grid; place-items: center;
+  }
+  .card .ico svg { width: 4.6mm; height: 4.6mm; }
+  .card.accent { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- cover ---------- */
+  .cover { padding: 15mm 16mm 12mm; }
+  .cover .top { display: flex; align-items: center; gap: 4mm; margin-bottom: 7mm; }
+  .cover .mark {
+    width: 13mm; height: 13mm; border-radius: 3.6mm; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 2mm 6mm rgba(62, 142, 222, 0.28);
+  }
+  .cover .mark svg { width: 6.6mm; height: 6.6mm; }
+  .cover .course { font-weight: 700; font-size: 13pt; letter-spacing: -0.2px; color: var(--ink); }
+  .cover .course small { color: var(--muted); font-weight: 500; font-size: 10pt; }
+  .cover .cols { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr); gap: 10mm; flex: 1; min-height: 0; }
+  .cover .lede { display: flex; flex-direction: column; justify-content: center; }
+  .cover h1 { font-size: 40pt; line-height: 1.04; letter-spacing: -1.6px; margin: 0 0 5mm; font-weight: 700; color: var(--ink); }
+  .cover h1 .accent { color: var(--blue-deep); }
+  .cover .sub { color: var(--muted-2); font-size: 13pt; max-width: 150mm; margin: 0 0 6mm; }
+  .cover .pills { display: flex; flex-wrap: wrap; gap: 2.6mm; }
+  .pill {
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 1.6mm 4.4mm; font-size: 9.5pt; color: #46505f;
+    background: var(--paper);
+  }
+  .cover .shot {
+    border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong);
+    box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);
+    position: relative; min-height: 0;
+  }
+  .cover .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover .team {
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    border-top: 1px solid var(--line); margin-top: 7mm; padding-top: 4mm;
+    font-size: 9.5pt; color: var(--muted-2);
+  }
+  .cover .team b { color: var(--ink); font-weight: 600; }
+  .cover .team .tufts { color: var(--muted); }
+
+  /* ---------- discussion ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; flex: 1; }
+  .prompt {
+    position: relative;
+    border: 1px solid var(--line); border-radius: 5mm;
+    background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    padding: 8mm 7mm;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .prompt .q { font-size: 16pt; line-height: 1.3; letter-spacing: -0.3px; font-weight: 600; margin: 0; color: var(--ink); }
+  .prompt .qn { position: absolute; top: 6mm; left: 7mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--blue-deep); font-size: 10pt; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- gallery / mosaic ---------- */
+  .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 2.6mm; flex: 1; min-height: 0; }
+  .tile { position: relative; border-radius: 3mm; overflow: hidden; border: 1px solid var(--line); background: var(--paper); min-height: 0; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 1.8mm 3mm; font-size: 7.5pt; color: var(--muted-2);
+    background: rgba(255, 255, 255, 0.93); border-top: 1px solid var(--line);
+  }
+
+  .gallery { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .gallery.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gallery.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery .tile { display: flex; flex-direction: column; background: var(--paper); }
+  .gallery .tile img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+  .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
+  .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
+
+  /* ---------- structure ---------- */
+  .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
+  .phase.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .phase .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 1mm; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9.5pt; color: var(--muted); margin: 0 0 4mm; }
+  .phase h3 { margin: 0 0 3mm; font-size: 14pt; color: var(--ink); }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted); font-size: 10.5pt; padding-left: 5mm; position: relative; margin-bottom: 2.2mm; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--blue-deep); }
+  .assign { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); margin-top: 4mm; padding: 4.6mm 6mm; display: flex; align-items: center; gap: 6mm; }
+  .assign .alabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); white-space: nowrap; }
+  .assign p { margin: 0; color: var(--muted); font-size: 10.5pt; }
+  .assign p b { color: var(--ink); }
+
+  /* ---------- outline ---------- */
+  .outline { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5mm; flex: 1; min-height: 0; align-items: center; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5.5mm 6mm; display: flex; flex-direction: column; min-height: 0; }
+  .panel .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 3.6mm; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2.2mm; align-content: flex-start; }
+  .chip {
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 999px; padding: 1.4mm 3.6mm; font-size: 10pt; color: var(--muted-2);
+  }
+  .journey { display: flex; align-items: stretch; gap: 2.4mm; margin-top: 4mm; }
+  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.6mm 3mm; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .step b { display: block; font-size: 10.5pt; color: var(--ink); }
+  .step span { display: block; color: var(--muted); font-size: 8.5pt; margin-top: 0.8mm; }
+  .step.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .arrow { display: grid; place-items: center; color: var(--blue-deep); font-size: 14pt; }
+
+  /* ---------- rubrics ---------- */
+  .rubric { display: flex; flex-direction: column; gap: 5mm; flex: 1; justify-content: center; }
+  .rub-row { display: grid; grid-template-columns: 62mm minmax(0, 1fr) 16mm; align-items: center; gap: 6mm; }
+  .rub-label { color: var(--muted-2); font-size: 12pt; }
+  .rub-label small { display: block; color: var(--muted); font-size: 9pt; }
+  .bar { height: 3.4mm; border-radius: 999px; background: #edf1f6; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .rub-val { text-align: right; font-weight: 700; font-size: 16pt; color: var(--ink); }
+  .footnote { color: var(--muted); font-size: 9.5pt; margin-top: 3mm; }
+
+  /* ---------- reflections ---------- */
+  .refl { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 5mm; flex: 1; min-height: 0; }
+  .cycle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5mm 4mm; position: relative; }
+  .cyc .cn { position: absolute; top: 3.6mm; right: 4mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9pt; color: var(--blue-deep); font-weight: 700; }
+  .cyc h3 { margin: 0 0 1.6mm; font-size: 12.5pt; color: var(--ink); }
+  .cyc p { margin: 0; color: var(--muted); font-size: 9.5pt; }
+  .qs { list-style: none; margin: 0; padding: 0; }
+  .qs li { position: relative; padding-left: 7mm; margin-bottom: 3.4mm; color: var(--muted-2); font-size: 11pt; }
+  .qs li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--blue-deep); font-weight: 700; }
+  .qs li:last-child { margin-bottom: 0; }
+
+  /* ---------- kit / makerspace ---------- */
+  .kit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4mm; flex: 1; align-content: center; }
+  .kit .card { align-items: flex-start; }
+  .bigline { text-align: center; margin: auto 0; }
+  .bigline .kicker-sm { font-size: 9pt; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 4mm; }
+  .bigline h2 { font-size: 34pt; letter-spacing: -1.2px; margin: 0 0 5mm; color: var(--ink); }
+  .bigline p { color: var(--muted); font-size: 14pt; max-width: 190mm; margin: 0 auto 6mm; }
+  .bigline .url { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12pt; color: var(--blue-deep); }
+
+  /* ---------- closing ---------- */
+  .closing { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6mm; flex: 1; align-items: center; }
+  .closing h2 { font-size: 36pt; }
+  .contact-card { border: 1px solid var(--line-strong); border-radius: 5mm; background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 7mm; }
+  .contact-card .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 4mm; }
+  .contact-card p { margin: 0 0 3.4mm; color: var(--muted); font-size: 11pt; }
+  .contact-card p:last-child { margin-bottom: 0; }
+  .contact-card b { color: var(--ink); }
+
+  @media screen {
+    body { padding: 10mm 0; }
+    .slide { margin: 0 auto 10mm; box-shadow: 0 12px 40px rgba(13, 21, 38, 0.16); border-radius: 2mm; }
+  }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .slide { margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 01 · COVER ============ -->
+<section class="slide cover">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="top">
+    <span class="mark" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="6" cy="6" r="3" />
+        <path d="M8.12 8.12 12 12" />
+        <path d="M20 4 8.12 15.88" />
+        <circle cx="6" cy="18" r="3" />
+        <path d="M14.8 14.8 20 20" />
+      </svg>
+    </span>
+    <div class="course">ENT-164 <small>· Intro to Making</small></div>
+  </div>
+  <div class="cols">
+    <div class="lede">
+      <p class="s-kicker">Class 3 · Week 3 · Fall 2026</p>
+      <h1 style="font-size: 37pt;">From 2D to 3D<br><span class="accent">Laser Cutting</span></h1>
+      <p class="sub">Turn your robot sketches and measurements into a laser-ready 2D design — measure the real parts, model in Onshape, and cut at Nolop.</p>
+      <div class="pills">
+        <span class="pill">Thu, Sep 24</span>
+        <span class="pill">JCC 301 / Nolop</span>
+        <span class="pill">Onshape + Illustrator</span>
+        <span class="pill">Individual laser-cut project</span>
+      </div>
+    </div>
+    <figure class="shot">
+      <img src="shots/laser-cutting-closeup.jpg" alt="A hand lifting a freshly laser-cut heart-shaped panel from a laser cutter bed">
+    </figure>
+  </div>
+  <div class="team">
+    <span><b>Thomas Van de Velde</b> · Instructor &nbsp; · &nbsp; <b>Alexander Beattie</b> · TA &nbsp; · &nbsp; <b>Patrice Pinardo</b> · TA</span>
+    <span class="tufts">Tufts University · Gordon Institute</span>
+  </div>
+</section>
+
+<!-- ============ 02 · ROBO CHALLENGE ROADMAP ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Robo Challenge · roadmap</p>
+    <h2>Seven weeks from sketch <span class="accent">to race day</span></h2>
+    <p class="s-sub">Today we're at WK2 — laser cutting. Here's how the robot build comes together.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3mm;">
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK1</span>
+        <h3 style="font-size: 11pt;">Sketch &amp; Prototype</h3>
+        <p>Sketch concept variations; build a foam core mockup.</p>
+      </article>
+      <article class="card tight accent" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK2</span>
+        <h3 style="font-size: 11pt;">Laser Cutting</h3>
+        <p>Create a laser-ready 2D design; cut structural parts.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK3</span>
+        <h3 style="font-size: 11pt;">3D Printing</h3>
+        <p>Model 3D parts; 3D print functional parts.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK4</span>
+        <h3 style="font-size: 11pt;">Electronics</h3>
+        <p>Wire motors, sensors, and controls; program with MicroPython + AI.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK5</span>
+        <h3 style="font-size: 11pt;">Connectivity</h3>
+        <p>Connect to a wireless network; build a remote control interface.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK6</span>
+        <h3 style="font-size: 11pt;">Final Testing</h3>
+        <p>Final integration and test runs.</p>
+      </article>
+      <article class="card tight" style="padding: 4.4mm 4mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">WK7</span>
+        <h3 style="font-size: 11pt;">Race!</h3>
+        <p>Demonstrate the robot with mechanical systems and motors mounted.</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Today</span>
+      <p><b>WK2 · Laser Cutting</b> — go from a foam core prototype to a laser-cut assembly: measure the real parts, draw them in Onshape, and cut.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">02</span></footer>
+</section>
+
+<!-- ============ 03 · TODAY'S PLAN ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Robo Challenge · today</p>
+    <h2>From mockup <span class="accent">to laser-cut assembly</span></h2>
+    <p class="s-sub">Your foam core prototype proved the idea. Now we design the real parts.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.92fr 1.08fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <article class="phase hot" style="flex: 1;">
+          <p class="plabel">Today's plan</p>
+          <ul style="margin-top: 3mm;">
+            <li>Read your sketches as engineering drawings</li>
+            <li>Pull numbers from datasheets</li>
+            <li>Measure the real parts with calipers</li>
+            <li>Draw the parts in Onshape</li>
+            <li>Turn a sketch into a laser-ready DXF</li>
+          </ul>
+        </article>
+        <article class="phase" style="flex: 1;">
+          <p class="plabel">Where we are in the build</p>
+          <p style="margin: 3mm 0 0; color: var(--muted); font-size: 10.5pt;">Sketch and mockup are behind you. Today the design becomes a real, cut part — then we fabricate, assemble, and get on to electronics.</p>
+        </article>
+      </div>
+      <figure class="tile" style="display: flex;">
+        <img src="shots/prototype-cardboard.jpg" alt="A foam core and cardboard mockup of a tracked robot, showing how the flat parts assemble into a body" style="object-fit: contain; background: var(--paper);">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">03</span></footer>
+</section>
+
+<!-- ============ 04 · THE MAKING CYCLE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The making cycle</p>
+    <h2>Sketch, mockup, <span class="accent">design, fabricate</span></h2>
+    <p class="s-sub">TwoD design sits between the mockup and the finished part — and the cycle repeats.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.18fr 0.82fr;">
+      <figure class="tile" style="display: flex;">
+        <img src="shots/making-cycle.png" alt="Hand-drawn making cycle: sketch, mockup, design 2D, fabricate by laser cut, assemble with glue and screws, program, test — plus measure and component sketch" style="object-fit: contain; background: var(--paper);">
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Measure before you draw</h3>
+          <p>Every hole and every slot starts with a real number from a real part — never a guess.</p>
+        </article>
+        <article class="card tight">
+          <h3>Design for the sheet</h3>
+          <p>Laser cutting works on flat stock, so think in 2D: flat panels that slot, bolt, or glue into a 3D object.</p>
+        </article>
+        <article class="card tight">
+          <h3>Fabricate, then check</h3>
+          <p>Cut a test part in cardboard before you commit a sheet of plywood to the design.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ============ 05 · SIGN UP FOR ONSHAPE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Before you design</p>
+    <h2>Sign up for <span class="accent">Onshape</span></h2>
+    <p class="s-sub">Onshape is a CAD program that runs in your browser — nothing to install, and your work is always saved.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.1fr 0.9fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card accent">
+          <p class="s-kicker" style="margin-bottom: 3mm;">Do this now</p>
+          <p style="font-size: 12pt; color: var(--text); margin-bottom: 4mm;">Sign up with your <b>Tufts account</b> to get the free education plan.</p>
+          <span class="mono" style="font-size: 12.5pt; color: var(--blue-deep);">onshape.com/en/education/sign-up</span>
+        </article>
+        <article class="card tight">
+          <h3>Why Onshape?</h3>
+          <p>It runs in the browser on any laptop, keeps a version history of every change, and exports a DXF that the laser cutter can read.</p>
+        </article>
+      </div>
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); background: var(--paper); padding: 12mm;">
+          <img src="shots/onshape-logo.png" alt="The Onshape logo" style="width: 100%; height: auto; display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">Use your Tufts account — the education plan is free.</p>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ============ 06 · DESIGN SKETCH: TOP VIEW ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Read your sketch · 1 of 3</p>
+    <h2>The top view is your <span class="accent">base plate</span></h2>
+    <p class="s-sub">Looking straight down: the footprint of the robot, the wheel positions, and the mounting holes for the motors.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.62fr 1.38fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Overall size</h3>
+          <p>170 mm long and 60 mm wide set the sheet footprint of the whole assembly.</p>
+        </article>
+        <article class="card tight">
+          <h3>Wheel cutouts</h3>
+          <p>The hatched panels at each corner are the wheels, bolted through the base plate.</p>
+        </article>
+        <article class="card tight">
+          <h3>Motor mounts</h3>
+          <p>The two small squares are the motor housings — their spacing comes from the datasheet.</p>
+        </article>
+      </div>
+      <figure class="tile" style="display: flex;">
+        <img src="shots/sketch-top.png" alt="Hand-drawn top view of the robot: a base plate 170 mm by 60 mm with wheel panels at each corner and two motor housings" style="object-fit: contain; background: var(--paper);">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ============ 07 · DESIGN SKETCH: SIDE VIEW ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Read your sketch · 2 of 3</p>
+    <h2>The side view sets the <span class="accent">heights</span></h2>
+    <p class="s-sub">Looking from the side: how tall the body is, where the electronics sit, and how the wheel clears the deck.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.62fr 1.38fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Body height</h3>
+          <p>45 mm of clearance under the deck for the electronics and the motor driver.</p>
+        </article>
+        <article class="card tight">
+          <h3>Battery pack</h3>
+          <p>45 mm long and 60 mm wide — it decides where the electronics panel sits.</p>
+        </article>
+        <article class="card tight">
+          <h3>Wheel diameter</h3>
+          <p>The wheel is the lowest point, so it sets how the chassis meets the ground.</p>
+        </article>
+      </div>
+      <figure class="tile" style="display: flex;">
+        <img src="shots/sketch-side.png" alt="Hand-drawn side view of the robot showing a 170 mm length, a 45 mm tall body, the battery pack, the wheel, and the motor driver on top" style="object-fit: contain; background: var(--paper);">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ============ 08 · DESIGN SKETCH: AXLE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Read your sketch · 3 of 3</p>
+    <h2>The axle is a <span class="accent">measured part</span></h2>
+    <p class="s-sub">Small parts need the tightest numbers — the axle is where a loose hole turns into a wobbly wheel.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.62fr 1.38fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Axle length</h3>
+          <p>60 mm from the motor to the far wheel, held by 2 × M3 screws.</p>
+        </article>
+        <article class="card tight">
+          <h3>Hole sizes</h3>
+          <p>A Ø3 shaft hole and Ø3 mounting holes at 17.5 mm spacing — half of a 35 mm motor centre.</p>
+        </article>
+        <article class="card tight">
+          <h3>Material thickness</h3>
+          <p>6 mm and 20 mm faces are the plywood thickness the slots have to match.</p>
+        </article>
+      </div>
+      <figure class="tile" style="display: flex;">
+        <img src="shots/sketch-axle.png" alt="Hand-drawn axle drawing: a 60 mm axle with two wheels, a 30 mm arm, and a bracket with a 3 mm hole at 17.5 mm spacing" style="object-fit: contain; background: var(--paper);">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ============ 09 · DATASHEETS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Numbers, not guesses · 1 of 2</p>
+    <h2>Leverage <span class="accent">datasheets</span></h2>
+    <p class="s-sub">Every part you bought came with a drawing. Use it — the manufacturer already measured the part for you.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.08fr 0.92fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">The four numbers you need</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.6;">
+            <li><b>Mounting hole distance</b> — 17.5 mm and 22.3 mm on the TT motor</li>
+            <li><b>Mounting hole diameter</b> — Ø2.4 / Ø3 mm, depending on the screw</li>
+            <li><b>Motor housing height</b> — 64.4 mm overall, 36.8 mm to the shaft</li>
+            <li><b>Motor housing depth</b> — 22.6 mm, plus the 9.1 mm shaft</li>
+          </ul>
+        </article>
+        <article class="card tight">
+          <p>Check the drawing for <b>hole spacing</b> before you draw the mount — that single number decides whether the motor fits.</p>
+        </article>
+      </div>
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); background: var(--paper); padding: 6mm;">
+          <img src="shots/motor-datasheet.png" alt="Datasheet drawing of a TT geared motor with dimensions: 22.6 mm width, 17.5 mm mounting hole spacing, 64.4 mm height, and a 9.1 mm shaft" style="width: 100%; height: auto; display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">A TT motor datasheet — all the numbers for the mount are already here.</p>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">09</span></footer>
+</section>
+
+<!-- ============ 10 · MEASURE IT YOURSELF ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Numbers, not guesses · 2 of 2</p>
+    <h2>Take your own <span class="accent">measurements</span></h2>
+    <p class="s-sub">When there's no datasheet, or the part is already in your hand, the caliper is the answer.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.02fr 0.98fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Outer jaws (1)</h3>
+          <p>Measure the outside of a shaft, a wheel hub, or sheet thickness.</p>
+        </article>
+        <article class="card tight">
+          <h3>Inner jaws (2)</h3>
+          <p>Measure the inside of a hole or a slot — the two small jaws at the top.</p>
+        </article>
+        <article class="card tight">
+          <h3>Depth rod (3)</h3>
+          <p>Reach into a bore to find how deep a part really sits — handy for the motor boss.</p>
+        </article>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
+        <figure style="margin: 0; flex: 1; display: flex; min-height: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); background: var(--paper);">
+          <img src="shots/calipers.png" alt="A labelled diagram of a Vernier caliper pointing out the outer jaws, inner jaws, depth rod, main scale, and sliding scale" style="width: 100%; height: 100%; object-fit: contain; padding: 4mm;">
+        </figure>
+        <article class="card tight accent">
+          <p class="s-kicker" style="margin-bottom: 2mm;">Tip</p>
+          <p style="font-size: 11pt;">Measure twice, and write the number on the sketch before you open Onshape.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">10</span></footer>
+</section>
+
+<!-- ============ 11 · BOLTS, WASHERS, NUTS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Holding it together · 1 of 2</p>
+    <h2>Bolts, washers, <span class="accent">and nuts</span></h2>
+    <p class="s-sub">Flat parts become a 3D object when you bolt them together — so your drawing needs the hole, not just the shape.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.06fr 0.94fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>The bolt sizes the hole</h3>
+          <p>An M3 bolt needs a clearance hole around 3.2 mm in the parts it passes through — the head and the nut do the clamping.</p>
+        </article>
+        <article class="card tight">
+          <h3>The washer spreads the load</h3>
+          <p>Under the nut and the head, it stops the bolt from crushing soft plywood or cracking acrylic.</p>
+        </article>
+        <article class="card tight">
+          <h3>The nut locks it</h3>
+          <p>Threads only bite where there is a matching nut, so plan for access on both sides of the joint.</p>
+        </article>
+      </div>
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); background: var(--paper); padding: 8mm;">
+          <img src="shots/bolt-washer-nut.png" alt="Labelled section drawing of a bolted joint through two parts, showing the bolt head, hole, body, washer, nut, and threads" style="width: 100%; height: auto; display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">A bolted joint: head, hole, washer, nut, and threads.</p>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">11</span></footer>
+</section>
+
+<!-- ============ 12 · SELF-TAPPING VS SELF-DRILLING ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Holding it together · 2 of 2</p>
+    <h2>Screws that make <span class="accent">their own hole</span></h2>
+    <p class="s-sub">Two screw types you'll use on wood and acrylic — and the pilot hole each one needs.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1fr 1fr;">
+      <article class="card accent">
+        <span class="num">01</span>
+        <h3>Self-tapping</h3>
+        <p>Needs a <b>pre-drilled pilot hole</b>. The screw cuts its own threads as it goes in — a pilot hole slightly smaller than the screw keeps the wood from splitting.</p>
+        <p style="margin-top: 3mm;">Use it when the screw has to grip the material directly, with no nut on the far side.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Self-drilling</h3>
+        <p>Has a <b>drill point on the tip</b>. It drills its own hole and taps its own threads in one pass — no pilot hole needed.</p>
+        <p style="margin-top: 3mm;">Fast for thin sheet and soft material, but it can split thin plywood or crack acrylic.</p>
+      </article>
+    </div>
+    <div class="assign" style="margin-top: 5mm;">
+      <span class="alabel">On the laser</span>
+      <p><b>You can't drill a hole with a laser</b> — laser-cut a pilot hole slightly undersized and let the screw cut its own thread, or cut the clearance hole and use a bolt, washer, and nut.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">12</span></footer>
+</section>
+
+<!-- ============ 13 · ONSHAPE DESIGN DEMO ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Onshape design demo</p>
+    <h2>Draw your first <span class="accent">laser-ready shapes</span></h2>
+    <p class="s-sub">Follow along in your own Onshape document — five shapes cover almost every part you'll cut.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.04fr 0.96fr;">
+      <div style="display: flex; flex-direction: column; gap: 3mm; min-height: 0;">
+        <article class="card tight accent">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">In this demo</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10pt; line-height: 1.55;">
+            <li><b>A workspace overview</b> — documents, tabs, and the feature list</li>
+            <li><b>A basic rectangle</b> — start a sketch and draw the base plate</li>
+            <li><b>Updating dimensions</b> — drive every size from a typed number</li>
+            <li><b>Mirroring</b> — one wheel mount becomes two</li>
+            <li><b>Combining shapes and the Trim tool</b> — slots and cutouts</li>
+            <li><b>Creating joints</b> — check that the parts assemble</li>
+          </ul>
+        </article>
+        <article class="card tight">
+          <h3>From sketch to laser file</h3>
+          <p>Right-click the sketch in the feature list and choose <b>Export as DXF/DWG</b> — that file goes to the laser cutter.</p>
+        </article>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 3mm; min-height: 0;">
+        <figure style="margin: 0; flex: 1; display: flex; min-height: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); background: var(--paper);">
+          <img src="shots/onshape-logo.png" alt="The Onshape logo" style="width: 100%; height: 100%; object-fit: contain; padding: 22mm;">
+        </figure>
+        <article class="card tight accent">
+          <p class="s-kicker" style="margin-bottom: 2mm;">More videos</p>
+          <p style="font-size: 9.5pt; line-height: 1.5;">A longer Onshape playlist is on the class page and in the syllabus.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">13</span></footer>
+</section>
+
+<!-- ============ 14 · LASER VS 3D PRINT (1) ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Laser cutting vs 3D printing · 1 of 2</p>
+    <h2>Two machines, <span class="accent">two ways of making</span></h2>
+    <p class="s-sub">Both are digital fabrication — but they remove material differently, so they suit different parts.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.78fr 1.22fr; align-items: center;">
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); background: var(--paper);">
+          <img src="shots/laser-vs-printer.jpg" alt="A laser engraver cutting a wooden plaque beside a filament 3D printer" style="width: 100%; height: auto; display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">A laser cutter (left) and a 3D printer (right).</p>
+      </figure>
+      <div style="display: grid; grid-template-columns: 34mm 1fr 1fr; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--paper); font-size: 9.5pt;">
+        <div style="background: var(--blue-tint-2); padding: 2.8mm 3.4mm; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--line);">Aspect</div>
+        <div style="background: var(--blue-tint-2); padding: 2.8mm 3.4mm; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--line);">3D printing</div>
+        <div style="background: var(--blue-tint-2); padding: 2.8mm 3.4mm; font-weight: 700; color: var(--blue-deep); border-bottom: 1px solid var(--line);">Laser cutting</div>
+
+        <div style="padding: 2.8mm 3.4mm; font-weight: 600; color: var(--muted-2); border-bottom: 1px solid var(--line);">Process</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Additive — builds the object layer by layer</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Subtractive — removes material from a flat sheet</div>
+
+        <div style="padding: 2.8mm 3.4mm; font-weight: 600; color: var(--muted-2); border-bottom: 1px solid var(--line);">Material</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Thermoplastics, resins, and metal powders</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Wood, acrylic, paper, fabric, and some plastics</div>
+
+        <div style="padding: 2.8mm 3.4mm; font-weight: 600; color: var(--muted-2); border-bottom: 1px solid var(--line);">Complexity</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Intricate, organic 3D geometry</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Best for 2D — 3D shapes are assembled from flat parts</div>
+
+        <div style="padding: 2.8mm 3.4mm; font-weight: 600; color: var(--muted-2);">Precision</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted);">Good resolution; layer lines affect the finish</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted);">High precision and tight tolerances on flat stock</div>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">14</span></footer>
+</section>
+
+<!-- ============ 15 · LASER VS 3D PRINT (2) ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Laser cutting vs 3D printing · 2 of 2</p>
+    <h2>Choosing the <span class="accent">right machine</span></h2>
+    <p class="s-sub">Speed, cost, and finishing decide it — and often the answer is to use both.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.78fr 1.22fr; align-items: center;">
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0; max-height: 100%;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); background: var(--paper); min-height: 0; display: flex;">
+          <img src="shots/prusa-extruder.jpg" alt="Close-up of a Prusa MK4 print head laying down a first layer on the print bed" style="width: 100%; height: 100%; max-height: 96mm; object-fit: cover; object-position: center 42%; display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">The 3D printer builds up; the laser cuts down.</p>
+      </figure>
+      <div style="display: grid; grid-template-columns: 34mm 1fr 1fr; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--paper); font-size: 9.5pt;">
+        <div style="background: var(--blue-tint-2); padding: 2.8mm 3.4mm; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--line);">Aspect</div>
+        <div style="background: var(--blue-tint-2); padding: 2.8mm 3.4mm; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--line);">3D printing</div>
+        <div style="background: var(--blue-tint-2); padding: 2.8mm 3.4mm; font-weight: 700; color: var(--blue-deep); border-bottom: 1px solid var(--line);">Laser cutting</div>
+
+        <div style="padding: 2.8mm 3.4mm; font-weight: 600; color: var(--muted-2); border-bottom: 1px solid var(--line);">Speed</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Slower on large or highly detailed objects</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Fast from sheet stock — excellent for batch runs</div>
+
+        <div style="padding: 2.8mm 3.4mm; font-weight: 600; color: var(--muted-2); border-bottom: 1px solid var(--line);">Cost</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Cost-effective for one-off prototypes and custom parts</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Lower cost per part from standard sheet sizes</div>
+
+        <div style="padding: 2.8mm 3.4mm; font-weight: 600; color: var(--muted-2); border-bottom: 1px solid var(--line);">Finishing</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Supports to remove, then sanding or finishing</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted); border-bottom: 1px solid var(--line);">Minimal — usually just cleaning the edges</div>
+
+        <div style="padding: 2.8mm 3.4mm; font-weight: 600; color: var(--muted-2);">Best for</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted);">Rapid prototypes and complex 3D models</div>
+        <div style="padding: 2.8mm 3.4mm; color: var(--muted);">Signage, panels, precision parts, high-volume cutting</div>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">15</span></footer>
+</section>
+
+<!-- ============ 16 · SHAPE GENERATOR ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Shortcut</p>
+    <h2>When you need a box, <span class="accent">not a design</span></h2>
+    <p class="s-sub">Generate the panels, then take them into Onshape or straight to the laser.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 0.98fr 1.02fr;">
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card accent">
+          <p class="s-kicker" style="margin-bottom: 3mm;">Laser cut shape generator</p>
+          <p style="font-size: 12pt; color: var(--text); margin-bottom: 4mm;">Pick a box, a tray, or a living hinge, type your material thickness, and download an SVG.</p>
+          <span class="mono" style="font-size: 11.5pt; color: var(--blue-deep);">boxes.hackerspace-bamberg.de/boxes.py</span>
+        </article>
+        <article class="card tight">
+          <h3>The material thickness drives everything</h3>
+          <p>Every finger joint is sized from the sheet thickness — measure it with your calipers first.</p>
+        </article>
+      </div>
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
+          <img src="shots/boxes-py.jpg" alt="The boxes.py website with a box generator form and a preview of a laser-cut finger-jointed box" style="width: 100%; height: auto; display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">Boxes.py generates finger-jointed panels from your thickness.</p>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">16</span></footer>
+</section>
+
+<!-- ============ 17 · LASER CONTROL SOFTWARE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Laser control software</p>
+    <h2>Where the file meets <span class="accent">the machine</span></h2>
+    <p class="s-sub">The control software is both the design environment and the machine controller.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2" style="grid-template-columns: 1.06fr 0.94fr;">
+      <div style="display: flex; flex-direction: column; gap: 3.4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Import</h3>
+          <p>Vector and image files — SVG, DXF, AI, PDF, PNG, JPG, and more.</p>
+        </article>
+        <article class="card tight">
+          <h3>Prepare</h3>
+          <p>Scale, align, and add text so the job fits the sheet you actually have.</p>
+        </article>
+        <article class="card tight">
+          <h3>Assign operations</h3>
+          <p>Say which lines are cuts and which areas are engraves, with their own speeds and power levels.</p>
+        </article>
+        <article class="card tight">
+          <h3>Send</h3>
+          <p>Where supported, it talks to the cutter directly — no separate driver step.</p>
+        </article>
+      </div>
+      <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+        <div style="border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
+          <img src="shots/ucp-workplane.jpg" alt="The laser control software showing red cut paths laid out on a work plane with rulers and machine controls" style="width: 100%; height: auto; display: block;">
+        </div>
+        <p style="margin: 2.6mm 0 0; color: var(--muted); font-size: 9.5pt;">Red tool paths on the work plane, ready to send to the cutter.</p>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">17</span></footer>
+</section>
+
+<!-- ============ 18 · LASER STEP BY STEP (1-3) ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">At Nolop · laser cutting step by step 1–3</p>
+    <h2>Open it in Illustrator and <span class="accent">fix the lines</span></h2>
+    <p class="s-sub">Your DXF will look wrong when it opens — that's normal. Three steps to make it cuttable.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <figure class="tile">
+        <img src="shots/illustrator-stroke.jpg" alt="Adobe Illustrator's properties panel with the Stroke value highlighted and set to 0.001" style="object-fit: contain; background: var(--paper);">
+        <figcaption><b>1 · Set the stroke</b>File &gt; Open your DXF. Select All (Cmd/Ctrl+A) and set Stroke to 0.001".</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/illustrator-ungroup.jpg" alt="Right-click context menu in Illustrator with Ungroup selected over a drawing of box panels" style="object-fit: contain; background: var(--paper);">
+        <figcaption><b>2 · Ungroup</b>Right-click the drawing and choose Ungroup so you can select individual lines.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/illustrator-color-mixer.jpg" alt="Illustrator's colour mixer showing R 255, G 0, B 0 for a pure red stroke, with the properties panel showing stroke 0.001" style="object-fit: contain; background: var(--paper);">
+        <figcaption><b>3 · Make cuts red</b>Click the Stroke colour box, open the Color Mixer, and set R 255, G 0, B 0.</figcaption>
+      </figure>
+    </div>
+    <div class="assign" style="margin-top: 4mm;">
+      <span class="alabel">The rule</span>
+      <p><b>Cuts are 100% red. Engraves and text are 100% black.</b> The laser reads colour, so anything in the wrong colour is the wrong operation.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">18</span></footer>
+</section>
+
+<!-- ============ 19 · LASER STEP BY STEP (4-5) ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">At Nolop · laser cutting step by step 4–5</p>
+    <h2>Print it and <span class="accent">hand it off</span></h2>
+    <p class="s-sub">Illustrator is the editor; the control software runs the machine. Two steps to move between them.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <figure class="tile">
+        <img src="shots/illustrator-print.jpg" alt="The Illustrator Print dialog with the Print button highlighted" style="object-fit: contain; background: var(--paper);">
+        <figcaption><b>4 · File &gt; Print</b>Choose File &gt; Print… from the menu bar and click the Print button. Illustrator hands the job to the laser's print driver.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/ucp-icon.jpg" alt="A taskbar showing the UCP application icon among other application icons" style="object-fit: contain; background: var(--paper);">
+        <figcaption><b>5 · Find UCP</b>A second application opens with your drawing loaded. If it doesn't appear, click the UCP icon in the taskbar.</figcaption>
+      </figure>
+    </div>
+    <div class="assign" style="margin-top: 4mm;">
+      <span class="alabel">Check</span>
+      <p>Confirm your drawing arrived complete — every cut line red, every engrave black, nothing missing from the sheet.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">19</span></footer>
+</section>
+
+<!-- ============ 20 · LASER STEP BY STEP (6-7) ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">At Nolop · laser cutting step by step 6–7</p>
+    <h2>Place it, load it, <span class="accent">cut it</span></h2>
+    <p class="s-sub">Save material, load the sheet, and press go.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <figure class="tile">
+        <img src="shots/ucp-move-to-corner.jpg" alt="The laser control software showing cut paths positioned at the top-left corner of the work plane beside the rulers" style="object-fit: contain; background: var(--paper);">
+        <figcaption><b>6 · Move it (optional)</b>Drag the drawing into a corner of the work plane to save wood — move it with the move icon.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/laser-bed.jpg" alt="A sheet of plywood loaded flat on the laser cutter's honeycomb bed" style="object-fit: contain; background: var(--paper);">
+        <figcaption><b>7a · Load the sheet</b>Put a sheet of wood flat on the print bed before you start.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/ucp-play-button.jpg" alt="The laser control software's large green play button, next to the pause and power buttons" style="object-fit: contain; background: var(--paper);">
+        <figcaption><b>7b · Press play</b>Hit the green play button to start cutting. Never leave the laser running unattended.</figcaption>
+      </figure>
+    </div>
+    <div class="assign" style="margin-top: 4mm;">
+      <span class="alabel">Safety</span>
+      <p>Know where the <b>fire extinguisher</b> and the <b>emergency stop</b> are before you press play — and stay with the machine until the job finishes.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">20</span></footer>
+</section>
+
+<!-- ============ 21 · WHAT GOOD LOOKS LIKE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">In the lab</p>
+    <h2>What <span class="accent">good looks like</span></h2>
+    <p class="s-sub">Flat sheets becoming real, structural objects — the same jump your robot parts make.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery" style="grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: 1.25fr 1fr;">
+      <figure class="tile" style="grid-row: span 2;">
+        <img src="shots/laser-projects.jpg" alt="Four laser-cut projects: a layered wooden skull, a wooden speaker with a drilled grille, a layered plywood enclosure, and flat blue interlocking panels" style="object-fit: cover; height: 100%; aspect-ratio: auto;">
+        <figcaption><b>Flat stock, 3D objects</b>Every one of these started as a 2D drawing.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/laser-cutting-closeup.jpg" alt="A hand lifting a freshly cut decorative panel from the laser bed">
+        <figcaption><b>Fits matter</b>Cut a test part in cardboard first.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/laser-cutting-wood.jpg" alt="A laser cutter cutting a set of wooden frames, with the cut line glowing as it works">
+        <figcaption><b>Cut and engrave</b>One job can cut lines and etch artwork.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/boxes-py.jpg" alt="A generated finger-jointed box preview from boxes.py">
+        <figcaption><b>Generate, then edit</b>Start from a template, finish it in Onshape.</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="shots/laser-bed.jpg" alt="Plywood loaded on the honeycomb bed of the laser cutter">
+        <figcaption><b>Sheets in, parts out</b>Plan the layout to use the whole sheet.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">21</span></footer>
+</section>
+
+<!-- ============ 22 · ASSIGNMENT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Individual assignment · 5 pts · due next week</p>
+    <h2>Create an interesting <span class="accent">laser-cut object</span></h2>
+    <p class="s-sub">Anything you like — as long as you designed the vector file and cut it yourself.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Design it</h3>
+        <p>Draw your own vector file in Onshape — or start from a template you found, and remix it into something new.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Cut it</h3>
+        <p>Export the DXF, prepare it in Illustrator, and cut it at Nolop. Cut a cardboard test first.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Assemble it</h3>
+        <p>Build the object — slots, glue, or bolts, washers and nuts.</p>
+      </article>
+    </div>
+    <div class="assign" style="margin-top: 5mm;">
+      <span class="alabel">Deliverables</span>
+      <p><b>Submit your vector design files and upload photos of what you created.</b> Bring the assembled object to class for a demo.</p>
+    </div>
+    <div class="assign" style="margin-top: 3mm;">
+      <span class="alabel">Reflection</span>
+      <p>Submit your end-of-class reflection at <span class="mono">go.tufts.edu/reflect</span></p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">22</span></footer>
+</section>
+
+<!-- ============ 23 · REFLECTION ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="bigline">
+      <p class="kicker-sm">By the end of class</p>
+      <h2>Personal reflection</h2>
+      <p>Before you leave, complete your personal reflection for today's class.</p>
+      <span class="url">go.tufts.edu/reflect</span>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">23</span></footer>
+</section>
+
+<!-- ============ 24 · CLOSING ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="closing">
+      <div>
+        <p class="s-kicker">Before you go</p>
+        <h2>Questions?</h2>
+        <p class="s-sub" style="margin-top: 4mm;">Next week: 3D Printing — model 3D parts in Onshape, prepare them in PrusaSlicer, and print the functional parts your robot needs.</p>
+      </div>
+      <div class="contact-card">
+        <p class="plabel">Where to find us</p>
+        <p><b>Office hours</b><br><span class="mono">go.tufts.edu/meet_tvdv</span></p>
+        <p><b>Email</b><br><span class="mono">thomas.van_de_velde@tufts.edu</span></p>
+        <p><b>Course materials</b><br>tuftsmaker.github.io/ENT-164</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 3 · Laser Cutting</span><span class="fnum">24</span></footer>
+</section>
+
+</body>
+</html>

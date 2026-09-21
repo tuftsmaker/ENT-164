@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 · Class 3 — Laser Cutting</title>
+<meta name="description" content="Class 3 of ENT-164 Intro to Making: turn sketches and real measurements into a laser-ready 2D design in Onshape, then cut it at Nolop.">
+<meta name="theme-color" content="#f7f9fc">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ENT-164 · Class 3 — Laser Cutting">
+<meta property="og:description" content="From sketch to laser-cut part: measure the real parts, draw them in Onshape, export a DXF, and cut at Nolop.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="page-class">
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>· Intro to Making</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#measure">Measure</a>
+      <a href="#onshape">Onshape</a>
+      <a href="#cut">Laser cutting</a>
+      <a href="#due">What's due</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a class="nav-cta" href="ENT-164-Class-3-Laser-Cutting.pdf">Download slides</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker reveal">Class 3 · Week 3 · Fall 2026</p>
+    <h1 class="reveal" style="--d:.06s">From 2D to 3D <span class="accent">Laser Cutting</span></h1>
+    <p class="lead reveal" style="--d:.12s">Your foam core mockup proved the idea. Today we measure the real parts, draw them in Onshape, export a DXF, and cut the structural pieces at Nolop.</p>
+    <div class="pills reveal" style="--d:.18s">
+      <span class="pill">Thu, Sep 24</span>
+      <span class="pill">JCC 301 / Nolop</span>
+      <span class="pill">Onshape + Illustrator</span>
+      <span class="pill">Individual laser-cut project due next week</span>
+    </div>
+    <div class="cta-row reveal" style="--d:.24s">
+      <a class="btn btn-primary" href="ENT-164-Class-3-Laser-Cutting.pdf">Download the slides (PDF)</a>
+      <a class="btn btn-ghost" href="#measure">Start with the numbers &darr;</a>
+    </div>
+    <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
+  </div>
+</header>
+
+<div class="wrap class-layout">
+
+  <aside class="toc reveal" style="--d:.36s">
+    <h2>On this page</h2>
+    <a href="#challenge">Where we are</a>
+    <a href="#measure">Measure &amp; sketch</a>
+    <a href="#onshape">Onshape design demo</a>
+    <a href="#versus">Laser vs 3D print</a>
+    <a href="#cut">Laser cutting step by step</a>
+    <a href="#due">What's due</a>
+  </aside>
+
+  <main class="content">
+
+    <section class="section-block" id="challenge">
+      <h2>Where we are: from mockup to laser-cut assembly</h2>
+      <p class="lede">Six steps from sketch to race — Class 3 is step two. Today the design becomes a real, cut part.</p>
+      <div class="phases">
+        <div class="phase">
+          <p class="plabel">Week 2</p>
+          <h3>Sketch &amp; Prototype</h3>
+          <ul>
+            <li>Rapidly sketch concept variations</li>
+            <li>Build a foam core mockup to test form and mechanics</li>
+          </ul>
+        </div>
+        <div class="phase accent">
+          <p class="plabel">Week 3 · today</p>
+          <h3>Laser Cutting</h3>
+          <ul>
+            <li>Create a laser-ready 2D design file from a sketch</li>
+            <li>Laser cut structural components</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Week 4</p>
+          <h3>3D Printing</h3>
+          <ul>
+            <li>Model 3D parts — mounts, brackets, custom components</li>
+            <li>3D print functional parts for your robot</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Week 5</p>
+          <h3>Electronics</h3>
+          <ul>
+            <li>Wire motors, sensors, and controls on a breadboard</li>
+            <li>Program basic movements using MicroPython and AI</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Week 6</p>
+          <h3>Connectivity</h3>
+          <ul>
+            <li>Connect a microcontroller to a wireless network</li>
+            <li>Build a remote control interface</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Weeks 7–8</p>
+          <h3>Assemble &amp; Race</h3>
+          <ul>
+            <li>Integrate all components and test runs</li>
+            <li>Demonstrate the robot with motors mounted</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout"><b>Today:</b> create a laser-ready 2D design file from your sketch and laser cut the structural components of your robot.</div>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/prototype-cardboard.jpg" alt="A foam core and cardboard mockup of a tracked robot with a body, eyes, and tracks">
+          <figcaption><b>The mockup</b>Cardboard and foam core prove the form — now it needs to be structural.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/laser-cutting-closeup.jpg" alt="A hand lifting a freshly laser-cut heart-shaped panel from the laser cutter bed">
+          <figcaption><b>The cut part</b>Flat sheet in, precise structural part out.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-block" id="measure">
+      <h2>Measure &amp; sketch</h2>
+      <p class="lede">Every hole and every slot starts with a real number from a real part. Read the sketch, check the datasheet, then measure it yourself.</p>
+
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/sketch-top.png" alt="Hand-drawn top view of the robot: a base plate 170 mm by 60 mm with wheel panels at each corner and two motor housings">
+          <figcaption><b>Top view · the base plate</b>170 mm × 60 mm footprint, with the wheels and motor housings marked.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/sketch-side.png" alt="Hand-drawn side view of the robot showing a 170 mm length, a 45 mm tall body, the battery pack, and the wheel">
+          <figcaption><b>Side view · the heights</b>45 mm of body clearance, plus the battery pack and the wheel diameter.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/sketch-axle.png" alt="Hand-drawn axle drawing: a 60 mm axle with two wheels and a bracket with a 3 mm hole at 17.5 mm spacing">
+          <figcaption><b>Axle · the tight tolerance</b>60 mm axle with 2 × M3 screws, and Ø3 holes at 17.5 mm spacing.</figcaption>
+        </figure>
+      </div>
+
+      <div class="callout"><b>Measure twice.</b> Write every number on the sketch before you open Onshape — a hole that is 1 mm off is a part that doesn't assemble.</div>
+
+      <h3 style="font-size:1.05rem;margin:26px 0 10px;">Read the sketch like a drawing</h3>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Overall size</h3>
+          <p>The footprint and height decide how much sheet you need and how the parts nest together.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Hole positions</h3>
+          <p>Where a hole goes matters more than its size. Spacing between holes is what makes a part fit.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">03</span>
+          <h3>Material thickness</h3>
+          <p>Every slot has to match the plywood thickness — measure it with calipers, don't trust the label.</p>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.05rem;margin:26px 0 10px;">Datasheets vs your own measurements</h3>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/motor-datasheet.png" alt="Datasheet drawing of a TT geared motor with dimensions: 22.6 mm width, 17.5 mm mounting hole spacing, 64.4 mm height, and a 9.1 mm shaft">
+          <figcaption><b>Use the datasheet</b>Mounting hole distance and diameter, housing height and depth — already measured for you.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/calipers.png" alt="A labelled diagram of a Vernier caliper pointing out the outer jaws, inner jaws, and depth rod">
+          <figcaption><b>Or measure it yourself</b>Outer jaws for outside dimensions, inner jaws for holes, depth rod for how deep a part sits.</figcaption>
+        </figure>
+      </div>
+
+      <div class="panel" style="margin-top:20px;">
+        <h3>The four numbers you need from any datasheet</h3>
+        <div class="chips">
+          <span class="chip">Mounting holes distance</span>
+          <span class="chip">Mounting holes diameter</span>
+          <span class="chip">Motor housing height</span>
+          <span class="chip">Motor housing depth</span>
+          <span class="chip">Shaft diameter</span>
+          <span class="chip">Shaft length</span>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.05rem;margin:26px 0 10px;">Fasteners: how flat parts become a 3D object</h3>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/bolt-washer-nut.png" alt="Labelled section drawing of a bolted joint through two parts, showing the bolt head, hole, body, washer, nut, and threads">
+          <figcaption><b>Bolts, washers and nuts</b>An M3 bolt wants a clearance hole around 3.2 mm — the head and nut do the clamping.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/self-tapping.png" alt="Two labelled diagrams: a self-tapping screw in a pre-drilled hole, and a self-drilling screw that drills its own hole">
+          <figcaption><b>Self-tapping vs self-drilling</b>One needs a pilot hole; the other drills its own. You can't drill with a laser.</figcaption>
+        </figure>
+      </div>
+      <div class="callout warm"><b>On the laser:</b> cut a pilot hole slightly undersized and let a self-tapping screw cut its own thread — or cut a clearance hole and bolt it with a washer and nut.</div>
+    </section>
+
+    <section class="section-block" id="onshape">
+      <h2>Onshape design demo</h2>
+      <p class="lede">Onshape runs in your browser — nothing to install, and your work is always saved. Sign up free with your Tufts account, then follow along.</p>
+      <div class="callout"><b>Sign up:</b> <a href="https://www.onshape.com/en/education/sign-up" target="_blank" rel="noopener">Onshape</a> with your Tufts account to get the free education plan.</div>
+
+      <div class="phases">
+        <div class="phase">
+          <p class="plabel">Demo 1</p>
+          <h3>A workspace overview</h3>
+          <ul>
+            <li>Documents, part studios, and the feature list</li>
+            <li>Where your tools live on screen</li>
+          </ul>
+        </div>
+        <div class="phase accent">
+          <p class="plabel">Demo 2</p>
+          <h3>A basic rectangle</h3>
+          <ul>
+            <li>Start a sketch on a plane</li>
+            <li>Draw the base plate with the rectangle tool</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Demo 3</p>
+          <h3>Updating dimensions</h3>
+          <ul>
+            <li>Drive every size from a typed number</li>
+            <li>Change it later without redrawing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phases" style="margin-top:16px;">
+        <div class="phase">
+          <p class="plabel">Demo 4</p>
+          <h3>Mirroring</h3>
+          <ul>
+            <li>Draw one wheel mount</li>
+            <li>Mirror it across the centreline</li>
+          </ul>
+        </div>
+        <div class="phase accent">
+          <p class="plabel">Demo 5</p>
+          <h3>Combining shapes and the Trim tool</h3>
+          <ul>
+            <li>Merge outlines into one profile</li>
+            <li>Trim away the lines you don't want</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Demo 6</p>
+          <h3>Creating joints</h3>
+          <ul>
+            <li>Check that the parts assemble</li>
+            <li>Test the motion before you cut</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout"><b>Export it:</b> right-click the sketch in the feature list and choose <b>Export as DXF/DWG</b> — that file is what goes to the laser cutter.</div>
+      <div class="panel" style="margin-top:20px;">
+        <h3>Want the longer walkthrough?</h3>
+        <p style="margin:0 0 12px;color:var(--muted);">A full Onshape playlist covering the same ground, at your own pace:</p>
+        <p style="margin:0;"><a href="https://youtube.com/playlist?list=PLH4y0lK6l56WRNkuDAYK4tuNkLXQfmeIP" target="_blank" rel="noopener">Onshape beginner playlist &rarr;</a></p>
+      </div>
+    </section>
+
+    <section class="section-block" id="versus">
+      <h2>Laser cutting vs 3D printing</h2>
+      <p class="lede">Both are digital fabrication — but they work in opposite directions, so they suit different parts.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>Laser cutting</h3>
+          <ul>
+            <li>Subtractive — removes material from a flat sheet</li>
+            <li>Wood, acrylic, paper, fabric, and some plastics</li>
+            <li>Best for 2D designs; 3D shapes assemble from flat parts</li>
+            <li>High precision and tight tolerances on flat stock</li>
+            <li>Fast for batch production from standard sheet sizes</li>
+            <li>Minimal finishing — usually just cleaning the edges</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>3D printing</h3>
+          <ul>
+            <li>Additive — builds the object layer by layer</li>
+            <li>Thermoplastics, resins, and metal powders</li>
+            <li>Excellent for intricate, organic 3D geometry</li>
+            <li>Good resolution, but layer lines affect the finish</li>
+            <li>Slower on large or highly detailed objects</li>
+            <li>Support removal, sanding, and finishing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout"><b>Often the answer is both:</b> laser cut the flat structural panels, then 3D print the small brackets and mounts that need depth.</div>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/laser-vs-printer.jpg" alt="A laser engraver cutting a wooden plaque beside a filament 3D printer">
+          <figcaption><b>Two machines</b>A laser cutter removes material; a 3D printer adds it.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/prusa-extruder.jpg" alt="Close-up of a Prusa MK4 print head laying down a first layer on the print bed">
+          <figcaption><b>The other direction</b>Next week: model 3D parts and print them.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-block" id="cut">
+      <h2>Laser cutting step by step</h2>
+      <p class="lede">Your DXF will look wrong when it opens in Illustrator — that's normal. Seven steps take it from file to finished cut.</p>
+
+      <div class="phases">
+        <div class="phase">
+          <p class="plabel">Step 1</p>
+          <h3>Set the stroke</h3>
+          <ul>
+            <li>File &gt; Open your DXF</li>
+            <li>Select All (Cmd/Ctrl+A)</li>
+            <li>Set Stroke to 0.001"</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Step 2</p>
+          <h3>Ungroup</h3>
+          <ul>
+            <li>Right-click the drawing</li>
+            <li>Choose Ungroup</li>
+            <li>Now you can select single lines</li>
+          </ul>
+        </div>
+        <div class="phase accent">
+          <p class="plabel">Step 3</p>
+          <h3>Make cuts 100% red</h3>
+          <ul>
+            <li>Click the Stroke colour box</li>
+            <li>Open the Color Mixer</li>
+            <li>Set R 255, G 0, B 0</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phases" style="margin-top:16px;">
+        <div class="phase">
+          <p class="plabel">Step 4</p>
+          <h3>File &gt; Print</h3>
+          <ul>
+            <li>Send the design to the laser software</li>
+            <li>Click the Print button</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Step 5</p>
+          <h3>Find UCP</h3>
+          <ul>
+            <li>A second app opens with your drawing</li>
+            <li>Click the UCP icon if it hides</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Steps 6–7</p>
+          <h3>Place, load, cut</h3>
+          <ul>
+            <li>Move the job to a corner to save wood</li>
+            <li>Load a sheet on the bed, then press play</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warm"><b>The rule:</b> cuts are 100% red, engraves and text are 100% black. The laser reads colour, so anything in the wrong colour is the wrong operation.</div>
+      <div class="callout warm"><b>Safety:</b> know where the fire extinguisher and the emergency stop are before you press play — and never leave the laser running unattended.</div>
+
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/illustrator-stroke.jpg" alt="Adobe Illustrator's properties panel with the Stroke value highlighted and set to 0.001">
+          <figcaption><b>Step 1 · Set the stroke</b>Thin lines cut correctly; thick lines don't.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/illustrator-ungroup.jpg" alt="Right-click context menu in Illustrator with Ungroup selected over a drawing of box panels">
+          <figcaption><b>Step 2 · Ungroup</b>So you can select and recolour individual lines.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/illustrator-color-mixer.jpg" alt="Illustrator's colour mixer showing R 255, G 0, B 0 for a pure red stroke">
+          <figcaption><b>Step 3 · Red for cuts</b>R 255, G 0, B 0 — pure red, nothing else.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/illustrator-print.jpg" alt="The Illustrator Print dialog with the Print button highlighted">
+          <figcaption><b>Step 4 · Print</b>Illustrator hands the job to the laser's driver.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/ucp-workplane.jpg" alt="The laser control software showing red cut paths laid out on a work plane with machine controls">
+          <figcaption><b>Step 5 · UCP opens</b>Your drawing loads in the laser's own software. Check it arrived complete.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/ucp-move-to-corner.jpg" alt="Cut paths positioned at the top-left corner of the work plane beside the rulers">
+          <figcaption><b>Step 6 · Move it (optional)</b>Drag the job into a corner to save wood.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/laser-bed.jpg" alt="A sheet of plywood loaded flat on the laser cutter's honeycomb bed">
+          <figcaption><b>Step 7a · Load the sheet</b>Put a sheet of wood flat on the bed before you start.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/ucp-play-button.jpg" alt="The laser control software's large green play button">
+          <figcaption><b>Step 7b · Press play</b>Hit the green button to start. Never leave the laser unattended.</figcaption>
+        </figure>
+      </div>
+
+      <h3 style="font-size:1.05rem;margin:26px 0 10px;">Shortcut: the laser cut shape generator</h3>
+      <p class="lede" style="margin-bottom:16px;">Need a box, a tray, or a living hinge? Generate the panels, then edit them if you need to.</p>
+      <div class="callout"><b>Generate a box:</b> <a href="https://boxes.hackerspace-bamberg.de/boxes.py" target="_blank" rel="noopener">boxes.hackerspace-bamberg.de/boxes.py</a> — pick a shape, type your material thickness, download an SVG. Every finger joint is sized from the thickness, so measure first.</div>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="shots/boxes-py.jpg" alt="The boxes.py website with a box generator form and a preview of a laser-cut finger-jointed box">
+          <figcaption><b>Boxes.py</b>Finger-jointed panels generated from your thickness — then tweak in Onshape.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/laser-projects.jpg" alt="Four laser-cut projects: a layered wooden skull, a wooden speaker, a layered plywood enclosure, and flat blue interlocking panels">
+          <figcaption><b>What you can make</b>Flat stock, assembled into real 3D objects.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-block" id="due">
+      <h2>What's due</h2>
+      <p class="lede">One individual project this week — your first finished fabricated object.</p>
+      <div class="cards">
+        <div class="card accent">
+          <span class="num">Individual · 5 pt · due next week</span>
+          <h3>Create an interesting laser-cut object</h3>
+          <p>Anything you like. You can search for existing laser project templates or create your own in Onshape. Submit your vector design files and upload photos of what you've created, and bring the assembled object to class for a demo.</p>
+        </div>
+        <div class="card">
+          <span class="num">Every week</span>
+          <h3>End-of-class reflection</h3>
+          <p>Submit your reflection at <span class="mono">go.tufts.edu/reflect</span> before you leave.</p>
+        </div>
+      </div>
+      <div class="phases" style="margin-top:16px;">
+        <div class="phase">
+          <p class="plabel">Submit in Canvas</p>
+          <h3>Files + photos</h3>
+          <ul>
+            <li>Your vector design file (DXF, SVG, or AI)</li>
+            <li>Photos of the assembled object</li>
+          </ul>
+        </div>
+        <div class="phase accent">
+          <p class="plabel">Bring to class</p>
+          <h3>The assembled object</h3>
+          <ul>
+            <li>Slotted, glued, or bolted together</li>
+            <li>Ready to show and talk about</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:16px;"><b>Cut a test first.</b> Cardboard is cheap and cuts in seconds. Prove the fit, then commit your plywood or acrylic to the design.</div>
+    </section>
+
+    <section class="section-block" style="padding-bottom: 0;">
+      <div class="callout warm"><b>Next class:</b> 3D Printing — model 3D parts in Onshape, prepare them in PrusaSlicer, and print the functional parts your robot needs. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark-xs" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 · Intro to Making — Class 3, Fall 2026</span>
+    </div>
+    <div class="foot-links">
+      <a href="../../">All class materials</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../about/">About the instructor</a>
+      <a href="slides.html">Slide deck (web)</a>
+      <a href="ENT-164-Class-3-Laser-Cutting.pdf">Download the slides</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
