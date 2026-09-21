@@ -108,10 +108,9 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   class pages; `assets/guide.css` is the same theme for the guide pages (A4
   print). Both follow the slide decks' palette. Style pages through these
   files — do not reintroduce per-page `<style>` blocks.
-- Stock photography lives in `assets/photos/` with `CREDITS.md` (Unsplash
-  License — attribution not required, credited anyway). Prefer the real class
-  photographs in `classes/*/shots/` wherever they exist; stock is for pages
-  that have no class imagery.
+- Photography on the site comes from the instructor's own class photos
+  (`assets/photos/class/`, EXIF stripped before committing). Prefer these, and
+  the deck photos in `classes/*/shots/`, over stock imagery.
 - `classes/class-NN/index.html` is the hand-authored class landing page, separate
   from the deck (it is not generated). Keep its links to `slides.html` and the
   PDF working, and update it when shared facts change (title, dates, TA info).
