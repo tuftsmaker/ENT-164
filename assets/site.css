@@ -204,6 +204,24 @@ h2 { font-size: clamp(1.55rem, 3.1vw, 2.15rem); line-height: 1.2; letter-spacing
 .section-head.left .kicker { margin-bottom: 10px; }
 .logos-block { padding-top: 66px; }
 
+/* ---------- pages: photo banner + strip ---------- */
+.hero-photo { position: relative; margin: 34px 0 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-md); }
+.hero-photo img { display: block; width: 100%; aspect-ratio: 21 / 9; object-fit: cover; }
+.hero-photo figcaption {
+  position: absolute; left: 14px; bottom: 14px;
+  background: rgba(255, 255, 255, 0.92); border: 1px solid var(--line);
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; color: var(--muted-2);
+}
+.photo-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-top: 38px; }
+.photo-strip figure { margin: 0; }
+.photo-strip img {
+  display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: 16px; border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+}
+.photo-strip figcaption { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.photo-strip figcaption b { display: block; color: var(--ink); font-size: 14px; margin-bottom: 2px; }
+.photo-strip .credit { display: block; margin-top: 3px; font-size: 11.5px; color: var(--muted); }
+
 /* ---------- layout: class + syllabus ---------- */
 .class-layout, .syllabus-layout { display: grid; grid-template-columns: 208px minmax(0, 1fr); gap: 44px; align-items: start; padding-top: 56px; }
 .toc {
