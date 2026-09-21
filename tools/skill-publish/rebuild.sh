@@ -35,4 +35,4 @@ echo "==> rebuilding $SKILLS/index.json"
 echo
 echo "Next: git add skills && git commit && git push"
 echo "Then verify the live copy before relying on it:"
-echo "  curl -s https://tvande08.github.io/ENT-164/skills/index.json"
+echo "  curl -s https://tuftsmaker.github.io/ENT-164/skills/index.json"

@@ -1,7 +1,7 @@
 # ENT-164 site and class decks — working agreement
 
 Static course site for ENT-164 Intro to Making (Tufts), published from this repo
-via GitHub Pages: https://tvande08.github.io/ENT-164/
+via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
 
 ## Deck sync: one source, generated PDFs
 
@@ -21,7 +21,7 @@ via GitHub Pages: https://tvande08.github.io/ENT-164/
 
 - Canvas never stores a deck copy. Each class module has an **ExternalUrl** item
   at the slides position pointing at the Pages PDF, e.g. Class 1 →
-  `https://tvande08.github.io/ENT-164/classes/class-01/ENT-164-Class-1-Introductions.pdf`.
+  `https://tuftsmaker.github.io/ENT-164/classes/class-01/ENT-164-Class-1-Introductions.pdf`.
   Pushing to `main` is the only sync step. Do not upload replacement PDFs.
 - Canvas API token and base URL live in `~/esp32/canvas_config.py` (outside the
   repo). Never print, copy, commit, or echo the token.
@@ -78,7 +78,7 @@ via GitHub Pages: https://tvande08.github.io/ENT-164/
 
 ## Class skills for opencode (`skills/`)
 
-- `skills/` is served by Pages at `https://tvande08.github.io/ENT-164/skills/`
+- `skills/` is served by Pages at `https://tuftsmaker.github.io/ENT-164/skills/`
   and consumed by opencode via `skills.urls`. `skills/` is the **source of
   truth** — there is no separate source tree; edit in place.
 - opencode re-downloads a skill only when its `version` changes, and the version

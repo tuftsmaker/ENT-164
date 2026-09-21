@@ -4,7 +4,7 @@
 `skills.urls`:
 
 ```
-https://tvande08.github.io/ENT-164/skills/
+https://tuftsmaker.github.io/ENT-164/skills/
 ```
 
 Students add that URL to `opencode.json` once (see `handouts/`), then pick up
@@ -27,7 +27,7 @@ $EDITOR skills/maker/circuits/led.yml
 git add skills && git commit -m "..." && git push
 
 # 4. verify what students will actually get
-curl -s https://tvande08.github.io/ENT-164/skills/index.json
+curl -s https://tuftsmaker.github.io/ENT-164/skills/index.json
 ```
 
 Steps 2 and 3 are not optional together. **Editing without rebuilding means
@@ -74,7 +74,7 @@ that every file in the index actually returns 200:
 ```bash
 python3 - <<'PY'
 import json, urllib.request
-base = "https://tvande08.github.io/ENT-164/skills/"
+base = "https://tuftsmaker.github.io/ENT-164/skills/"
 idx = json.load(urllib.request.urlopen(base + "index.json"))
 for s in idx["skills"]:
     for rel in s["files"]:
