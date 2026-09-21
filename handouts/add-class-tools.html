@@ -22,6 +22,15 @@
     --tufts-brown: #63493A;
     --bessie-brown: #3D2E25;
     --candle: #F2EDE7;
+    --blue-deep: #1F6FD0;
+    --ink: #0d1526;
+    --text: #17203a;
+    --muted: #5f6b7a;
+    --muted-2: #3f4a5a;
+    --line: #e6eaf1;
+    --line-strong: #d5dce7;
+    --paper: #ffffff;
+    --blue-tint: #f2f7fd;
   }
   @page { size: Letter; margin: 0; }
   * { box-sizing: border-box; }
@@ -29,7 +38,7 @@
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    color: #1c1c22;
+    color: var(--text);
     font-size: 10.5pt;
     line-height: 1.5;
     background: #fff;
@@ -39,8 +48,8 @@
   .masthead { display: flex; align-items: center; gap: 4mm; border-bottom: 2px solid var(--candle); padding-bottom: 3mm; margin-bottom: 3mm; }
   .masthead .mark { flex: 0 0 auto; width: 12mm; height: 12mm; border-radius: 3mm; background: var(--tufts-blue); display: flex; align-items: center; justify-content: center; }
   .masthead .mark img { width: 7.5mm; height: 7.5mm; }
-  .masthead .course { font-size: 8.5pt; letter-spacing: 1.8px; text-transform: uppercase; color: var(--tufts-blue); font-weight: 700; }
-  .masthead h1 { font-size: 17pt; margin: 0.6mm 0 0; font-weight: 700; letter-spacing: -0.3px; color: var(--bessie-brown); }
+  .masthead .course { font-size: 8.5pt; letter-spacing: 1.8px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; }
+  .masthead h1 { font-size: 17pt; margin: 0.6mm 0 0; font-weight: 700; letter-spacing: -0.3px; color: var(--ink); }
   .masthead .mins { margin-left: auto; text-align: right; font-size: 8.5pt; color: #6b7280; line-height: 1.35; }
 
   .lead { font-size: 10.5pt; margin: 0 0 2mm; }
@@ -48,37 +57,37 @@
   .step { margin-bottom: 2mm; break-inside: avoid; page-break-inside: avoid; }
   .step-header { display: flex; align-items: center; gap: 3.5mm; margin: 0 0 1.2mm; }
   .step-num { flex: 0 0 auto; width: 8mm; height: 8mm; border-radius: 50%; background: var(--tufts-blue); color: #fff; font-weight: 700; font-size: 10.5pt; display: flex; align-items: center; justify-content: center; }
-  h2 { font-size: 12.5pt; margin: 0; font-weight: 700; color: var(--bessie-brown); letter-spacing: -0.2px; }
+  h2 { font-size: 12.5pt; margin: 0; font-weight: 700; color: var(--ink); letter-spacing: -0.2px; }
   .step p { margin: 0 0 1.2mm; }
   .step ol, .step ul { margin: 0 0 1.2mm; padding-left: 5mm; }
   .step li { margin-bottom: 0.6mm; }
 
   .paste {
-    background: #F4F8FD;
+    background: var(--blue-tint);
     border: 1.5px dashed var(--tufts-blue);
     border-radius: 8px;
     padding: 2mm 3mm;
     margin: 1mm 0 1.2mm;
     break-inside: avoid;
   }
-  .paste .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: var(--tufts-blue); font-weight: 700; margin-bottom: 0.8mm; }
+  .paste .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: var(--blue-deep); font-weight: 700; margin-bottom: 0.8mm; }
   .paste .say { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10pt; color: #0f172a; line-height: 1.4; }
   .url { background: #fff3cd; border-bottom: 2px solid #e0a800; padding: 0 0.6mm; font-weight: 700; }
 
-  .callout { border-left: 3px solid var(--tufts-blue); background: #F4F8FD; border-radius: 0 8px 8px 0; padding: 2mm 3mm; margin: 0 0 2mm; font-size: 9.5pt; break-inside: avoid; }
+  .callout { border-left: 3px solid var(--tufts-blue); background: var(--blue-tint); border-radius: 0 8px 8px 0; padding: 2mm 3mm; margin: 0 0 2mm; font-size: 9.5pt; break-inside: avoid; }
   .callout.tip { border-color: #1A5532; background: #F1F7F3; }
   .callout b { color: #111827; }
 
   table { width: 100%; border-collapse: collapse; margin: 1.2mm 0 0; font-size: 9.5pt; break-inside: avoid; }
-  th, td { text-align: left; padding: 1.3mm 2.5mm; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  th, td { text-align: left; padding: 1.3mm 2.5mm; border-bottom: 1px solid var(--line); vertical-align: top; }
   th { background: var(--candle); font-size: 8pt; text-transform: uppercase; letter-spacing: 0.6px; color: var(--tufts-brown); }
   tr:last-child td { border-bottom: none; }
 
   .keycap { display: inline-block; background: #f3f4f6; border: 1px solid #d1d5db; border-bottom-width: 2px; border-radius: 5px; padding: 0.2mm 1.6mm; font-size: 9pt; font-weight: 600; }
   .ui { background: var(--candle); border: 1px solid #E3D9CE; border-radius: 5px; padding: 0.2mm 1.6mm; font-weight: 600; font-size: 9.5pt; white-space: nowrap; }
-  .divider { height: 1px; background: #e5e7eb; margin: 2mm 0; }
+  .divider { height: 1px; background: var(--line); margin: 2mm 0; }
   /* fixed, so the footer can never push content onto a second page */
-  .doc-footer { position: fixed; bottom: 5mm; left: 0; right: 0; font-size: 8pt; color: #9ca3af; text-align: center; }
+  .doc-footer { position: fixed; bottom: 5mm; left: 0; right: 0; font-size: 8pt; color: var(--muted); text-align: center; }
 </style>
 </head>
 <body>

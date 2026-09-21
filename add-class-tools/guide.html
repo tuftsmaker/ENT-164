@@ -3,124 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Add your class tools to opencode — Beginner's Guide</title>
-<style>
-  :root {
-    --tufts-blue: #3E8EDE;
-    --jumbo-blue: #002E6D;
-    --tufts-brown: #63493A;
-    --bessie-brown: #3D2E25;
-    --candle: #F2EDE7;
-  }
-  @page { size: A4; margin: 0; }
-  * { box-sizing: border-box; }
-  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    color: #1c1c22;
-    font-size: 10.5pt;
-    line-height: 1.55;
-    background: #fff;
-  }
-  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-
-  /* Cover */
-  .cover {
-    height: 297mm;
-    background: linear-gradient(160deg, #0a1020 0%, #101a2b 55%, #241a13 100%);
-    color: #f2f2f5;
-    padding: 22mm 20mm 14mm;
-    display: flex;
-    flex-direction: column;
-    page-break-after: always;
-  }
-  .cover .kicker { font-size: 9pt; letter-spacing: 2.5px; text-transform: uppercase; color: #9aa0b4; margin-bottom: 5mm; }
-  .cover h1 { font-size: 25pt; line-height: 1.16; margin: 0 0 4mm; font-weight: 700; letter-spacing: -0.4px; }
-  .cover h1 .accent { color: #6FB3EC; }
-  .cover .mark { width: 15mm; height: 15mm; border-radius: 4mm; background: var(--tufts-blue); display: flex; align-items: center; justify-content: center; margin-bottom: 6mm; }
-  .cover .mark img { width: 9mm; height: 9mm; }
-  .cover .course { font-size: 14pt; font-weight: 700; color: #6FB3EC; letter-spacing: 0.2px; margin-bottom: 2.5mm; }
-  .cover .subtitle { font-size: 12pt; color: #c3c7d6; max-width: 158mm; margin-bottom: 7mm; }
-  .cover .pills { display: flex; gap: 3mm; flex-wrap: wrap; margin-bottom: 8mm; }
-  .cover .pill { border: 1px solid rgba(255,255,255,0.22); border-radius: 99px; padding: 1.6mm 4.5mm; font-size: 8.5pt; color: #dfe2ee; background: rgba(255,255,255,0.05); }
-  .cover .hero { margin-top: auto; }
-  .cover .hero img { width: 100%; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); }
-  .cover .hero .cap { font-size: 8pt; color: #8f94aa; margin-top: 3mm; }
-  .cover .footer { margin-top: 7mm; font-size: 8.5pt; color: #8f94aa; display: flex; justify-content: space-between; }
-
-  /* Content */
-  .page { padding: 15mm 18mm 12mm; }
-  .step { margin-bottom: 8mm; }
-  .step-header { display: flex; align-items: center; gap: 4mm; margin: 0 0 3.5mm; page-break-after: avoid; }
-  .step-num { flex: 0 0 auto; width: 9mm; height: 9mm; border-radius: 50%; background: var(--tufts-blue); color: #fff; font-weight: 700; font-size: 11pt; display: flex; align-items: center; justify-content: center; }
-  h2 { font-size: 15pt; margin: 0; font-weight: 700; letter-spacing: -0.2px; color: var(--bessie-brown); }
-  h3 { font-size: 11.5pt; margin: 5mm 0 2mm; color: var(--bessie-brown); }
-  p { margin: 0 0 3mm; }
-  ul, ol { margin: 0 0 3mm; padding-left: 5.5mm; }
-  li { margin-bottom: 1.4mm; }
-  .muted { color: #6b7280; }
-  .lead { font-size: 11pt; }
-
-  code.inline { background: #eef1f6; border: 1px solid #dfe4ec; border-radius: 4px; padding: 0.4mm 1.4mm; font-size: 9pt; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-  .keycap { display: inline-block; background: #f3f4f6; border: 1px solid #d1d5db; border-bottom-width: 2px; border-radius: 5px; padding: 0.3mm 1.8mm; font-size: 9pt; font-weight: 600; }
-  .ui { background: var(--candle); border: 1px solid #E3D9CE; border-radius: 5px; padding: 0.3mm 1.8mm; font-weight: 600; font-size: 9.5pt; white-space: nowrap; }
-  .callout { border-left: 3px solid var(--tufts-blue); background: #F4F8FD; border-radius: 0 8px 8px 0; padding: 3mm 4mm; margin: 0 0 4mm; font-size: 9.5pt; break-inside: avoid; }
-  .callout.tip { border-color: #1A5532; background: #F1F7F3; }
-  .callout.warn { border-color: #F37121; background: #FFF6EE; }
-  .callout b { color: #111827; }
-  .callout ul { margin: 1.2mm 0 0; padding-left: 4.5mm; }
-  .callout li { margin-bottom: 0.9mm; }
-
-  .paste { background: #F4F8FD; border: 1.5px dashed var(--tufts-blue); border-radius: 8px; padding: 3mm 4mm; margin: 2mm 0 3mm; break-inside: avoid; }
-  .paste .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: var(--tufts-blue); font-weight: 700; margin-bottom: 1mm; }
-  .paste .say { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10pt; color: #0f172a; line-height: 1.45; }
-  .paste .url { background: #fff3cd; border-bottom: 2px solid #e0a800; padding: 0 0.6mm; font-weight: 700; }
-
-  figure { margin: 0 0 4mm; break-inside: avoid; page-break-inside: avoid; }
-  figure img { width: 100%; border-radius: 8px; border: 1px solid #dfe3ea; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.10); break-inside: avoid; page-break-inside: avoid; }
-  figcaption { font-size: 8.5pt; color: #6b7280; margin-top: 2.5mm; break-inside: avoid; page-break-inside: avoid; }
-  figcaption b { color: #374151; }
-  figure.narrow img { width: 78%; display: block; margin: 0 auto; }
-  figure.medium img { width: 62%; display: block; margin: 0 auto; }
-
-  table { width: 100%; border-collapse: collapse; margin: 0 0 4mm; font-size: 9.5pt; break-inside: avoid; }
-  table.flow { break-inside: auto; }
-  table.flow thead { display: table-header-group; }
-  th, td { text-align: left; padding: 2.2mm 3mm; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
-  th { background: var(--candle); font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.6px; color: var(--tufts-brown); }
-  tr:last-child td { border-bottom: none; }
-  .glossary td:first-child { white-space: nowrap; font-weight: 600; }
-  .examples td:first-child { width: 46%; }
-  .examples td:first-child i { color: #374151; }
-
-  .checklist { list-style: none; padding-left: 0; }
-  .checklist li { padding-left: 6mm; position: relative; }
-  .checklist li::before { content: "✓"; position: absolute; left: 0; font-weight: 700; color: #1A5532; }
-  .divider { height: 1px; background: #e5e7eb; margin: 7mm 0; }
-  .doc-footer { font-size: 8pt; color: #9ca3af; text-align: center; margin-top: 5mm; }
-  .doc-footer .foot-mark { width: 3.4mm; height: 3.4mm; vertical-align: -0.55mm; margin-right: 1.4mm; }
-
-  /* Site navigation (screen only) */
-  .site-nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 9px max(16px, calc((100vw - 1100px) / 2));
-    background: rgba(10, 16, 32, 0.92);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  }
-  .site-nav a { color: #dfe2ee; text-decoration: none; font-size: 13.5px; font-weight: 500; }
-  .site-nav a:hover { color: #fff; }
-  .site-nav .brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; letter-spacing: -0.2px; }
-  .site-nav .brand small { color: #9aa0b4; font-weight: 500; }
-  .site-nav .mark { width: 26px; height: 26px; border-radius: 8px; background: var(--tufts-blue); display: flex; align-items: center; justify-content: center; }
-  .site-nav .mark img { width: 14px; height: 14px; }
-  .site-nav .links { display: flex; align-items: center; gap: 18px; }
-  .site-nav .pill-link { border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px; padding: 5px 14px; background: rgba(255, 255, 255, 0.06); color: #fff; }
-  @media (max-width: 640px) { .site-nav .brand small { display: none; } }
-  @media print { .site-nav { display: none !important; } }
-</style>
+<link rel="stylesheet" href="../assets/guide.css">
 </head>
 <body>
 
@@ -137,7 +20,7 @@
 </nav>
 
 <!-- ================= COVER ================= -->
-<div class="cover">
+<div class="cover cover-text">
   <div class="mark"><img src="shots/class-hammer.svg" alt="Class mark"></div>
   <div class="course">ENT-164 · Intro to Making</div>
   <div class="kicker">Beginner's Guide · One-time setup · No experience needed</div>
@@ -149,10 +32,6 @@
     <div class="pill">Wiring diagrams</div>
     <div class="pill">For macOS &amp; Windows</div>
   </div>
-  <div class="hero">
-    <img src="shots/led.png" alt="A breadboard wiring diagram drawn by the class tools: an LED and resistor on the Freenove ESP32 board">
-    <div class="cap">A wiring diagram drawn by the class tools: an LED on the breadboard, with every jumper wire routed and labelled.</div>
-  </div>
   <div class="footer">
     <span>Prepared September 21, 2026</span>
     <span>tuftsmaker.github.io/ENT-164/skills/</span>
@@ -163,7 +42,7 @@
 <div class="page">
 
   <p class="lead">Your class has a set of <b>class tools</b> that live on the class website — extra abilities you switch on inside <b>opencode</b>. The main one is a <b>wiring-diagram maker</b>: describe a circuit for your ESP32 kit, and opencode draws a labelled breadboard picture with the jumper wires routed for you.</p>
-  <p>You don't install anything and you can't break anything. You ask opencode to add the tools, restart it once, and from then on you can ask for diagrams like the one on the cover.</p>
+  <p>You don't install anything and you can't break anything. You ask opencode to add the tools, restart it once, and from then on you can ask opencode for a wiring diagram whenever you need one.</p>
 
   <div class="callout">
     <b>Why add them?</b>
@@ -231,11 +110,7 @@
       <div class="label">Try asking</div>
       <div class="say">Draw me a wiring diagram for connecting an LED to my ESP32</div>
     </div>
-    <p>After a moment opencode draws the diagram, shows it in the reply, and saves the files in your project folder. More involved circuits work the same way:</p>
-    <figure>
-      <img src="shots/robot-drive.png" alt="A wiring diagram of the class robot's two motors, L298N driver and joystick on the ESP32">
-      <figcaption><b>Figure 2.</b> The same tools drew the robot drive: two motors, the L298N driver, and the joystick — ask for one part at a time, or the whole robot.</figcaption>
-    </figure>
+    <p>After a moment opencode draws the diagram, shows it in the reply, and saves the files in your project folder. Bigger circuits work the same way — ask for one part at a time, or the whole robot.</p>
   </div>
 
   <div class="divider"></div>
@@ -254,10 +129,7 @@
         <tr><td><i>"How do I wire the LCD1602?"</i></td><td>The LCD with its I2C backpack on the class's SDA/SCL pins</td></tr>
       </tbody>
     </table>
-    <figure>
-      <img src="shots/gallery.png" alt="A local gallery page listing every wiring diagram drawn so far">
-      <figcaption><b>Figure 3.</b> Every diagram is collected in a local gallery in your project folder — click a picture to zoom and trace wires, or open the PNG or SVG. Nothing is uploaded anywhere.</figcaption>
-    </figure>
+    <p>Every diagram is collected in a local gallery in your project folder — click a picture to zoom and trace wires, or open the PNG or SVG. Nothing is uploaded anywhere.</p>
   </div>
 
   <div class="divider"></div>

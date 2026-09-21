@@ -104,7 +104,11 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
 
 ## Class web pages
 
-- `classes/class-NN/index.html` is the hand-authored dark landing page, separate
+- `assets/site.css` is the shared light theme for the hub, syllabus, about and
+  class pages; `assets/guide.css` is the same theme for the guide pages (A4
+  print). Both follow the slide decks' palette. Style pages through these
+  files — do not reintroduce per-page `<style>` blocks.
+- `classes/class-NN/index.html` is the hand-authored class landing page, separate
   from the deck (it is not generated). Keep its links to `slides.html` and the
   PDF working, and update it when shared facts change (title, dates, TA info).
 - Hub `index.html` and `syllabus/index.html` link to each class page; keep the
