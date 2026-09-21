@@ -1,24 +1,32 @@
 #!/usr/bin/env python3
 """Slide PDF <-> source sync bookkeeping.
 
-Each class deck records a source hash (slides.html + shots/ + shared
-assets/) in classes/<class>/slides.buildinfo when its PDF is built.
-`check` recomputes the hash and fails when a committed PDF no longer
-matches its sources.
+Each class deck records a source hash (slides.html + shots/ + the shared
+assets it references) in classes/<class>/slides.buildinfo when its PDF is
+built. `check` recomputes the hash and fails when a committed PDF no
+longer matches its sources.
 """
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
 from datetime import datetime, timezone
 
 BUILDINFO = "slides.buildinfo"
+ASSET_REF = re.compile(r'(?:src|href)="([^"]+)"')
 
 
 def source_hash(class_dir, root):
     h = hashlib.sha256()
+
+    def add_file(path):
+        h.update(os.path.relpath(path, root).encode() + b"\0")
+        with open(path, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                h.update(chunk)
 
     def add_tree(path):
         if not os.path.isdir(path):
@@ -28,21 +36,29 @@ def source_hash(class_dir, root):
             for name in sorted(filenames):
                 if name == ".DS_Store":
                     continue
-                p = os.path.join(dirpath, name)
-                h.update(os.path.relpath(p, root).encode() + b"\0")
-                with open(p, "rb") as f:
-                    for chunk in iter(lambda: f.read(1 << 20), b""):
-                        h.update(chunk)
+                add_file(os.path.join(dirpath, name))
 
     slides = os.path.join(class_dir, "slides.html")
     if not os.path.isfile(slides):
         raise SystemExit(f"no slides.html in {class_dir}")
-    h.update(b"slides.html\0")
     with open(slides, "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
+        slides_html = f.read()
+    h.update(b"slides.html\0")
+    h.update(slides_html)
     add_tree(os.path.join(class_dir, "shots"))
-    add_tree(os.path.join(root, "assets"))
+
+    # Only the files under assets/ that this deck actually references count,
+    # so style changes elsewhere on the site do not invalidate the deck.
+    assets_root = os.path.abspath(os.path.join(root, "assets"))
+    refs = set()
+    for ref in ASSET_REF.findall(slides_html.decode("utf-8", "replace")):
+        if ref.startswith(("http:", "https:", "data:", "#", "mailto:")):
+            continue
+        path = os.path.abspath(os.path.normpath(os.path.join(class_dir, ref)))
+        if os.path.isfile(path) and os.path.commonpath([path, assets_root]) == assets_root:
+            refs.add(path)
+    for path in sorted(refs):
+        add_file(path)
     return h.hexdigest()
 
 
