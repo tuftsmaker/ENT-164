@@ -96,6 +96,11 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
 - `handouts/add-class-tools.html` is the student-facing one-pager; rebuild its
   PDF with headless Chrome after editing. It is US Letter and must stay on one
   page — check with `pdftotext -f 2 -l 2 ...` (anything printed = it spilled).
+- `add-class-tools/guide.html` is the fuller web version of that one-pager,
+  with figures and its own A4 `add-class-tools-to-opencode.pdf`. Edit both
+  together when the instructions change, and rebuild the guide PDF with
+  headless Chrome (`--headless=new --no-pdf-header-footer
+  --print-to-pdf=add-class-tools/add-class-tools-to-opencode.pdf`).
 
 ## Class web pages
 

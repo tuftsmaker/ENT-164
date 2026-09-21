@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add your class tools to opencode — Beginner's Guide</title>
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: #1c1c22;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    background: #fff;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  /* Cover */
+  .cover {
+    height: 297mm;
+    background: linear-gradient(160deg, #0a1020 0%, #101a2b 55%, #241a13 100%);
+    color: #f2f2f5;
+    padding: 22mm 20mm 14mm;
+    display: flex;
+    flex-direction: column;
+    page-break-after: always;
+  }
+  .cover .kicker { font-size: 9pt; letter-spacing: 2.5px; text-transform: uppercase; color: #9aa0b4; margin-bottom: 5mm; }
+  .cover h1 { font-size: 25pt; line-height: 1.16; margin: 0 0 4mm; font-weight: 700; letter-spacing: -0.4px; }
+  .cover h1 .accent { color: #6FB3EC; }
+  .cover .mark { width: 15mm; height: 15mm; border-radius: 4mm; background: var(--tufts-blue); display: flex; align-items: center; justify-content: center; margin-bottom: 6mm; }
+  .cover .mark img { width: 9mm; height: 9mm; }
+  .cover .course { font-size: 14pt; font-weight: 700; color: #6FB3EC; letter-spacing: 0.2px; margin-bottom: 2.5mm; }
+  .cover .subtitle { font-size: 12pt; color: #c3c7d6; max-width: 158mm; margin-bottom: 7mm; }
+  .cover .pills { display: flex; gap: 3mm; flex-wrap: wrap; margin-bottom: 8mm; }
+  .cover .pill { border: 1px solid rgba(255,255,255,0.22); border-radius: 99px; padding: 1.6mm 4.5mm; font-size: 8.5pt; color: #dfe2ee; background: rgba(255,255,255,0.05); }
+  .cover .hero { margin-top: auto; }
+  .cover .hero img { width: 100%; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); }
+  .cover .hero .cap { font-size: 8pt; color: #8f94aa; margin-top: 3mm; }
+  .cover .footer { margin-top: 7mm; font-size: 8.5pt; color: #8f94aa; display: flex; justify-content: space-between; }
+
+  /* Content */
+  .page { padding: 15mm 18mm 12mm; }
+  .step { margin-bottom: 8mm; }
+  .step-header { display: flex; align-items: center; gap: 4mm; margin: 0 0 3.5mm; page-break-after: avoid; }
+  .step-num { flex: 0 0 auto; width: 9mm; height: 9mm; border-radius: 50%; background: var(--tufts-blue); color: #fff; font-weight: 700; font-size: 11pt; display: flex; align-items: center; justify-content: center; }
+  h2 { font-size: 15pt; margin: 0; font-weight: 700; letter-spacing: -0.2px; color: var(--bessie-brown); }
+  h3 { font-size: 11.5pt; margin: 5mm 0 2mm; color: var(--bessie-brown); }
+  p { margin: 0 0 3mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 5.5mm; }
+  li { margin-bottom: 1.4mm; }
+  .muted { color: #6b7280; }
+  .lead { font-size: 11pt; }
+
+  code.inline { background: #eef1f6; border: 1px solid #dfe4ec; border-radius: 4px; padding: 0.4mm 1.4mm; font-size: 9pt; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .keycap { display: inline-block; background: #f3f4f6; border: 1px solid #d1d5db; border-bottom-width: 2px; border-radius: 5px; padding: 0.3mm 1.8mm; font-size: 9pt; font-weight: 600; }
+  .ui { background: var(--candle); border: 1px solid #E3D9CE; border-radius: 5px; padding: 0.3mm 1.8mm; font-weight: 600; font-size: 9.5pt; white-space: nowrap; }
+  .callout { border-left: 3px solid var(--tufts-blue); background: #F4F8FD; border-radius: 0 8px 8px 0; padding: 3mm 4mm; margin: 0 0 4mm; font-size: 9.5pt; break-inside: avoid; }
+  .callout.tip { border-color: #1A5532; background: #F1F7F3; }
+  .callout.warn { border-color: #F37121; background: #FFF6EE; }
+  .callout b { color: #111827; }
+  .callout ul { margin: 1.2mm 0 0; padding-left: 4.5mm; }
+  .callout li { margin-bottom: 0.9mm; }
+
+  .paste { background: #F4F8FD; border: 1.5px dashed var(--tufts-blue); border-radius: 8px; padding: 3mm 4mm; margin: 2mm 0 3mm; break-inside: avoid; }
+  .paste .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: var(--tufts-blue); font-weight: 700; margin-bottom: 1mm; }
+  .paste .say { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10pt; color: #0f172a; line-height: 1.45; }
+  .paste .url { background: #fff3cd; border-bottom: 2px solid #e0a800; padding: 0 0.6mm; font-weight: 700; }
+
+  figure { margin: 0 0 4mm; break-inside: avoid; page-break-inside: avoid; }
+  figure img { width: 100%; border-radius: 8px; border: 1px solid #dfe3ea; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.10); break-inside: avoid; page-break-inside: avoid; }
+  figcaption { font-size: 8.5pt; color: #6b7280; margin-top: 2.5mm; break-inside: avoid; page-break-inside: avoid; }
+  figcaption b { color: #374151; }
+  figure.narrow img { width: 78%; display: block; margin: 0 auto; }
+  figure.medium img { width: 62%; display: block; margin: 0 auto; }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 4mm; font-size: 9.5pt; break-inside: avoid; }
+  table.flow { break-inside: auto; }
+  table.flow thead { display: table-header-group; }
+  th, td { text-align: left; padding: 2.2mm 3mm; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  th { background: var(--candle); font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.6px; color: var(--tufts-brown); }
+  tr:last-child td { border-bottom: none; }
+  .glossary td:first-child { white-space: nowrap; font-weight: 600; }
+  .examples td:first-child { width: 46%; }
+  .examples td:first-child i { color: #374151; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding-left: 6mm; position: relative; }
+  .checklist li::before { content: "✓"; position: absolute; left: 0; font-weight: 700; color: #1A5532; }
+  .divider { height: 1px; background: #e5e7eb; margin: 7mm 0; }
+  .doc-footer { font-size: 8pt; color: #9ca3af; text-align: center; margin-top: 5mm; }
+  .doc-footer .foot-mark { width: 3.4mm; height: 3.4mm; vertical-align: -0.55mm; margin-right: 1.4mm; }
+
+  /* Site navigation (screen only) */
+  .site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 9px max(16px, calc((100vw - 1100px) / 2));
+    background: rgba(10, 16, 32, 0.92);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .site-nav a { color: #dfe2ee; text-decoration: none; font-size: 13.5px; font-weight: 500; }
+  .site-nav a:hover { color: #fff; }
+  .site-nav .brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; letter-spacing: -0.2px; }
+  .site-nav .brand small { color: #9aa0b4; font-weight: 500; }
+  .site-nav .mark { width: 26px; height: 26px; border-radius: 8px; background: var(--tufts-blue); display: flex; align-items: center; justify-content: center; }
+  .site-nav .mark img { width: 14px; height: 14px; }
+  .site-nav .links { display: flex; align-items: center; gap: 18px; }
+  .site-nav .pill-link { border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px; padding: 5px 14px; background: rgba(255, 255, 255, 0.06); color: #fff; }
+  @media (max-width: 640px) { .site-nav .brand small { display: none; } }
+  @media print { .site-nav { display: none !important; } }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="../">
+    <span class="mark"><img src="shots/class-hammer.svg" alt=""></span>
+    <span>ENT-164 <small>· Intro to Making</small></span>
+  </a>
+  <div class="links">
+    <a href="../syllabus/">Syllabus</a>
+    <a href="../about/">About</a>
+    <a class="pill-link" href="../">All materials &larr;</a>
+  </div>
+</nav>
+
+<!-- ================= COVER ================= -->
+<div class="cover">
+  <div class="mark"><img src="shots/class-hammer.svg" alt="Class mark"></div>
+  <div class="course">ENT-164 · Intro to Making</div>
+  <div class="kicker">Beginner's Guide · One-time setup · No experience needed</div>
+  <h1>Add your class tools<br><span class="accent">to opencode</span></h1>
+  <div class="subtitle">Turn on the class skills inside opencode — including the wiring-diagram maker we use in class. Paste one sentence, restart once, and you're set.</div>
+  <div class="pills">
+    <div class="pill">About 2 minutes</div>
+    <div class="pill">You only do it once</div>
+    <div class="pill">Wiring diagrams</div>
+    <div class="pill">For macOS &amp; Windows</div>
+  </div>
+  <div class="hero">
+    <img src="shots/led.png" alt="A breadboard wiring diagram drawn by the class tools: an LED and resistor on the Freenove ESP32 board">
+    <div class="cap">A wiring diagram drawn by the class tools: an LED on the breadboard, with every jumper wire routed and labelled.</div>
+  </div>
+  <div class="footer">
+    <span>Prepared September 21, 2026</span>
+    <span>tuftsmaker.github.io/ENT-164/skills/</span>
+  </div>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<div class="page">
+
+  <p class="lead">Your class has a set of <b>class tools</b> that live on the class website — extra abilities you switch on inside <b>opencode</b>. The main one is a <b>wiring-diagram maker</b>: describe a circuit for your ESP32 kit, and opencode draws a labelled breadboard picture with the jumper wires routed for you.</p>
+  <p>You don't install anything and you can't break anything. You ask opencode to add the tools, restart it once, and from then on you can ask for diagrams like the one on the cover.</p>
+
+  <div class="callout">
+    <b>Why add them?</b>
+    <ul>
+      <li><b>Wiring diagrams built for your kit</b> — LEDs, buttons, buzzers, servos, motors, the ultrasonic sensor, the LCD1602, the camera, and more.</li>
+      <li><b>Always the class setup</b> — the ESP32 on its GPIO extension board, real pin names, and the MicroPython pin choices from class.</li>
+      <li><b>They update themselves</b> — when your instructor improves a tool on the class website, your copy picks it up next time opencode starts.</li>
+      <li><b>Nothing to install, nothing to pay</b> — it rides along with the opencode setup you already did.</li>
+    </ul>
+  </div>
+
+  <h3>What you'll need</h3>
+  <ul class="checklist">
+    <li>opencode installed and connected to DeepSeek V4.1 Flash (the <a href="../opencode-deepseek-guide-mac/guide.html">macOS</a> or <a href="../opencode-deepseek-guide-win/guide.html">Windows</a> setup guide walks you through it)</li>
+    <li>An internet connection — the first download comes from the class website</li>
+    <li>About 2 minutes, once</li>
+    <li>Nothing to pay — this is part of your class materials</li>
+  </ul>
+
+  <div class="callout"><b>New word alert.</b> An <b>opencode skill</b> is a small set of instructions and programs that teaches opencode a new trick. The class skills stay on the class website; opencode downloads its own copy and keeps it up to date.</div>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><h2>Open opencode</h2></div>
+    <p>Open opencode the same way you always do. It doesn't matter which project is open — a class project, a practice folder, or nothing at all.</p>
+    <figure class="narrow">
+      <img src="shots/app-00-start-crop.png" alt="The opencode start screen with the message box">
+      <figcaption><b>Figure 1.</b> The message box at the bottom is where everything starts — the same box you type questions in.</figcaption>
+    </figure>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><h2>Paste this sentence</h2></div>
+    <p>Click in opencode's message box, then copy and paste this whole sentence:</p>
+    <div class="paste">
+      <div class="label">Copy and paste this</div>
+      <div class="say">Add my class skills to opencode: <span class="url">https://tuftsmaker.github.io/ENT-164/skills/</span></div>
+    </div>
+    <p>Press <span class="keycap">Enter</span> and let it work. It takes a few seconds. opencode downloads the class tools and notes where they came from, so it can update them later.</p>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">3</div><h2>If it asks for permission, say yes</h2></div>
+    <p>opencode may ask something like <i>"Can I change your settings file?"</i> or <i>"Can I run this command?"</i> — that's normal, and it's exactly what you asked for. Click <span class="ui">Allow</span> or <span class="ui">Yes</span>.</p>
+    <div class="callout tip"><b>Not sure?</b> It's only changing opencode's own settings, not anything else on your computer. Nothing is deleted, and you can undo it by asking opencode to remove the class skills again.</div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">4</div><h2>Quit opencode and open it again</h2></div>
+    <p>This part matters — the new tools only appear after opencode restarts.</p>
+    <ol>
+      <li>On a Mac, quit with <span class="keycap">⌘</span>+<span class="keycap">Q</span> (or the opencode menu → <span class="ui">Quit</span>). On Windows, close the window.</li>
+      <li>Open it again the same way you always do.</li>
+    </ol>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">5</div><h2>Try it out</h2></div>
+    <p>Type this into the message box and press <span class="keycap">Enter</span>:</p>
+    <div class="paste">
+      <div class="label">Try asking</div>
+      <div class="say">Draw me a wiring diagram for connecting an LED to my ESP32</div>
+    </div>
+    <p>After a moment opencode draws the diagram, shows it in the reply, and saves the files in your project folder. More involved circuits work the same way:</p>
+    <figure>
+      <img src="shots/robot-drive.png" alt="A wiring diagram of the class robot's two motors, L298N driver and joystick on the ESP32">
+      <figcaption><b>Figure 2.</b> The same tools drew the robot drive: two motors, the L298N driver, and the joystick — ask for one part at a time, or the whole robot.</figcaption>
+    </figure>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT YOU CAN ASK -->
+  <div class="step">
+    <h3>What you can ask for</h3>
+    <p>Ask in plain English — you don't need to know pin numbers. A few examples:</p>
+    <table class="examples">
+      <thead><tr><th>You can ask</th><th>What you get</th></tr></thead>
+      <tbody>
+        <tr><td><i>"Draw me a wiring diagram for connecting an LED to my ESP32"</i></td><td>The LED and its resistor on the breadboard, wired to a free GPIO pin</td></tr>
+        <tr><td><i>"Add a push button that reads when it's pressed"</i></td><td>The button wired to a pin with the pull-up resistor arrangement from class</td></tr>
+        <tr><td><i>"Wire up my ultrasonic sensor"</i></td><td>The HC-SR04 on 5&nbsp;V with Trig and Echo on the class pins</td></tr>
+        <tr><td><i>"Show me how to connect the servo"</i></td><td>The SG90's three wires — power, ground, and the signal pin from class</td></tr>
+        <tr><td><i>"How do I wire the LCD1602?"</i></td><td>The LCD with its I2C backpack on the class's SDA/SCL pins</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="shots/gallery.png" alt="A local gallery page listing every wiring diagram drawn so far">
+      <figcaption><b>Figure 3.</b> Every diagram is collected in a local gallery in your project folder — click a picture to zoom and trace wires, or open the PNG or SVG. Nothing is uploaded anywhere.</figcaption>
+    </figure>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="step">
+    <h3>If something goes wrong</h3>
+    <table class="flow">
+      <thead><tr><th>What you see</th><th>What to do</th></tr></thead>
+      <tbody>
+        <tr><td>opencode says it can't reach the website</td><td>Check you're connected to wifi. The class tools live online, so the first download needs internet.</td></tr>
+        <tr><td>Nothing new happens after restarting</td><td>Ask opencode: <b>"do you have the maker skill?"</b> — it will tell you either way. If not, paste the sentence from Step 2 again.</td></tr>
+        <tr><td>It asks to change settings or run a command</td><td>Say yes. That's the setup step doing its job — it's only touching opencode's own settings.</td></tr>
+        <tr><td>The diagram doesn't match your parts</td><td>Tell opencode what's different — for example, "use GPIO 4 for the LED" — and ask it to redraw. It re-renders in a second.</td></tr>
+        <tr><td>Still stuck</td><td>Show your instructor this guide. Nothing you did is broken, and it's quick to fix.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GLOSSARY + REF -->
+  <div class="step" style="break-inside: avoid;">
+    <h3>Words you'll see</h3>
+    <table class="glossary">
+      <tbody>
+        <tr><td>Class tools</td><td>The skills your instructor publishes on the class website — the wiring-diagram maker and anything added later.</td></tr>
+        <tr><td>Skill</td><td>A set of instructions and programs that teaches opencode a new trick. opencode downloads skills from a URL and keeps them up to date.</td></tr>
+        <tr><td>Wiring diagram</td><td>A picture of the breadboard and board with the parts placed and every jumper wire routed and labelled.</td></tr>
+        <tr><td>Breadboard</td><td>The white board with a grid of holes where the parts plug in. Holes in one column already connect to each other.</td></tr>
+        <tr><td>Jumper wire</td><td>The coloured wires you use to connect the board, the breadboard, and the parts.</td></tr>
+        <tr><td>GPIO</td><td>A pin on the ESP32 that can send or read a signal — the diagram labels the one to use.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Where everything lives</h3>
+    <table>
+      <thead><tr><th>What you want</th><th>Where to find it</th></tr></thead>
+      <tbody>
+        <tr><td>The class tools themselves</td><td><span class="mono">tuftsmaker.github.io/ENT-164/skills/</span> — published by your instructor, no login</td></tr>
+        <tr><td>Your copy of the tools</td><td>Downloaded and cached by opencode; updates happen by themselves on restart</td></tr>
+        <tr><td>Your diagrams</td><td>Your project folder — PNG and SVG files, plus a <span class="mono">gallery.html</span> you can open in a browser</td></tr>
+        <tr><td>The one-page print version</td><td><a href="../handouts/add-class-tools.pdf">Add your class tools to opencode (PDF)</a></td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><b>You never repeat this.</b> The class tools update by themselves when your instructor changes them. If the website ever moves, your instructor will share the new sentence.</div>
+  </div>
+
+  <div class="doc-footer"><img class="foot-mark" src="shots/class-hammer-blue.svg" alt="">ENT-164 · Intro to Making — Add your class tools to opencode · Beginner's guide · September 21, 2026</div>
+</div>
+
+</body>
+</html>
