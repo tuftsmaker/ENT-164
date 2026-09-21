@@ -173,6 +173,11 @@
   .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
   .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
 
+  /* This deck's photos are often two-up strips or product shots cut out on
+     white; show them whole and centred instead of cropping them into the
+     tile boxes. */
+  .tile img, .gallery .tile img { object-fit: contain; background: #ffffff; }
+
   /* ---------- structure ---------- */
   .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
   .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
@@ -532,8 +537,8 @@
         <figcaption><b>SG90 9g micro servo</b>The servo in your kit.</figcaption>
       </figure>
       <figure class="tile">
-        <img src="shots/servo-dimensions.jpg" alt="Dimensional drawing of a micro servo">
-        <figcaption><b>Dimensions</b>Check sizes before you design the mount.</figcaption>
+        <img src="shots/servo-horns.jpg" alt="The white plastic servo horns supplied with the servo">
+        <figcaption><b>Servo horns</b>The arms that come with it — pick one for your mechanism.</figcaption>
       </figure>
       <figure class="tile">
         <img src="shots/servos-wired.jpg" alt="A servo motor wired to a circuit board">
@@ -588,7 +593,7 @@
   <div class="s-body">
     <div class="grid" style="grid-template-columns: 0.78fr 1fr 1.1fr; grid-template-rows: 1fr;">
       <figure class="tile" style="margin: 0;">
-        <img src="shots/motor-dimensions.jpg" alt="A technical drawing of the DC gearbox motor with dimensions" style="object-fit: contain; background: #ffffff;">
+        <img src="shots/motor-dimensions.jpg" alt="A technical drawing of the DC gearbox motor with dimensions">
       </figure>
       <div class="phase">
         <p class="plabel">Exact parts</p>
