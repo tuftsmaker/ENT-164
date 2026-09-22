@@ -4,10 +4,13 @@
 Uses the YouTube Data API v3 `videos.insert` method with a resumable upload.
 Credentials live OUTSIDE this repo (see below) and are never printed.
 
-    ~/esp32/youtube_config.py     client secret + token path (like canvas_config.py)
+    ~/.config/tuftsmaker/youtube_config.py    client secret + token paths
 
 First run opens a browser for a one-time Google consent; the refresh token is
 cached next to the client secret so later runs are unattended.
+
+The config module is loaded from that directory by absolute path, so no
+PYTHONPATH juggling is needed.
 
 Requirements (install into a venv, not the system Python):
     python3 -m venv ~/.venvs/ent164-youtube
@@ -30,7 +33,6 @@ Usage:
 import argparse
 import os
 import sys
-import textwrap
 
 # youtube.upload is the least-privilege scope for publishing. youtube.readonly
 # is needed as well because the script verifies the target channel and reads the
@@ -48,39 +50,45 @@ DEFAULT_CATEGORY = "28"
 # Containers YouTube commonly accepts (it re-encodes everything anyway).
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".wmv", ".flv", ".webm", ".mkv", ".mpg", ".mpeg", ".3gp"}
 
-CONFIG_HINT = textwrap.dedent(
-    """
-    Expected config file: ~/esp32/youtube_config.py
+CONFIG_DIR = os.path.join(os.path.expanduser("~"), ".config", "tuftsmaker")
+CONFIG_PATH = os.path.join(CONFIG_DIR, "youtube_config.py")
+
+CONFIG_HINT = f"""
+    Expected config file: {CONFIG_PATH}
 
         # Path to the OAuth client secret downloaded from Google Cloud Console
         # (Credentials -> OAuth client ID -> Desktop app -> Download JSON).
-        CLIENT_SECRET_FILE = "/Users/you/esp32/youtube_client_secret.json"
+        CLIENT_SECRET_FILE = "{CONFIG_DIR}/client_secret.json"
 
         # Where the refresh token is cached after the first consent. Keep this
         # outside the repo as well.
-        TOKEN_FILE = "/Users/you/esp32/youtube_token.json"
+        TOKEN_FILE = "{CONFIG_DIR}/token.json"
 
         # Optional: pin the channel to protect against consenting with the
         # wrong Google account (recommended).
         EXPECTED_CHANNEL_ID = "UC..."
-    """
-).strip()
+""".strip()
 
 
 def load_config():
-    """Import youtube_config.py from outside the repo.
+    """Load youtube_config.py from outside the repo.
 
-    Follows the canvas_config.py convention: config lives in ~/esp32, is never
-    committed, and is imported by name so its values never enter this repo.
+    Loaded by absolute path from ~/.config/tuftsmaker/ so the caller does not
+    have to set PYTHONPATH, and so nothing credential-related can drift into
+    the repository. Values are read but never printed.
     """
+    if not os.path.exists(CONFIG_PATH):
+        sys.exit(f"Config not found: {CONFIG_PATH}\n\n" + CONFIG_HINT)
+
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("youtube_config", CONFIG_PATH)
+    cfg = importlib.util.module_from_spec(spec)
     try:
-        import youtube_config as cfg
-    except ImportError:
-        sys.exit(
-            "youtube_config.py not found on sys.path.\n\n"
-            "Add ~/esp32 to PYTHONPATH, or run from that directory:\n"
-            "    PYTHONPATH=~/esp32 scripts/upload-youtube.py ...\n\n" + CONFIG_HINT
-        )
+        spec.loader.exec_module(cfg)
+    except Exception as e:
+        sys.exit(f"Could not read {CONFIG_PATH}: {e}")
+
     missing = [n for n in ("CLIENT_SECRET_FILE", "TOKEN_FILE") if not getattr(cfg, n, None)]
     if missing:
         sys.exit("youtube_config.py is missing: " + ", ".join(missing) + "\n\n" + CONFIG_HINT)
@@ -301,7 +309,7 @@ def main():
     ap = argparse.ArgumentParser(
         description="Upload a video to the TuftsMaker YouTube channel",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="Config lives in ~/esp32/youtube_config.py (never in this repo).",
+        epilog="Config lives in ~/.config/tuftsmaker/ (never in this repo).",
     )
     ap.add_argument("video", help="path to the video file (mp4/mov/mkv/...)")
     ap.add_argument("--title", help="video title (required unless --dry-run)")

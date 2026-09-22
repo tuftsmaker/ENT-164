@@ -56,9 +56,11 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   Data API v3 (`videos.insert`, resumable). It defaults to `--privacy private`,
   does not notify subscribers, and reads the video back afterwards to report
   what YouTube actually did.
-- OAuth client secret and refresh token live in `~/esp32/youtube_config.py` +
-  the JSON paths it points at (outside the repo, mode 0600). Never print, copy,
-  commit or echo them — same rule as the Canvas token.
+- OAuth client secret and refresh token live in `~/.config/tuftsmaker/`
+  (`youtube_config.py` + `client_secret.json` + `token.json`, mode 0600, dir
+  0700). Outside the repo, same rule as the Canvas token: never print, copy,
+  commit or echo them. The script loads the config by absolute path, so no
+  `PYTHONPATH` is needed.
 - Dependencies are NOT installed in the system Python (mixing them there breaks
   the anaconda `streamlit`, which needs `protobuf<6`). Use the dedicated venv:
   `~/.venvs/ent164-youtube/bin/python scripts/upload-youtube.py ...`
