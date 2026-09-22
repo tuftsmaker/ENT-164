@@ -81,6 +81,16 @@ the manual; this is the contract.
   **before** the Sketch tool; the green check **commits and closes** the sketch,
   so it must not be clicked until drawing is done; a right-*drag* orbits while a
   right-*click* opens a context menu.
+- **If browser-control keeps dropping mid-record**, check in this order:
+  `browser-control status` (extension connected? relay reachable?),
+  then reload the extension via chrome://extensions, then recycle a wedged
+  relay with `kill -9 <pid of cli.js serve>` — the next CLI call auto-starts a
+  fresh one. A long-lived relay (many hours) tends to start rejecting executes
+  while still answering `status`, and a session whose page was replaced will try
+  to create a new target, which fails if the extension is mid-reconnect. Starting
+  a fresh `session new` is cheaper than reusing a broken one. Recording needs
+  five consecutive operations (setup, preflight, start, take, stop), so the
+  connection has to hold for the whole take, not just one command.
 
 ## YouTube: uploads via API, credentials outside the repo (TuftsMaker)
 
