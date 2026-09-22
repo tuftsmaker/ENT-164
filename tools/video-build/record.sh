@@ -65,7 +65,14 @@ print(next((t.get('setup','setup-noop') for t in d['takes'] if t['name']=='$TAKE
   echo "-- setup --"
   bundle "$PROJ/setup/$SETUP.js" /tmp/vid/.vs-setup.js
   browser-control execute --session "$SESSION" --file /tmp/vid/.vs-setup.js --json \
-    | python3 -c "import json,sys;d=json.load(sys.stdin);v=d.get('value') or {};print('  ok:',d.get('ok'),str(v)[:200]);sys.exit(0 if d.get('ok') else 1)"
+    | python3 -c "
+import json,sys
+d=json.load(sys.stdin)
+v=d.get('value') or {}
+print('  ok:',d.get('ok'),str(v)[:300])
+if not d.get('ok'):
+    print('  error:',(d.get('text') or '')[:400])
+sys.exit(0 if d.get('ok') else 1)"
 
   echo "-- preflight --"
   browser-control execute --session "$SESSION" --file "$HERE/scenes/preflight.js" --json \
@@ -78,6 +85,12 @@ print(next((t.get('setup','setup-noop') for t in d['takes'] if t['name']=='$TAKE
   bundle "$PROJ/takes/$TAKE.js" /tmp/vid/.vs-take.js
   browser-control execute --session "$SESSION" --file /tmp/vid/.vs-take.js --json \
     > "$WORK/takes/$TAKE.exec.json" 2>&1 || true
+  python3 -c "
+import json
+try:
+    d=json.load(open('$WORK/takes/$TAKE.exec.json'))
+    if not d.get('ok'): print('  take error:', (d.get('text') or '')[:300])
+except Exception: pass"
 
   sleep 1
   browser-control recording stop --session "$SESSION" --json > "$WORK/takes/$TAKE.json" 2>&1
