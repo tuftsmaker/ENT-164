@@ -56,10 +56,21 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   Data API v3 (`videos.insert`, resumable). It defaults to `--privacy private`,
   does not notify subscribers, and reads the video back afterwards to report
   what YouTube actually did.
-- OAuth client secret and refresh token live in `~/.config/tuftsmaker/`
-  (`youtube_config.py` + `client_secret.json` + `token.json`, mode 0600, dir
-  0700). Outside the repo, same rule as the Canvas token: never print, copy,
-  commit or echo them. The script loads the config by absolute path, so no
+- `scripts/update-youtube.py` changes an existing video (`videos.update`):
+  privacy (i.e. publishing a private upload), title, description, tags.
+- Both share `scripts/_youtube_auth.py`. **Two tokens, one per purpose**, in
+  `~/.config/tuftsmaker/`: `token-upload.json` (`youtube.upload` +
+  `youtube.readonly`) and `token-manage.json` (`youtube.force-ssl` +
+  `youtube.readonly`). They are separate because `videos.update` is *not*
+  covered by `youtube.upload` — the API accepts only `youtube`,
+  `youtube.force-ssl` or `youtubepartner` — and because one shared token would
+  mean widening it breaks the other capability. The auth module checks a cached
+  token's scopes and re-consents when one is missing, instead of failing later
+  with a bare 403 "Insufficient Permission".
+- OAuth client secret and tokens live in `~/.config/tuftsmaker/`
+  (`youtube_config.py` + `client_secret.json` + the two token files, mode 0600,
+  dir 0700). Outside the repo, same rule as the Canvas token: never print, copy,
+  commit or echo them. The scripts load the config by absolute path, so no
   `PYTHONPATH` is needed.
 - Dependencies are NOT installed in the system Python (mixing them there breaks
   the anaconda `streamlit`, which needs `protobuf<6`). Use the dedicated venv:

@@ -2,17 +2,13 @@
 """Upload a video to the ENT-164 / TuftsMaker YouTube channel.
 
 Uses the YouTube Data API v3 `videos.insert` method with a resumable upload.
-Credentials live OUTSIDE this repo (see below) and are never printed.
-
-    ~/.config/tuftsmaker/youtube_config.py    client secret + token paths
+Credentials live OUTSIDE this repo; see scripts/_youtube_auth.py.
 
 First run opens a browser for a one-time Google consent; the refresh token is
-cached next to the client secret so later runs are unattended.
+cached so later runs are unattended.
 
-The config module is loaded from that directory by absolute path, so no
-PYTHONPATH juggling is needed.
-
-Requirements (install into a venv, not the system Python):
+Requirements (install into a venv, not the system Python — mixing these into
+the anaconda base env breaks streamlit, which needs protobuf<6):
     python3 -m venv ~/.venvs/ent164-youtube
     ~/.venvs/ent164-youtube/bin/pip install \\
         google-api-python-client google-auth-oauthlib google-auth-httplib2
@@ -21,9 +17,8 @@ Requirements (install into a venv, not the system Python):
 IMPORTANT — unaudited projects are locked to private:
     Google restricts every upload made through an API project that has not
     passed a compliance audit to *private* viewing mode. The upload succeeds,
-    but YouTube then silently refuses to publish it publicly. Run with
-    --check-audit to see whether the API will report this for your project,
-    and see AGENTS.md for the audit form link.
+    but YouTube then silently refuses to publish it publicly. The script warns
+    when it detects this. See AGENTS.md for the audit form link.
 
 Usage:
     scripts/upload-youtube.py VIDEO [options]
@@ -34,14 +29,8 @@ import argparse
 import os
 import sys
 
-# youtube.upload is the least-privilege scope for publishing. youtube.readonly
-# is needed as well because the script verifies the target channel and reads the
-# video back afterwards (to detect the unaudited-project private lock), and
-# those are read operations that youtube.upload alone does not permit.
-SCOPES = [
-    "https://www.googleapis.com/auth/youtube.upload",
-    "https://www.googleapis.com/auth/youtube.readonly",
-]
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _youtube_auth as auth  # noqa: E402
 
 # "Science & Technology" — the closest fit for a making/engineering channel.
 # Full list: https://developers.google.com/youtube/v3/docs/videoCategories/list
@@ -50,91 +39,6 @@ DEFAULT_CATEGORY = "28"
 # Containers YouTube commonly accepts (it re-encodes everything anyway).
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".wmv", ".flv", ".webm", ".mkv", ".mpg", ".mpeg", ".3gp"}
 
-CONFIG_DIR = os.path.join(os.path.expanduser("~"), ".config", "tuftsmaker")
-CONFIG_PATH = os.path.join(CONFIG_DIR, "youtube_config.py")
-
-CONFIG_HINT = f"""
-    Expected config file: {CONFIG_PATH}
-
-        # Path to the OAuth client secret downloaded from Google Cloud Console
-        # (Credentials -> OAuth client ID -> Desktop app -> Download JSON).
-        CLIENT_SECRET_FILE = "{CONFIG_DIR}/client_secret.json"
-
-        # Where the refresh token is cached after the first consent. Keep this
-        # outside the repo as well.
-        TOKEN_FILE = "{CONFIG_DIR}/token.json"
-
-        # Optional: pin the channel to protect against consenting with the
-        # wrong Google account (recommended).
-        EXPECTED_CHANNEL_ID = "UC..."
-""".strip()
-
-
-def load_config():
-    """Load youtube_config.py from outside the repo.
-
-    Loaded by absolute path from ~/.config/tuftsmaker/ so the caller does not
-    have to set PYTHONPATH, and so nothing credential-related can drift into
-    the repository. Values are read but never printed.
-    """
-    if not os.path.exists(CONFIG_PATH):
-        sys.exit(f"Config not found: {CONFIG_PATH}\n\n" + CONFIG_HINT)
-
-    import importlib.util
-
-    spec = importlib.util.spec_from_file_location("youtube_config", CONFIG_PATH)
-    cfg = importlib.util.module_from_spec(spec)
-    try:
-        spec.loader.exec_module(cfg)
-    except Exception as e:
-        sys.exit(f"Could not read {CONFIG_PATH}: {e}")
-
-    missing = [n for n in ("CLIENT_SECRET_FILE", "TOKEN_FILE") if not getattr(cfg, n, None)]
-    if missing:
-        sys.exit("youtube_config.py is missing: " + ", ".join(missing) + "\n\n" + CONFIG_HINT)
-    return cfg
-
-
-def get_credentials(cfg, force_reauth=False):
-    """Return OAuth credentials, running the browser consent flow if needed.
-
-    The refresh token is cached in TOKEN_FILE so this is a one-time step.
-    """
-    from google.auth.transport.requests import Request
-    from google.oauth2.credentials import Credentials
-    from google_auth_oauthlib.flow import InstalledAppFlow
-
-    token_file = os.path.expanduser(cfg.TOKEN_FILE)
-    creds = None
-
-    if not force_reauth and os.path.exists(token_file):
-        try:
-            creds = Credentials.from_authorized_user_file(token_file, SCOPES)
-        except ValueError:
-            creds = None  # corrupt/stale token file -> re-consent below
-
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-
-    if not creds or not creds.valid:
-        secret = os.path.expanduser(cfg.CLIENT_SECRET_FILE)
-        if not os.path.exists(secret):
-            sys.exit(
-                f"OAuth client secret not found: {secret}\n\n"
-                "Create one in Google Cloud Console:\n"
-                "  APIs & Services -> Credentials -> Create credentials\n"
-                "  -> OAuth client ID -> Desktop app -> Download JSON\n\n" + CONFIG_HINT
-            )
-        flow = InstalledAppFlow.from_client_secrets_file(secret, SCOPES)
-        # Local loopback flow; opens the browser once.
-        creds = flow.run_local_server(port=0)
-        with open(token_file, "w") as f:
-            f.write(creds.to_json())
-        os.chmod(token_file, 0o600)
-        print(f"Saved refresh token to {token_file} (do not commit this)")
-
-    return creds
-
 
 def human(n):
     for unit in ("B", "KB", "MB", "GB", "TB"):
@@ -142,39 +46,6 @@ def human(n):
             return f"{n:.0f} {unit}" if unit == "B" else f"{n:.1f} {unit}"
         n /= 1024.0
     return f"{n:.1f} PB"
-
-
-def check_channel(youtube, cfg):
-    """Verify the consented account is the channel we expect.
-
-    Guards against silently uploading to whichever Google account happened to
-    be signed in during consent. This is a read call, so it needs the
-    youtube.readonly scope; failure here is non-fatal because the upload
-    scope alone is still enough to publish.
-    """
-    from googleapiclient.errors import HttpError
-
-    try:
-        resp = youtube.channels().list(part="snippet", mine=True).execute()
-    except HttpError as e:
-        print(f"Could not read the channel ({e.resp.status}); continuing without verification.")
-        return None
-
-    items = resp.get("items", [])
-    if not items:
-        sys.exit("This Google account has no YouTube channel.")
-    ch = items[0]
-    name = ch["snippet"]["title"]
-    cid = ch["id"]
-    print(f"Channel: {name}  ({cid})")
-    expected = getattr(cfg, "EXPECTED_CHANNEL_ID", None)
-    if expected and expected != cid:
-        sys.exit(
-            f"Channel mismatch: expected {expected}, got {cid}.\n"
-            "Re-authenticate with the right Google account, or update "
-            "EXPECTED_CHANNEL_ID in youtube_config.py."
-        )
-    return cid
 
 
 def validate_video(path):
@@ -198,11 +69,11 @@ def validate_video(path):
     return size
 
 
-def build_body(args, size):
+def build_body(args):
     """Assemble the video resource.
 
-    Only the properties videos.insert actually accepts are set here; an
-    unknown or malformed value makes the whole call fail with a 400.
+    Only the properties videos.insert actually accepts are set; an unknown or
+    malformed value makes the whole call fail with a 400.
     """
     body = {
         "snippet": {
@@ -226,17 +97,15 @@ def build_body(args, size):
     return body
 
 
-def upload(youtube, args, path, size):
+def upload(yt, args, path, size):
     """Resumable upload with progress, retrying transient failures."""
     from googleapiclient.errors import HttpError
     from googleapiclient.http import MediaFileUpload
 
-    body = build_body(args, size)
     media = MediaFileUpload(path, chunksize=8 * 1024 * 1024, resumable=True)
-
-    request = youtube.videos().insert(
+    request = yt.videos().insert(
         part="snippet,status",
-        body=body,
+        body=build_body(args),
         media_body=media,
         notifySubscribers=args.notify_subscribers,
     )
@@ -263,18 +132,16 @@ def upload(youtube, args, path, size):
     return response
 
 
-def report(youtube, video_id, privacy):
+def report(yt, video_id, privacy):
     """Read the video back and warn if YouTube overrode the privacy.
 
-    Read-back is best-effort: the upload has already succeeded by this point,
-    so a failure here must not look like an upload failure.
+    Best-effort: the upload already succeeded, so a read failure here must not
+    look like an upload failure.
     """
     from googleapiclient.errors import HttpError
 
     try:
-        resp = youtube.videos().list(
-            part="status,snippet,processingDetails", id=video_id
-        ).execute()
+        resp = yt.videos().list(part="status,snippet,processingDetails", id=video_id).execute()
     except HttpError as e:
         print(f"\n  https://youtu.be/{video_id}")
         print(f"  Uploaded, but could not read it back ({e.resp.status}).")
@@ -283,6 +150,7 @@ def report(youtube, video_id, privacy):
     if not resp.get("items"):
         print(f"Uploaded, but could not read back video {video_id}.")
         return
+
     item = resp["items"][0]
     snippet = item.get("snippet", {})
     actual = item.get("status", {}).get("privacyStatus")
@@ -308,7 +176,6 @@ def report(youtube, video_id, privacy):
 def main():
     ap = argparse.ArgumentParser(
         description="Upload a video to the TuftsMaker YouTube channel",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="Config lives in ~/.config/tuftsmaker/ (never in this repo).",
     )
     ap.add_argument("video", help="path to the video file (mp4/mov/mkv/...)")
@@ -325,8 +192,6 @@ def main():
     ap.add_argument("--dry-run", action="store_true",
                     help="validate file + config and show what would be sent, without uploading")
     ap.add_argument("--reauth", action="store_true", help="ignore the cached token and consent again")
-    ap.add_argument("--check-audit", action="store_true",
-                    help="upload a tiny throwaway video to learn whether the project is audited")
     args = ap.parse_args()
 
     if not args.dry_run and not args.title:
@@ -342,31 +207,19 @@ def main():
         print(f"  Category: {args.category}")
         print(f"  Tags:     {args.tags or '(none)'}")
         print(f"  Notify:   {'yes' if args.notify_subscribers else 'no'}")
-        cfg = load_config()
+        cfg = auth.load_config()
         secret = os.path.expanduser(cfg.CLIENT_SECRET_FILE)
-        token = os.path.expanduser(cfg.TOKEN_FILE)
+        token = auth.token_path("upload")
         print(f"  Secret:   {secret} {'(found)' if os.path.exists(secret) else '(MISSING)'}")
         print(f"  Token:    {token} {'(cached)' if os.path.exists(token) else '(not yet — first run will open a browser)'}")
         return
 
-    cfg = load_config()
-
-    # Imported here so --dry-run works without the libraries installed.
-    from googleapiclient.discovery import build
-
-    creds = get_credentials(cfg, force_reauth=args.reauth)
-    youtube = build("youtube", "v3", credentials=creds, cache_discovery=False)
-    check_channel(youtube, cfg)
-
-    if args.check_audit:
-        print()
-        print("--check-audit given: uploading a short test video to see whether")
-        print("this project can publish publicly. Delete it afterwards.")
-        args.title = args.title or "ENT-164 API audit check (safe to delete)"
-        args.privacy = "unlisted"
+    cfg = auth.load_config()
+    yt = auth.service("upload", force_reauth=args.reauth)
+    auth.check_channel(yt, cfg)
 
     try:
-        result = upload(youtube, args, args.video, size)
+        result = upload(yt, args, args.video, size)
     except Exception as e:
         msg = str(e)
         if "uploadLimitExceeded" in msg:
@@ -389,7 +242,7 @@ def main():
         raise
 
     print("Upload complete.")
-    report(youtube, result["id"], args.privacy)
+    report(yt, result["id"], args.privacy)
 
 
 if __name__ == "__main__":

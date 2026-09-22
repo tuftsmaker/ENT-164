@@ -1,0 +1,132 @@
+#!/usr/bin/env python3
+"""Change an existing YouTube video: privacy, title, description, tags.
+
+Complements scripts/upload-youtube.py, which only creates new videos. Use this
+to publish an upload, fix a typo in a title, or adjust tags afterwards.
+
+This cannot use the upload token: videos.update is not covered by
+youtube.upload (the API accepts only youtube, youtube.force-ssl or
+youtubepartner). So it consents separately, with its own token file — which
+also means adding this capability never invalidates the working upload token.
+
+Credentials live outside this repo; see scripts/_youtube_auth.py.
+
+Usage:
+    scripts/update-youtube.py VIDEO_ID --privacy public
+    scripts/update-youtube.py VIDEO_ID --title "New title"
+    scripts/update-youtube.py VIDEO_ID --dry-run
+"""
+import argparse
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _youtube_auth as auth  # noqa: E402
+
+# videos.update replaces the parts named in `part`, so every writable property
+# that is not being changed must be sent back verbatim or it is erased
+# (tags are the classic casualty).
+WRITABLE_STATUS = ("privacyStatus", "selfDeclaredMadeForKids", "embeddable", "license",
+                   "publicStatsViewable")
+
+
+def fetch(yt, video_id):
+    resp = yt.videos().list(part="snippet,status", id=video_id).execute()
+    items = resp.get("items", [])
+    if not items:
+        sys.exit(f"No video found with id {video_id} on this channel.")
+    return items[0]
+
+
+def build(it, args):
+    """Merge the requested changes onto the video's current metadata."""
+    snippet = {
+        "title": args.title or it["snippet"]["title"],
+        "description": (args.description if args.description is not None
+                        else it["snippet"].get("description", "")),
+        "categoryId": it["snippet"].get("categoryId", "28"),
+    }
+    if args.tags is not None:
+        tags = [t.strip() for t in args.tags.split(",") if t.strip()]
+        if tags:
+            snippet["tags"] = tags
+    elif it["snippet"].get("tags"):
+        snippet["tags"] = it["snippet"]["tags"]
+
+    status = {k: it["status"][k] for k in WRITABLE_STATUS if k in it["status"]}
+    if args.privacy:
+        status["privacyStatus"] = args.privacy
+    return snippet, status
+
+
+def show(snippet, status, current_privacy, tags_label):
+    print("After this change:")
+    print(f"  Title:   {snippet['title']}")
+    print(f"  Privacy: {current_privacy} -> {status.get('privacyStatus')}")
+    print(f"  Tags:    {', '.join(snippet.get('tags', [])) or '(none)'}  {tags_label}")
+    print(f"  Desc:    {len(snippet['description'])} chars")
+
+
+def main():
+    ap = argparse.ArgumentParser(
+        description="Update an existing YouTube video",
+        epilog="Config lives in ~/.config/tuftsmaker/ (never in this repo).",
+    )
+    ap.add_argument("video_id", help="the video id (the part after youtu.be/)")
+    ap.add_argument("--privacy", choices=("private", "unlisted", "public"))
+    ap.add_argument("--title")
+    ap.add_argument("--description")
+    ap.add_argument("--tags", help="comma-separated; replaces the existing set")
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--reauth", action="store_true", help="ignore the cached token and consent again")
+    args = ap.parse_args()
+
+    if not any((args.privacy, args.title, args.description, args.tags is not None)):
+        ap.error("nothing to change; pass at least one of --privacy/--title/--description/--tags")
+
+    cfg = auth.load_config()
+
+    # A dry run still needs a token to read the current values, but should not
+    # trigger a browser consent as a side effect.
+    if args.dry_run and not os.path.exists(auth.token_path("manage")):
+        sys.exit(
+            "No manage token yet, so a dry run cannot read the video.\n"
+            "Run once without --dry-run to consent (a browser will open)."
+        )
+
+    yt = auth.service("manage", force_reauth=args.reauth)
+    auth.check_channel(yt, cfg)
+
+    it = fetch(yt, args.video_id)
+    current = it["status"].get("privacyStatus")
+    snippet, status = build(it, args)
+
+    print(f"Video:   {it['snippet']['title']}")
+    print(f"Current: {current}")
+    tags_label = "(replaced)" if args.tags is not None else "(unchanged)"
+    if args.tags is None and not it["snippet"].get("tags"):
+        tags_label = "(none set)"
+    show(snippet, status, current, tags_label)
+
+    if args.dry_run:
+        print()
+        print("DRY RUN — nothing sent.")
+        return
+
+    resp = yt.videos().update(
+        part="snippet,status",
+        body={"id": args.video_id, "snippet": snippet, "status": status},
+    ).execute()
+
+    print()
+    now = resp["status"]["privacyStatus"]
+    print(f"Updated. Privacy is now: {now}")
+    if args.privacy and now != args.privacy:
+        print("WARNING: YouTube did not apply the requested privacy.")
+        print("         If it stays private, that is the unaudited-project lock:")
+        print("         https://support.google.com/youtube/contact/yt_api_form")
+    print(f"  https://youtu.be/{args.video_id}")
+
+
+if __name__ == "__main__":
+    main()
