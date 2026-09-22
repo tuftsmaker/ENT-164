@@ -203,3 +203,64 @@ async function reloadDocument(waitMs = 7000) {
   await esc(); await P(300);
   return { ok: true, url: page.url() };
 }
+
+// Create a new Onshape document with the given name and wait for its Part
+// Studio. Used by the tip videos so each one works in a document named after
+// itself (the title bar is on screen the whole time).
+async function createDocument(name) {
+  await page.goto('https://cad.onshape.com/documents', { waitUntil: 'domcontentloaded' });
+  await P(2500);
+  for (let i = 0; i < 20; i++) { const u = page.url(); await P(320); if (page.url() === u) break; }
+
+  // Poll for the Create button: the SPA renders after the URL settles.
+  let createB = null;
+  for (let i = 0; i < 40; i++) {
+    createB = await boxOf('Create', { exact: true, maxY: 120 });
+    if (createB) break;
+    await P(500);
+  }
+  if (!createB) return { ok: false, why: 'no-create-button', url: page.url() };
+  await clickAt(createB.x + createB.w / 2, createB.y + createB.h / 2, 600, 400);
+
+  const docItem = await boxOf('Document…', { exact: true, maxY: 560 });
+  if (!docItem) return { ok: false, why: 'no-document-item' };
+  await clickAt(docItem.x + docItem.w / 2, docItem.y + docItem.h / 2, 1400, 200);
+
+  // Clear the default name through the native setter (Meta+A does not work here).
+  await page.evaluate((n) => {
+    const el = document.querySelector('.modal input.form-control');
+    if (!el) return;
+    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    setter.call(el, n);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  }, name);
+  await P(400);
+
+  const ok = await page.evaluate(() => {
+    const vis = (e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    const b = Array.from(document.querySelectorAll('.modal button')).filter(vis)
+      .find((e) => /^create$/i.test((e.innerText || '').trim()));
+    if (!b) return null;
+    const r = b.getBoundingClientRect();
+    return { x: r.x, y: r.y, w: r.width, h: r.height };
+  });
+  if (!ok) return { ok: false, why: 'no-create-confirm' };
+  await clickAt(ok.x + ok.w / 2, ok.y + ok.h / 2, 2000, 500);
+  for (let i = 0; i < 40; i++) { await P(500); if (/\/e\//.test(page.url())) break; }
+  await P(2500);
+
+  // A new document opens on its tab list; the sketch lives in a Part Studio.
+  if (!/\/e\//.test(page.url())) {
+    for (let i = 0; i < 20; i++) {
+      const tab = await boxOf('Part Studio 1', { exact: false, minY: 1000 });
+      if (tab) {
+        await clickAt(tab.x + tab.w / 2, tab.y + tab.h / 2, 1800, 400);
+        break;
+      }
+      await P(500);
+    }
+    for (let i = 0; i < 40; i++) { await P(500); if (/\/e\//.test(page.url())) break; }
+    await P(2500);
+  }
+  return { ok: /\/e\//.test(page.url()), url: page.url() };
+}

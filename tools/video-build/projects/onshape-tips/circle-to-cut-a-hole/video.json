@@ -1,0 +1,27 @@
+{
+  "slug": "circle-to-cut-a-hole",
+  "workDir": "~/Movies/ent164-onshape-tutorial/onshape-tips/circle-to-cut-a-hole",
+  "output": "~/Movies/ent164-onshape-tutorial/onshape-tips/circle-to-cut-a-hole.mp4",
+  "eyebrow": "ENT-164  \u00b7  ONSHAPE TIPS",
+  "heading": "Adding a Circle to a Rectangle to Cut a Hole",
+  "subtitle": "A circle becomes a hole when the file reaches the cutter",
+  "footer": "Tufts University  \u00b7  Nolop Makerspace",
+  "titleDuration": 4.0,
+  "endHeading": "Happy making.",
+  "endSubtitle": "Measure the real part, draw it, export the DXF, and cut.",
+  "endFooter": "ENT-164  \u00b7  Intro to Making  \u00b7  Tufts University  \u00b7  Nolop Makerspace",
+  "endCardDuration": 5.0,
+  "voice": "aura-2-thalia-en",
+  "documentName": "Adding a Circle to a Rectangle to Cut a Hole",
+  "lead": 0.0,
+  "tail": 0.5,
+  "takes": [
+    {
+      "name": "take01",
+      "setup": "setup-workspace",
+      "scenes": [
+        "s01"
+      ]
+    }
+  ]
+}

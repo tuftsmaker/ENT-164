@@ -1,0 +1,27 @@
+{
+  "slug": "workspace-overview",
+  "workDir": "~/Movies/ent164-onshape-tutorial/onshape-tips/workspace-overview",
+  "output": "~/Movies/ent164-onshape-tutorial/onshape-tips/workspace-overview.mp4",
+  "eyebrow": "ENT-164  \u00b7  ONSHAPE TIPS",
+  "heading": "Workspace Overview",
+  "subtitle": "The dashboard, units, and moving around in 3D",
+  "footer": "Tufts University  \u00b7  Nolop Makerspace",
+  "titleDuration": 4.0,
+  "endHeading": "Happy making.",
+  "endSubtitle": "Measure the real part, draw it, export the DXF, and cut.",
+  "endFooter": "ENT-164  \u00b7  Intro to Making  \u00b7  Tufts University  \u00b7  Nolop Makerspace",
+  "endCardDuration": 5.0,
+  "voice": "aura-2-thalia-en",
+  "documentName": "Workspace Overview",
+  "lead": 0.0,
+  "tail": 0.5,
+  "takes": [
+    {
+      "name": "take01",
+      "setup": "setup-workspace",
+      "scenes": [
+        "s01"
+      ]
+    }
+  ]
+}

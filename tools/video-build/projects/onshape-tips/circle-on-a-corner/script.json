@@ -1,0 +1,3 @@
+{
+ "s01": "Now let's look at placing a circle at a corner of the square. The same idea as centring it, but this time we anchor to a corner instead of a midpoint. I'll draw a construction line out from the corner, then place the circle where those lines meet, and dimension it from the edges. That gives us a hole at a known distance from the corner, rather than one that just looks about right."
+}
