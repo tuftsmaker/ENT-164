@@ -57,7 +57,21 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   does not notify subscribers, and reads the video back afterwards to report
   what YouTube actually did.
 - `scripts/update-youtube.py` changes an existing video (`videos.update`):
-  privacy (i.e. publishing a private upload), title, description, tags.
+  privacy (i.e. publishing a private upload), title, description, tags,
+  thumbnail (`thumbnails.set`).
+- `scripts/channel-youtube.py` reads or changes channel-level settings, currently
+  the **made-for-kids** declaration (`--show`, `--made-for-kids`,
+  `--not-made-for-kids`, `--sync-videos`). This channel must be **NOT made for
+  kids**: the declaration is for content whose primary audience is *children*,
+  and when set, YouTube disables comments, end screens, cards, notifications and
+  personalised ads on every video. It was set by accident once and silently
+  broke those features; keep it `False`. `--sync-videos` realigns videos whose
+  stored declaration drifts from the channel's.
+- **Custom thumbnails additionally require phone verification** of the channel
+  (they are one of YouTube's "intermediate features"). Until that is done,
+  `thumbnails.set` fails with a 403 whose message wrongly blames permissions —
+  verify at https://www.youtube.com/verify, then re-run. This is unrelated to
+  the made-for-kids setting and to OAuth scopes.
 - Both share `scripts/_youtube_auth.py`. **Two tokens, one per purpose**, in
   `~/.config/tuftsmaker/`: `token-upload.json` (`youtube.upload` +
   `youtube.readonly`) and `token-manage.json` (`youtube.force-ssl` +
