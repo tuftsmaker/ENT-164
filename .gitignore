@@ -1,2 +1,40 @@
 .DS_Store
 __pycache__/
+
+# ---- generated output (never commit; rebuild from the sources) -------------
+# The maker skill writes its diagrams here. Nothing links to them, and they are
+# regenerable: skills/maker/render.py -o out/<name>
+/out/
+
+# ---- local working copies of source material (never commit) ----------------
+# These hold large source media that must stay on disk but do not belong in git:
+#   Photos/   raw instructor photos and phone video (the site uses the resized,
+#             EXIF-stripped copies under assets/photos/class/)
+#   slides/   source .pptx class decks (the committed artifact is the built PDF
+#             + slides.html, per the deck-sync rule in AGENTS.md)
+#   videos/   legacy full-desktop screen recordings, used as teaching source for
+#             tools/video-build/ projects; cannot be re-edited into the new look
+#             (see make-legacy-tips.py)
+#
+# Leading slash anchors these to the repo root. Do not drop it: an unanchored
+# Photos/ would also match assets/photos/ on a case-insensitive filesystem.
+/Photos/
+/slides/
+/videos/
+
+# ---- video-build render intermediates (never commit) -----------------------
+# The pipeline keeps recordings, narration audio and render intermediates in a
+# per-project workDir OUTSIDE the repo (video.json -> workDir). These rules are
+# the belt to that suspenders: if a project ever omits workDir, pipeline.py
+# falls back to <project>/build/ INSIDE the repo, which would otherwise stage
+# hundreds of MB of media on the next `git add`.
+#
+# Only rendered media is excluded. The scene scripts themselves are source and
+# live in tools/video-build/projects/<slug>/takes/*.js — those stay committed,
+# so these patterns must match the media, not the whole directory.
+tools/video-build/**/build/
+tools/video-build/**/cap/
+*.mov
+*.wav
+*.aiff
+*.m4a

@@ -55,7 +55,15 @@ def dur(path):
 
 def work(proj, cfg):
     """Where recordings and intermediates live - outside the repo by design."""
-    w = cfg.get('workDir') or os.path.join(proj, 'build')
+    w = cfg.get('workDir')
+    if not w:
+        raise SystemExit(
+            f"{proj}/video.json has no workDir.\n\n"
+            "Media must not be written inside the repo (see the Tutorial videos\n"
+            "section in AGENTS.md): it bloats git and gets published by Pages.\n"
+            "Set workDir to a path outside the repo, e.g.\n"
+            '  "workDir": "~/Movies/ent164-onshape-tutorial/<slug>-build"'
+        )
     w = os.path.expanduser(w)
     os.makedirs(w, exist_ok=True)
     return w
