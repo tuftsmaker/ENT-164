@@ -50,6 +50,32 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   is the deck for **Class 11** (syllabus Week 11, Thu Nov 19) — module 314499.
   Class 10 "Smart Devices" still has no source deck.
 
+## YouTube: uploads via API, credentials outside the repo (TuftsMaker)
+
+- `scripts/upload-youtube.py` uploads a video to the channel with the YouTube
+  Data API v3 (`videos.insert`, resumable). It defaults to `--privacy private`,
+  does not notify subscribers, and reads the video back afterwards to report
+  what YouTube actually did.
+- OAuth client secret and refresh token live in `~/esp32/youtube_config.py` +
+  the JSON paths it points at (outside the repo, mode 0600). Never print, copy,
+  commit or echo them — same rule as the Canvas token.
+- Dependencies are NOT installed in the system Python (mixing them there breaks
+  the anaconda `streamlit`, which needs `protobuf<6`). Use the dedicated venv:
+  `~/.venvs/ent164-youtube/bin/python scripts/upload-youtube.py ...`
+  Run `--dry-run` to validate without uploading; it works without the venv.
+- **The audit gate:** Google locks every upload from an API project that has not
+  passed a compliance audit to *private* viewing mode — the upload succeeds and
+  then cannot be made public. Until the project passes an audit
+  (https://support.google.com/youtube/contact/yt_api_form), publish via YouTube
+  Studio in the browser instead, or expect private-only. The script detects and
+  warns about this after each upload.
+- Quota: `videos.insert` has its own bucket of **100 calls/day at 1 unit each**
+  (the old "1,600 units, ~6/day" figure is obsolete). Separately, a channel has
+  a per-account daily upload cap (`uploadLimitExceeded`) that is lower for new
+  or unverified channels.
+- Source footage lives in `Photos/*.mp4` (untracked, unpublished). Do not commit
+  video files to this repo.
+
 ## Converting another class deck
 
 1. `python3 scripts/extract-pptx.py "slides/ENT-164 Class N - ....pptx" /tmp/class-N`
