@@ -127,6 +127,27 @@ but you must re-record, because the recorded pacing is baked into the video.
 **Every take's setup must land the app in the starting state itself**, so a take
 can be re-recorded on its own. Do not rely on the previous take having run.
 
+### The document is created once, not by the setup
+
+Onshape's Create flow opens the new document in a **new tab**, and a recording
+session stays pinned to the tab it started on. A setup that creates its own
+document therefore keeps working on the wrong page — and reports success while
+it does it.
+
+So create the document once, up front (by hand, or with `createDocument()`), and
+record its Part Studio URL as `"documentUrl"` in `video.json`. The setup then
+calls:
+
+```js
+const made = await openDocument(cfg.documentUrl);
+```
+
+which navigates the *current* tab. It also repairs a dropped connection: a tab
+left idle long enough shows Onshape's "is not connected" banner, and from then
+on no command opens a feature dialog — every later step fails quietly, with the
+screenshot looking almost normal. `openDocument` detects the banner, reloads,
+and waits for it to clear.
+
 ## Gotchas worth knowing
 
 These all cost real time to discover. They are handled in the helpers — keep

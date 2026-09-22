@@ -7,8 +7,8 @@ const cfg = (() => {
   } catch (e) { return { documentName: 'Updating Dimensions' }; }
 })();
 
-const made = await createDocument(cfg.documentName);
-if (!made.ok) return { step: 'could-not-create-document', made };
+const made = cfg.documentUrl ? await openDocument(cfg.documentUrl) : await createDocument(cfg.documentName);
+if (!made.ok) return { step: 'could-not-open-document', made };
 
 await cleanStudio();
 const sk = await newTopSketchFramed();

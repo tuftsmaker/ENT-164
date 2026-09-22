@@ -75,8 +75,15 @@ if not d.get('ok'):
 sys.exit(0 if d.get('ok') else 1)"
 
   echo "-- preflight --"
-  browser-control execute --session "$SESSION" --file "$HERE/scenes/preflight.js" --json \
-    | python3 -c "import json,sys;d=json.load(sys.stdin);v=d.get('value') or {};print('  ok:',d.get('ok'),'surface',v.get('surface'))"
+  bundle "$HERE/scenes/preflight.js" /tmp/vid/.vs-preflight.js
+  browser-control execute --session "$SESSION" --file /tmp/vid/.vs-preflight.js --json \
+    | python3 -c "
+import json,sys
+d=json.load(sys.stdin)
+v=d.get('value') or {}
+print('  ok:',d.get('ok'),'surface',v.get('surface'), 'inner', v.get('inner'))
+if not d.get('ok'):
+    print('  error:',(d.get('text') or '')[:400])"
 
   echo "-- record --"
   browser-control recording start "$WORK/takes/$TAKE.mp4" --session "$SESSION" \

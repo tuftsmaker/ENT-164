@@ -207,6 +207,40 @@ async function reloadDocument(waitMs = 7000) {
 // Create a new Onshape document with the given name and wait for its Part
 // Studio. Used by the tip videos so each one works in a document named after
 // itself (the title bar is on screen the whole time).
+// Open an existing document's Part Studio in the current tab.
+//
+// The document is created ONCE, up front, and its Part Studio URL recorded in
+// video.json as "documentUrl" (see the README). It cannot be created inside a
+// take's setup: Onshape's Create flow opens the new document in a *new* tab,
+// and a recording session stays pinned to the tab it started on - so the setup
+// would silently keep working on the wrong page.
+async function openDocument(url, waitMs = 8000) {
+  if (!url) return { ok: false, why: 'no-document-url' };
+
+  const lost = async () => page.evaluate(
+    () => /is not connected/i.test(document.body.innerText || ''));
+  const settle = async (totalMs) => {
+    for (let i = 0; i < Math.ceil(totalMs / 1000); i++) { await P(1000); if (!(await lost())) break; }
+  };
+
+  const navigated = !page.url().startsWith(url);
+  if (navigated) { await page.goto(url, { waitUntil: 'domcontentloaded' }); await P(waitMs); }
+
+  // A tab left idle for a long time loses Onshape's websocket. The page then
+  // keeps rendering - with a stale "is not connected" banner - but no command
+  // opens a feature dialog, so every later step fails quietly. A reload
+  // re-establishes the connection.
+  let reconnected = false;
+  if (await lost()) {
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await settle(45000);
+    await P(2500);
+    reconnected = true;
+  }
+  return { ok: /\/e\//.test(page.url()) && !(await lost()),
+    url: page.url(), navigated, reconnected };
+}
+
 async function createDocument(name) {
   await page.goto('https://cad.onshape.com/documents', { waitUntil: 'domcontentloaded' });
   await P(2500);
