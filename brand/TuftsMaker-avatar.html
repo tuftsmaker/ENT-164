@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  /* TuftsMaker channel avatar.
+     Rendered at 480x480 and downsampled to 120x120 for clean antialiasing.
+     The whole square is filled with the gradient because YouTube circle-crops
+     avatars — a rounded-square mark would show its corners cut off. */
+  @page { size: 480px 480px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 480px; height: 480px; overflow: hidden; }
+
+  body {
+    background: linear-gradient(145deg, #4c9ae6 0%, #3E8EDE 46%, #2f7cc9 100%);
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  /* Soft top-left sheen, matching the mark's inset highlight in the banner. */
+  body::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(58% 58% at 30% 26%, rgba(255,255,255,.24) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+  }
+
+  /* 66px at final scale => 264px here (same icon-to-mark ratio as the banner). */
+  svg { width: 264px; height: 264px; position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+    <path d="m18 15 4-4" />
+    <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+  </svg>
+</body>
+</html>
