@@ -50,6 +50,38 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   is the deck for **Class 11** (syllabus Week 11, Thu Nov 19) — module 314499.
   Class 10 "Smart Devices" still has no source deck.
 
+## Tutorial videos (`tools/video-build/`)
+
+Tutorial videos are built from a narration script plus **real browser
+recordings** driven through `browser-control`. `tools/video-build/README.md` is
+the manual; this is the contract.
+
+- **Media never enters the repo.** Recordings, narration audio and intermediates
+  go to the project's `workDir` (from `video.json`, default
+  `~/Movies/ent164-onshape-tutorial/<slug>-build/`). Only scripts and config are
+  committed.
+- Pipeline: `tts -> align -> cards -> captions -> plan -> assemble`, with
+  `./tools/video-build/record.sh <project>` driving the takes. Everything after
+  `align` is deterministic given the recordings, so re-running is safe.
+- **Scene timing is derived from the narration.** Take scripts pace themselves
+  with `Beat` / `at(O, scene, sentence)` against the aligned sentence timings, so
+  editing `script.json` and re-running `tts`+`align` retimes the scenes on its
+  own — but the pacing is baked into the footage, so **re-record the affected
+  takes**; do not just rebuild.
+- Each take's setup must land its own starting state, so any take can be
+  re-recorded alone: `./tools/video-build/record.sh <project> take04`.
+- ffmpeg here has **no `drawtext`, `subtitles` or `ass`** (no freetype/libass).
+  Captions and the title/end cards are rendered with PIL and composited with
+  `overlay`. Do not reach for text filters.
+- After `record.sh`, read the reported capture surface and content rectangle.
+  Letterboxed captures are recovered automatically by `assemble`; a wrong *state*
+  is not.
+- Onshape specifics that are easy to get wrong: selecting a datum row only
+  *highlights* it — the sketch plane is set only if the datum is selected
+  **before** the Sketch tool; the green check **commits and closes** the sketch,
+  so it must not be clicked until drawing is done; a right-*drag* orbits while a
+  right-*click* opens a context menu.
+
 ## YouTube: uploads via API, credentials outside the repo (TuftsMaker)
 
 - `scripts/upload-youtube.py` uploads a video to the channel with the YouTube
@@ -134,6 +166,11 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
 - `skills/` is served by Pages at `https://tuftsmaker.github.io/ENT-164/skills/`
   and consumed by opencode via `skills.urls`. `skills/` is the **source of
   truth** — there is no separate source tree; edit in place.
+- Skills are **student-facing**. Repo-internal build processes (the deck
+  pipeline, `tools/video-build/`, the Canvas and YouTube scripts) do not belong
+  here — they go in AGENTS.md and the tool's own README. A skill is distributed
+  to student machines and publicly served, so publishing build tooling there
+  only pushes irrelevant files at students.
 - opencode re-downloads a skill only when its `version` changes, and the version
   is a hash of the skill's contents. So after editing anything under `skills/`:
   run `tools/skill-publish/rebuild.sh`, then commit and push. Editing without

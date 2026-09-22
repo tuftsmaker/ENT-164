@@ -1,0 +1,61 @@
+{
+  "slug": "laser-cutting-in-onshape",
+  "workDir": "~/Movies/ent164-onshape-tutorial/laser-cutting-in-onshape-build",
+  "output": "~/Movies/ent164-onshape-tutorial/ENT-164-Onshape-Laser-Cut-Sketch.mp4",
+  "eyebrow": "ENT-164  \u00b7  INTRO TO MAKING",
+  "heading": "Laser Cutting in Onshape",
+  "subtitle": "Draw a basic sketch and export a DXF for the laser cutter",
+  "footer": "Tufts University  \u00b7  Nolop Makerspace",
+  "titleDuration": 5.0,
+  "endHeading": "Happy making.",
+  "endSubtitle": "Measure the real part, draw it, export the DXF, and cut.",
+  "endFooter": "ENT-164  \u00b7  Intro to Making  \u00b7  Tufts University  \u00b7  Nolop Makerspace",
+  "endCardDuration": 6.0,
+  "voice": "aura-2-thalia-en",
+  "documentName": "Laser Cutting in Onshape",
+  "lead": 0.0,
+  "tail": 0.5,
+  "takes": [
+    {
+      "name": "take01",
+      "setup": "setup-docs",
+      "scenes": [
+        "s01_intro",
+        "s02_documents"
+      ]
+    },
+    {
+      "name": "take02",
+      "setup": "setup-open-studio",
+      "scenes": [
+        "s03_partstudio",
+        "s04_sketch",
+        "s05_normal"
+      ]
+    },
+    {
+      "name": "take03",
+      "setup": "setup-top-sketch",
+      "scenes": [
+        "s06_rectangle",
+        "s07_dimensions"
+      ]
+    },
+    {
+      "name": "take04",
+      "setup": "setup-rect-sketch",
+      "scenes": [
+        "s08_circle",
+        "s09_finish"
+      ]
+    },
+    {
+      "name": "take05",
+      "setup": "setup-final-sketch",
+      "scenes": [
+        "s10_dxf",
+        "s11_recap"
+      ]
+    }
+  ]
+}
