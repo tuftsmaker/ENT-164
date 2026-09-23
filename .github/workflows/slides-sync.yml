@@ -5,12 +5,14 @@ on:
     branches: [main]
     paths:
       - "classes/**"
+      - "syllabus/**"
       - "assets/**"
       - "scripts/**"
       - ".github/workflows/slides-sync.yml"
   pull_request:
     paths:
       - "classes/**"
+      - "syllabus/**"
       - "assets/**"
       - "scripts/**"
   workflow_dispatch:
@@ -25,3 +27,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Verify each class PDF matches its slide sources
         run: ./scripts/build-class.sh --check --all
+      - name: Verify the syllabus PDF matches syllabus/index.html
+        run: ./scripts/build-syllabus.sh --check

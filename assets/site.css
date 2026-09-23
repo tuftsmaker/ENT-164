@@ -687,3 +687,52 @@ footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44
   .reveal { animation: none; opacity: 1; }
   .btn, .card, .instructor, .week, .entry, .guide-card { transition: none; }
 }
+
+/* ---------- print: the syllabus PDF -----------------------------------------
+   scripts/build-syllabus.sh prints syllabus/index.html to PDF with headless
+   Chrome. The page is the single source of truth, so this block is what turns
+   a web page into a document: US Letter, the site's sidebar/hero/footer chrome
+   removed, and cards and weeks kept whole across page breaks. Scoped to
+   .page-syllabus so printing any other page is unaffected.
+
+   The `.reveal` animation must be neutralised: those elements start at
+   `opacity: 0` and are faded in by CSS animation, which a print render can
+   capture mid-flight - or not at all. */
+@media print {
+  @page { size: Letter; margin: 14mm 15mm; }
+
+  .page-syllabus { background: #fff; font-size: 10.5pt; line-height: 1.5; }
+  .page-syllabus .nav,
+  .page-syllabus .toc,
+  .page-syllabus footer,
+  .page-syllabus .cta-row,
+  .page-syllabus .hero-photo { display: none !important; }
+
+  .page-syllabus .reveal { opacity: 1 !important; animation: none !important; }
+  .page-syllabus .wrap { width: auto; }
+  .page-syllabus .syllabus-layout { display: block; padding-top: 0; }
+  .page-syllabus .hero { padding: 0 0 6mm; }
+  .page-syllabus .hero::before { display: none; }
+  .page-syllabus .section-block { padding-bottom: 8mm; }
+
+  .page-syllabus .section-block > h2,
+  .page-syllabus .week,
+  .page-syllabus .card,
+  .page-syllabus .callout,
+  .page-syllabus .instructor,
+  .page-syllabus .person,
+  .page-syllabus .grade-row,
+  .page-syllabus figure.shot {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .page-syllabus .section-block > h2,
+  .page-syllabus h3 { break-after: avoid; page-break-after: avoid; }
+
+  /* A week's chips name the workshop and what is due; keep them visible in
+     print, where their links cannot be followed. */
+  .page-syllabus .chips { flex-direction: column; gap: 3px; }
+  .page-syllabus .chip { display: block; border: 0; background: none; padding: 0; }
+  .page-syllabus a { color: var(--muted-2); }
+  .page-syllabus .grade-bar { border: 1px solid var(--line); }
+}

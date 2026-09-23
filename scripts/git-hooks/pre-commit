@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Rebuild the generated PDFs this commit invalidates, and stage them.
+#
+# A deck's PDF and the syllabus PDF are generated artifacts: CI fails when one
+# disagrees with its page, and the published site serves whichever the commit
+# contains. Forgetting to rebuild is therefore a silent way to ship a stale
+# document. This hook does the rebuild instead of asking anyone to remember.
+#
+# Installed by scripts/install-git-hooks.sh. Bypass with `git commit --no-verify`.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+
+exec python3 "$ROOT/scripts/rebuild-staged-pdfs.py"

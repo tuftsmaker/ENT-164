@@ -93,7 +93,7 @@ build_one() {
     echo "ERROR: $dir/$pdf was not produced" >&2
     return 1
   fi
-  python3 "$ROOT/scripts/slides_buildinfo.py" write "$dir" "$pdf"
+  python3 "$ROOT/scripts/pdf_buildinfo.py" write "$dir" "$pdf"
 }
 
 args=("$@")
@@ -110,9 +110,9 @@ fi
 
 if [[ "$mode" == "check" ]]; then
   if [[ ${#args[@]} -eq 0 || "${args[0]}" == "--all" ]]; then
-    exec python3 "$ROOT/scripts/slides_buildinfo.py" check --all
+    exec python3 "$ROOT/scripts/pdf_buildinfo.py" check --all
   fi
-  exec python3 "$ROOT/scripts/slides_buildinfo.py" check "${args[@]}"
+  exec python3 "$ROOT/scripts/pdf_buildinfo.py" check "${args[@]}"
 fi
 
 declare -a dirs=()

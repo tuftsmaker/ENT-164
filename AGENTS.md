@@ -17,6 +17,44 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   with `CHROME_BIN`. Print flags: `--headless=new --no-pdf-header-footer
   --print-to-pdf=... --virtual-time-budget=12000`.
 
+## Syllabus: one source, generated PDF
+
+- **`syllabus/index.html` is the single source of truth for the syllabus, and the
+  PDF is generated from it.** There is no separate hand-authored syllabus
+  document any more; the old one drifted from the page (it still described
+  weekly reflections and "Spring 2026" long after both had changed) and was
+  removed. Never edit the PDF.
+- After any syllabus edit: `scripts/build-syllabus.sh` regenerates
+  `syllabus/ENT-164-Syllabus-Fall-2026.pdf` and records
+  `syllabus/syllabus.buildinfo`. Commit page, PDF and buildinfo together.
+  `scripts/build-syllabus.sh --check` is the CI check.
+- Both scripts print with the same headless-Chrome flags and share the
+  bookkeeping in `scripts/pdf_buildinfo.py`. `--all` for build-class.sh means
+  every deck and only decks; the syllabus is a separate `--check` so a failure
+  names the one stale document.
+- **The print layout is CSS, in `assets/site.css` under `@media print`, scoped to
+  `.page-syllabus`.** Because the PDF is printed straight from the web page,
+  that block is what makes it a document: US Letter, sidebar/hero-CTA/footer
+  hidden, cards and weeks kept whole across breaks. The `.reveal` fade-in must
+  stay disabled there — those elements start at `opacity: 0` and a print render
+  can catch them invisible.
+- The syllabus page loads `assets/site.css`, so **any change to that shared
+  stylesheet invalidates the syllabus PDF** (and every deck whose PDF references
+  an asset that changed). Rebuild both after touching the theme.
+- **A pre-commit hook does the rebuilding, so it cannot be forgotten.** Run
+  `scripts/install-git-hooks.sh` once per clone (it sets `core.hooksPath` to the
+  tracked `scripts/git-hooks/`). The hook calls
+  `scripts/rebuild-staged-pdfs.py`, which finds the documents the staged changes
+  invalidate, rebuilds each, and stages the PDF and buildinfo. `--dry-run` on
+  that script reports without changing anything. Bypass a commit with
+  `git commit --no-verify`; the failure mode it prevents is a commit whose PDF
+  disagrees with its page, which CI catches but Pages still deploys.
+  - It uses the same dependency rule as the source hash (page + image tree +
+    referenced `assets/` files), so a `site.css` change rebuilds the syllabus and
+    not the decks, and a logo change rebuilds every deck that embeds it.
+  - Git does not version `.git/hooks`, which is why the hook lives in
+    `scripts/git-hooks/` and is wired up by the installer.
+
 ## Canvas: links only, never copies (course 76330, Fa26-ENT-0164-01)
 
 - Canvas never stores a deck copy. Each class module has an **ExternalUrl** item
@@ -431,5 +469,22 @@ film.
 - `classes/class-NN/index.html` is the hand-authored class landing page, separate
   from the deck (it is not generated). Keep its links to `slides.html` and the
   PDF working, and update it when shared facts change (title, dates, TA info).
+- **Every class in the course has a page; not every class has a deck yet.**
+  Classes 8, 10, 12 and 13 are placeholders: a real page with the syllabus week
+  title, what the class covers, and the milestone reflection where one is due
+  (weeks 8 and 13), plus the note that the deck is being converted. No class
+  page links Google Slides or Figma — those are retired, and students reach the
+  old material through Canvas.
+  - `populate.py` derives a class's title from `<title>` and its week from the
+    hero kicker, so a placeholder's Canvas module name changes with its page.
+    A placeholder has no `ENT-164-Class-N-*.pdf`, so the plan gives it no
+    "Slides (PDF)" item — just the class page.
+  - Canvas module names and the syllabus week titles disagree for weeks 10, 12
+    and 13 (Canvas: "Smart Devices", "Connectivity (Part 2)", "Final Demos and
+    Class Retro"). The class pages follow the **syllabus** titles by decision;
+    the Canvas modules still carry the deck names.
+  - Placeholders are in `PAGES` in `nav.py` with a syllabus CTA rather than
+    "Download slides". When a real deck is converted, add the PDF name and
+    switch the CTA and footer link like the other classes.
 - Hub `index.html` and `syllabus/index.html` link to each class page; keep the
   "In-class decks" card counts (e.g. slide counts) accurate.
