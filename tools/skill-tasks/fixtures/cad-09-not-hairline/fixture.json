@@ -1,0 +1,10 @@
+{
+  "task": "cad-09-laser-ready",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "colours"
+    ]
+  },
+  "note": "red, but a wide line: the laser follows the centre of a hairline"
+}

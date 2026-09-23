@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import sys
+import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent          # tools/skill-tasks
@@ -20,6 +21,8 @@ REPO = HERE.parent.parent
 CHECK = REPO / "skills" / "maker-tasks" / "check"
 sys.path.insert(0, str(CHECK))
 FIXTURES = HERE / "fixtures"
+
+import laser_svg  # noqa: E402  (needs the check dir on sys.path)
 
 # ---------------------------------------------------------------- DXF writer
 
@@ -403,6 +406,63 @@ def main():
         expect={"verdict": "fix", "fails": ["joints"]},
         note="a plain rectangle: no slots or fingers at all",
         manifest=MANIFEST,
+    )
+
+    # -- cad-09: the laser-ready SVG ------------------------------------
+    # The good one is what the converter really writes, plus the etch text a
+    # student would add in Inkscape. The bad ones break one thing each, the two
+    # the video warns about: lines left black, and a non-hairline width.
+    svg_manifest = {
+        "student": "Test Student",
+        "source_dxf": "part.dxf — cad-08-laser-joints",
+        "self_check": "ready to submit",
+    }
+    no_selfcheck = {k: v for k, v in svg_manifest.items() if k != "self_check"}
+
+    def write_svg(name, body, transform=None, expect=None, note="", manifest=None):
+        folder = FIXTURES / name
+        folder.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory() as td:
+            src = Path(td) / "part.dxf"
+            src.write_text(header() + body, encoding="utf-8", newline="")
+            laser_svg.convert(src, folder / "part-laser-ready.svg")
+        svg_path = folder / "part-laser-ready.svg"
+        if transform:
+            svg_path.write_text(transform(svg_path.read_text(encoding="utf-8")),
+                                encoding="utf-8")
+        lines = [f"{k}: {v}" for k, v in (manifest or {}).items()]
+        (folder / "manifest.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        (folder / "fixture.json").write_text(
+            json.dumps({"task": "cad-09-laser-ready", "expect": expect, "note": note},
+                       indent=2) + "\n",
+            encoding="utf-8")
+
+    def add_etch(svg):
+        return svg.replace(
+            "</svg>",
+            '  <text id="etch" x="10" y="30" style="fill:#000000;stroke:none;'
+            'font-size:6px">ENT-164</text>\n</svg>')
+
+    ready = entities(rectangle(0, 0, 100, 60))
+    write_svg(
+        "cad-09-good", ready, transform=add_etch,
+        manifest=svg_manifest,
+        expect={"verdict": "ready", "fails": [], "reviews": ["look"]},
+        note="red hairlines to cut, black text to etch",
+    )
+    write_svg(
+        "cad-09-black-lines", ready,
+        transform=lambda s: s.replace("stroke:#ff0000", "stroke:#000000"),
+        manifest=no_selfcheck,
+        expect={"verdict": "fix", "fails": ["colours"]},
+        note="the DXF's default black lines: nothing will cut",
+    )
+    write_svg(
+        "cad-09-not-hairline", ready,
+        transform=lambda s: s.replace("-inkscape-stroke:hairline", ""),
+        manifest=no_selfcheck,
+        expect={"verdict": "fix", "fails": ["colours"]},
+        note="red, but a wide line: the laser follows the centre of a hairline",
     )
 
     # -- broken files ----------------------------------------------------

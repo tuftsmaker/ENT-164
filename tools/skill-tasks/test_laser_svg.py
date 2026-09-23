@@ -226,6 +226,48 @@ def main() -> int:
         except laser_svg.dxf_reader.DxfError as exc:
             check("a non-DXF raises DxfError", True, str(exc)[:40])
 
+    # ---- 6. the converter's output passes the cad-09 checker ---------------
+    # These two halves are written by different hands and must agree: the
+    # converter writes `fill:none` for cuts, and the svg_laser_ready check must
+    # accept that. It did not once, and nothing caught it because no test ran
+    # one against the other.
+    #
+    # Skipped when the cad-09 task is not present, so this file can be committed
+    # independently of that task landing.
+    cad09 = CHECK.parent / "tasks" / "cad-09-laser-ready.yml"
+    if not cad09.exists():
+        print(f"skip cad-09: {cad09.name} is not in this tree yet")
+    for fixture in ("cad-01-good", "cad-07-good") if cad09.exists() else ():
+        dxf = FIXTURES / fixture / "part.dxf"
+        if not dxf.exists():
+            continue
+        out = Path(tempfile.mkdtemp()) / "part-laser-ready.svg"
+        laser_svg.convert(dxf, out)
+        try:
+            import runner  # noqa: E402
+
+            sub = runner.Submission(source=out.parent)
+            sub.files["part-laser-ready.svg"] = out
+            sub.manifest = {"material_thickness": "3.0", "source_dxf": dxf.name,
+                            "self_check": "ready"}
+            task_def = runner.load_task("cad-09-laser-ready")
+            report = runner.run(task_def, sub)
+            bad = [c.id for c in report.failures]
+            # Assert the colour criterion PASSES, not merely that nothing failed.
+            # A criterion whose check function is missing becomes `review`, not
+            # `fail` (runner._run_criterion), so "no failures" is also true when
+            # the check does not exist at all — which is not what this test is
+            # for. The pass must be a real pass.
+            status = {c.id: c.status for c in report.criterion_results}
+            colours_ok = status.get("colours") == "pass"
+            check(f"cad-09: the converter's output passes ({fixture})",
+                  not bad and colours_ok,
+                  f"failures {bad}, colours {status.get('colours')!r}"
+                  if (bad or not colours_ok) else "no failures")
+        except Exception as exc:  # noqa: BLE001 - report, do not mask
+            check(f"cad-09: the converter's output passes ({fixture})", False,
+                  repr(exc)[:60])
+
     failures = [r for r in results if not r[1]]
     print(f"\n{len(results) - len(failures)}/{len(results)} checks passed")
     if failures:

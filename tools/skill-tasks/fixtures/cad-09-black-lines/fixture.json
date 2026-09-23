@@ -1,0 +1,10 @@
+{
+  "task": "cad-09-laser-ready",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "colours"
+    ]
+  },
+  "note": "the DXF's default black lines: nothing will cut"
+}

@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Creating Laser Cut Joints &mdash; ENT-164</title>
-<meta name="description" content="A 100 × 60 mm piece with slot-and-finger joints on the left and right edges.
-Every joint is as wide as the material you measured.
+<title>Preparing a DXF for the Laser &mdash; ENT-164</title>
+<meta name="description" content="One of your parts, prepared for the laser: part-laser-ready.svg with red
+hairline cut lines and, if you want one, a black etch.
 ">
 <link rel="stylesheet" href="../assets/site.css">
 <style>
@@ -90,13 +90,13 @@ Every joint is as wide as the material you measured.
 </nav>
 <header class="hero">
   <div class="wrap">
-    <p class="kicker reveal">Task 8 &middot; Laser-Ready File</p>
-    <h1 class="reveal">Creating Laser Cut Joints</h1>
-    <p class="lead reveal">A 100 × 60 mm piece with slot-and-finger joints on the left and right edges.
-Every joint is as wide as the material you measured.</p>
+    <p class="kicker reveal">Task 9 &middot; Laser-Ready File</p>
+    <h1 class="reveal">Preparing a DXF for the Laser</h1>
+    <p class="lead reveal">One of your parts, prepared for the laser: part-laser-ready.svg with red
+hairline cut lines and, if you want one, a black etch.</p>
     <div class="pills reveal">
-      <span class="pill">0:51 video</span>
-      <span class="pill">One Onshape sketch</span>
+      <span class="pill">3:15 video</span>
+      <span class="pill">One prepared SVG</span>
       <span class="pill">Signed off by a TA</span>
     </div>
   </div>
@@ -113,24 +113,27 @@ Every joint is as wide as the material you measured.</p>
   <section id="do">
     <div class="wrap">
       <div class="callout video-embed">
-        <b>Watch first.</b> Creating Laser Cut Joints <span class="video-len">(0:51)</span>
-        <video controls preload="metadata" playsinline poster="../onshape-tips/posters/laser-cut-joints.png">
-          <source src="../onshape-tips/videos/laser-cut-joints.mp4" type="video/mp4">
+        <b>Watch first.</b> Preparing a DXF for the Laser <span class="video-len">(3:15)</span>
+        <video controls preload="metadata" playsinline poster="../laser-cutting/posters/preparing-a-dxf-in-inkscape.png">
+          <source src="../laser-cutting/videos/preparing-a-dxf-in-inkscape.mp4" type="video/mp4">
           Your browser cannot play this video.
-          <a href="../onshape-tips/videos/laser-cut-joints.mp4">Download it</a> instead.
+          <a href="../laser-cutting/videos/preparing-a-dxf-in-inkscape.mp4">Download it</a> instead.
         </video>
       </div>
 
       <div class="section-head left"><h2>What to do</h2></div>
-      <p>Cut fingers on one edge and matching slots on the other, sized from the
-thickness you measured with calipers rather than the number on the label.</p>
-      <p><b>Do first:</b> <a href="cad-01-first-sketch.html">A Basic Rectangle as My First Sketch</a>.</p>
+      <p>Take one of your parts and make the file the laser actually reads: pure-red
+hairline cut lines, no shape filled except one you mean to etch in black, and
+the page in millimetres. Do it by hand in Inkscape with the video, or run the
+checker with --svg and then open the result in Inkscape to check it and add
+any etched text.</p>
+      <p><b>Do first:</b> <a href="cad-08-laser-joints.html">Creating Laser Cut Joints</a>.</p>
 
       <div class="section-head left" id="hand"><h2>What to hand in</h2></div>
       <table class="submit-table">
         <tr><th>File</th><th></th><th>What it is</th></tr>
-        <tr><td class="mono">part.dxf</td><td>required</td><td>the piece with its joints</td></tr>
-<tr><td class="mono">manifest.md</td><td>required</td><td>include the thickness you measured — the joints are checked against it</td></tr>
+        <tr><td class="mono">part-laser-ready.svg</td><td>required</td><td>the file the laser reads</td></tr>
+<tr><td class="mono">manifest.md</td><td>required</td><td>which DXF it came from, and how you prepared it</td></tr>
       </table>
       <p style="color:var(--muted);font-size:14px;margin-top:12px;">
         Put both files in one folder, run the checker, and upload the zip in Canvas.
@@ -148,15 +151,14 @@ thickness you measured with calipers rather than the number on the label.</p>
       <p class="lede">Every criterion below is checked on your file. The ones marked for a person
       are judged by a TA — they are never passed or failed by the checker.</p>
       <div class="criteria">
-        <div class="criterion"><span class="auto ">Checked automatically</span><h4>The two files are there</h4><p>The file is in the submission.</p></div>
-<div class="criterion"><span class="auto ">Checked automatically</span><h4>part.dxf opens as a DXF</h4><p>The file is readable as a DXF and is not something renamed.</p></div>
-<div class="criterion"><span class="auto ">Checked automatically</span><h4>Every path is closed</h4><p>Every line end meets another line end. A corner that only looks joined would cut open.</p></div>
-<div class="criterion"><span class="auto ">Checked automatically</span><h4>The drawing is one shape</h4><p>Checked on your file.</p></div>
-<div class="criterion"><span class="auto ">Checked automatically</span><h4>The joints match the thickness you measured</h4><p>Checked on your file.</p></div>
-<div class="criterion"><span class="auto ">Checked automatically</span><h4>The measured thickness is recorded</h4><p>Checked on your file.</p></div>
-<div class="criterion"><span class="auto ">Checked automatically</span><h4>It fits the laser bed</h4><p>The part fits inside the laser bed (300 × 600 mm).</p></div>
-<div class="criterion"><span class="auto human">A person checks this</span><h4>Onshape link recorded — a person opens it to see the joint dimensions</h4><p>A TA opens your Onshape link to confirm the sketch is yours and committed.</p></div>
+        <div class="criterion"><span class="auto ">Checked automatically</span><h4>The laser file is there</h4><p>The file is in the submission.</p></div>
+<div class="criterion"><span class="auto ">Checked automatically</span><h4>It opens as an SVG, in millimetres</h4><p>Checked on your file.</p></div>
+<div class="criterion"><span class="auto ">Checked automatically</span><h4>Red hairlines cut; anything filled is black</h4><p>Checked on your file.</p></div>
+<div class="criterion"><span class="auto ">Checked automatically</span><h4>The DXF it was prepared from is recorded</h4><p>Your manifest records &quot;source_dxf&quot;.</p></div>
 <div class="criterion"><span class="auto ">Checked automatically</span><h4>You ran the checker on this file</h4><p>You ran the checker on this same file before submitting it.</p></div>
+<div class="criterion"><span class="auto human">A person checks this</span><h4>A person opens it and it is the right part</h4><p>Open part-laser-ready.svg in Inkscape or UCP: it is the part you meant, at
+the size you designed, and any etch text is where you want it.
+</p></div>
       </div>
 
       <div class="callout warm" style="margin-top:24px;">
@@ -166,8 +168,8 @@ thickness you measured with calipers rather than the number on the label.</p>
       </div>
 
       <div class="cta-row" style="margin-top:24px;">
-        <a class="btn btn-ghost btn-sm" href="cad-07-trim-tool.html">&larr; Combining Shapes with the Trim Tool</a>
-        <a class="btn btn-primary btn-sm" href="cad-09-laser-ready.html">Preparing a DXF for the Laser &rarr;</a>
+        <a class="btn btn-ghost btn-sm" href="cad-08-laser-joints.html">&larr; Creating Laser Cut Joints</a>
+        
       </div>
     </div>
   </section>

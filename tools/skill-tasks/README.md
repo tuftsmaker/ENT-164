@@ -23,8 +23,11 @@ tools/skill-tasks/             ← THE TA'S AND THE REPO'S TOOLS (not shipped)
   canvas/pull.py                 download submissions, run the checks, write reports
   canvas/ai_review.py            advisory notes (link + photo); never signs off
   canvas/apply.py                post the signoff, only after --reviewed
+  finger_joints.py               cut finger joints along a seam (depth <= one thickness)
   lint_tasks.py                  every criterion names a check that exists
   selftest.py                    the fixture suite — checks the checker
+  test_laser_svg.py              the SVG converter's known answers
+  test_finger_joints.py          the depth rule and the corner rule
   make_fixtures.py               regenerates fixtures/ from known answers
   fixtures/                      known-good and known-bad files, one per criterion
 
@@ -117,6 +120,7 @@ python3 tools/skill-tasks/catalog/build.py
 python3 tools/skill-tasks/lint_tasks.py     # every criterion names a real check
 python3 tools/skill-tasks/selftest.py       # every fixture gives the expected verdict
 python3 tools/skill-tasks/test_laser_svg.py # the SVG converter's known answers
+python3 tools/skill-tasks/test_finger_joints.py  # the joint depth and corner rules
 python3 tools/skill-tasks/catalog/build.py --check   # catalog matches the YAML
 ```
 

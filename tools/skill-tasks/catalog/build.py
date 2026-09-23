@@ -259,7 +259,7 @@ def task_page(task: dict, all_tasks: dict) -> str:
     <p class="lead reveal">{esc(task["spec"].strip())}</p>
     <div class="pills reveal">
       <span class="pill">{esc(task.get('time',''))} video</span>
-      <span class="pill">One Onshape sketch</span>
+      <span class="pill">{esc(task.get('makes', 'One Onshape sketch'))}</span>
       <span class="pill">Signed off by a TA</span>
     </div>
   </div>
@@ -333,6 +333,15 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
         (t for t in all_tasks.values() if t.get("kind") != "unit"),
         key=lambda t: t.get("order", 99),
     )
+    # What the track makes, counted from each task's submit list so a new task
+    # cannot leave the pill stale.
+    submits = [s for tid in unit["tasks"] for s in (all_tasks[tid].get("submit") or [])]
+    hand_ins = []
+    for ext, label in ((".dxf", "DXF"), (".svg", "SVG")):
+        n = sum(1 for s in submits if str(s.get("name", "")).endswith(ext))
+        if n:
+            hand_ins.append(f"{n} {label}" + ("s" if n != 1 else ""))
+    hand_ins = ", ".join(hand_ins)
     return HEAD.format(title=esc(unit["title"]), description=esc(unit.get("summary", ""))) + nav() + f"""
 <header class="hero">
   <div class="wrap">
@@ -341,7 +350,7 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
     <p class="lead reveal">{esc(unit.get("summary","").strip())}</p>
     <div class="pills reveal">
       <span class="pill">{len(unit["tasks"])} tasks</span>
-      <span class="pill">{len(unit["tasks"])} DXFs</span>
+      <span class="pill">{esc(hand_ins)}</span>
       <span class="pill">One supervised cut</span>
     </div>
   </div>
@@ -412,7 +421,7 @@ def catalog_page(tasks: list, unit: dict | None, units: list | None = None) -> s
       </div>"""
     return HEAD.format(
         title="Maker skills tasks",
-        description=f"{n} short tasks that take you from a blank Onshape document to a laser-ready DXF, each signed off against written criteria.",
+        description=f"{n} short tasks that take you from a blank Onshape document to a file the laser can cut, each signed off against written criteria.",
     ) + nav() + f"""
 <header class="hero">
   <div class="wrap">

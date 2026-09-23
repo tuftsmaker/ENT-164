@@ -1,0 +1,11 @@
+{
+  "task": "cad-09-laser-ready",
+  "expect": {
+    "verdict": "ready",
+    "fails": [],
+    "reviews": [
+      "look"
+    ]
+  },
+  "note": "red hairlines to cut, black text to etch"
+}

@@ -1,0 +1,3 @@
+student: Test Student
+source_dxf: part.dxf — cad-08-laser-joints
+self_check: ready to submit
