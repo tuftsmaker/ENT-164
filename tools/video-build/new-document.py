@@ -76,7 +76,8 @@ def main():
     ap.add_argument('--force', action='store_true')
     args = ap.parse_args()
 
-    proj = args.project if os.path.isdir(args.project) else os.path.join(HERE, 'projects', args.project)
+    proj = os.path.abspath(args.project if os.path.isdir(args.project)
+                            else os.path.join(HERE, 'projects', args.project))
     cfg_path = os.path.join(proj, 'video.json')
     if not os.path.exists(cfg_path):
         sys.exit(f'no video.json in {proj}')
