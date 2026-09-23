@@ -340,24 +340,44 @@ film.
   dimensions (an inch export reads ~25× too small), and centring is checked by
   outcome rather than by looking for construction geometry. Colour and hairline
   width belong to the laser-cutting guide, not here.
-- **Canvas** (course 76330): a 0-weight group "Skill tasks (not graded)", one
-  assignment per task with a rubric whose rows are the criteria. All of it is
-  **feedback-only** — 0 points, by decision, this semester. `sync.py` creates and
-  leaves assignments **unpublished** unless given `--publish`.
+- **Canvas writes stop at the prototype. This is enforced in code, not by habit.**
+  `canvas_client._guard` refuses any POST/PUT/DELETE that is not aimed at course
+  **71548, "Intro to Making Prototype"** — including the case where a client was
+  *constructed* for the live course, which is precisely the mistake it exists to
+  catch. Reads pass through, so comparing against the live course still works.
+  - `load_config()` returns the prototype regardless of the config's `COURSE_ID`,
+    because a stale or copied config must not decide which course tools touch.
+  - The single escape hatch is `CANVAS_ALLOW_LIVE=1` in the environment. It is
+    deliberately not a bare CLI flag, so reaching the live course is a decision
+    rather than a typo. `populate.py --i-know` is the same gate.
+  - `python3 tools/skill-tasks/canvas/test_guard.py` proves it offline: 12 cases,
+    no network, covering writes, deletes, rubrics, grades, account-level routes
+    and the override. **Run it after touching the client.**
+  - Why it is our job: Canvas token scopes cannot do this. Scopes restrict which
+    *endpoints* a token may call, and `:course_id` in a scope is a path
+    placeholder, not a filter — there is no syntax for pinning a course. Personal
+    access tokens (what we have) are unscoped and inherit the user's full
+    permissions across all their courses.
+- **Canvas** (course 76330, the live course): a 0-weight group "Skill tasks (not
+  graded)", one assignment per task with a rubric whose rows are the criteria.
+  All of it is **feedback-only** — 0 points, by decision, this semester. The
+  task tools create and leave assignments **unpublished** unless given
+  `--publish`. Everything is developed against the prototype first.
 - **Modules are classes, and only classes. Tasks are assignments.** The tasks are
   grouped by *assignment category* — the "Skill tasks (not graded)" group — and
   deliberately not by a module, which is the class structure. `sync.py` no longer
   creates one.
-- **Both Canvas tools take `--course`.** Without it they use `COURSE_ID` from the
-  config, which is the live course, so a "trial" run would write to it —
-  `sync.py` had exactly that hole. Target **71548, "Intro to Making Prototype"**,
-  to try anything first; it exists for that and everything in it is disposable.
+- **All the Canvas tools take `--course`**, defaulting to the prototype:
+  `sync.py`, `apply.py`, `pull.py` (the skill-task loop) and `populate.py`.
+  `apply.py` is the one that writes student records, so being able to rehearse it
+  on the prototype matters most.
 - `tools/canvas-course/populate.py` builds the course structure from the site:
   one module per class, with the deck PDF, the class page, and the site content
   that belongs to that class (the setup guides with Class 1, the tips and the
   cutting guide with Class 3). Links only, never copies. `--prune` clears modules
   outside the plan and assignments the task sync does not own, and refuses to run
-  against the live course without `--i-know`. Canvas creates modules and items
+  against the live course without `--i-know` (the same gate as
+  `CANVAS_ALLOW_LIVE=1`). Canvas creates modules and items
   unpublished; publishing a module publishes its items with it.
 - `sync.py --dry-run` used to call `ensure_group()`/`ensure_module()`, which
   create on the way, so a dry run wrote to Canvas. Both dry runs now only look.

@@ -15,6 +15,8 @@ COURSE_ID). That file is outside the repo and its token is never printed.
 from __future__ import annotations
 
 import json
+import os
+import re
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -22,6 +24,17 @@ from dataclasses import dataclass
 from pathlib import Path
 
 CONFIG_PATH = Path.home() / "esp32" / "canvas_config.py"
+
+# Which course these tools may touch. Everything in tools/ is in development
+# against the prototype; the live course is only ever reached deliberately.
+PROTOTYPE_COURSE = "71548"  # "Intro to Making Prototype" — disposable
+LIVE_COURSE = "76330"       # Fa26-ENT-0164-01 — real students, real grades
+DEV_COURSE = PROTOTYPE_COURSE
+
+# Set this to allow a write against a course other than DEV_COURSE. Deliberately
+# awkward to type and deliberately not a CLI flag on the ordinary paths: the
+# point is that reaching the live course must be a decision, not a typo.
+OVERRIDE_ENV = "CANVAS_ALLOW_LIVE"
 
 # The module the tasks live in, and the weight: 0.0 keeps them off the grade
 # while still recording completion. Feedback-only this semester, by design.
@@ -34,6 +47,10 @@ class CanvasError(Exception):
     pass
 
 
+class LiveCourseRefused(CanvasError):
+    """Raised when a write is aimed at a course other than the prototype."""
+
+
 def load_config(path: Path = CONFIG_PATH) -> dict:
     if not path.exists():
         raise CanvasError(
@@ -44,10 +61,12 @@ def load_config(path: Path = CONFIG_PATH) -> dict:
     missing = [k for k in ("CANVAS_URL", "CANVAS_TOKEN", "COURSE_ID") if not namespace.get(k)]
     if missing:
         raise CanvasError(f"Canvas config is missing {', '.join(missing)}")
+    # Development points at the prototype, whatever the config's COURSE_ID says:
+    # a stale or copied config must not decide which course tools touch.
     return {
         "base": str(namespace["CANVAS_URL"]).rstrip("/"),
         "token": str(namespace["CANVAS_TOKEN"]),
-        "course_id": str(namespace["COURSE_ID"]),
+        "course_id": DEV_COURSE,
     }
 
 
@@ -63,7 +82,47 @@ class Client:
 
     # -- plumbing ---------------------------------------------------------
 
+    def _guard(self, method: str, path: str):
+        """Refuse to write outside the development course.
+
+        Canvas tokens cannot be scoped to a course, so the boundary lives here:
+        every request funnels through `_request`, and a write aimed at another
+        course stops before it leaves the machine. Reads are allowed — reading
+        the live course is how you compare against it — but nothing changes
+        there.
+
+        The comparison is against DEV_COURSE, never against `self.course_id`:
+        constructing a client *for* the live course is precisely the mistake
+        this must catch, so a client's own target cannot be its permission.
+
+        Escape hatch, for the deliberate case: set CANVAS_ALLOW_LIVE=1.
+        """
+        if method in ("GET", "HEAD"):
+            return
+        if os.environ.get(OVERRIDE_ENV) == "1":
+            return
+
+        target = _course_in(path)
+        if target is None:
+            # An account- or user-level write, e.g. creating a course.
+            raise LiveCourseRefused(
+                f"refusing {method} {path}: it is not scoped to a course, and these "
+                f"tools only write inside course {DEV_COURSE}. "
+                f"Set {OVERRIDE_ENV}=1 if you really mean it."
+            )
+        if target != DEV_COURSE:
+            hint = (
+                f" (that is the live course — real students, real grades)"
+                if target == LIVE_COURSE else ""
+            )
+            raise LiveCourseRefused(
+                f"refusing {method} {path}: it targets course {target}{hint}. "
+                f"These tools only write inside course {DEV_COURSE}. "
+                f"Set {OVERRIDE_ENV}=1 if you really mean it."
+            )
+
     def _request(self, method: str, path: str, body: dict | None = None, params: dict | None = None):
+        self._guard(method, path)
         url = f"{self.base}/api/v1{path}"
         if params:
             url += "?" + urllib.parse.urlencode(params, doseq=True)
@@ -267,6 +326,17 @@ class Client:
             },
         )
         return {"id": rubric_id, "rows": len(rows), "title": rubric.get("title")}
+
+
+def _course_in(path: str) -> str | None:
+    """The course a Canvas path targets, if it is scoped to one.
+
+    Canvas paths look like /courses/76330/assignments or
+    /courses/71548/rubrics/29917/rubric_associations. Anything else (an account
+    or user route) returns None.
+    """
+    m = re.match(r"^/courses/(\d+)(?:/|$)", path)
+    return m.group(1) if m else None
 
 
 def _flatten(body: dict) -> dict:

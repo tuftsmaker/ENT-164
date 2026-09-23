@@ -39,6 +39,8 @@ def main(argv=None) -> int:
     parser.add_argument("--student", help="only this student's submission")
     parser.add_argument("--all", action="store_true", help="include already-graded submissions")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--course",
+                        help="Canvas course id; defaults to the prototype")
     args = parser.parse_args(argv)
 
     try:
@@ -51,7 +53,10 @@ def main(argv=None) -> int:
         return 2
 
     try:
-        client = Client(**load_config())
+        cfg = load_config()
+        if args.course:
+            cfg["course_id"] = str(args.course)
+        client = Client(**cfg)
     except CanvasError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

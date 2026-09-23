@@ -72,6 +72,9 @@ def main(argv=None) -> int:
     parser.add_argument("--task", "-t", required=True)
     parser.add_argument("--workdir", default=str(DEFAULT_WORKDIR))
     parser.add_argument("--student", help="only this student (a name substring)")
+    parser.add_argument("--course",
+                        help="Canvas course id; defaults to the prototype. "
+                             "The live course needs CANVAS_ALLOW_LIVE=1 as well.")
     parser.add_argument("--reviewed", action="store_true", help="a person has read the report")
     parser.add_argument("--ready-only", action="store_true", help="only post where no check failed")
     parser.add_argument("--note", default="", help="a line to add to the comment (what you looked at)")
@@ -118,7 +121,10 @@ def main(argv=None) -> int:
         return 0
 
     try:
-        client = Client(**load_config())
+        cfg = load_config()
+        if args.course:
+            cfg["course_id"] = str(args.course)
+        client = Client(**cfg)
     except CanvasError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

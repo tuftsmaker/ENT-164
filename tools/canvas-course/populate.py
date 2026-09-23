@@ -11,7 +11,10 @@ rubrics or enrolments, and it never deletes anything.
 
     python3 tools/canvas-course/populate.py --dry-run     # show the plan
     python3 tools/canvas-course/populate.py               # the prototype course
-    python3 tools/canvas-course/populate.py --course 76330
+
+Writes only ever go to the prototype. Reaching the live course needs
+CANVAS_ALLOW_LIVE=1 in the environment *and* --course, and is refused
+otherwise by canvas_client.
 
 Idempotent: modules are found by name and items by title, so re-running after a
 class is added only creates what is missing.
@@ -23,11 +26,17 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(ROOT, 'tools', 'skill-tasks', 'canvas'))
-from canvas_client import Client, load_config  # noqa: E402
+from canvas_client import (  # noqa: E402
+    DEV_COURSE,
+    LIVE_COURSE,
+    OVERRIDE_ENV,
+    Client,
+    LiveCourseRefused,
+    load_config,
+)
 
 SITE = 'https://tuftsmaker.github.io/ENT-164'
-PROTOTYPE_COURSE = '71548'          # "Intro to Making Prototype"
-LIVE_COURSE = '76330'               # Fa26-ENT-0164-01 — never pruned by accident
+PROTOTYPE_COURSE = DEV_COURSE       # one definition, in the client
 
 TIP_ORDER = ['workspace-overview', 'basic-rectangle', 'updating-dimensions',
              'circle-to-cut-a-hole', 'circle-in-the-center', 'circle-on-a-corner',
@@ -138,7 +147,8 @@ def main():
                     help=f'Canvas course id (default {PROTOTYPE_COURSE}, the prototype)')
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--i-know', action='store_true',
-                    help='allow --prune against the live course')
+                    help=f'allow --prune against the live course (same gate as '
+                         f'{OVERRIDE_ENV}=1)')
     ap.add_argument('--prune', action='store_true',
                     help='delete modules that are not in the plan (prototype cleanup)')
     ap.add_argument('--publish', action='store_true',
@@ -159,11 +169,19 @@ def main():
     cfg = load_config()
     cfg['course_id'] = str(args.course)
     client = Client(**cfg)
-    print(f'  acting as {client.whoami().get("name", "?")}')
+    try:
+        print(f'  acting as {client.whoami().get("name", "?")}')
+    except LiveCourseRefused as exc:
+        sys.exit(str(exc))
 
     if args.prune:
-        if str(args.course) == LIVE_COURSE and not args.i_know:
-            sys.exit(f'refusing to prune the live course {LIVE_COURSE} without --i-know')
+        if str(args.course) == LIVE_COURSE and not (
+            args.i_know or os.environ.get(OVERRIDE_ENV) == '1'
+        ):
+            sys.exit(
+                f'refusing to prune the live course {LIVE_COURSE}: pass --i-know '
+                f'or set {OVERRIDE_ENV}=1'
+            )
         wanted = {name for name, _ in mods}
         for mod in client.modules():
             if mod['name'] not in wanted:

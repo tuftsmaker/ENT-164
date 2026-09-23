@@ -99,8 +99,8 @@ def main(argv=None) -> int:
     parser.add_argument("--publish", action="store_true", help="make assignments visible to students")
     parser.add_argument("--task", help="only this task id")
     parser.add_argument("--course",
-                        help="Canvas course id; defaults to COURSE_ID in the config. "
-                             "Use 71548 (the prototype) to try a change before the live course.")
+                        help="Canvas course id; defaults to the prototype. "
+                             "The live course needs CANVAS_ALLOW_LIVE=1 as well.")
     args = parser.parse_args(argv)
 
     try:
