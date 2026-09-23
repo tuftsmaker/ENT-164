@@ -259,15 +259,14 @@ h1 .accent { color: var(--blue-deep); }
 .deck-week { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 8px; }
 .deck-body h3 { margin: 0 0 8px; font-size: 1.1rem; letter-spacing: -0.2px; color: var(--ink); }
 .deck-body > p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
-.deck-body .tags { margin-bottom: 16px; }
+.deck-body h3 a { color: var(--ink); }
+.deck-body .tags { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; list-style: none; padding: 0; margin: 0 0 16px; }
+.deck-body .tags li { font-size: 12.5px; color: var(--muted-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 4px 11px; background: var(--paper); }
+.deck-body .tags li.pill-cell { border: 0; background: none; padding: 0; }
+.deck-pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 4px 11px; }
+.deck-pill.ready { color: var(--blue-deep); background: var(--blue-tint); }
+.deck-pill.soon { color: #8a5a00; background: #fff4e0; }
 .deck-body .guide-actions { margin-top: auto; }
-.deck-more {
-  border: 1px dashed var(--line-strong); border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.55);
-  display: flex; align-items: center; justify-content: center; text-align: center; padding: 34px 30px;
-}
-.deck-more h3 { margin: 0 0 6px; font-size: 1.02rem; color: var(--muted-2); }
-.deck-more p { margin: 0; color: var(--muted); font-size: 14px; max-width: 280px; }
 .principles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
 .principle { border-top: 2px solid var(--line-strong); padding-top: 18px; }
 .principle .num {
@@ -714,6 +713,12 @@ footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44
   .page-syllabus .hero { padding: 0 0 6mm; }
   .page-syllabus .hero::before { display: none; }
   .page-syllabus .section-block { padding-bottom: 8mm; }
+
+  /* Every section starts on a fresh page. Without this, the section header is
+     what lands at the foot of the previous page and the body spills over,
+     leaving a header orphaned above the break. */
+  .page-syllabus .section-block { break-before: page; page-break-before: always; }
+  .page-syllabus .section-block:first-of-type { break-before: auto; page-break-before: auto; }
 
   .page-syllabus .section-block > h2,
   .page-syllabus .week,

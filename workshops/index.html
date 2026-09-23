@@ -4,42 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Workshops &mdash; ENT-164</title>
-<meta name="description" content="Every workshop in ENT-164 Intro to Making: the semester's classes in order, each with its own page, its deck and its assignment.">
+<meta name="description" content="Every workshop in ENT-164 Intro to Making: the semester's weeks in order, each with its page, its deck and its assignments.">
 <link rel="stylesheet" href="../assets/site.css">
-<style>
-  /* The hub's deck cards, reused: a workshop card shows a photo, the week, what
-     the week is about, and one link. That link goes to the workshop's *page*,
-     not to the PDF — the deck, the plan, the assignment and the reflection all
-     live on the page, and the PDF is one of its links. */
-  .deck-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
-  .deck-card { display: grid; grid-template-columns: 40% minmax(0, 1fr);
-               border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
-               background: var(--paper); box-shadow: var(--shadow-sm);
-               transition: border-color .2s ease, box-shadow .2s ease; }
-  .deck-card:hover { border-color: #cfe1f7; box-shadow: var(--shadow-md); }
-  .deck-card img { display: block; width: 100%; height: 100%; min-height: 230px; object-fit: cover; }
-  .deck-body { display: flex; flex-direction: column; padding: 22px 24px; }
-  .deck-week { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep);
-               font-weight: 700; margin: 0 0 8px; }
-  .deck-body h3 { margin: 0 0 8px; font-size: 1.1rem; letter-spacing: -.2px; }
-  .deck-body h3 a { color: var(--ink); }
-  .deck-body > p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
-  .deck-body .tags { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; list-style: none;
-                     padding: 0; margin: 0 0 16px; }
-  .deck-body .tags li { font-size: 12.5px; color: var(--muted-2); border: 1px solid var(--line-strong);
-                        border-radius: 999px; padding: 4px 11px; background: var(--paper); }
-  .deck-body .tags li.pill-cell { border: 0; background: none; padding: 0; }
-  .deck-pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em;
-               text-transform: uppercase; border-radius: 999px; padding: 4px 11px; }
-  .deck-pill.ready { color: var(--blue-deep); background: var(--blue-tint); }
-  .deck-pill.soon { color: #8a5a00; background: #fff4e0; }
-  .deck-body .guide-actions { margin-top: auto; }
-  @media (max-width: 900px) {
-    .deck-grid { grid-template-columns: 1fr; }
-    .deck-card { grid-template-columns: 1fr; }
-    .deck-card img { min-height: 210px; aspect-ratio: 16 / 9; }
-  }
-</style>
 </head>
 <body class="page-class">
 <nav class="nav">
@@ -72,11 +38,11 @@
   <div class="wrap">
     <p class="kicker reveal">Workshops</p>
     <h1 class="reveal">Thirteen weeks,<br><span class="accent">one workshop at a time</span></h1>
-    <p class="lead reveal">Each workshop has its own page: what we cover, what you make,
-    and what is due. Where the deck is ready you can read it on the web or take the PDF
-    to class.</p>
+    <p class="lead reveal">The semester, week by week — what each workshop covers, what you
+    make, and what is due. Open a card for the week's page, and take the PDF to class where
+    the deck is ready.</p>
     <div class="pills reveal">
-      <span class="pill">12 workshops</span>
+      <span class="pill">13 workshops</span>
       <span class="pill">8 decks ready</span>
       <span class="pill">Thursdays 1:20&ndash;4:20pm</span>
       <span class="pill">JCC 301 / Nolop</span>
@@ -93,151 +59,163 @@
     <div class="wrap">
       <div class="section-head">
         <h2>The semester</h2>
-        <p>In teaching order. Every card opens the workshop's page — the deck, the plan and
-        what is due are all there.</p>
+        <p>In teaching order. Each card opens the workshop's page — the deck, the plan and
+        what is due are all there — except Week 7, which is a full build session at Nolop.</p>
       </div>
       <div class="deck-grid">
         <article class="deck-card">
-          <img src="../classes/class-01/shots/product-evolution.jpg" alt="">
+          <img src="../assets/photos/class/class-01-presenting.jpg" alt="The instructor introducing the course to students gathered in the Nolop makerspace">
           <div class="deck-body">
             <p class="deck-week">Week 1 &middot; Thu, Sep 10</p>
             <h3><a href="../classes/class-01/">Kickoff and Nolop Tour</a></h3>
-            <p>By the end of this course, you will be able to:</p>
+            <p>Welcome to Intro to Making: what you&#x27;ll learn this semester, how class works, the grading rubric, your tools and maker kit, and an introduction to the Nolop makerspace.</p>
             <ul class="tags"><li>20 slides</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-01/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-01/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/class-02-robot-run.jpg" alt="">
+        <article class="deck-card">
+          <img src="../classes/class-02/shots/foam-core-samples.jpg" alt="Three folded foam-core mockups standing on a cutting mat">
           <div class="deck-body">
             <p class="deck-week">Week 2 &middot; Thu, Sep 17</p>
             <h3><a href="../classes/class-02/">Ideation and Prototyping</a></h3>
-            <p>Design, build, and program a robot that moves as many balls as possible across the finish line in 5 minutes.</p>
+            <p>The robot challenge rules and scoring, your team and kit, foam-core mockups, and the clay-to-3D scanning workflow.</p>
             <ul class="tags"><li>28 slides</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-02/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-02/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/laser-cut-projects.jpg" alt="">
+        <article class="deck-card">
+          <img src="../assets/photos/class/laser-cut-projects.jpg" alt="A table of student-built laser-cut enclosures and boxes">
           <div class="deck-body">
             <p class="deck-week">Week 3 &middot; Thu, Sep 24</p>
             <h3><a href="../classes/class-03/">From Physical to Digital: 2D</a></h3>
-            <p>Six steps from sketch to race — Class 3 is step two. Today the design becomes a real, cut part.</p>
+            <p>From sketch to cut part: read your drawings, pull numbers from datasheets, model in Onshape, and cut at Nolop.</p>
             <ul class="tags"><li>23 slides</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-03/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-03/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/printed-medallion.jpg" alt="">
+        <article class="deck-card">
+          <img src="../assets/photos/class/printed-medallion.jpg" alt="A 3D-printed blue Tufts medallion">
           <div class="deck-body">
             <p class="deck-week">Week 4 &middot; Thu, Oct 1</p>
             <h3><a href="../classes/class-04/">From Physical to Digital: 3D</a></h3>
-            <p>Six steps from sketch to race — Class 4 is step three. Today we 3D print the custom parts.</p>
+            <p>From model to machine: how a 3D printer works, filament choices, exporting from Onshape, slicing in PrusaSlicer, and printing at Nolop.</p>
             <ul class="tags"><li>19 slides</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-04/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-04/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../classes/class-05/shots/kit-contents.jpg" alt="">
+        <article class="deck-card">
+          <img src="../classes/class-05/shots/lab-test-rig.jpg" alt="A breadboard wired to motors, a servo, and an ESP32 on the bench">
           <div class="deck-body">
             <p class="deck-week">Week 5 &middot; Thu, Oct 8</p>
             <h3><a href="../classes/class-05/">Basic Electronics and Microcontrollers</a></h3>
-            <p>Seven weeks from sketch to race day. Today is WK4 — Electronics: wire motors, sensors, and controls, then program basic movements with MicroPython and AI.</p>
+            <p>Wire motors, servos, and sensors on the breadboard, install MicroPython on the ESP32, and write your first AI-assisted code.</p>
             <ul class="tags"><li>19 slides</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-05/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-05/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/device-list-ui.jpg" alt="">
+        <article class="deck-card">
+          <img src="../classes/class-06/shots/phone-rgb-control.jpg" alt="A phone screen showing an RGB LED control page">
           <div class="deck-body">
             <p class="deck-week">Week 6 &middot; Thu, Oct 15</p>
             <h3><a href="../classes/class-06/">AI Coding Agents</a></h3>
-            <p>Before we go wireless — the three things you should have from last class.</p>
+            <p>Direct an AI coding agent: give your ESP32 a web page with Wi-Fi setup, the client/server model, a smart RGB light, and Tufts device registration.</p>
             <ul class="tags"><li>13 slides</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-06/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-06/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/band-robot-challenge.jpg" alt="">
+        <article class="deck-card">
+          <img src="../assets/photos/class/robot-internals.jpg" alt="The inside of a team robot showing a servo, a battery pack, and wiring">
+          <div class="deck-body">
+            <p class="deck-week">Week 7 &middot; Thu, Oct 22</p>
+            <h3><a href="../syllabus/#schedule">Final Robot Assembly and Testing</a></h3>
+            <p>A full working session at Nolop: integrate everything into one working robot, then debug, test, and iterate with your team.</p>
+            <ul class="tags"><li>Working session</li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../syllabus/#schedule">See the syllabus week &rarr;</a>
+            </div>
+          </div>
+        </article>
+        <article class="deck-card">
+          <img src="../assets/photos/class/band-robot-challenge.jpg" alt="A student-built robot on the challenge course, with hands adjusting it">
           <div class="deck-body">
             <p class="deck-week">Week 8 &middot; Thu, Oct 29</p>
             <h3><a href="../classes/class-08/">Robo Challenge and Final Project Kickoff</a></h3>
-            <p>Class 8 is the finish line for the first module: a working robot, a full scoreboard, and the awards.</p>
+            <p>Put your robot to the test: teams race on the course, scores go on the board, and the awards close out the first module.</p>
             <ul class="tags"><li>Plan only</li><li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-08/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-08/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/class-09-demo-1.jpg" alt="">
+        <article class="deck-card">
+          <img src="../assets/photos/class/class-09-demo-1.jpg" alt="A team presenting their project to the class">
           <div class="deck-body">
             <p class="deck-week">Week 9 &middot; Thu, Nov 5</p>
             <h3><a href="../classes/class-09/">Final Project Kickoff</a></h3>
-            <p>The race is over — robots built from scratch, a full scoreboard, and awards. One last piece of admin before the final project begins.</p>
+            <p>Robot Challenge awards, the five-week final project arc, what your build must include, and the 5-minute concept pitch.</p>
             <ul class="tags"><li>11 slides</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-09/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-09/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/device-list-ui.jpg" alt="">
+        <article class="deck-card">
+          <img src="../assets/photos/class/device-item-added.jpg" alt="A tablet showing live sensor readings, including the weather">
           <div class="deck-body">
             <p class="deck-week">Week 10 &middot; Thu, Nov 12</p>
             <h3><a href="../classes/class-10/">Sensing and Visualization</a></h3>
-            <p>Class 10 opens with the pitches from last week&#x27;s brainstorming — five minutes per team.</p>
+            <p>Collect data from the physical world with sensors, then present it in a real-time visualization someone can read at a glance.</p>
             <ul class="tags"><li>Plan only</li><li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-10/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-10/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../classes/class-11/shots/poetic-typewriter.jpg" alt="">
+        <article class="deck-card">
+          <img src="../classes/class-11/shots/poetic-typewriter.jpg" alt="An illustration of the poetic typewriter with glowing butterflies">
           <div class="deck-body">
             <p class="deck-week">Week 11 &middot; Thu, Nov 19</p>
             <h3><a href="../classes/class-11/">Making Devices Smart with AI</a></h3>
-            <p>Adding AI to a device to do smart things — no programming required. Your board asks a service for data or an action, and gets an answer back.</p>
+            <p>A voice-driven poetic light built with an ESP32, cloud APIs, and Claude — plus how humans and AI divide the work.</p>
             <ul class="tags"><li>13 slides</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-11/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-11/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/makerspace.jpg" alt="">
+        <article class="deck-card">
+          <img src="../assets/photos/class/makerspace.jpg" alt="Students working at tables in the Nolop makerspace">
           <div class="deck-body">
             <p class="deck-week">Week 12 &middot; Thu, Dec 3</p>
             <h3><a href="../classes/class-12/">Final Project Making Time</a></h3>
-            <p>Workshop time goes fast. Come in with a list and leave with a working prototype.</p>
+            <p>Dedicated workshop time at Nolop: finish the build, make it reliable, and rehearse the demo before the showcase.</p>
             <ul class="tags"><li>Plan only</li><li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-12/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-12/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
-<article class="deck-card">
-          <img src="../assets/photos/class/student-builds.jpg" alt="">
+        <article class="deck-card">
+          <img src="../assets/photos/class/student-builds.jpg" alt="Three students holding the robots and models they built in class">
           <div class="deck-body">
             <p class="deck-week">Week 13 &middot; Thu, Dec 10</p>
             <h3><a href="../classes/class-13/">Final Project Showcase</a></h3>
-            <p>Final presentations and live product demos, open to the public — friends, family, and the wider Tufts community are welcome.</p>
+            <p>Demo Day: every team presents a finished product to the Tufts community, and the course closes with a final reflection.</p>
             <ul class="tags"><li>Plan only</li><li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li></ul>
             <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="../classes/class-13/">Open the workshop &rarr;</a>
+              <a class="btn btn-primary btn-sm" href="../classes/class-13/">Open the Workshop &rarr;</a>
             </div>
           </div>
         </article>
@@ -248,10 +226,11 @@
   <section style="padding-top:0;">
     <div class="wrap">
       <div class="callout warm">
-        <b>How a workshop runs.</b> We meet in the classroom for the first half to introduce
-        the skill, then move to Nolop to use it. The <a href="../syllabus/">syllabus</a> has
-        the learning outcomes, grading and policies; the
-        <a href="../tasks/">maker skills tasks</a> are where you get each skill signed off.
+        <b>How a workshop runs.</b> We meet in the JCC classroom for a short introduction
+        to the skill, then move to Nolop where the work is hands-on. The
+        <a href="../syllabus/">syllabus</a> has the learning outcomes, grading and
+        policies; the <a href="../tasks/">maker skills tasks</a> are where you get each
+        skill signed off.
       </div>
     </div>
   </section>

@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
-"""Build the workshops landing page from the class pages and the syllabus.
+"""Build the workshops landing page and the homepage's workshop cards.
 
 `workshops/index.html` is generated, not hand-written, for the same reason the
-task catalog is: it is a list of facts that already exist elsewhere (each class
-page's title and blurb, the syllabus week and date, whether a deck exists yet),
-and a hand-maintained copy drifts the moment a class is added or a deck lands.
+task catalog is: it is a list of facts that already exist elsewhere (each week's
+title and date from the syllabus, whether a deck exists, what the week is
+about), and a hand-maintained copy drifts the moment a class is added or a deck
+lands.
 
-The class pages remain the source of truth for what a workshop is. This reads
-them and presents the whole semester as one page.
+The homepage's workshop grid is generated from the same list, for the same
+reason: the two pages show the same workshops, so they must show the same
+titles, blurbs and photos. `index.html` carries a pair of markers around its
+grid; this script rewrites everything between them.
+
+The syllabus remains the source of truth for a week's name and date; the class
+pages remain the source of truth for what a workshop contains (its deck).
 
     python3 tools/site-nav/build-workshops.py
     python3 tools/site-nav/build-workshops.py --check    # fail if stale
@@ -28,6 +34,9 @@ sys.path.insert(0, str(HERE))
 import nav as site_nav  # noqa: E402
 
 OUT = REPO / "workshops" / "index.html"
+HOME = REPO / "index.html"
+HOME_START = "<!-- workshops:start -->"
+HOME_END = "<!-- workshops:end -->"
 
 
 def esc(text) -> str:
@@ -63,49 +72,107 @@ def read_schedule() -> dict:
     return out
 
 
-def card_image(folder: Path, number: int) -> str:
-    """The photo a workshop's card uses.
+# What each workshop's card says. One entry per week, so the homepage and the
+# workshops page show the same photo, the same sentence and the same alt text.
+# The copy is written for the card rather than pulled from the class page,
+# because a class page's first lede is often written for the page's own layout
+# ("By the end of this course, you will be able to:") and reads as a fragment
+# out of context.
+CARDS = {
+    1: {
+        "image": "assets/photos/class/class-01-presenting.jpg",
+        "alt": "The instructor introducing the course to students gathered in the Nolop makerspace",
+        "blurb": "Welcome to Intro to Making: what you'll learn this semester, how class "
+                 "works, the grading rubric, your tools and maker kit, and an introduction "
+                 "to the Nolop makerspace.",
+    },
+    2: {
+        "image": "classes/class-02/shots/foam-core-samples.jpg",
+        "alt": "Three folded foam-core mockups standing on a cutting mat",
+        "blurb": "The robot challenge rules and scoring, your team and kit, foam-core "
+                 "mockups, and the clay-to-3D scanning workflow.",
+    },
+    3: {
+        "image": "assets/photos/class/laser-cut-projects.jpg",
+        "alt": "A table of student-built laser-cut enclosures and boxes",
+        "blurb": "From sketch to cut part: read your drawings, pull numbers from "
+                 "datasheets, model in Onshape, and cut at Nolop.",
+    },
+    4: {
+        "image": "assets/photos/class/printed-medallion.jpg",
+        "alt": "A 3D-printed blue Tufts medallion",
+        "blurb": "From model to machine: how a 3D printer works, filament choices, "
+                 "exporting from Onshape, slicing in PrusaSlicer, and printing at Nolop.",
+    },
+    5: {
+        "image": "classes/class-05/shots/lab-test-rig.jpg",
+        "alt": "A breadboard wired to motors, a servo, and an ESP32 on the bench",
+        "blurb": "Wire motors, servos, and sensors on the breadboard, install MicroPython "
+                 "on the ESP32, and write your first AI-assisted code.",
+    },
+    6: {
+        "image": "classes/class-06/shots/phone-rgb-control.jpg",
+        "alt": "A phone screen showing an RGB LED control page",
+        "blurb": "Direct an AI coding agent: give your ESP32 a web page with Wi-Fi setup, "
+                 "the client/server model, a smart RGB light, and Tufts device registration.",
+    },
+    7: {
+        "image": "assets/photos/class/robot-internals.jpg",
+        "alt": "The inside of a team robot showing a servo, a battery pack, and wiring",
+        "blurb": "A full working session at Nolop: integrate everything into one working "
+                 "robot, then debug, test, and iterate with your team.",
+    },
+    8: {
+        "image": "assets/photos/class/band-robot-challenge.jpg",
+        "alt": "A student-built robot on the challenge course, with hands adjusting it",
+        "blurb": "Put your robot to the test: teams race on the course, scores go on the "
+                 "board, and the awards close out the first module.",
+    },
+    9: {
+        "image": "assets/photos/class/class-09-demo-1.jpg",
+        "alt": "A team presenting their project to the class",
+        "blurb": "Robot Challenge awards, the five-week final project arc, what your build "
+                 "must include, and the 5-minute concept pitch.",
+    },
+    10: {
+        "image": "assets/photos/class/device-item-added.jpg",
+        "alt": "A tablet showing live sensor readings, including the weather",
+        "blurb": "Collect data from the physical world with sensors, then present it in a "
+                 "real-time visualization someone can read at a glance.",
+    },
+    11: {
+        "image": "classes/class-11/shots/poetic-typewriter.jpg",
+        "alt": "An illustration of the poetic typewriter with glowing butterflies",
+        "blurb": "A voice-driven poetic light built with an ESP32, cloud APIs, and Claude "
+                 "— plus how humans and AI divide the work.",
+    },
+    12: {
+        "image": "assets/photos/class/makerspace.jpg",
+        "alt": "Students working at tables in the Nolop makerspace",
+        "blurb": "Dedicated workshop time at Nolop: finish the build, make it reliable, and "
+                 "rehearse the demo before the showcase.",
+    },
+    13: {
+        "image": "assets/photos/class/student-builds.jpg",
+        "alt": "Three students holding the robots and models they built in class",
+        "blurb": "Demo Day: every team presents a finished product to the Tufts community, "
+                 "and the course closes with a final reflection.",
+    },
+}
 
-    Chosen by looking at the library rather than by filename. A card should show
-    the week's *activity* — a person doing the thing — rather than a product shot
-    or a diagram, because twelve cards are read as a set and the sterile ones
-    stand out against the rest.
 
-    `PICKS` names the choice per week where the class page's own leading image is
-    not the best of what exists. The rest fall back to the class page's first
-    content image, which is right by construction.
-    """
-    PACK = "../assets/photos/class/"
-    PICKS = {
-        # A robot on the track beats a single motor on a white sweep: it shows
-        # the challenge the week is about.
-        2: PACK + "class-02-robot-run.jpg",
-        # Laser-cut objects in use, not a toy robot standing in for them.
-        3: PACK + "laser-cut-projects.jpg",
-        # A printed object on the bed, not a cart photographed in a supermarket.
-        4: PACK + "printed-medallion.jpg",
-        # The class page leads with a bare board shot; this shows the device
-        # doing its job.
-        6: PACK + "device-list-ui.jpg",
-        8: PACK + "band-robot-challenge.jpg",
-        # The scoreboard is a whiteboard of arithmetic; the demo is the moment.
-        9: PACK + "class-09-demo-1.jpg",
-        10: PACK + "device-list-ui.jpg",
-        # The poetic typewriter is the week's case study, and the best image here.
-        11: "../classes/class-11/shots/poetic-typewriter.jpg",
-        12: PACK + "makerspace.jpg",
-        13: PACK + "student-builds.jpg",
-    }
-    if number in PICKS:
-        return PICKS[number]
-
+def card_image(folder: Path) -> str:
+    """A fallback photo for a week with no entry in CARDS: the class page's
+    first content image. A card should show the week's *activity* — a person
+    doing the thing — rather than a product shot or a diagram, because the
+    cards are read as a set and the sterile ones stand out against the rest."""
     for src in re.findall(r'<img[^>]*src="([^"]+)"', (folder / "index.html").read_text()):
         if any(x in src for x in ("icon", "logo", ".svg")):
             continue
         rel = (folder / src).resolve()
         if rel.is_file() and ("assets/photos" in str(rel) or "shots" in str(rel)):
-            return "../" + str(rel.relative_to(REPO))
-    return PACK + "makerspace.jpg"
+            return str(rel.relative_to(REPO))
+    return "assets/photos/class/makerspace.jpg"
 
 
 def deck_slide_count(folder: Path):
@@ -118,108 +185,101 @@ def deck_slide_count(folder: Path):
 
 
 def read_workshops() -> list:
-    """Every class page, as one row of card data."""
+    """Every teaching week, as one row of card data.
+
+    The weeks come from the syllabus, so a week with no class page yet (Week 7)
+    still appears; its card points at the syllabus week instead of a missing
+    page.
+    """
     schedule = read_schedule()
     rows = []
-    for folder in sorted((REPO / "classes").iterdir()):
-        m = re.match(r"class-(\d+)$", folder.name)
-        if not m or not (folder / "index.html").exists():
-            continue
-        number = int(m.group(1))
-        t = (folder / "index.html").read_text()
+    for number, (date, title) in sorted(
+        (int(k.split()[1]), v) for k, v in schedule.items() if k.startswith("Week ")
+    ):
+        folder = REPO / "classes" / f"class-{number:02d}"
+        has_page = (folder / "index.html").exists()
+        page = (folder / "index.html").read_text() if has_page else ""
+        deck = has_page and (folder / "slides.html").exists() and bool(list(folder.glob("*.pdf")))
 
-        # The title comes from the syllabus, which owns the week's name; the
-        # class page's own <h1> is its own headline and has drifted from it.
-        # Falling back to the h1 keeps a page useful before its week is listed.
-        week = schedule.get(f"Week {number}", ("", ""))
-        title = week[1] or first(r'<h1[^>]*>(.*?)</h1>', t)
-        lede = first(r'<p class="lede[^"]*"[^>]*>(.*?)</p>', t)
-        if not lede:
-            lede = first(r'<p class="lead[^"]*"[^>]*>(.*?)</p>', t)
-        if len(lede) > 200:
-            lede = lede[:197].rsplit(" ", 1)[0] + "…"
+        card = CARDS.get(number, {})
+        blurb = card.get("blurb") or first(r'<p class="lede[^"]*"[^>]*>(.*?)</p>', page)
+        if not blurb:
+            blurb = first(r'<p class="lead[^"]*"[^>]*>(.*?)</p>', page)
+        if len(blurb) > 200:
+            blurb = blurb[:197].rsplit(" ", 1)[0] + "…"
 
         rows.append(
             {
                 "number": number,
                 "title": title or f"Class {number}",
-                "blurb": lede,
-                "href": f"../classes/{folder.name}/",
-                "deck": (folder / "slides.html").exists() and bool(list(folder.glob("*.pdf"))),
-                "date": week[0],
-                "week_title": week[1],
-                "image": card_image(folder, number),
-                "slides": deck_slide_count(folder),
+                "blurb": blurb,
+                "date": date,
+                "page": has_page,
+                "path": f"classes/class-{number:02d}/" if has_page else "syllabus/#schedule",
+                "cta": "Open the Workshop" if has_page else "See the syllabus week",
+                "deck": deck,
+                "slides": deck_slide_count(folder) if has_page else None,
+                "image": card.get("image") or (card_image(folder) if has_page else ""),
+                "alt": card.get("alt", ""),
             }
         )
     return rows
 
 
-CSS = """
-  /* The hub's deck cards, reused: a workshop card shows a photo, the week, what
-     the week is about, and one link. That link goes to the workshop's *page*,
-     not to the PDF — the deck, the plan, the assignment and the reflection all
-     live on the page, and the PDF is one of its links. */
-  .deck-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
-  .deck-card { display: grid; grid-template-columns: 40% minmax(0, 1fr);
-               border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
-               background: var(--paper); box-shadow: var(--shadow-sm);
-               transition: border-color .2s ease, box-shadow .2s ease; }
-  .deck-card:hover { border-color: #cfe1f7; box-shadow: var(--shadow-md); }
-  .deck-card img { display: block; width: 100%; height: 100%; min-height: 230px; object-fit: cover; }
-  .deck-body { display: flex; flex-direction: column; padding: 22px 24px; }
-  .deck-week { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep);
-               font-weight: 700; margin: 0 0 8px; }
-  .deck-body h3 { margin: 0 0 8px; font-size: 1.1rem; letter-spacing: -.2px; }
-  .deck-body h3 a { color: var(--ink); }
-  .deck-body > p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
-  .deck-body .tags { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; list-style: none;
-                     padding: 0; margin: 0 0 16px; }
-  .deck-body .tags li { font-size: 12.5px; color: var(--muted-2); border: 1px solid var(--line-strong);
-                        border-radius: 999px; padding: 4px 11px; background: var(--paper); }
-  .deck-body .tags li.pill-cell { border: 0; background: none; padding: 0; }
-  .deck-pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em;
-               text-transform: uppercase; border-radius: 999px; padding: 4px 11px; }
-  .deck-pill.ready { color: var(--blue-deep); background: var(--blue-tint); }
-  .deck-pill.soon { color: #8a5a00; background: #fff4e0; }
-  .deck-body .guide-actions { margin-top: auto; }
-  @media (max-width: 900px) {
-    .deck-grid { grid-template-columns: 1fr; }
-    .deck-card { grid-template-columns: 1fr; }
-    .deck-card img { min-height: 210px; aspect-ratio: 16 / 9; }
-  }
-"""
+def card(r: dict, depth: int = 0, delay: float | None = None) -> str:
+    """One workshop card, as it appears on both pages.
+
+    `depth` is the page's distance from the site root; `delay` is the homepage's
+    staggered reveal, which the workshops page does not use.
+    """
+    root = "../" * depth
+    href = root + r["path"]
+    classes = "deck-card reveal" if delay is not None else "deck-card"
+    style = f' style="--d:{delay:.2f}s"' if delay is not None else ""
+
+    tags = []
+    if r["slides"]:
+        tags.append(f'<li>{r["slides"]} slides</li>')
+    elif not r["page"]:
+        tags.append("<li>Working session</li>")
+    else:
+        tags.append("<li>Plan only</li>")
+    if r["deck"]:
+        tags.append('<li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li>')
+    elif r["page"]:
+        tags.append('<li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li>')
+
+    kicker = f"Week {r['number']}" + (f" &middot; {esc(r['date'])}" if r["date"] else "")
+    return f"""        <article class="{classes}"{style}>
+          <img src="{esc(root + r['image'])}" alt="{esc(r['alt'])}">
+          <div class="deck-body">
+            <p class="deck-week">{kicker}</p>
+            <h3><a href="{esc(href)}">{esc(r['title'])}</a></h3>
+            <p>{esc(r['blurb'])}</p>
+            <ul class="tags">{''.join(tags)}</ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="{esc(href)}">{esc(r['cta'])} &rarr;</a>
+            </div>
+          </div>
+        </article>"""
+
+
+def home_grid() -> str:
+    """The homepage's workshop grid, between its markers."""
+    items = [card(r, 0, delay=0.04 + 0.02 * i) for i, r in enumerate(read_workshops())]
+    return (
+        HOME_START
+        + '\n      <div class="deck-grid">\n'
+        + "\n".join(items)
+        + "\n      </div>\n      "
+        + HOME_END
+    )
 
 
 def page() -> str:
     rows = read_workshops()
     ready = sum(1 for r in rows if r["deck"])
-    items = []
-    for r in rows:
-        label = "Deck ready" if r["deck"] else "Deck coming"
-        pill_class = "ready" if r["deck"] else "soon"
-        # The kicker already gives the week and its date, so the tags carry
-        # only what the kicker does not: the deck's size and its state.
-        tags = []
-        if r["slides"]:
-            tags.append(f'<li>{r["slides"]} slides</li>')
-        if not r["deck"]:
-            tags.append("<li>Plan only</li>")
-        tags.append(f'<li class="pill-cell"><span class="deck-pill {pill_class}">{label}</span></li>')
-        items.append(
-            f"""<article class="deck-card">
-          <img src="{esc(r['image'])}" alt="">
-          <div class="deck-body">
-            <p class="deck-week">Week {r["number"]}{f" &middot; {esc(r['date'])}" if r["date"] else ""}</p>
-            <h3><a href="{esc(r['href'])}">{esc(r["title"])}</a></h3>
-            <p>{esc(r["blurb"])}</p>
-            <ul class="tags">{''.join(tags)}</ul>
-            <div class="guide-actions">
-              <a class="btn btn-primary btn-sm" href="{esc(r['href'])}">Open the workshop &rarr;</a>
-            </div>
-          </div>
-        </article>"""
-        )
+    grid = "\n".join(card(r, 1) for r in rows)
 
     head = f"""<!DOCTYPE html>
 <html lang="en">
@@ -227,9 +287,8 @@ def page() -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Workshops &mdash; ENT-164</title>
-<meta name="description" content="Every workshop in ENT-164 Intro to Making: the semester's classes in order, each with its own page, its deck and its assignment.">
+<meta name="description" content="Every workshop in ENT-164 Intro to Making: the semester's weeks in order, each with its page, its deck and its assignments.">
 <link rel="stylesheet" href="../assets/site.css">
-<style>{CSS}</style>
 </head>
 <body class="page-class">
 """
@@ -238,9 +297,9 @@ def page() -> str:
   <div class="wrap">
     <p class="kicker reveal">Workshops</p>
     <h1 class="reveal">Thirteen weeks,<br><span class="accent">one workshop at a time</span></h1>
-    <p class="lead reveal">Each workshop has its own page: what we cover, what you make,
-    and what is due. Where the deck is ready you can read it on the web or take the PDF
-    to class.</p>
+    <p class="lead reveal">The semester, week by week — what each workshop covers, what you
+    make, and what is due. Open a card for the week's page, and take the PDF to class where
+    the deck is ready.</p>
     <div class="pills reveal">
       <span class="pill">{len(rows)} workshops</span>
       <span class="pill">{ready} decks ready</span>
@@ -259,11 +318,11 @@ def page() -> str:
     <div class="wrap">
       <div class="section-head">
         <h2>The semester</h2>
-        <p>In teaching order. Every card opens the workshop's page — the deck, the plan and
-        what is due are all there.</p>
+        <p>In teaching order. Each card opens the workshop's page — the deck, the plan and
+        what is due are all there — except Week 7, which is a full build session at Nolop.</p>
       </div>
       <div class="deck-grid">
-        {chr(10).join(items)}
+{grid}
       </div>
     </div>
   </section>
@@ -271,10 +330,11 @@ def page() -> str:
   <section style="padding-top:0;">
     <div class="wrap">
       <div class="callout warm">
-        <b>How a workshop runs.</b> We meet in the classroom for the first half to introduce
-        the skill, then move to Nolop to use it. The <a href="../syllabus/">syllabus</a> has
-        the learning outcomes, grading and policies; the
-        <a href="../tasks/">maker skills tasks</a> are where you get each skill signed off.
+        <b>How a workshop runs.</b> We meet in the JCC classroom for a short introduction
+        to the skill, then move to Nolop where the work is hands-on. The
+        <a href="../syllabus/">syllabus</a> has the learning outcomes, grading and
+        policies; the <a href="../tasks/">maker skills tasks</a> are where you get each
+        skill signed off.
       </div>
     </div>
   </section>
@@ -298,22 +358,42 @@ def page() -> str:
 """
 
 
+def replace_region(text: str, start: str, end: str, new: str) -> str:
+    """Swap everything between two markers, keeping the markers themselves."""
+    if start not in text or end not in text:
+        raise SystemExit(f"{HOME.name} is missing its {start} / {end} markers")
+    pre, rest = text.split(start, 1)
+    _, post = rest.split(end, 1)
+    return pre + new + post
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(prog="build-workshops")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
 
     content = page()
-    if OUT.exists() and OUT.read_text(encoding="utf-8") == content:
-        print("workshops page is up to date")
+    home_before = HOME.read_text()
+    home_after = replace_region(home_before, HOME_START, HOME_END, home_grid())
+
+    stale = []
+    if not OUT.exists() or OUT.read_text(encoding="utf-8") != content:
+        stale.append(f"{OUT.relative_to(REPO)}")
+    if home_after != home_before:
+        stale.append(f"{HOME.relative_to(REPO)} (workshop grid)")
+
+    if not stale:
+        print("workshops pages are up to date")
         return 0
     if args.check:
-        print("stale: run tools/site-nav/build-workshops.py")
+        print("stale: run tools/site-nav/build-workshops.py — " + ", ".join(stale))
         return 1
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(content, encoding="utf-8")
+    HOME.write_text(home_after, encoding="utf-8")
     rows = read_workshops()
-    print(f"wrote {OUT.relative_to(REPO)} — {len(rows)} workshops, "
+    print(f"wrote {OUT.relative_to(REPO)} and the homepage grid — {len(rows)} workshops, "
           f"{sum(1 for r in rows if r['deck'])} with a deck")
     return 0
 
