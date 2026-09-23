@@ -1,18 +1,29 @@
 {
-  "_": "s06-s07: add black etched text with the Text tool, then select everything, and centre the text on the plate with Align and Distribute (Relative to: Selection). The text's fill is set black with a palette click (a plain click sets the fill), for the same reason the stroke colour in take02 comes from the palette: the Fill and Stroke colour section moves under the take's own steps.",
+  "_": "s06-s07: add black etched text with the Text tool, then select everything, and centre the text on the plate with Align and Distribute (Relative to: Selection). The tools are chosen with their keyboard shortcuts (T, then S) rather than by clicking the toolbar: the toolbar's icons move between sessions, and a click that lands on the calligraphy tool instead turns the typing into pen strokes. The text's fill is set black with a palette click (a plain click sets the fill), for the same reason the stroke colour in take02 comes from the palette: the Fill and Stroke colour section moves under the take's own steps.",
   "actions": [
     {
       "at": {
         "scene": "s06_etched",
         "sent": 2,
-        "off": 0.5
+        "off": 0.4
       },
       "do": [
         {
           "click": [
-            12,
-            485
+            "plate-centre"
           ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 2,
+        "off": 1.1
+      },
+      "do": [
+        {
+          "press": "t"
         }
       ]
     },
@@ -50,9 +61,23 @@
       },
       "do": [
         {
+          "press": "esc"
+        },
+        {
+          "press": "s"
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 0.8
+      },
+      "do": [
+        {
           "click": [
-            12,
-            119
+            "plate-centre"
           ]
         }
       ]

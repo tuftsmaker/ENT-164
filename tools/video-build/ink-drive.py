@@ -245,6 +245,40 @@ def launch(path=None, timeout=60):
     raise RuntimeError(f"Inkscape not ready within {timeout}s (last: {last})")
 
 
+# The dock's left edge that every panel offset in this file was measured
+# against. The recordings normalise the dock to it at setup time.
+DOCK_LEFT = 988
+
+
+def set_dock_width(target=DOCK_LEFT, tries=4):
+    """Make sure the right dock is no wider than TARGET.
+
+    Inkscape does not restore the dock's width reliably between launches: a new
+    window comes up with the default, ~708 px dock, and the whole point of the
+    narrower panel is a video where it does not dominate the screen. Dragging
+    the divider with synthetic events is hit-and-miss (the grab area is a few
+    px, and some sessions refuse it entirely), but shrinking the window forces
+    the paned widget to squeeze the dock, and restoring the window keeps the
+    narrower width. That is the normalisation: no saved state, no divider drag.
+
+    A dock that is already narrower than the target is left alone — every panel
+    point is an offset from the dock's left edge, so it tracks whatever width
+    the dock happens to have.
+    """
+    if dock_left() >= target - 8:
+        return
+    for _ in range(tries):
+        left = dock_left()
+        if left >= target - 8:
+            break
+        narrow = max(900, int(WIN["w"] - (target - left)))
+        set_window(WIN["x"], WIN["y"], narrow, WIN["h"])
+        time.sleep(1.0)
+        set_window(WIN["x"], WIN["y"], WIN["w"], WIN["h"])
+        time.sleep(1.0)
+    print(f"  dock left at {dock_left():.0f} (target {target})")
+
+
 def to_screen(x, y):
     """Canvas coords are given relative to the document window; convert for input.
 
@@ -369,9 +403,11 @@ def plate_point(name):
 # move. Right-aligned widgets (the colour mode menu and the RGBA fields) are
 # measured from the window's right edge instead, so they need no offset at all.
 _PANEL_OFFSETS = {
-    "panel:fill": (71, 168),
-    "panel:strokepaint": (145, 168),
-    "panel:strokestyle": (243, 168),
+    "panel:fill": (71, 172),
+    "panel:strokepaint": (145, 172),
+    "panel:strokestyle": (243, 172),
+    "panel:x": (55, 206),           # the ✕ (no paint) button, on both tabs
+    "panel:flat": (81, 206),        # flat colour, second button of the row
     "panel:unit": (243, 208),
     "panel:hairline": (243, 401),
     "panel:docktab": (293, 145),
@@ -379,24 +415,17 @@ _PANEL_OFFSETS = {
     "panel:mode-rgb": ("right", 297),
     # panel:rgb-r/g/b are not here: the colour section scrolls under the
     # take's own steps, so those rows are located per use by rgb_field_y().
-    "panel:opacity": ("right", 416),
-}
-
-# Absolute window coordinates for widgets that dock-relative offsets cannot
-# reach reliably. The paint-type buttons are ~25 px tiles and the panel's
-# content does not actually shift with the dock's width, so a dock-relative
-# offset drifts with it and misses (x 843 landed on the Fill tab's ✕ by a hair
-# and on nothing at all on the Stroke paint tab). Align and Distribute does not
-# move with the dock either, and its six ~26 px icon buttons per row put the
-# middle one at x 913; the row order is Inkscape's — "Centre on vertical axis"
-# (moves the selection left/right) is the upper row, "Centre on horizontal
-# axis" (moves it up/down) below it. Verified on 1.4.4 by clicking and reading
-# the objects' x/y back.
-_ABS_PANEL = {
-    "panel:x": (858, 201),          # the ✕ (no paint) button, on both tabs
-    "panel:flat": (885, 201),       # flat colour, second button of the row
-    "align:centre-v": (913, 322),
-    "align:centre-h": (913, 360),
+    "panel:opacity": ("right", 771),
+    # Align and Distribute's two centring buttons. Six ~26 px icons per row put
+    # them at +109; the row order is Inkscape's — "Centre on vertical axis"
+    # (moves the selection left/right) is the upper row, "Centre on horizontal
+    # axis" (moves it up/down) below it. Verified on 1.4.4 by clicking and
+    # reading the objects' x/y back, at two dock widths — which is why these
+    # are offsets and not absolutes: the dock's width is not reliably restored
+    # across launches (988 in one session, 804 in the next), while the panel's
+    # content is anchored a fixed distance from its left edge.
+    "align:centre-v": (109, 329),
+    "align:centre-h": (109, 363),
 }
 
 
@@ -568,8 +597,7 @@ def palette_point(name):
 
 def panel_point(name):
     """A named Fill and Stroke / Align widget position, in window coordinates."""
-    if name in _ABS_PANEL:
-        return _ABS_PANEL[name]
+
     if name in ("panel:rgb-r", "panel:rgb-g", "panel:rgb-b"):
         # These rows move with the panel's scroll; find them before each use.
         return 1456, rgb_field_y(name[-1])
@@ -935,6 +963,7 @@ def prepare_dxf(cfg, work, setup="setup-open-dxf"):
         time.sleep(1.0)
         set_window(WIN["x"], WIN["y"], WIN["w"], WIN["h"])
         time.sleep(1.5)
+        set_dock_width()
         press("s")
         time.sleep(0.5)
         return
@@ -953,6 +982,7 @@ def prepare_dxf(cfg, work, setup="setup-open-dxf"):
         dismiss_notices()
         set_window(WIN["x"], WIN["y"], WIN["w"], WIN["h"])
         time.sleep(1.5)
+        set_dock_width()
         press("s")
         time.sleep(0.5)
         zoom_drawing()
@@ -999,6 +1029,7 @@ def prepare_dxf(cfg, work, setup="setup-open-dxf"):
     # after the dialogs close the window index can no longer be trusted.
     set_window(WIN["x"], WIN["y"], WIN["w"], WIN["h"])
     time.sleep(1.5)
+    set_dock_width()
     press("s")                              # select tool
     time.sleep(0.5)
     # Zoom via the menu, never a bare keystroke: the terminal reclaims focus
