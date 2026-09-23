@@ -18,10 +18,11 @@
   "takes": [
     {
       "name": "take01",
-      "setup": "setup-workspace",
+      "setup": "setup-doc-rectangle",
       "scenes": [
         "s01"
       ]
     }
-  ]
+  ],
+  "documentUrl": "https://cad.onshape.com/documents/f6d157067451842ea3da3e7b/w/5bda4e1ed669ad0aa80b7e3a/e/4723c1f4cf2d41d01bdcbd1a"
 }

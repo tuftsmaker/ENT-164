@@ -121,8 +121,12 @@ async function newTopSketchFramed() {
     const m = (d.innerText || '').match(/Sketch plane\s*\n?\s*([^\n]*)/);
     return m ? m[1].trim() : null;
   });
-  // (no right-click re-orient here: the reload already gives a canonical camera)
-  await page.keyboard.press('n'); await P(900);
+  // Canonical top view. 'n' ("normal to") only bites while the sketch plane is
+  // the active selection; if it is missed the camera stays isometric and the
+  // take records the plane at an angle. The view-cube hotspot always works, so
+  // click it too.
+  await page.keyboard.press('n'); await P(700);
+  await clickAt(CUBE_TOP[0], CUBE_TOP[1], 650, 450);
   await page.keyboard.press('f'); await P(1400);
   await esc(); await P(400);
   return { ok: plane === 'Top plane', plane };
