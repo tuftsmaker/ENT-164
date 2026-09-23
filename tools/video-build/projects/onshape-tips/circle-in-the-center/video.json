@@ -18,10 +18,11 @@
   "takes": [
     {
       "name": "take01",
-      "setup": "setup-workspace",
+      "setup": "setup-square-and-circle",
       "scenes": [
         "s01"
       ]
     }
-  ]
+  ],
+  "documentUrl": "https://cad.onshape.com/documents/0f41c4198ab5e5e479b3acb5/w/48095af860efc659a8fc7857/e/e820b4c89f95bc3c8a2ab19c"
 }
