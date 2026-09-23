@@ -147,7 +147,19 @@ the manual; this is the contract.
   then cannot be made public. Until the project passes an audit
   (https://support.google.com/youtube/contact/yt_api_form), publish via YouTube
   Studio in the browser instead, or expect private-only. The script detects and
-  warns about this after each upload.
+  warns about this after each upload. **As of Sept 2026 this project is not
+  gated:** `update-youtube.py <id> --privacy public` took effect immediately and
+  the oEmbed endpoint confirmed it, so try the API first and only fall back to
+  Studio. `--thumbnail` also works (phone verification is done).
+- `scripts/playlist-youtube.py` creates or fills a playlist (the `manage`
+  token — playlist edits are not covered by `youtube.upload`). Re-running with
+  the same `--playlist` adds only what is missing, so it is safe after a new
+  video lands.
+- The seven finished Onshape tips are published on the TuftsMaker channel
+  (@TuftsMaker) and collected in the public "Onshape Tips" playlist:
+  https://www.youtube.com/playlist?list=PLQNuQi1_2lXk — basic-rectangle,
+  updating-dimensions, circle-to-cut-a-hole, circle-in-the-center,
+  circle-on-a-corner, mirroring-entities, trim-tool, in that order.
 - Quota: `videos.insert` has its own bucket of **100 calls/day at 1 unit each**
   (the old "1,600 units, ~6/day" figure is obsolete). Separately, a channel has
   a per-account daily upload cap (`uploadLimitExceeded`) that is lower for new
