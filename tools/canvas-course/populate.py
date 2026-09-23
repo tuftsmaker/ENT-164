@@ -27,6 +27,7 @@ from canvas_client import Client, load_config  # noqa: E402
 
 SITE = 'https://tuftsmaker.github.io/ENT-164'
 PROTOTYPE_COURSE = '71548'          # "Intro to Making Prototype"
+LIVE_COURSE = '76330'               # Fa26-ENT-0164-01 — never pruned by accident
 
 TIP_ORDER = ['workspace-overview', 'basic-rectangle', 'updating-dimensions',
              'circle-to-cut-a-hole', 'circle-in-the-center', 'circle-on-a-corner',
@@ -84,6 +85,7 @@ def tips():
 
 
 def tasks():
+    """(id, title) for every task, as the task sync names its assignments."""
     import yaml
     base = os.path.join(ROOT, 'skills', 'maker-tasks', 'tasks')
     out = []
@@ -91,38 +93,42 @@ def tasks():
         if not name.endswith('.yml'):
             continue
         t = yaml.safe_load(open(os.path.join(base, name)))
-        out.append((t.get('title', name), name[:-4]))
+        out.append((t.get('id', name[:-4]), t.get('title', name[:-4])))
     return out
 
 
+def task_assignment_names():
+    """The assignment names the task sync owns: '<task id> · <title>'."""
+    return {f'{tid} · {title}' for tid, title in tasks()}
+
+
 def plan():
-    """The whole course structure, as (module name, [(title, url), ...])."""
+    """The course structure, as (module name, [(title, url), ...]).
+
+    Modules are classes and only classes. Site content is filed under the class
+    it belongs to rather than in a module of its own: the setup guides go with
+    Class 1, and everything about getting a file to the laser - the tips, the
+    cutting guide - goes with Class 3. The tasks are not here at all: they are
+    assignments (tools/skill-tasks/canvas/sync.py).
+    """
+    setups = [('Set up OpenCode + DeepSeek (macOS)',
+               f'{SITE}/opencode-deepseek-guide-mac/guide.html'),
+              ('Set up OpenCode + DeepSeek (Windows)',
+               f'{SITE}/opencode-deepseek-guide-win/guide.html'),
+              ('Add your class tools to opencode', f'{SITE}/add-class-tools/guide.html')]
+    laser = [('Laser cutting at Nolop with Inkscape', f'{SITE}/laser-cutting/guide.html')]
+    laser += [(title, f'{SITE}/onshape-tips/videos/{slug}.mp4') for title, slug in tips()]
+    laser.append(('All nine tips, on the course site', f'{SITE}/onshape-tips/'))
+
+    extra = {1: setups, 3: laser}
     mods = []
-    mods.append(('Start here', [
-        ('Course site', f'{SITE}/'),
-        ('Syllabus', f'{SITE}/syllabus/'),
-    ]))
-
-    tip_items = [(title, f'{SITE}/onshape-tips/videos/{slug}.mp4') for title, slug in tips()]
-    tip_items.append(('All nine, on the course site', f'{SITE}/onshape-tips/'))
-    mods.append(('Onshape tips', tip_items))
-
     for c in classes():
         items = []
         if c['deck']:
             items.append(('Slides (PDF)', f'{SITE}/classes/{c["slug"]}/{c["deck"]}'))
         items.append(('Class page', f'{SITE}/classes/{c["slug"]}/'))
+        items += extra.get(c['week'], [])
         mods.append((f'Class {c["week"]} · {c["title"]}', items))
-
-    guide_items = [(g['title'], f'{SITE}/{g["hrefs"][0]}') for g in guides()
-                   if not g['hrefs'][0].startswith('syllabus')]
-    guide_items.append(('OpenCode + DeepSeek — Windows',
-                        f'{SITE}/opencode-deepseek-guide-win/guide.html'))
-    mods.append(('Guides', guide_items))
-
-    task_items = [(title, f'{SITE}/tasks/{slug}.html') for title, slug in tasks()]
-    task_items.sort(key=lambda kv: ('/unit-' not in kv[1], kv[0]))
-    mods.append(('Skill tasks · Laser-ready file', task_items))
     return mods
 
 
@@ -131,6 +137,10 @@ def main():
     ap.add_argument('--course', default=PROTOTYPE_COURSE,
                     help=f'Canvas course id (default {PROTOTYPE_COURSE}, the prototype)')
     ap.add_argument('--dry-run', action='store_true')
+    ap.add_argument('--i-know', action='store_true',
+                    help='allow --prune against the live course')
+    ap.add_argument('--prune', action='store_true',
+                    help='delete modules that are not in the plan (prototype cleanup)')
     ap.add_argument('--publish', action='store_true',
                     help='publish the modules and items (Canvas creates them unpublished)')
     args = ap.parse_args()
@@ -150,6 +160,23 @@ def main():
     cfg['course_id'] = str(args.course)
     client = Client(**cfg)
     print(f'  acting as {client.whoami().get("name", "?")}')
+
+    if args.prune:
+        if str(args.course) == LIVE_COURSE and not args.i_know:
+            sys.exit(f'refusing to prune the live course {LIVE_COURSE} without --i-know')
+        wanted = {name for name, _ in mods}
+        for mod in client.modules():
+            if mod['name'] not in wanted:
+                client._request('DELETE', f'/courses/{client.course_id}/modules/{mod["id"]}')
+                print(f'  - removed module {mod["name"]}')
+        # Assignments belong to the task sync, so "prune" here means the leftovers
+        # - the test assignments a prototype course accumulates. Anything the task
+        # sync owns is left alone.
+        keep = task_assignment_names()
+        for a in client.assignments():
+            if a['name'] not in keep:
+                client._request('DELETE', f'/courses/{client.course_id}/assignments/{a["id"]}')
+                print(f'  - removed assignment {a["name"]}')
 
     created_mod, created_item, skipped, published = 0, 0, 0, 0
     for position, (name, items) in enumerate(mods, start=1):

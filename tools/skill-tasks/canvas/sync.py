@@ -99,10 +99,16 @@ def main(argv=None) -> int:
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--publish", action="store_true", help="make assignments visible to students")
     parser.add_argument("--task", help="only this task id")
+    parser.add_argument("--course",
+                        help="Canvas course id; defaults to COURSE_ID in the config. "
+                             "Use 71548 (the prototype) to try a change before the live course.")
     args = parser.parse_args(argv)
 
     try:
-        client = Client(**load_config())
+        config = load_config()
+        if args.course:
+            config["course_id"] = str(args.course)
+        client = Client(**config)
     except CanvasError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
@@ -113,10 +119,20 @@ def main(argv=None) -> int:
     tasks.sort(key=lambda t: t.get("order", 99))
 
     try:
-        group = client.ensure_group()
-        module = client.ensure_module()
-        print(f"group  {group['id']}  {group['name']} (weight {group.get('group_weight')})")
-        print(f"module {module['id']}  {module['name']}")
+        if args.dry_run:
+            # Look, do not touch: ensure_group/ensure_module create on the way, so
+            # calling them here made --dry-run write to Canvas.
+            group = next((g for g in client.assignment_groups()
+                          if g["name"] == GROUP_NAME), None)
+            module = next((m for m in client.modules() if m["name"] == MODULE_NAME), None)
+            print(f"group  {group['id'] if group else '(would create)'}  {GROUP_NAME} "
+                  f"(weight {GROUP_WEIGHT})")
+            print(f"module {module['id'] if module else '(would create)'}  {MODULE_NAME}")
+        else:
+            group = client.ensure_group()
+            module = client.ensure_module()
+            print(f"group  {group['id']}  {group['name']} (weight {group.get('group_weight')})")
+            print(f"module {module['id']}  {module['name']}")
         for task in tasks:
             name = assignment_name(task)
             existing = client.find_assignment(name)
