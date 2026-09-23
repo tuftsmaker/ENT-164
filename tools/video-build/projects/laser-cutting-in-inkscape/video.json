@@ -1,0 +1,26 @@
+{
+  "slug": "laser-cutting-in-inkscape",
+  "workDir": "~/Movies/ent164-onshape-tutorial/laser-cutting-in-inkscape-build",
+  "output": "~/Movies/ent164-onshape-tutorial/ENT-164-Inkscape-Prepare-DXF-for-Laser-Cutting.mp4",
+  "eyebrow": "ENT-164  \u00b7  INTRO TO MAKING",
+  "heading": "Preparing a DXF in Inkscape",
+  "subtitle": "Import your Onshape file, set cut colours, and add etched text",
+  "footer": "Tufts University  \u00b7  Nolop Makerspace",
+  "titleDuration": 5.0,
+  "endHeading": "Happy making.",
+  "endSubtitle": "Red cuts, black etches. Export from Onshape, prepare in Inkscape, cut at Nolop.",
+  "endFooter": "ENT-164  \u00b7  Intro to Making  \u00b7  Tufts University  \u00b7  Nolop Makerspace",
+  "endCardDuration": 6.0,
+  "voice": "aura-2-thalia-en",
+  "sourceFile": "~/Movies/ent164-onshape-tutorial/laser-cutting-in-inkscape-build/ENT-164-bracket.dxf",
+  "lead": 0.0,
+  "tail": 0.5,
+  "driver": "ink-drive.py",
+  "takes": [
+    { "name": "take01", "setup": "setup-open-dxf",   "scenes": ["s01_intro", "s02_import"] },
+    { "name": "take02", "setup": "setup-open-dxf",   "scenes": ["s03_hairline", "s04_nopaint"] },
+    { "name": "take03", "setup": "setup-open-dxf",   "scenes": ["s05_red"] },
+    { "name": "take04", "setup": "setup-open-dxf",   "scenes": ["s06_etched", "s07_center"] },
+    { "name": "take05", "setup": "setup-open-dxf",   "scenes": ["s08_save", "s09_recap"] }
+  ]
+}

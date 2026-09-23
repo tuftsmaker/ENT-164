@@ -1,5 +1,5 @@
 /* ENT-164 guide theme — shared by every guide page (setup guides and the
-   class-tools guide), on screen and in the generated A4 PDFs.
+   class-tools guide), on screen and in the generated US Letter PDFs.
 
    Same light tokens as assets/site.css, so a guide and the site read as one
    design. Keep guide pages identical: add rules here, not inline. */

@@ -198,3 +198,59 @@ resumable, defaults to private) and `scripts/update-youtube.py` publishes it
 later. Both live in the repo's `scripts/` and share `scripts/_youtube_auth.py`;
 see AGENTS.md for the two tokens, the venv, and the API-audit caveat that forces
 private-only uploads until the project passes a compliance audit.
+
+## Recording a native app (Inkscape)
+
+The browser pipeline records a tab over CDP. Inkscape is a **native** app, so it
+has its own driver: `ink-drive.py`, which controls the GUI through macOS
+Accessibility (`osascript`) and synthetic input (`cliclick`), and captures the
+screen with `ffmpeg`. Its output matches what `pipeline.py plan/assemble`
+expect, so post-production is unchanged.
+
+```bash
+python3 ink-drive.py record --project projects/laser-cutting-in-inkscape --take take01
+```
+
+### One-time setup
+
+1. Grant **Accessibility** to the terminal that runs opencode (System Settings >
+   Privacy & Security > Accessibility), then restart the terminal. Grant it to
+   the *sender* — the terminal — not to Inkscape; the permission is needed to
+   send UI events, not to receive them.
+2. `brew install cliclick`
+
+### What costs time if you don't know it
+
+- **Zoom is a menu action, not a bare key.** `Cmd+4` is Zoom Drawing and `Cmd+5`
+  is Zoom Page, but plain `4` is *Center Page* and plain `5` is *Grey Scale* —
+  so a bare keypress leaves the view at about 2% on a grey canvas and it looks
+  as though the import failed. `ink-drive.py` uses `menu("View","Zoom",...)`.
+  It also uses the menu rather than a keystroke because the terminal reclaims
+  focus between `osascript` calls, so a keystroke can land outside Inkscape.
+- **Window geometry comes back ambiguously.** AppleScript's
+  `(position of w) & (size of w)` concatenates two records with no separator, so
+  `{0,33}` + `{1512,868}` arrives as `033 1512868` and cannot be split reliably.
+  Query each item and join with commas yourself.
+- **A modal dialog is not always window 1**, and its size is unrelated to the
+  main window's, so clicking it by a fraction of the main window misses. Look it
+  up by title (`named_window_xywh`). GTK widgets in these dialogs have no
+  accessible names, so clicking by measured fraction is the only handle.
+- **The process is `inkscape`, lowercase.** `pkill -x Inkscape` matches nothing,
+  so a "clean restart" silently reuses the old process and every window query
+  afterwards is wrong. `quit_app()` matches case-insensitively.
+- **"A window exists" is not "the app is ready."** The menu bar is unavailable
+  until startup finishes; clicking it too early throws *Can't get menu bar item*.
+
+### Onshape DXFs need normalising before Inkscape will place them
+
+`projects/laser-cutting-in-inkscape/normalise-dxf.py` fixes a real trap: the
+Onshape export carries **no units** and sets `$EXTMIN`/`$EXTMAX`/`$PEXTMIN`/
+`$PEXTMAX` to AutoCAD's `+/-1e20` "empty extents" sentinel. Inkscape's importer
+then flips Y with `height - scale*(y - ymin)` using its own hardcoded A4 height
+and `ymin = 0`, which puts a sketch drawn at `y = -60..0` at 297..357mm —
+entirely above the page. The document opens looking empty.
+
+The script shifts the geometry into positive Y and writes real units and extents
+for all four variables. A header variable like `$EXTMIN` carries **three**
+values (X, Y, Z), so replacing only the first leaves the sentinels on the other
+axes — which is enough to keep the page wrong.
