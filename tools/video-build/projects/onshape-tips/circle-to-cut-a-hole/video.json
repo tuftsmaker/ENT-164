@@ -13,12 +13,13 @@
   "endCardDuration": 5.0,
   "voice": "aura-2-thalia-en",
   "documentName": "Adding a Circle to a Rectangle to Cut a Hole",
+  "documentUrl": "https://cad.onshape.com/documents/ef41048ac26af857c16783e5/w/8ddd1fdbb50ed68d71d44da5/e/20ab57a134a29029b9f7ce73",
   "lead": 0.0,
   "tail": 0.5,
   "takes": [
     {
       "name": "take01",
-      "setup": "setup-workspace",
+      "setup": "setup-doc-rectangle",
       "scenes": [
         "s01"
       ]

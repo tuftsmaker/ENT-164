@@ -214,31 +214,73 @@ async function reloadDocument(waitMs = 7000) {
 // take's setup: Onshape's Create flow opens the new document in a *new* tab,
 // and a recording session stays pinned to the tab it started on - so the setup
 // would silently keep working on the wrong page.
-async function openDocument(url, waitMs = 8000) {
+// Force a true 1920x1080 compositor surface.
+//
+// The scene constants in GEO were measured at 1920x1080, so the surface has to
+// be pinned *before* anything draws with them - a setup that runs at the
+// window's natural size puts the geometry somewhere else entirely, and the take
+// then records the wrong thing. Retries because a navigation or an SPA redirect
+// can reset the override.
+async function pinSurface() {
+  const cdp = await context.newCDPSession(page);
+  let surface = null;
+  for (let i = 0; i < 6; i++) {
+    await cdp.send('Emulation.setDeviceMetricsOverride', {
+      width: 1920, height: 1080, deviceScaleFactor: 1, mobile: false,
+      screenWidth: 1920, screenHeight: 1080,
+      screenOrientation: { type: 'landscapePrimary', angle: 0 },
+    });
+    await P(500);
+    for (let k = 0; k < 8; k++) { const u = page.url(); await P(320); if (page.url() === u) break; }
+    const s = await cdp.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
+    const b = Buffer.from(s.data, 'base64');
+    surface = [b.readUInt32BE(16), b.readUInt32BE(20)];
+    if (surface[0] === 1920 && surface[1] === 1080) break;
+  }
+  return surface;
+}
+
+async function openDocument(url, waitMs = 9000) {
   if (!url) return { ok: false, why: 'no-document-url' };
+
+  // Keep the tab in the foreground. Chrome throttles hidden tabs - timers are
+  // clamped and requestAnimationFrame is suspended - which turns the cursor
+  // animations into multi-minute stalls and can push a setup past the CLI's
+  // execute timeout (which then reports "relay is not reachable").
+  try { await page.bringToFront(); } catch (e) { /* not fatal */ }
 
   const lost = async () => page.evaluate(
     () => /is not connected/i.test(document.body.innerText || ''));
-  const settle = async (totalMs) => {
-    for (let i = 0; i < Math.ceil(totalMs / 1000); i++) { await P(1000); if (!(await lost())) break; }
-  };
 
+  // Reload even when we are already on the document. It resets Onshape's camera
+  // to the canonical starting view - a camera inherited from whatever the last
+  // take left behind makes "normal to" look at the sketch from *behind*, so the
+  // geometry is reversed and the view cube labels are mirrored - and it
+  // re-establishes a dropped websocket. One call per take, so it is cheap.
   const navigated = !page.url().startsWith(url);
-  if (navigated) { await page.goto(url, { waitUntil: 'domcontentloaded' }); await P(waitMs); }
+  if (navigated) await page.goto(url, { waitUntil: 'domcontentloaded' });
+  else await page.reload({ waitUntil: 'domcontentloaded' });
+  await P(waitMs);
 
-  // A tab left idle for a long time loses Onshape's websocket. The page then
-  // keeps rendering - with a stale "is not connected" banner - but no command
-  // opens a feature dialog, so every later step fails quietly. A reload
-  // re-establishes the connection.
+  // A tab left idle long enough loses Onshape's websocket and shows a stale
+  // "is not connected" banner: no command opens a feature dialog after that.
   let reconnected = false;
   if (await lost()) {
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await settle(45000);
+    for (let i = 0; i < 45; i++) { await P(1000); if (!(await lost())) break; }
     await P(2500);
     reconnected = true;
   }
+
+  // Setups drive the cursor too, and moveTo() needs the injected cursor to
+  // exist. Idempotent, and cheap enough to do unconditionally.
+  await cursorInject();
+
+  // And the setup draws with the GEO constants, which assume 1920x1080.
+  const surface = await pinSurface();
+
   return { ok: /\/e\//.test(page.url()) && !(await lost()),
-    url: page.url(), navigated, reconnected };
+    url: page.url(), navigated, reconnected, surface };
 }
 
 async function createDocument(name) {

@@ -62,6 +62,11 @@ async function moveTo(x, y, durMs = 620, opts = {}) {
 
   // One round trip: run the whole animation in-page on rAF.
   const animP = page.evaluate(({ sx, sy, x, y, dur }) => new Promise((res) => {
+    // The cursor is injected by scenePrep()/openDocument(). If it is missing,
+    // __vcSet throws inside the rAF callback, the promise never settles, and
+    // the caller waits until a navigation tears the context down - which shows
+    // up as a ~60s stall in the middle of a setup. Do the pointer move instead.
+    if (typeof window.__vcSet !== 'function') { res(false); return; }
     const t0 = performance.now();
     const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
     function step() {
