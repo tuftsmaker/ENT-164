@@ -160,6 +160,9 @@ h1 .accent { color: var(--blue-deep); }
 .make-strip figcaption { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
 .make-strip figcaption b { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 1px; }
 .guides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+/* A guide that is not one of the paired setup guides spans the full row, so a
+   third card does not leave an orphan cell in the 2-column grid. */
+.guide-card-wide { grid-column: 1 / -1; }
 .guide-card.syllabus-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 30px; align-items: center; padding: 30px 34px; }
 .syllabus-card .mark-md {
   width: 56px; height: 56px; border-radius: 16px;
