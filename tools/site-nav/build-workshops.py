@@ -128,20 +128,23 @@ def read_workshops() -> list:
         number = int(m.group(1))
         t = (folder / "index.html").read_text()
 
-        title = first(r'<h1[^>]*>(.*?)</h1>', t)
+        # The title comes from the syllabus, which owns the week's name; the
+        # class page's own <h1> is its own headline and has drifted from it.
+        # Falling back to the h1 keeps a page useful before its week is listed.
+        week = schedule.get(f"Week {number}", ("", ""))
+        title = week[1] or first(r'<h1[^>]*>(.*?)</h1>', t)
         lede = first(r'<p class="lede[^"]*"[^>]*>(.*?)</p>', t)
         if not lede:
             lede = first(r'<p class="lead[^"]*"[^>]*>(.*?)</p>', t)
         if len(lede) > 200:
             lede = lede[:197].rsplit(" ", 1)[0] + "…"
 
-        week = schedule.get(f"Week {number}", ("", ""))
         rows.append(
             {
                 "number": number,
                 "title": title or f"Class {number}",
                 "blurb": lede,
-                "href": f"../{folder.name}/",
+                "href": f"../classes/{folder.name}/",
                 "deck": (folder / "slides.html").exists() and bool(list(folder.glob("*.pdf"))),
                 "date": week[0],
                 "week_title": week[1],
@@ -195,19 +198,20 @@ def page() -> str:
     for r in rows:
         label = "Deck ready" if r["deck"] else "Deck coming"
         pill_class = "ready" if r["deck"] else "soon"
+        # The kicker already gives the week and its date, so the tags carry
+        # only what the kicker does not: the deck's size and its state.
         tags = []
-        if r["date"]:
-            tags.append(f'<li>{esc(r["date"])}</li>')
         if r["slides"]:
             tags.append(f'<li>{r["slides"]} slides</li>')
-        tags.append(f'<li>Week {r["number"]}</li>')
+        if not r["deck"]:
+            tags.append("<li>Plan only</li>")
         tags.append(f'<li class="pill-cell"><span class="deck-pill {pill_class}">{label}</span></li>')
         items.append(
             f"""<article class="deck-card">
           <img src="{esc(r['image'])}" alt="">
           <div class="deck-body">
-            <p class="deck-week">Week {r["number"]} &middot; {esc(r["week_title"] or "Workshop")}</p>
-            <h3><a href="{esc(r['href'])}">Class {r["number"]} &middot; {esc(r["title"])}</a></h3>
+            <p class="deck-week">Week {r["number"]}{f" &middot; {esc(r['date'])}" if r["date"] else ""}</p>
+            <h3><a href="{esc(r['href'])}">{esc(r["title"])}</a></h3>
             <p>{esc(r["blurb"])}</p>
             <ul class="tags">{''.join(tags)}</ul>
             <div class="guide-actions">
