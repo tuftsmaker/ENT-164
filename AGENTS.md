@@ -344,8 +344,9 @@ the manual; this is the contract.
 
 A CAP-style task system for maker skills: a task is a short video, a file the
 student makes, written criteria checked on that file, and a signoff by a person.
-The **Laser-Ready File** track is open (8 tasks, all reusing the Onshape tips as
-task videos — nothing was filmed for it). Four further tracks — Print-Ready
+The **Laser-Ready File** track is open (9 tasks; the first eight reuse the
+Onshape tips as task videos, and the ninth — preparing the DXF for the laser —
+uses the class's Inkscape tutorial). Four further tracks — Print-Ready
 Model, Working Circuit, Connected Device, Intelligent Device — exist as
 `status: planned` units: documentation of what they will contain, shown dimmed on
 the site and refused by the runner. A planned unit uses `planned_tasks` (no real

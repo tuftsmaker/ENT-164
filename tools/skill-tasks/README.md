@@ -200,8 +200,8 @@ Worth knowing before trusting a green report:
 
 ## Status
 
-- Checker: 8 tasks, 27 fixtures, all agreeing.
-- Catalog: 8 pages generated.
+- Checker: 9 tasks, 30 fixtures, all agreeing.
+- Catalog: 16 pages generated.
 - Canvas: the group and module exist; assignments are created by `sync.py` and
   deliberately left unpublished until the pilot starts.
 - AI tier: wired, guarded, and off unless `opencode` and `browser-control` are
