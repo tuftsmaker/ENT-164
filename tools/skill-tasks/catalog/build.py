@@ -23,30 +23,13 @@ sys.path.insert(0, str(REPO / "skills" / "maker-tasks" / "check"))
 import runner  # noqa: E402
 from map import render_svg as task_map_svg  # noqa: E402
 
+sys.path.insert(0, str(REPO / "tools" / "site-nav"))
+import nav as site_nav  # noqa: E402
+
 TASKS_DIR = REPO / "tasks"
 SITE = "https://tuftsmaker.github.io/ENT-164"
 
-NAV = """\
-<nav class="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="../">
-      <span class="mark-sm" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
-          <path d="m18 15 4-4" />
-          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
-        </svg>
-      </span>
-      <span>ENT-164 <small>&middot; Intro to Making</small></span>
-    </a>
-    <div class="nav-links">
-      <a href="../onshape-tips/">Onshape tips</a>
-      <a href="../laser-cutting/">Laser cutting guide</a>
-      <a class="nav-cta" href="../">All materials &rarr;</a>
-    </div>
-  </div>
-</nav>
-"""
+NAV = site_nav.main_nav(1, "./", "Start with task 1 &rarr;", "tasks")
 
 FOOTER = """\
 <footer>
@@ -119,10 +102,16 @@ def video_line(task: dict) -> str:
     if not task.get("video"):
         return ""
     poster = task.get("poster")
+    poster_attr = f' poster="../{esc(poster)}"' if poster else ""
+    length = f" <span class=\"video-len\">({esc(task['time'])})</span>" if task.get("time") else ""
     return f"""\
-      <div class="callout">
-        <b>Watch first.</b> <a href="../{esc(task['video'])}">{esc(task['title'])}</a>{f" ({esc(task['time'])})" if task.get('time') else ""}.
-        {f'<br><img src="../{esc(poster)}" alt="Title card for the video" style="max-width:360px;border-radius:10px;margin-top:10px;">' if poster else ""}
+      <div class="callout video-embed">
+        <b>Watch first.</b> {esc(task['title'])}{length}
+        <video controls preload="metadata" playsinline{poster_attr}>
+          <source src="../{esc(task['video'])}" type="video/mp4">
+          Your browser cannot play this video.
+          <a href="../{esc(task['video'])}">Download it</a> instead.
+        </video>
       </div>"""
 
 
@@ -172,6 +161,23 @@ def table_lookup(check: str, args: dict) -> str:
         "manifest_field": f'Your manifest records "{args.get("field","")}".',
     }
     return table.get(check, "Checked on your file.")
+
+
+SUBNav = {
+    "catalog": [("map", "The map"), ("tasks", "The tasks"), ("how", "How it works")],
+    "unit": [("what", "What it takes"), ("tasks", "The tasks"), ("then", "Supervised cut")],
+    "task": [("do", "What to do"), ("hand", "What to hand in"), ("checked", "How it is checked")],
+}
+
+
+def subnav(kind: str) -> str:
+    """A page's own sections, under the main nav."""
+    links = "\n      ".join(f'<a href="#{sid}">{label}</a>' for sid, label in SUBNav[kind])
+    return f"""<nav class="subnav" aria-label="On this page">
+  <div class="wrap subnav-inner">
+      {links}
+  </div>
+</nav>"""
 
 
 def task_page(task: dict, all_tasks: dict) -> str:
@@ -232,7 +238,8 @@ def task_page(task: dict, all_tasks: dict) -> str:
 </header>
 
 <main>
-  <section>
+  {subnav("task")}
+  <section id="do">
     <div class="wrap">
 {video_line(task)}
 
@@ -240,7 +247,7 @@ def task_page(task: dict, all_tasks: dict) -> str:
       {para(task["goal"])}
       {prereq_line}
 
-      <div class="section-head left"><h2>What to hand in</h2></div>
+      <div class="section-head left" id="hand"><h2>What to hand in</h2></div>
       <table class="submit-table">
         <tr><th>File</th><th></th><th>What it is</th></tr>
         {submits}
@@ -250,7 +257,7 @@ def task_page(task: dict, all_tasks: dict) -> str:
         Ask opencode: <span class="mono">check my cad-01 submission</span>.
       </p>
 
-      <div class="section-head left"><h2>How it is checked</h2></div>
+      <div class="section-head left" id="checked"><h2>How it is checked</h2></div>
       <p class="lede">Every criterion below is checked on your file. The ones marked for a person
       are judged by a TA — they are never passed or failed by the checker.</p>
       <div class="criteria">
@@ -306,7 +313,8 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
 </header>
 
 <main>
-  <section>
+  {subnav("unit")}
+  <section id="what">
     <div class="wrap">
       <div class="section-head">
         <h2>What it takes</h2>
@@ -320,14 +328,14 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
     </div>
   </section>
 
-  <section style="padding-top:0;">
+  <section id="tasks" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head left"><h2>The tasks</h2></div>
       <div class="task-list">
         {chr(10).join(rows)}
       </div>
 
-      <div class="section-head left" style="margin-top:40px;"><h2>Then: {esc(supervised.get('title','Supervised cut'))}</h2></div>
+      <div class="section-head left" id="then" style="margin-top:40px;"><h2>Then: {esc(supervised.get('title','Supervised cut'))}</h2></div>
       {para(supervised.get("detail",""))}
 
       <div class="callout warn" style="margin-top:24px;">
@@ -420,7 +428,7 @@ def catalog_page(tasks: list, unit: dict | None) -> str:
     </div>
   </section>
 
-  <section style="padding-top:0;">
+  <section id="how" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head left"><h2>How it works</h2></div>
       <div class="cards">

@@ -51,13 +51,14 @@ from each of the two edges meeting the top-right corner.
       <span>ENT-164 <small>&middot; Intro to Making</small></span>
     </a>
     <div class="nav-links">
-      <a href="../onshape-tips/">Onshape tips</a>
-      <a href="../laser-cutting/">Laser cutting guide</a>
-      <a class="nav-cta" href="../">All materials &rarr;</a>
+      <a href="../tasks/" aria-current="page">Tasks</a>
+      <a href="../syllabus/#schedule">Class slides</a>
+      <a href="../syllabus/">Syllabus</a>
+      <a href="../about/">About</a>
+      <a class="nav-cta" href="./">Start with task 1 &rarr;</a>
     </div>
   </div>
 </nav>
-
 <header class="hero">
   <div class="wrap">
     <p class="kicker reveal">Task 5 &middot; Laser-Ready File</p>
@@ -73,11 +74,22 @@ from each of the two edges meeting the top-right corner.</p>
 </header>
 
 <main>
-  <section>
+  <nav class="subnav" aria-label="On this page">
+  <div class="wrap subnav-inner">
+      <a href="#do">What to do</a>
+      <a href="#hand">What to hand in</a>
+      <a href="#checked">How it is checked</a>
+  </div>
+</nav>
+  <section id="do">
     <div class="wrap">
-      <div class="callout">
-        <b>Watch first.</b> <a href="../onshape-tips/videos/circle-on-a-corner.mp4">Adding a Circle at a Corner</a> (1:12).
-        <br><img src="../onshape-tips/posters/circle-on-a-corner.png" alt="Title card for the video" style="max-width:360px;border-radius:10px;margin-top:10px;">
+      <div class="callout video-embed">
+        <b>Watch first.</b> Adding a Circle at a Corner <span class="video-len">(1:12)</span>
+        <video controls preload="metadata" playsinline poster="../onshape-tips/posters/circle-on-a-corner.png">
+          <source src="../onshape-tips/videos/circle-on-a-corner.mp4" type="video/mp4">
+          Your browser cannot play this video.
+          <a href="../onshape-tips/videos/circle-on-a-corner.mp4">Download it</a> instead.
+        </video>
       </div>
 
       <div class="section-head left"><h2>What to do</h2></div>
@@ -85,7 +97,7 @@ from each of the two edges meeting the top-right corner.</p>
 and dimensions from the two edges that meet there.</p>
       <p><b>Do first:</b> <a href="cad-04-center-a-hole.html">Placing a Circle in the Center of a Rectangle</a>.</p>
 
-      <div class="section-head left"><h2>What to hand in</h2></div>
+      <div class="section-head left" id="hand"><h2>What to hand in</h2></div>
       <table class="submit-table">
         <tr><th>File</th><th></th><th>What it is</th></tr>
         <tr><td class="mono">part.dxf</td><td>required</td><td></td></tr>
@@ -96,7 +108,7 @@ and dimensions from the two edges that meet there.</p>
         Ask opencode: <span class="mono">check my cad-01 submission</span>.
       </p>
 
-      <div class="section-head left"><h2>How it is checked</h2></div>
+      <div class="section-head left" id="checked"><h2>How it is checked</h2></div>
       <p class="lede">Every criterion below is checked on your file. The ones marked for a person
       are judged by a TA — they are never passed or failed by the checker.</p>
       <div class="criteria">

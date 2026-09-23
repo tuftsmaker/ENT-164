@@ -80,6 +80,28 @@ section[id] { scroll-margin-top: 92px; }
 }
 .nav-links a.nav-cta:hover { border-color: #cfe1f7; background: var(--blue-tint-2); }
 
+/* The page's own sections, under the main nav. Pages with a sidebar "On this
+   page" block do not get one — the sidebar already does this job. */
+.subnav {
+  position: sticky; top: 64px; z-index: 40;
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.subnav-inner {
+  display: flex; align-items: center; gap: 4px;
+  overflow-x: auto; scrollbar-width: none;
+  height: 44px;
+}
+.subnav-inner::-webkit-scrollbar { display: none; }
+.subnav a {
+  color: var(--muted-2); font-size: 13.5px; font-weight: 500;
+  padding: 6px 12px; border-radius: 999px; white-space: nowrap;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.subnav a:hover { color: var(--blue-deep); background: var(--blue-tint-2); text-decoration: none; }
+
 /* ---------- hero ---------- */
 .hero { position: relative; overflow: hidden; padding: 72px 0 22px; }
 .hero::before {
@@ -569,6 +591,10 @@ footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44
   .nav-links a:not(.nav-cta) { display: none; }
   .brand small { display: none; }
   .brand, .nav-links a.nav-cta { white-space: nowrap; }
+  /* The site links are hidden on a narrow screen, so the sub-nav is the only
+     way through the page: give it room and let it scroll. */
+  .subnav { top: 64px; }
+  .subnav-inner { height: 42px; }
 }
 @media (max-width: 700px) {
   .arrow { display: none; }
@@ -579,6 +605,16 @@ footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44
   .deck-card img { min-height: 210px; aspect-ratio: 16 / 9; }
   .principles { grid-template-columns: 1fr; }
 }
+/* ---- Embedded task video -------------------------------------------------
+   Every task page leads with its video. It plays here rather than opening the
+   file, so a student can watch and read the checklist without leaving the page. */
+.video-embed video {
+  display: block; width: 100%; max-width: 720px; margin-top: 14px;
+  aspect-ratio: 16 / 9; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--ink);
+}
+.video-embed .video-len { color: var(--muted); font-variant-numeric: tabular-nums; }
+
 /* ---- Onshape tips: self-hosted screen recordings -------------------------
    The finished MP4s live in onshape-tips/videos/ and play inline. They are
    small (the whole set is ~19MB) because they are 1080p captures of a mostly
