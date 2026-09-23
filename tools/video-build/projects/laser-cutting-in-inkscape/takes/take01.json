@@ -6,9 +6,9 @@
     {"at": {"scene": "s02_import", "sent": 1, "off": 0.5}, "do": [{"menu": ["File", "Open..."]}]},
     {"at": {"scene": "s02_import", "sent": 1, "off": 2.4}, "do": [{"typecodes": "~/Movies/ent164-onshape-tutorial/laser-cutting-in-inkscape-build/ENT-164-bracket.dxf"}]},
     {"at": {"scene": "s02_import", "sent": 1, "off": 12.0}, "do": [{"press": "enter"}]},
-    {"at": {"scene": "s02_import", "sent": 2, "off": 2.2}, "do": [{"move": [1321, 137]}]},
-    {"at": {"scene": "s02_import", "sent": 3, "off": 0.5}, "do": [{"click": [1321, 137]}]},
-    {"at": {"scene": "s02_import", "sent": 3, "off": 2.8}, "do": [{"click": [1456, 846]}]},
+    {"at": {"scene": "s02_import", "sent": 2, "off": 2.2}, "do": [{"move": ["dxf:read-from-file"]}]},
+    {"at": {"scene": "s02_import", "sent": 3, "off": 0.5}, "do": [{"click": ["dxf:read-from-file"]}]},
+    {"at": {"scene": "s02_import", "sent": 3, "off": 2.8}, "do": [{"click": ["dxf:ok"]}]},
     {"at": {"scene": "s02_import", "sent": 4, "off": 1.2}, "do": [{"dismiss": true}]},
     {"at": {"scene": "s02_import", "sent": 4, "off": 2.6}, "do": [{"window": [0, 33, 1512, 868]}]},
     {"at": {"scene": "s02_import", "sent": 4, "off": 3.6}, "do": [{"zoom": "drawing"}]}

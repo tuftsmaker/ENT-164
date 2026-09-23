@@ -103,7 +103,8 @@ def press(key):
 
 
 _KEYCODES = {"enter": 36, "return": 36, "tab": 48, "space": 49, "delete": 51,
-             "esc": 53, "escape": 53, "left": 123, "right": 124, "down": 125, "up": 126}
+             "esc": 53, "escape": 53, "left": 123, "right": 124, "down": 125, "up": 126,
+             "home": 115, "end": 119, "pageup": 116, "pagedown": 121}
 
 
 def _cliclick(*cmds):
@@ -263,6 +264,11 @@ def dock_left():
 
     The dock grows to fit its widest dialog (Align and Distribute is wider than
     Fill and Stroke), so every panel coordinate has to be an offset from this.
+
+    Takes the start of the longest run of dark columns, not the leftmost dark
+    column: the page's drop shadow is a dark sliver sitting left of the dock in
+    the same rows, and a leftmost test reports the shadow (~x 648) instead of
+    the dock (~x 819), which moves every panel click ~170 px off.
     """
     import tempfile
     from PIL import Image
@@ -279,11 +285,20 @@ def dock_left():
     # A column is "dock" when it is dark for most of a tall band: the dock is a
     # uniform dark slab, while the drawing's ink crosses only a few rows of it.
     band = a[int(380 * s):int(520 * s), :]
-    dark_cols = (band.sum(2) < 330).mean(0) > 0.9
-    xs = np.where(dark_cols[int(300 * s):int(1500 * s)])[0]
-    if len(xs) == 0:
+    dark = (band.sum(2) < 330).mean(0) > 0.5
+    runs, start = [], None
+    for i, v in enumerate(dark):
+        if v and start is None:
+            start = i
+        elif not v and start is not None:
+            runs.append((start, i - 1))
+            start = None
+    if start is not None:
+        runs.append((start, len(dark) - 1))
+    runs = [(r0, r1) for r0, r1 in runs if (r1 - r0 + 1) / s >= 100]
+    if not runs:
         raise RuntimeError("dock_left: no dock found")
-    left = (int(300 * s) + xs.min()) / s
+    left = max(runs, key=lambda r: r[1] - r[0])[0] / s
     print(f"  dock left at {left:.0f}")
     return left
 
@@ -357,37 +372,215 @@ _PANEL_OFFSETS = {
     "panel:fill": (71, 168),
     "panel:strokepaint": (145, 168),
     "panel:strokestyle": (243, 168),
-    "panel:x": (39, 201),
-    "panel:flat": (69, 201),
     "panel:unit": (243, 208),
     "panel:hairline": (243, 401),
     "panel:docktab": (293, 145),
     "panel:mode": ("right", 242),
     "panel:mode-rgb": ("right", 297),
-    "panel:rgb-r": ("right", 303),
-    "panel:rgb-g": ("right", 341),
-    "panel:rgb-b": ("right", 379),
+    # panel:rgb-r/g/b are not here: the colour section scrolls under the
+    # take's own steps, so those rows are located per use by rgb_field_y().
     "panel:opacity": ("right", 416),
-    "align:centre-v": (147, 330),
-    "align:centre-h": (147, 364),
 }
+
+# Absolute window coordinates for widgets that dock-relative offsets cannot
+# reach reliably. The paint-type buttons are ~25 px tiles and the panel's
+# content does not actually shift with the dock's width, so a dock-relative
+# offset drifts with it and misses (x 843 landed on the Fill tab's ✕ by a hair
+# and on nothing at all on the Stroke paint tab). Align and Distribute does not
+# move with the dock either, and its six ~26 px icon buttons per row put the
+# middle one at x 913; the row order is Inkscape's — "Centre on vertical axis"
+# (moves the selection left/right) is the upper row, "Centre on horizontal
+# axis" (moves it up/down) below it. Verified on 1.4.4 by clicking and reading
+# the objects' x/y back.
+_ABS_PANEL = {
+    "panel:x": (858, 201),          # the ✕ (no paint) button, on both tabs
+    "panel:flat": (885, 201),       # flat colour, second button of the row
+    "align:centre-v": (913, 322),
+    "align:centre-h": (913, 360),
+}
+
+
+def _slider_rows(a):
+    """y of each channel's slider row in a screenshot, from its gradient.
+
+    Inkscape draws a channel slider as a gradient of that channel, so between
+    its left and right ends that channel rises from its current value to its
+    maximum: the red row is the one whose red rises most, and so on. Returns
+    {channel: y or None} for the R, G and B rows of the Stroke paint tab.
+    """
+    s = a.shape[0] / WIN["h"]
+    x0, x1 = int(950 * s), int(1400 * s)
+    out = {}
+    for idx, name in ((0, "r"), (1, "g"), (2, "b")):
+        best, run = None, []
+        for y in range(int(240 * s), int(470 * s)):
+            d = [a[y, x1][i] - a[y, x0][i] for i in range(3)]
+            ok = (d[idx] >= 80
+                  and d[idx] - max(d[i] for i in range(3) if i != idx) >= 30)
+            if ok:
+                run.append(y)
+            elif run:
+                if best is None or len(run) > len(best):
+                    best = run
+                run = []
+        if run and (best is None or len(run) > len(best)):
+            best = run
+        out[name] = (None if not best or len(best) < 10
+                     else (best[0] + best[-1]) / 2 / s)
+    return out
+
+
+def _grab():
+    """Screenshot the document window into an RGB array."""
+    import tempfile
+    from PIL import Image
+    import numpy as np
+
+    fd, path = tempfile.mkstemp(suffix='.png')
+    os.close(fd)
+    try:
+        shot(path)
+        return np.asarray(Image.open(path).convert('RGB')).astype(int)
+    finally:
+        os.unlink(path)
+
+
+def _mode_is_rgb():
+    """True when all three R/G/B channel sliders are showing.
+
+    That is uniquely RGB mode among the modes Inkscape offers (HSLuv shows
+    H/S/L/A, CMYK shows its own four channels).
+    """
+    rows = _slider_rows(_grab())
+    return all(rows[c] is not None for c in ("r", "g", "b"))
+
+
+def select_rgb_mode(tries=3):
+    """Switch the Stroke paint colour mode to RGB, verifying it.
+
+    A click opens the mode list, but the synthetic Home/Down/Return keys do not
+    always reach the popup (an override-redirect window whose grab is not always
+    in place when the keys arrive), so whether the selection took is checked by
+    looking for the three channel sliders, and the whole sequence is retried.
+    Each attempt starts with a click on Flat colour: it is where the take was
+    anyway, and it dismisses a list left open by a failed attempt.
+    """
+    for _ in range(tries):
+        click(*to_screen(*panel_point("panel:flat")))
+        time.sleep(0.4)
+        click(*to_screen(*panel_point("panel:mode")))
+        time.sleep(0.6)
+        for key in ("home", "down", "down", "return"):
+            press(key)
+            time.sleep(0.2)
+        time.sleep(0.5)
+        if _mode_is_rgb():
+            return
+    raise RuntimeError(f"select_rgb_mode: RGB not showing after {tries} tries")
+
+
+def rgb_field_y(channel):
+    """y of the R, G or B numeric field on the Stroke paint tab.
+
+    The colour section scrolls — switching the colour mode can leave it
+    scrolled — so the fixed y in _PANEL_OFFSETS is only right part of the time.
+    The rows come from _slider_rows(), i.e. from the sliders themselves. The
+    flow sets R, then G, then B starting from black, so the channel being set
+    is never already flat when it is looked up.
+    """
+    y = _slider_rows(_grab()).get(channel)
+    if y is None:
+        raise RuntimeError(f"rgb_field_y({channel!r}): no {channel} slider found")
+    print(f"  {channel} field row at {y:.0f}")
+    return y
+
+
+def dxf_dialog_point(name):
+    """A point inside the DXF Input dialog, as a fraction of that window.
+
+    The dialog is ~526x490 at the window's top-left, not a full-window sheet, so
+    document-window coordinates cannot address it; it can also end up behind the
+    document window, so it is raised before the point is returned. Returns
+    screen coordinates: the caller must not add the window origin again.
+    """
+    fracs = {
+        "dxf:read-from-file": (0.624, 0.280),   # the radio, already default
+        "dxf:ok": (0.912, 0.959),
+    }
+    if name not in fracs:
+        raise ValueError(f"unknown DXF dialog point {name!r}")
+    # It appears a moment after File > Open accepts the path.
+    w = None
+    for _ in range(20):
+        w = named_window_xywh("DXF Input")
+        if w:
+            break
+        time.sleep(0.5)
+    if not w:
+        raise RuntimeError("DXF Input dialog did not appear")
+    try:
+        osa(f'tell application "System Events" to tell process "{APP}" to '
+            f'perform action "AXRaise" of window "DXF Input"')
+    except RuntimeError:
+        pass
+    time.sleep(0.3)
+    w = named_window_xywh("DXF Input") or w
+    fx, fy = fracs[name]
+    return w["x"] + int(w["w"] * fx), w["y"] + int(w["h"] * fy)
+
+
+def palette_point(name):
+    """A colour on the window's palette strip, found by its colour.
+
+    The palette sits at a fixed place at the bottom of the window, but the x of
+    a colour is not stable across palette changes (the strip reorders and
+    scrolls), so it is located from its colour on each use. Shift-clicking a
+    swatch sets the *stroke*; a plain click sets the fill.
+
+    This is the stroke-colour route the take uses: typing into the Fill and
+    Stroke RGB fields needs those fields' positions, and the dialog's colour
+    section scrolls between the mode switch and the fields, so the fields move
+    under the take's own steps. The palette does not move with the panel.
+    """
+    import tempfile
+    from PIL import Image
+    import numpy as np
+
+    targets = {"palette:red": (255, 0, 0), "palette:black": (0, 0, 0)}
+    if name not in targets:
+        raise ValueError(f"unknown palette colour {name!r}")
+    fd, path = tempfile.mkstemp(suffix='.png')
+    os.close(fd)
+    try:
+        shot(path)
+        a = np.asarray(Image.open(path).convert('RGB')).astype(int)
+    finally:
+        os.unlink(path)
+    s = a.shape[0] / WIN["h"]
+    strip = a[int(755 * s):int(840 * s), :]
+    tr, tg, tb = targets[name]
+    d = (strip[:, :, 0] - tr) ** 2 + (strip[:, :, 1] - tg) ** 2 + (strip[:, :, 2] - tb) ** 2
+    iy, ix = np.unravel_index(np.argmin(d), d.shape)
+    x, y = ix / s, (int(755 * s) + iy) / s
+    print(f"  {name} at {x:.0f},{y:.0f} ({tuple(strip[iy, ix])})")
+    return x, y
 
 
 def panel_point(name):
     """A named Fill and Stroke / Align widget position, in window coordinates."""
+    if name in _ABS_PANEL:
+        return _ABS_PANEL[name]
+    if name in ("panel:rgb-r", "panel:rgb-g", "panel:rgb-b"):
+        # These rows move with the panel's scroll; find them before each use.
+        return 1456, rgb_field_y(name[-1])
     off = _PANEL_OFFSETS.get(name)
     if off is None:
         raise ValueError(f"unknown panel point {name!r}")
     dx, y = off
     if dx == "right":
         return 1456, y
-    if name.startswith("align:"):
-        # Opening Align and Distribute widens the dock, so its own coordinates
-        # need a fresh edge measurement rather than the cached one.
-        left = _PANEL["left"] = dock_left()
-    else:
-        left = _PANEL.get("left") or dock_left()
-        _PANEL["left"] = left
+    left = _PANEL.get("left") or dock_left()
+    _PANEL["left"] = left
     return left + dx, y
 
 
@@ -477,11 +670,19 @@ def _apply(op, marks, started):
     v = op[kind]
 
     # Canvas coordinates may be named points on the measured drawing, so a click
-    # does not depend on the zoom or on which dock dialogs are open.
+    # does not depend on the zoom or on which dock dialogs are open. DXF dialog
+    # points come back in screen space already, because that dialog is not the
+    # document window.
+    screen_coords = False
     if kind in ("click", "sclick", "rclick", "dd", "move"):
         if isinstance(v[0], str):
-            v = list(plate_point(v[0]) if not v[0].startswith(("panel:", "align:"))
-                     else panel_point(v[0]))
+            if v[0].startswith("dxf:"):
+                v = list(dxf_dialog_point(v[0]))
+                screen_coords = True
+            else:
+                v = list(palette_point(v[0]) if v[0].startswith("palette:")
+                         else panel_point(v[0]) if v[0].startswith(("panel:", "align:"))
+                         else plate_point(v[0]))
     elif kind == "drag":
         if isinstance(v[0], str):
             a, b = plate_point(v[0]), plate_point(v[1])
@@ -491,24 +692,24 @@ def _apply(op, marks, started):
         marks.append({"n": v, "rel": int((time.time() - started) * 1000),
                       "wall": int(time.time() * 1000)})
     elif kind == "click":
-        x, y = to_screen(*v)
+        x, y = v if screen_coords else to_screen(*v)
         click(x, y)
     elif kind == "rclick":
-        x, y = to_screen(*v)
+        x, y = v if screen_coords else to_screen(*v)
         right_click(x, y)
     elif kind == "sclick":
-        x, y = to_screen(*v)
+        x, y = v if screen_coords else to_screen(*v)
         shift_click(x, y)
     elif kind == "dd":
         # double-click: the only way Inkscape's spin/combo widgets take focus
-        x, y = to_screen(*v)
+        x, y = v if screen_coords else to_screen(*v)
         _cliclick(f"dd:{int(round(x))},{int(round(y))}")
     elif kind == "drag":
         x1, y1 = to_screen(v[0], v[1])
         x2, y2 = to_screen(v[2], v[3])
         drag(x1, y1, x2, y2)
     elif kind == "move":
-        x, y = to_screen(*v)
+        x, y = v if screen_coords else to_screen(*v)
         move(x, y)
     elif kind == "type":
         type_text(v)
@@ -516,6 +717,8 @@ def _apply(op, marks, started):
         _type_codes(v)
     elif kind == "dismiss":
         dismiss_notices()
+    elif kind == "rgbmode":
+        select_rgb_mode()
     elif kind == "saveas":
         save_as(v)
     elif kind == "setfield":
@@ -728,6 +931,7 @@ def prepare_dxf(cfg, work, setup="setup-open-dxf"):
     if setup == "setup-empty":
         quit_app()
         launch()
+        dismiss_startup()                   # the startup dialog covers the menu bar
         time.sleep(1.0)
         set_window(WIN["x"], WIN["y"], WIN["w"], WIN["h"])
         time.sleep(1.5)
@@ -744,6 +948,7 @@ def prepare_dxf(cfg, work, setup="setup-open-dxf"):
                              f"(record the earlier take first)")
         quit_app()
         launch(path)
+        dismiss_startup()
         time.sleep(2.0)
         dismiss_notices()
         set_window(WIN["x"], WIN["y"], WIN["w"], WIN["h"])
@@ -836,6 +1041,32 @@ def menu_available():
         return False
 
 
+def dismiss_startup():
+    """Close Inkscape's startup dialog, which is modal and covers the menu bar.
+
+    It reappears on every launch unless its "Show this every time" box is
+    unticked, so that is done first; then New Document opens the blank window
+    the setups expect. Both are clicked by fraction of the dialog window, which
+    is ~752x675 — any window that large is the document instead, and then there
+    is nothing to do.
+    """
+    if menu_available():
+        return
+    w = window_xywh(1)
+    if not w or w["w"] > 900 or w["h"] > 800:
+        return
+    # Untick "Show this every time", then press New Document.
+    for fx, fy, note in ((0.082, 0.926, "show-every-time"), (0.842, 0.926, "new-document")):
+        click(w["x"] + int(w["w"] * fx), w["y"] + int(w["h"] * fy))
+        time.sleep(1.2)
+        print(f"  startup dialog: {note}")
+    for _ in range(10):
+        if menu_available():
+            time.sleep(1.0)
+            return
+        time.sleep(0.5)
+
+
 def dialog_windows():
     """Inkscape windows that are not the largest one (notices, dialogs)."""
     doc = document_window()
@@ -853,35 +1084,77 @@ def dialog_windows():
     return out
 
 
-def dismiss_notices(limit=6):
-    """Click OK on whatever modal is blocking the document's menus.
+def _notice_window():
+    """Geometry of the importer's notice window, if one is up.
 
-    A GTK notice fills the window it is given, and its single unnamed OK button
-    sits at the bottom centre. The modal is always the frontmost window — the
-    document window cannot be in front of it — and while it is frontmost the
-    menu bar has no View item, which is the test for "still modal".
+    It is a small **untitled** window of its own — the document window is
+    "<file> - Inkscape", the DXF Input dialog is named "DXF Input", and tooltips
+    are under 300 px. `menu_available()` is not a test for it: a notice that
+    does not fill the document window leaves the menu bar reachable, so the
+    menu bar shows View even while the notice is up.
+    """
+    for i in range(1, window_count() + 1):
+        g = window_xywh(i)
+        if not g or g["w"] < 300 or g["h"] < 300:
+            continue
+        if g["w"] > 900 or g["h"] > 800:
+            continue                       # the document window
+        try:
+            name = osa(f'tell application "System Events" to tell process "{APP}" '
+                       f'to get name of window {i}')
+        except RuntimeError:
+            name = ""
+        if not name.strip():
+            return g
+    return None
+
+
+def dismiss_notices(limit=6):
+    """Click OK on the importer's notice window, if one is up.
+
+    The notice comes in two shapes: when Inkscape is launched onto a file it
+    fills the document window and blocks the menu bar (tested with
+    `menu_available()`), while a File > Open import gets a small untitled dialog
+    of its own that leaves the menu bar reachable (found by `_notice_window()`).
+    In both, the OK button is at the bottom centre, but how far above the bottom
+    varies with the window (h-23 for the full-window form, h-63 for the small
+    one), so try a ladder of offsets; a click into the dialog's empty area does
+    nothing.
     """
     for _ in range(limit):
-        if menu_available():
+        if not menu_available():
+            w = window_xywh(1)
+            if w:
+                click(w["x"] + w["w"] // 2, w["y"] + w["h"] - 23)
+                time.sleep(1.0)
+                continue
+        w = _notice_window()
+        if not w:
             return
-        w = window_xywh(1) or document_window()
-        click(w["x"] + w["w"] // 2, w["y"] + w["h"] - 23)
-        time.sleep(1.0)
+        for dy in (23, 45, 63):
+            click(w["x"] + w["w"] // 2, w["y"] + w["h"] - dy)
+            time.sleep(0.8)
+            if not _notice_window():
+                time.sleep(0.5)
+                return
 
 
 def _set_field(x, y, text):
     """Click a text field and replace its contents.
 
     GTK fields in these dialogs expose no accessible name, so select-all is
-    done with the keyboard rather than by locating the widget. Two hard-won
+    done with the keyboard rather than by locating the widget. Three hard-won
     details: a single click does not put these fields into edit mode — only a
-    double click does — and the unicode typing cliclick/osascript offer
-    (`CGEventKeyboardSetUnicodeString`) is ignored by Inkscape's GTK entries.
-    Virtual key codes are accepted, so type with those.
+    double click does; the unicode typing cliclick/osascript offer
+    (`CGEventKeyboardSetUnicodeString`) is ignored by Inkscape's GTK entries, so
+    type with virtual key codes; and select-all there is **Control**+A, not
+    Command+A — Cmd+A is the canvas's Select All, so with Cmd+A the digits are
+    *inserted* into the old value and Enter reverts it (a "0" field typed as
+    "255" became "2550" → rejected), which looks like the click missed.
     """
     _cliclick(f"dd:{x},{y}")
     time.sleep(0.5)
-    keystroke("a", "cmd")                  # select the existing value
+    keystroke("a", "ctrl")                 # select the existing value
     time.sleep(0.3)
     _type_codes(text)
     time.sleep(0.3)
@@ -895,7 +1168,7 @@ _KEYCODES_TEXT = {
     "r": 15, "s": 1, "t": 17, "u": 32, "v": 9, "w": 13, "x": 7, "y": 16, "z": 6,
     "0": 29, "1": 18, "2": 19, "3": 20, "4": 21, "5": 23, "6": 22, "7": 26,
     "8": 28, "9": 25, ".": 47, "-": 27, ",": 43, "_": 27, "/": 44, ":": 41,
-    " ": 49,
+    "~": 50, " ": 49,
 }
 
 
@@ -911,7 +1184,7 @@ def _type_codes(s, delay=0.05):
         code = _KEYCODES_TEXT.get(ch.lower())
         if code is None:
             raise ValueError(f"no key code for {ch!r}")
-        shift = " using shift down" if (ch.isupper() or ch in "_:") else ""
+        shift = " using shift down" if (ch.isupper() or ch in "_~:") else ""
         lines.append(f'  key code {code}{shift}')
         if delay:
             lines.append(f'  delay {delay}')

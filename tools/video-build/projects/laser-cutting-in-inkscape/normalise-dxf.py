@@ -21,9 +21,18 @@ looking empty, and "zoom to drawing" lands at about 2%.
 
 What this does
 --------------
-Shifts every entity into positive Y (so the stock flip lands it on the page) and
-writes real $INSUNITS, $MEASUREMENT and $EXTMIN/$EXTMAX values. It does not
-change the geometry: the part keeps its size and shape.
+Centres every entity on the importer's A4 page, which needs both shifts: X
+because the exporter puts the origin at the part's left edge, and Y so the stock
+flip lands it on the page rather than above it. It also writes real $INSUNITS,
+$MEASUREMENT and $EXTMIN/$EXTMAX values. It does not change the geometry: the
+part keeps its size and shape.
+
+Centring matters for the video, not just for looks: the class deck's take03
+centres the added engraving text with Align and Distribute set to "Relative to:
+Page" — that dropdown will not open for a synthetic click, so the take relies on
+the part being at the page centre for a page-centre alignment to also be a
+part-centre alignment. An off-centre part would make the alignment move the part
+itself across the page on camera.
 
 Usage
 -----
@@ -43,6 +52,9 @@ import sys
 # exporters emit for the same geometry.
 X_CODES = ("10", "11", "13", "14")
 Y_CODES = ("20", "21", "23", "24")
+
+# The importer's hardcoded page (it assumes A4 for every DXF).
+PAGE_W, PAGE_H = 210.0, 297.0
 
 
 def read_pairs(path):
@@ -120,7 +132,10 @@ def normalise(src, dst):
     if ext is None:
         sys.exit(f"{src}: no geometry found in the ENTITIES section")
     xmin, ymin, xmax, ymax = ext
-    dy = -ymin if ymin < 0 else 0.0     # lift into positive Y
+    # Centre on the importer's page. In importer terms the page is y_svg =
+    # PAGE_H - (y + dy), so centring Y means dy = PAGE_H/2 - (ymin+ymax)/2.
+    dx = PAGE_W / 2 - (xmin + xmax) / 2
+    dy = PAGE_H / 2 - (ymin + ymax) / 2
 
     out, in_ent, i = [], False, 0
     while i < len(lines) - 1:
@@ -130,9 +145,10 @@ def normalise(src, dst):
                       and lines[i+3].strip() == "ENTITIES")
         elif code == "0" and val == "ENDSEC":
             in_ent = False
-        if in_ent and dy and code in Y_CODES:
+        if in_ent and code in X_CODES + Y_CODES:
             try:
-                out += [lines[i], f"{float(val) + dy:.6f}"]
+                shift = dx if code in X_CODES else dy
+                out += [lines[i], f"{float(val) + shift:.6f}"]
                 i += 2
                 continue
             except ValueError:
@@ -144,14 +160,14 @@ def normalise(src, dst):
     for var, values in (
         ("$INSUNITS", [("70", "4")]),                   # 4 = millimetres
         ("$MEASUREMENT", [("70", "1")]),                # 1 = metric
-        ("$EXTMIN", [("10", f"{xmin:.6f}"), ("20", f"{ymin + dy:.6f}"), ("30", "0.000000")]),
-        ("$EXTMAX", [("10", f"{xmax:.6f}"), ("20", f"{ymax + dy:.6f}"), ("30", "0.000000")]),
+        ("$EXTMIN", [("10", f"{xmin + dx:.6f}"), ("20", f"{ymin + dy:.6f}"), ("30", "0.000000")]),
+        ("$EXTMAX", [("10", f"{xmax + dx:.6f}"), ("20", f"{ymax + dy:.6f}"), ("30", "0.000000")]),
         # Paper-space extents. Onshape leaves these at the +/-1e20 sentinel too,
         # and Inkscape still takes the document's overall bounds from them, so
         # the drawing sits inside a 1e20-unit box and "zoom to drawing" lands at
         # about 2% on a page that looks empty. They must be fixed as well.
-        ("$PEXTMIN", [("10", f"{xmin:.6f}"), ("20", f"{ymin + dy:.6f}"), ("30", "0.000000")]),
-        ("$PEXTMAX", [("10", f"{xmax:.6f}"), ("20", f"{ymax + dy:.6f}"), ("30", "0.000000")]),
+        ("$PEXTMIN", [("10", f"{xmin + dx:.6f}"), ("20", f"{ymin + dy:.6f}"), ("30", "0.000000")]),
+        ("$PEXTMAX", [("10", f"{xmax + dx:.6f}"), ("20", f"{ymax + dy:.6f}"), ("30", "0.000000")]),
     ):
         out = upsert_header(out, var, values)
 
@@ -159,14 +175,15 @@ def normalise(src, dst):
 
     # Report what the stock importer will now do, so a wrong-looking result is
     # obvious at conversion time rather than at recording time.
-    page_h = 297.0                                      # importer's A4 default
-    top = page_h - (ymax + dy - (ymin + dy))            # height - (y - ymin) at ymax
-    bottom = page_h                                     # at ymin
-    print(f"  {os.path.basename(src)}: {xmax-xmin:.1f} x {ymax-ymin:.1f} mm")
-    print(f"  shifted Y by {dy:+.1f}mm; lands at y = {top:.0f}..{bottom:.0f}mm "
-          f"on the importer's {page_h:.0f}mm page")
-    if top < 0:
-        print("  WARNING: still above the page — the sketch may be taller than A4",
+    width, height = xmax - xmin, ymax - ymin
+    top = PAGE_H - (ymax + dy)              # y_svg of the part's top edge
+    bottom = PAGE_H - (ymin + dy)           # y_svg of the part's bottom edge
+    print(f"  {os.path.basename(src)}: {width:.1f} x {height:.1f} mm")
+    print(f"  centred: x = {xmin + dx:.0f}..{xmax + dx:.0f}mm, "
+          f"y = {top:.0f}..{bottom:.0f}mm from the page top "
+          f"on the importer's {PAGE_W:.0f}x{PAGE_H:.0f}mm page")
+    if width > PAGE_W or height > PAGE_H:
+        print("  WARNING: larger than the page — the sketch may not fit A4",
               file=sys.stderr)
     print(f"  wrote {dst}")
 

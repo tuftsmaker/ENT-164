@@ -1,5 +1,5 @@
 {
-  "_": "s06-s07: add black etched text with the Text tool, then select everything, and centre the text on the plate with Align and Distribute (Relative to: Selection).",
+  "_": "s06-s07: add black etched text with the Text tool, then select everything, and centre the text on the plate with Align and Distribute (Relative to: Selection). The text's fill is set black with a palette click (a plain click sets the fill), for the same reason the stroke colour in take02 comes from the palette: the Fill and Stroke colour section moves under the take's own steps.",
   "actions": [
     {
       "at": {
@@ -104,71 +104,12 @@
       "at": {
         "scene": "s06_etched",
         "sent": 4,
-        "off": 3.0
-      },
-      "do": [
-        {
-          "dd": [
-            "panel:mode"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s06_etched",
-        "sent": 4,
-        "off": 4.0
+        "off": 3.4
       },
       "do": [
         {
           "click": [
-            "panel:mode-rgb"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s06_etched",
-        "sent": 4,
-        "off": 5.0
-      },
-      "do": [
-        {
-          "setfield": [
-            "panel:rgb-r",
-            "0"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s06_etched",
-        "sent": 4,
-        "off": 6.2
-      },
-      "do": [
-        {
-          "setfield": [
-            "panel:rgb-g",
-            "0"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s06_etched",
-        "sent": 4,
-        "off": 7.4
-      },
-      "do": [
-        {
-          "setfield": [
-            "panel:rgb-b",
-            "0"
+            "palette:black"
           ]
         }
       ]

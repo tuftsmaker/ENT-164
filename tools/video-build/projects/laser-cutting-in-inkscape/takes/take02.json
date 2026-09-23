@@ -1,5 +1,5 @@
 {
-  "_": "s03-s05: select all in all layers, set the stroke to Hairline, set the fill to no paint, group the outlines, then make the stroke pure red in the Fill and Stroke dialog. Panel positions are named points resolved at record time (the dock's width depends on which dialogs are open).",
+  "_": "s03-s05: select all in all layers, set the stroke to Hairline, set the fill to no paint, group the outlines, then make the stroke pure red. The stroke colour comes from a Shift-click on the red palette swatch: typing the R/G/B fields needs those fields' positions, and the Fill and Stroke colour section scrolls between the mode switch and the fields, so they move under the take's own steps. Panel positions are named points resolved at record time (the dock's width depends on which dialogs are open). The width combo picks Hairline with the keyboard (End/Return) because a GTK combo popup opens above or below the widget depending on which item is current, so its items have no fixed y to click.",
   "actions": [
     {
       "at": {
@@ -53,9 +53,21 @@
       },
       "do": [
         {
-          "dd": [
+          "click": [
             "panel:unit"
           ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s03_hairline",
+        "sent": 3,
+        "off": 2.4
+      },
+      "do": [
+        {
+          "press": "end"
         }
       ]
     },
@@ -67,9 +79,7 @@
       },
       "do": [
         {
-          "click": [
-            "panel:hairline"
-          ]
+          "press": "return"
         }
       ]
     },
@@ -176,71 +186,12 @@
       "at": {
         "scene": "s05_red",
         "sent": 3,
-        "off": 2.8
+        "off": 3.4
       },
       "do": [
         {
-          "dd": [
-            "panel:mode"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s05_red",
-        "sent": 3,
-        "off": 4.0
-      },
-      "do": [
-        {
-          "click": [
-            "panel:mode-rgb"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s05_red",
-        "sent": 3,
-        "off": 5.4
-      },
-      "do": [
-        {
-          "setfield": [
-            "panel:rgb-r",
-            "255"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s05_red",
-        "sent": 3,
-        "off": 6.8
-      },
-      "do": [
-        {
-          "setfield": [
-            "panel:rgb-g",
-            "0"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s05_red",
-        "sent": 3,
-        "off": 8.2
-      },
-      "do": [
-        {
-          "setfield": [
-            "panel:rgb-b",
-            "0"
+          "sclick": [
+            "palette:red"
           ]
         }
       ]
