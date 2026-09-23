@@ -1,0 +1,10 @@
+{
+  "task": "cad-02-update-dimension",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "dims"
+    ]
+  },
+  "note": "still 100 wide: the dimension was never changed"
+}

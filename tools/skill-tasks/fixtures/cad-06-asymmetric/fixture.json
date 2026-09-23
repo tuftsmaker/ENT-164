@@ -1,0 +1,14 @@
+{
+  "task": "cad-06-mirror",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "symmetric"
+    ],
+    "not_fails": [
+      "dims",
+      "closed"
+    ]
+  },
+  "note": "notches on one side only: the halves are not mirror images"
+}

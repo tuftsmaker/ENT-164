@@ -1,0 +1,8 @@
+{
+  "task": "cad-05-corner-hole",
+  "expect": {
+    "verdict": "ready",
+    "fails": []
+  },
+  "note": "hole 20 mm from the right and top edges"
+}

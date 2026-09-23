@@ -1,0 +1,8 @@
+{
+  "task": "cad-04-center-a-hole",
+  "expect": {
+    "verdict": "ready",
+    "fails": []
+  },
+  "note": "hole exactly at the centre"
+}

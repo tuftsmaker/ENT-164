@@ -1,0 +1,13 @@
+{
+  "task": "cad-04-center-a-hole",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "closed"
+    ],
+    "reviews": [
+      "no-guides"
+    ]
+  },
+  "note": "guide lines left in the file: flagged for a person, and the dangling ends fail"
+}

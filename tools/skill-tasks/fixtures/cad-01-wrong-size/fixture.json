@@ -1,0 +1,11 @@
+{
+  "task": "cad-01-first-sketch",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "dims",
+      "shape"
+    ]
+  },
+  "note": "the classic: drew 80 mm wide instead of 100"
+}

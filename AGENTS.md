@@ -283,6 +283,50 @@ the manual; this is the contract.
   The same videos are also on the TuftsMaker channel; the site does not depend
   on that.
 
+## Maker skill tasks (`tools/skill-tasks/`, `skills/maker-tasks/`, `tasks/`)
+
+A CAP-style task system for maker skills: a task is a short video, a file the
+student makes, written criteria checked on that file, and a signoff by a person.
+Six tasks make the **Laser-Ready File** qualification. The pilot runs on the six
+CAD/laser tasks and reuses the Onshape tips as the task videos — nothing new to
+film.
+
+- **One source of truth: `skills/maker-tasks/tasks/*.yml`.** The public page, the
+  checker, the Canvas rubric and the TA report all come from it. Change a task
+  there, then rebuild all three:
+  ```bash
+  python3 tools/skill-tasks/lint_tasks.py        # criteria name real checks
+  python3 tools/skill-tasks/selftest.py          # fixtures still agree
+  python3 tools/skill-tasks/catalog/build.py     # tasks/*.html
+  ./tools/skill-publish/rebuild.sh               # students' copy of the skill
+  ```
+  `selftest.py` is the load-bearing one: each fixture in
+  `tools/skill-tasks/fixtures/` declares in its own `fixture.json` what the
+  report should say. Change a tolerance and a fixture disagrees, on purpose.
+- **The checker ships inside the skill** (`skills/maker-tasks/check/`), because a
+  student's opencode has no checkout of this repo. Keep the two halves in step:
+  the skill runs the checks, `tools/skill-tasks/` drives Canvas and builds pages.
+  Never let a repo-only import creep into `skills/maker-tasks/check/`.
+- **Signoff is human, and the code enforces it.** A report's verdict is `ready`
+  or `fix`, never `qualified`; `review` is a third state for criteria a person
+  must judge; `canvas/apply.py` posts nothing without `--reviewed`; the AI tier
+  (`canvas/ai_review.py`) writes advisory notes with evidence and cannot change
+  a verdict. The qualification means *the file is ready* — running the laser
+  stays with Nolop's own checkout, and that separation is deliberate.
+- **What the checks can see.** Onshape's DXF export has **no unit header and no
+  colours** — it is geometry on one layer, and construction lines are not
+  exported at all. So sizes are checked by measurement against the task's stated
+  dimensions (an inch export reads ~25× too small), and centring is checked by
+  outcome rather than by looking for construction geometry. Colour and hairline
+  width belong to the laser-cutting guide, not here.
+- **Canvas** (course 76330): a 0-weight group "Skill tasks (not graded)", one
+  assignment per task with a rubric whose rows are the criteria, and a module
+  "Skill tasks · Laser-ready file" as the qualification view. All of it is
+  **feedback-only** — 0 points, by decision, this semester. `sync.py` creates
+  and leaves assignments **unpublished** unless given `--publish`.
+- Student submissions live in Canvas and in the TA's `~/ent164/grading/`. They
+  never enter this repo, same rule as every other student artifact.
+
 ## Class web pages
 
 - `assets/site.css` is the shared light theme for the hub, syllabus, about and

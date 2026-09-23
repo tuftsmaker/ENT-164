@@ -1,0 +1,13 @@
+{
+  "task": "cad-01-first-sketch",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "closed"
+    ],
+    "not_fails": [
+      "shape"
+    ]
+  },
+  "note": "one side stops 6 mm short of the corner"
+}

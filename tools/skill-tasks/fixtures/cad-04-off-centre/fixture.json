@@ -1,0 +1,10 @@
+{
+  "task": "cad-04-center-a-hole",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "hole-centred"
+    ]
+  },
+  "note": "0.9 mm off centre: eyeballed rather than dimensioned"
+}

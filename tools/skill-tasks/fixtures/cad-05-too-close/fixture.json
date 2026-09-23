@@ -1,0 +1,11 @@
+{
+  "task": "cad-05-corner-hole",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "hole-corner",
+      "hole-inside"
+    ]
+  },
+  "note": "hole 4 mm from the corner: too thin a wall"
+}

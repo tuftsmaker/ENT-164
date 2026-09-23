@@ -1,0 +1,11 @@
+{
+  "task": "cad-01-first-sketch",
+  "expect": {
+    "verdict": "ready",
+    "fails": [],
+    "reviews": [
+      "link"
+    ]
+  },
+  "note": "100x60 rectangle, four sides, closed"
+}

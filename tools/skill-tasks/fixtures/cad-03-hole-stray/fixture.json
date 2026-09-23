@@ -1,0 +1,11 @@
+{
+  "task": "cad-03-cut-a-hole",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "hole-count",
+      "profiles"
+    ]
+  },
+  "note": "two holes: one is a leftover from practising"
+}

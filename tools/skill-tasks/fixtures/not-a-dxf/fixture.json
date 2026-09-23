@@ -1,0 +1,10 @@
+{
+  "task": "cad-01-first-sketch",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "parses"
+    ]
+  },
+  "note": "a text file renamed to .dxf"
+}

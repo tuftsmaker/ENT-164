@@ -1,0 +1,14 @@
+{
+  "task": "cad-03-cut-a-hole",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "hole-place",
+      "hole-inside"
+    ],
+    "not_fails": [
+      "closed"
+    ]
+  },
+  "note": "hole crosses the right edge: a notch, and nothing left of the wall"
+}

@@ -1,0 +1,10 @@
+{
+  "task": "cad-01-first-sketch",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "dims"
+    ]
+  },
+  "note": "exported in inches: 100x60 mm reads as 3.94x2.36"
+}

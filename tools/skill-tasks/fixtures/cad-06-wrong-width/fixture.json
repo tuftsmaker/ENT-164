@@ -1,0 +1,10 @@
+{
+  "task": "cad-06-mirror",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "dims"
+    ]
+  },
+  "note": "still the 100 mm rectangle"
+}

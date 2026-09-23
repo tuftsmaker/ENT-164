@@ -1,0 +1,8 @@
+{
+  "task": "cad-06-mirror",
+  "expect": {
+    "verdict": "ready",
+    "fails": []
+  },
+  "note": "70x60, symmetric about the vertical centre line"
+}

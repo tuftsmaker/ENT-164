@@ -1,0 +1,37 @@
+name: Skill tasks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - "tasks/**"
+      - "tools/skill-tasks/**"
+      - ".github/workflows/skill-tasks.yml"
+  pull_request:
+    paths:
+      - "skills/**"
+      - "tasks/**"
+      - "tools/skill-tasks/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Task files name real checks, and read the same shape
+        run: python3 tools/skill-tasks/lint_tasks.py
+
+      - name: The checker agrees with every fixture
+        run: python3 tools/skill-tasks/selftest.py
+
+      - name: The catalog pages match the task files
+        run: python3 tools/skill-tasks/catalog/build.py --check
