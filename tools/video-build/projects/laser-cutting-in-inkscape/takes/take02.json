@@ -34,20 +34,6 @@
     {
       "at": {
         "scene": "s03_hairline",
-        "sent": 2,
-        "off": 1.2
-      },
-      "do": [
-        {
-          "click": [
-            "panel:docktab"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s03_hairline",
         "sent": 3,
         "off": 0.4
       },

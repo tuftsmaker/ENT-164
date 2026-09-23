@@ -65,8 +65,9 @@
       },
       "do": [
         {
-          "click": [
-            "panel:docktab"
+          "menu": [
+            "Object",
+            "Fill and Stroke..."
           ]
         }
       ]
@@ -226,34 +227,6 @@
           "menu": [
             "Object",
             "Align and Distribute..."
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s07_center",
-        "sent": 3,
-        "off": 0.6
-      },
-      "do": [
-        {
-          "click": [
-            "align:relative"
-          ]
-        }
-      ]
-    },
-    {
-      "at": {
-        "scene": "s07_center",
-        "sent": 3,
-        "off": 1.8
-      },
-      "do": [
-        {
-          "click": [
-            "align:selection"
           ]
         }
       ]

@@ -368,10 +368,8 @@ _PANEL_OFFSETS = {
     "panel:rgb-g": ("right", 341),
     "panel:rgb-b": ("right", 379),
     "panel:opacity": ("right", 416),
-    "align:relative": (141, 296),
-    "align:selection": (148, 406),
-    "align:centre-v": (74, 330),
-    "align:centre-h": (74, 361),
+    "align:centre-v": (147, 330),
+    "align:centre-h": (147, 364),
 }
 
 
