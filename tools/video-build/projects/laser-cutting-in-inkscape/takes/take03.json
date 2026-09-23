@@ -1,0 +1,304 @@
+{
+  "_": "s06-s07: add black etched text with the Text tool, then select everything, and centre the text on the plate with Align and Distribute (Relative to: Selection).",
+  "actions": [
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 2,
+        "off": 0.5
+      },
+      "do": [
+        {
+          "click": [
+            12,
+            485
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 2,
+        "off": 2.4
+      },
+      "do": [
+        {
+          "click": [
+            "plate-centre"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 3,
+        "off": 0.4
+      },
+      "do": [
+        {
+          "typecodes": "ENT-164"
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 0.4
+      },
+      "do": [
+        {
+          "click": [
+            12,
+            119
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 0.2
+      },
+      "do": [
+        {
+          "click": [
+            "panel:docktab"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 1.4
+      },
+      "do": [
+        {
+          "click": [
+            "panel:fill"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 2.2
+      },
+      "do": [
+        {
+          "click": [
+            "panel:flat"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 3.0
+      },
+      "do": [
+        {
+          "dd": [
+            "panel:mode"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 4.0
+      },
+      "do": [
+        {
+          "click": [
+            "panel:mode-rgb"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 5.0
+      },
+      "do": [
+        {
+          "setfield": [
+            "panel:rgb-r",
+            "0"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 6.2
+      },
+      "do": [
+        {
+          "setfield": [
+            "panel:rgb-g",
+            "0"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 7.4
+      },
+      "do": [
+        {
+          "setfield": [
+            "panel:rgb-b",
+            "0"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s06_etched",
+        "sent": 4,
+        "off": 8.4
+      },
+      "do": [
+        {
+          "click": [
+            "panel:strokepaint"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s07_center",
+        "sent": 0,
+        "off": 0.6
+      },
+      "do": [
+        {
+          "click": [
+            "panel:x"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s07_center",
+        "sent": 1,
+        "off": 0.6
+      },
+      "do": [
+        {
+          "menu": [
+            "Edit",
+            "Select All in All Layers"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s07_center",
+        "sent": 2,
+        "off": 0.6
+      },
+      "do": [
+        {
+          "menu": [
+            "Object",
+            "Align and Distribute..."
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s07_center",
+        "sent": 3,
+        "off": 0.6
+      },
+      "do": [
+        {
+          "click": [
+            "align:relative"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s07_center",
+        "sent": 3,
+        "off": 1.8
+      },
+      "do": [
+        {
+          "click": [
+            "align:selection"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s07_center",
+        "sent": 3,
+        "off": 3.0
+      },
+      "do": [
+        {
+          "click": [
+            "align:centre-h"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s07_center",
+        "sent": 3,
+        "off": 4.6
+      },
+      "do": [
+        {
+          "click": [
+            "align:centre-v"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s07_center",
+        "sent": 4,
+        "off": 0.6
+      },
+      "do": [
+        {
+          "move": [
+            "page-below"
+          ]
+        }
+      ]
+    }
+  ]
+}

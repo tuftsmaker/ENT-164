@@ -1,0 +1,291 @@
+{
+  "_": "s03-s05: select all in all layers, set the stroke to Hairline, set the fill to no paint, group the outlines, then make the stroke pure red in the Fill and Stroke dialog. Panel positions are named points resolved at record time (the dock's width depends on which dialogs are open).",
+  "actions": [
+    {
+      "at": {
+        "scene": "s03_hairline",
+        "sent": 1,
+        "off": 0.4
+      },
+      "do": [
+        {
+          "menu": [
+            "Edit",
+            "Select All in All Layers"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s03_hairline",
+        "sent": 2,
+        "off": 0.3
+      },
+      "do": [
+        {
+          "menu": [
+            "Object",
+            "Fill and Stroke..."
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s03_hairline",
+        "sent": 2,
+        "off": 1.2
+      },
+      "do": [
+        {
+          "click": [
+            "panel:docktab"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s03_hairline",
+        "sent": 3,
+        "off": 0.4
+      },
+      "do": [
+        {
+          "click": [
+            "panel:strokestyle"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s03_hairline",
+        "sent": 3,
+        "off": 1.6
+      },
+      "do": [
+        {
+          "dd": [
+            "panel:unit"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s03_hairline",
+        "sent": 3,
+        "off": 2.8
+      },
+      "do": [
+        {
+          "click": [
+            "panel:hairline"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s04_nopaint",
+        "sent": 0,
+        "off": 0.3
+      },
+      "do": [
+        {
+          "click": [
+            "panel:fill"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s04_nopaint",
+        "sent": 1,
+        "off": 1.2
+      },
+      "do": [
+        {
+          "click": [
+            "panel:x"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s04_nopaint",
+        "sent": 3,
+        "off": 0.6
+      },
+      "do": [
+        {
+          "key": [
+            "g",
+            "cmd"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s04_nopaint",
+        "sent": 3,
+        "off": 2.2
+      },
+      "do": [
+        {
+          "click": [
+            "plate-centre"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s04_nopaint",
+        "sent": 3,
+        "off": 3.6
+      },
+      "do": [
+        {
+          "click": [
+            "plate-top"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 3,
+        "off": 0.5
+      },
+      "do": [
+        {
+          "click": [
+            "panel:strokepaint"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 3,
+        "off": 1.6
+      },
+      "do": [
+        {
+          "click": [
+            "panel:flat"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 3,
+        "off": 2.8
+      },
+      "do": [
+        {
+          "dd": [
+            "panel:mode"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 3,
+        "off": 4.0
+      },
+      "do": [
+        {
+          "click": [
+            "panel:mode-rgb"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 3,
+        "off": 5.4
+      },
+      "do": [
+        {
+          "setfield": [
+            "panel:rgb-r",
+            "255"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 3,
+        "off": 6.8
+      },
+      "do": [
+        {
+          "setfield": [
+            "panel:rgb-g",
+            "0"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 3,
+        "off": 8.2
+      },
+      "do": [
+        {
+          "setfield": [
+            "panel:rgb-b",
+            "0"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 4,
+        "off": 1.2
+      },
+      "do": [
+        {
+          "move": [
+            "panel:opacity"
+          ]
+        }
+      ]
+    },
+    {
+      "at": {
+        "scene": "s05_red",
+        "sent": 5,
+        "off": 0.6
+      },
+      "do": [
+        {
+          "move": [
+            "page-below"
+          ]
+        }
+      ]
+    }
+  ]
+}

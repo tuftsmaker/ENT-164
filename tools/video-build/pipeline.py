@@ -91,7 +91,13 @@ def step_tts(proj, cfg):
     total = 0.0
     for sid in sorted(script):
         path = os.path.join(out, sid + '.wav')
-        if os.path.exists(path) and os.path.getsize(path) > 2000:
+        sidecar = path + '.txt'
+        # Cache by *content*, not by existence: an edited script must re-synthesise,
+        # or the take timing is computed against audio that says something else.
+        fresh = (os.path.exists(path) and os.path.getsize(path) > 2000
+                 and os.path.exists(sidecar)
+                 and open(sidecar).read() == script[sid])
+        if fresh:
             print(f'  {sid:16s} cached')
         else:
             url = ('https://api.deepgram.com/v1/speak'
@@ -106,6 +112,7 @@ def step_tts(proj, cfg):
                     if len(data) < 2000:
                         raise RuntimeError('short response')
                     open(path, 'wb').write(data)
+                    open(sidecar, 'w').write(script[sid])
                     break
                 except Exception as e:
                     if attempt == 2:
@@ -161,9 +168,15 @@ def step_align(proj, cfg):
         run(['ffmpeg', '-v', 'error', '-y', '-i', src, '-ar', '16000', '-ac', '1',
              '-c:a', 'pcm_s16le', wav])
         pref = os.path.join(out, sid)
-        if not os.path.exists(pref + '.json'):
+        # Cache by the audio's identity, not by existence: re-synthesised audio
+        # must be re-transcribed, or the timings describe the old narration.
+        stamp = f'{os.path.getsize(wav)}:{os.path.getmtime(wav):.0f}'
+        stampf = pref + '.src'
+        if not (os.path.exists(pref + '.json') and os.path.exists(stampf)
+                and open(stampf).read() == stamp):
             run(['whisper-cli', '-m', WHISPER_MODEL, '-f', wav, '-ojf', '-ml', '1',
                  '-sow', '-of', pref, '-np'])
+            open(stampf, 'w').write(stamp)
         j = json.load(open(pref + '.json'))
         ws = _words(j)
         sents = _sentences(script[sid])

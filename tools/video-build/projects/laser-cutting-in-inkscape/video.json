@@ -16,11 +16,42 @@
   "lead": 0.0,
   "tail": 0.5,
   "driver": "ink-drive.py",
+  "normaliseDxf": true,
   "takes": [
-    { "name": "take01", "setup": "setup-open-dxf",   "scenes": ["s01_intro", "s02_import"] },
-    { "name": "take02", "setup": "setup-open-dxf",   "scenes": ["s03_hairline", "s04_nopaint"] },
-    { "name": "take03", "setup": "setup-open-dxf",   "scenes": ["s05_red"] },
-    { "name": "take04", "setup": "setup-open-dxf",   "scenes": ["s06_etched", "s07_center"] },
-    { "name": "take05", "setup": "setup-open-dxf",   "scenes": ["s08_save", "s09_recap"] }
+    {
+      "name": "take01",
+      "setup": "setup-empty",
+      "scenes": [
+        "s01_intro",
+        "s02_import"
+      ]
+    },
+    {
+      "name": "take02",
+      "setup": "setup-open-dxf",
+      "scenes": [
+        "s03_hairline",
+        "s04_nopaint",
+        "s05_red"
+      ],
+      "endSave": "take02-handoff.svg"
+    },
+    {
+      "name": "take03",
+      "setup": "setup-file:take02-handoff.svg",
+      "scenes": [
+        "s06_etched",
+        "s07_center"
+      ],
+      "endSave": "take03-handoff.svg"
+    },
+    {
+      "name": "take04",
+      "setup": "setup-file:take03-handoff.svg",
+      "scenes": [
+        "s08_save",
+        "s09_recap"
+      ]
+    }
   ]
 }
