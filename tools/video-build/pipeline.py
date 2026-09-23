@@ -233,14 +233,21 @@ def _card(path, heading, subtitle, footer, eyebrow=None, heading_size=96):
         w = d.textlength(text, font=font)
         d.text((cx - w / 2, y), text, font=font, fill=fill)
 
-    def fit(text, font_path, size, max_w, floor=54):
+    def fit(text, font_path, size, max_w, floor=None):
         """Largest size at or below `size` that keeps text on one line.
 
         The headings are not all the same length - "Mirroring Entities to Avoid
         Repetitive Drawing" is nearly twice "Updating Dimensions" - so a fixed
         size runs the long ones off the sides of the card, in the title slide
         and in the thumbnail.
+
+        The floor has to scale with the requested size. It used to default to
+        54, which is *above* what the subtitles and footer ask for (44-46 and
+        34): their search loop was skipped and they were rendered at 54 - larger
+        than asked - so a long closing subtitle ran edge to edge and clipped.
         """
+        if floor is None:
+            floor = max(18, size // 2)
         s = size
         while s > floor:
             f = ImageFont.truetype(font_path, s)
