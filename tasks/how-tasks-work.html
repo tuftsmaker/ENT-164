@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How tasks work &mdash; ENT-164</title>
+<meta name="description" content="How a maker skills task works: the video, the file you make, the checker that runs on your own machine, and the signoff that completes it.">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .steprow { display: grid; grid-template-columns: 46px minmax(0,1fr); gap: 18px; align-items: start;
+             border: 1px solid var(--line); border-radius: 14px; background: var(--paper); padding: 18px 20px; }
+  .steprow + .steprow { margin-top: 12px; }
+  .steprow .n { font-size: 22px; font-weight: 800; color: var(--blue-deep); text-align: center; }
+  .steprow h3 { margin: 0 0 6px; font-size: 1.02rem; }
+  .steprow p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .steprow code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                  font-size: 13px; background: var(--paper-2); border: 1px solid var(--line);
+                  border-radius: 6px; padding: 1px 6px; }
+  .mean-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,280px),1fr)); gap: 16px; }
+  .mean-grid .card h3 { margin-top: 0; }
+</style>
+</head>
+<body class="page-class">
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>&middot; Intro to Making</small></span>
+    </a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label">
+      <span class="nav-toggle-text">Menu</span>
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </label>
+    <div class="nav-links">
+        <a href="../workshops/">Workshops</a>
+        <a href="../tasks/" aria-current="page">Tasks</a>
+        <a href="../syllabus/">Syllabus</a>
+        <a href="../about/">About</a>
+        <a class="nav-cta" href="./">Back to the tasks &rarr;</a>
+    </div>
+  </div>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker reveal">Maker skills tasks</p>
+    <h1 class="reveal">How a task <span class="accent">works</span></h1>
+    <p class="lead reveal">Every task is the same four steps, whether it is a laser file, a
+    3D print, a circuit or a connected device. The shape does not change; only the thing you
+    make does.</p>
+  </div>
+</header>
+
+<main>
+  <section id="steps">
+    <div class="wrap">
+      <div class="section-head left"><h2>The four steps</h2></div>
+
+      <div class="steprow">
+        <div class="n">1</div>
+        <div>
+          <h3>Watch the task video</h3>
+          <p>Each task opens with a short video recorded in the tool the class uses — Onshape
+          at millimetres and the Top plane, the breadboard on its extension board, the class's
+          slicer settings. It is the same demonstration you get in class, short enough to
+          rewatch while you work.</p>
+        </div>
+      </div>
+
+      <div class="steprow">
+        <div class="n">2</div>
+        <div>
+          <h3>Make it yourself</h3>
+          <p>Do it in your own document, on your own bench. Nothing is timed and you can redo
+          it as often as you need — the task is signed when the work meets the criteria, not
+          when you first attempt it.</p>
+        </div>
+      </div>
+
+      <div class="steprow">
+        <div class="n">3</div>
+        <div>
+          <h3>Check it before you hand it in</h3>
+          <p>Ask opencode to check your file. It runs the same checks a TA will, on your
+          machine, and tells you what to fix in the tool you are working in. A task's page
+          lists every criterion, so there is nothing hidden.</p>
+        </div>
+      </div>
+
+      <div class="steprow">
+        <div class="n">4</div>
+        <div>
+          <h3>Hand it in, and a person signs it off</h3>
+          <p>Upload the zip in Canvas. A TA reviews the report, checks anything that needs
+          eyes — your link, a photo, the part in your hand — and signs the task. Then it counts
+          toward the track.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="signoff" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head left"><h2>What a signoff means — and does not</h2></div>
+      <div class="mean-grid">
+        <div class="card accent">
+          <h3>It does mean</h3>
+          <ul>
+            <li>Your work meets every written criterion for the task.</li>
+            <li>A person looked at it, not only a program.</li>
+            <li>It counts toward that track.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>It does not mean</h3>
+          <ul>
+            <li>That you may run the machine. The laser, the printers and the soldering iron
+                each need Nolop's own in-person training and checkout.</li>
+            <li>That the file is perfect — it means it is right for this task.</li>
+            <li>That you cannot resubmit. Fix it and hand it in again.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warm" style="margin-top:24px;">
+        <b>Why the machine is separate.</b> A file can be checked by software; whether you can
+        safely operate a laser is a judgement about you, made in person. Keeping the two apart
+        is deliberate, and it is the same split an emergency-services task book uses.
+      </div>
+    </div>
+  </section>
+
+  <section id="checker" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head left"><h2>What the checker can see</h2></div>
+      <p class="lede">Worth knowing, so a green report means what you think it does.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>It reads the file</h3>
+          <p>Geometry, units, sizes, thicknesses, closure, watertightness, pin choices,
+          whether code compiles. Anything a program can decide, it decides.</p>
+        </div>
+        <div class="card">
+          <h3>It cannot see you</h3>
+          <p>It cannot prove the work is yours, or that a physical part exists. That is what
+          your Onshape link, a photo, and the supervised step are for.</p>
+        </div>
+        <div class="card">
+          <h3>It never signs off</h3>
+          <p>A pass means the file meets the criteria. The signoff is always a person's
+          decision — there is no automatic grading in this system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tracks" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head left"><h2>Tracks</h2></div>
+      <p class="lede">Tasks belong to a track, one per skill the course teaches. Finish every
+      task in a track and the track is yours. <b>Laser-Ready File</b> is open now; Print-Ready
+      Model, Working Circuit and Connected Device are written down and in development.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="index.html#tracks">See the tracks &rarr;</a>
+        <a class="btn btn-ghost" href="index.html#tasks">The task list</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span>ENT-164 &middot; Intro to Making &mdash; class materials</span>
+    </div>
+    <div class="foot-links">
+      <a href="../">All materials</a>
+      <a href="../syllabus/">Course syllabus</a>
+      <a href="index.html">Maker skills tasks</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

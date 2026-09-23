@@ -88,12 +88,23 @@ HEAD = """\
   .tm-empty {{ color: var(--muted); text-align: center; padding: 30px; }}
   /* Tracks: one card per skill. A planned track is dimmed and says so, so the
      page can document what is coming without implying it is available. */
-  .track-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }}
+  /* Cap at three columns: five tracks then read as 3 + 2, rather than a full
+     row of four with one orphaned underneath. */
+  .track-grid {{ display: grid; gap: 16px;
+                 grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }}
+  @media (min-width: 900px) {{ .track-grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }} }}
   .track-card {{ position: relative; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); padding: 20px 22px; }}
   .track-card h3 {{ margin: 10px 0 8px; font-size: 1.05rem; }}
   .track-card p {{ margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }}
   .track-card .track-meta {{ font-size: 13px; color: var(--muted); margin-bottom: 14px; }}
   .track-card .track-badge {{ display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; }}
+  /* The track icon: the SVG has no intrinsic size, so bound it here. */
+  .track-icon {{ display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; margin-bottom: 2px;
+                 background: linear-gradient(145deg, #4c9ae6, #2f7cc9); color: #fff;
+                 box-shadow: 0 4px 12px rgba(62, 142, 222, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.35); }}
+  .track-icon svg {{ width: 24px; height: 24px; display: block; }}
+  .track-card.planned .track-icon {{ background: var(--paper-2); color: var(--muted); border: 1px dashed var(--line-strong); box-shadow: none; }}
+  .track-card.active .track-icon {{ margin-bottom: 10px; }}
   .track-card.active .track-badge {{ color: var(--blue-deep); background: var(--blue-tint); }}
   .track-card.active {{ border-color: #cfe1f7; }}
   .track-card.planned {{ background: var(--paper-2); border-style: dashed; }}
@@ -181,7 +192,7 @@ def table_lookup(check: str, args: dict) -> str:
 
 
 SUBNav = {
-    "catalog": [("map", "The map"), ("tasks", "The tasks"), ("how", "How it works")],
+    "catalog": [("tracks", "Tracks"), ("map", "The map"), ("tasks", "Task list"), ("how", "How it works")],
     "unit": [("what", "What it takes"), ("tasks", "The tasks"), ("then", "Supervised cut")],
     "task": [("do", "What to do"), ("hand", "What to hand in"), ("checked", "How it is checked")],
 }
@@ -272,6 +283,13 @@ def task_page(task: dict, all_tasks: dict) -> str:
       <p style="color:var(--muted);font-size:14px;margin-top:12px;">
         Put both files in one folder, run the checker, and upload the zip in Canvas.
         Ask opencode: <span class="mono">check my cad-01 submission</span>.
+      </p>
+      <p style="color:var(--muted);font-size:14px;">
+        When the file is ready, the same checker writes the file the laser reads —
+        pure red hairlines, in millimetres, with nothing to install:
+        <span class="mono">check my cad-01 submission and write the laser SVG</span>.
+        <a href="../laser-cutting/">The laser-cutting guide</a> covers what it does and
+        how to edit it in Inkscape afterwards.
       </p>
 
       <div class="section-head left" id="checked"><h2>How it is checked</h2></div>
@@ -400,12 +418,14 @@ def catalog_page(tasks: list, unit: dict | None, units: list | None = None) -> s
   <div class="wrap">
     <p class="kicker reveal">Maker skills tasks</p>
     <h1 class="reveal">Watch it, make it,<br><span class="accent">get it signed off</span></h1>
-    <p class="lead reveal">Each task is a short video, one file you make yourself, and written
-    criteria your file is checked against. Pass the checks, hand it in, and a TA signs the task
-    off. {n} tasks make the Laser-Ready File qualification.</p>
+    <p class="lead reveal">A task is a short video, something you make yourself, and written
+    criteria your work is checked against. Pass the checks, hand it in, and a TA signs the task
+    off. Tasks are grouped into <b>tracks</b> — one per skill the course teaches — and a track
+    is yours when every task in it is signed. <b>Laser-Ready File is open now;</b> the others are
+    on their way.</p>
     <div class="pills reveal">
-      <span class="pill">{n} tasks</span>
-      <span class="pill">Onshape &rarr; DXF</span>
+      <span class="pill">{len(units or [])} tracks</span>
+      <span class="pill">{n} tasks open now</span>
       <span class="pill">Checked on your own machine</span>
       <span class="pill">Signed by a person</span>
     </div>
@@ -434,6 +454,20 @@ def catalog_page(tasks: list, unit: dict | None, units: list | None = None) -> s
     </div>
   </section>
 
+  <section id="tracks" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head left"><h2>The tracks</h2></div>
+      <p class="lede">Every skill the course teaches has a track: a set of tasks, each one a
+      video, a thing you make, and a signoff. Finish the tasks and the track is yours.
+      <b>Laser-Ready File is open now.</b> The other {len([u for u in (units or []) if u.get("status") == "planned"])} are
+      written down so you can see where the semester is going — their videos and checks are
+      still being built.</p>
+      <div class="track-grid">
+        {chr(10).join(track_card(u, tasks) for u in (units or []))}
+      </div>
+    </div>
+  </section>
+
   <section id="tasks" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head">
@@ -447,37 +481,17 @@ def catalog_page(tasks: list, unit: dict | None, units: list | None = None) -> s
     </div>
   </section>
 
-  <section id="tracks" style="padding-top:0;">
-    <div class="wrap">
-      <div class="section-head left"><h2>The tracks</h2></div>
-      <p class="lede">One track per skill the course teaches. A track is a set of
-      tasks; sign each one and the track is yours. You are working on the first
-      one now — the others are written down so you can see where the course is
-      going.</p>
-      <div class="track-grid">
-        {chr(10).join(track_card(u, tasks) for u in (units or []))}
-      </div>
-    </div>
-  </section>
-
   <section id="how" style="padding-top:0;">
     <div class="wrap">
-      <div class="section-head left"><h2>How it works</h2></div>
-      <div class="cards">
-        <div class="card"><span class="num">01</span><h3>Watch</h3>
-          <p>Each task has a short video made in Onshape at the class's settings: millimetres, Top plane.</p></div>
-        <div class="card"><span class="num">02</span><h3>Make</h3>
-          <p>Do it yourself in your own document. Nothing is timed and you can redo it as often as you need.</p></div>
-        <div class="card"><span class="num">03</span><h3>Check</h3>
-          <p>Ask opencode to check your file before you hand it in — the same criteria the TA uses, run on your laptop.</p></div>
-        <div class="card"><span class="num">04</span><h3>Signoff</h3>
-          <p>Upload the zip in Canvas. A TA confirms it, signs the task, and it counts toward the qualification.</p></div>
-      </div>
-
-      <div class="callout warm" style="margin-top:24px;">
-        <b>What a signoff does and does not mean.</b> A signed task means your <i>file</i> is
-        right. Using the laser itself needs Nolop's own in-person training and checkout — that
-        is separate on purpose, and it stays that way.
+      <div class="callout">
+        <h3 style="margin-top:0;">How a task works</h3>
+        <p>Watch a short video, make the thing yourself, then let opencode check your file
+        against the same criteria a TA uses. Fix anything it flags, upload the zip, and a TA
+        signs the task off.</p>
+        <div class="cta-row" style="margin-top:14px;">
+          <a class="btn btn-primary btn-sm" href="how-tasks-work.html">How tasks work &rarr;</a>
+          <a class="btn btn-ghost btn-sm" href="#map">See the map</a>
+        </div>
       </div>
     </div>
   </section>
@@ -557,18 +571,63 @@ def planned_unit_page(unit: dict) -> str:
 """
 
 
+
+# One icon per track, in the site's line style (24x24, stroke, no fill).
+TRACK_ICONS = {
+    "unit-laser-ready": """
+        <path d="M4 20V6a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/>
+        <path d="M14 4v5h5"/>
+        <circle cx="9" cy="14" r="2.4"/>""",
+    "unit-print-ready": """
+        <path d="M3 8h18v6a2 2 0 0 1-2 2h-2"/>
+        <path d="M5 16H4a2 2 0 0 1-2-2V8"/>
+        <path d="M7 16h10v5H7z"/>
+        <path d="M7 8V3h10v5"/>
+        <path d="M9 22h6"/>""",
+    "unit-working-circuit": """
+        <path d="M3 12h3l2-5 3 10 2.5-7 2 4h5.5"/>
+        <circle cx="19" cy="14" r="2"/><circle cx="6" cy="12" r="1.4"/>""",
+    "unit-connected-device": """
+        <path d="M12 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+        <path d="M8.5 15.5a5 5 0 0 1 7 0"/>
+        <path d="M5.5 12.2a9.5 9.5 0 0 1 13 0"/>
+        <path d="M2.8 9.2a14 14 0 0 1 18.4 0"/>""",
+    # Chip with a spark: a device with a model inside it. Deliberately not a
+    # wifi glyph, so it reads differently to Connected Device at a glance.
+    "unit-intelligent-device": """
+        <rect x="7" y="7" width="10" height="10" rx="2"/>
+        <path d="M12 9.5 10.8 12h2L11.6 14.5"/>
+        <path d="M10 7V4M14 7V4M10 20v-3M14 20v-3M7 10H4M7 14H4M20 10h-3M20 14h-3"/>""",
+}
+
+
+def track_icon(unit_id: str) -> str:
+    body = TRACK_ICONS.get(unit_id)
+    if not body:
+        return ""
+    return (
+        '<span class="track-icon" aria-hidden="true">'
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" '
+        'stroke="currentColor" stroke-width="1.7" stroke-linecap="round" '
+        f'stroke-linejoin="round">{body}</svg></span>'
+    )
+
+
 def track_card(unit: dict, tasks: list) -> str:
     """One track on the catalog page. Active tracks link through; planned ones
     are dimmed and say so."""
     planned = unit.get("status") == "planned"
-    n = len(unit.get("planned_tasks") or []) if planned else len(
-        [t for t in tasks if t.get("unit") == unit["id"]]
-    )
+    # An active track has real tasks in it; a planned one only has the plan.
+    if planned:
+        n = len(unit.get("planned_tasks") or [])
+    else:
+        n = len([t for t in tasks if t.get("unit") == unit["id"]]) or len(unit.get("tasks") or [])
     label = "In development" if planned else "Open"
     badge = "planned" if planned else "active"
     body = esc(unit.get("summary", "").strip().replace("\n", " "))
     if planned:
         return f"""<article class="track-card {badge}">
+          {track_icon(unit["id"])}
           <span class="track-badge">{label}</span>
           <h3>{esc(unit["title"])}</h3>
           <p>{body}</p>
@@ -576,6 +635,7 @@ def track_card(unit: dict, tasks: list) -> str:
           <a class="btn btn-ghost btn-sm" href="{esc(unit['id'])}.html">See the plan &rarr;</a>
         </article>"""
     return f"""<article class="track-card {badge}">
+          {track_icon(unit["id"])}
           <span class="track-badge">{label}</span>
           <h3>{esc(unit["title"])}</h3>
           <p>{body}</p>
@@ -626,6 +686,15 @@ def build(check_only=False) -> int:
             return 1
         print(f"catalog is up to date ({len(pages)} pages)")
         return 0
+
+    # The "how tasks work" page is built by its own script; run it here so one
+    # command regenerates the whole catalog.
+    import subprocess
+
+    subprocess.run(
+        [sys.executable, str(HERE / "build-how.py"), *(["--check"] if check_only else [])],
+        check=False,
+    )
 
     print(f"\n{len(pages)} pages in {TASKS_DIR.relative_to(REPO)}/")
     return 0

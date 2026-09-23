@@ -35,12 +35,23 @@
   .tm-empty { color: var(--muted); text-align: center; padding: 30px; }
   /* Tracks: one card per skill. A planned track is dimmed and says so, so the
      page can document what is coming without implying it is available. */
-  .track-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+  /* Cap at three columns: five tracks then read as 3 + 2, rather than a full
+     row of four with one orphaned underneath. */
+  .track-grid { display: grid; gap: 16px;
+                 grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+  @media (min-width: 900px) { .track-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .track-card { position: relative; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); padding: 20px 22px; }
   .track-card h3 { margin: 10px 0 8px; font-size: 1.05rem; }
   .track-card p { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }
   .track-card .track-meta { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
   .track-card .track-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; }
+  /* The track icon: the SVG has no intrinsic size, so bound it here. */
+  .track-icon { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; margin-bottom: 2px;
+                 background: linear-gradient(145deg, #4c9ae6, #2f7cc9); color: #fff;
+                 box-shadow: 0 4px 12px rgba(62, 142, 222, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+  .track-icon svg { width: 24px; height: 24px; display: block; }
+  .track-card.planned .track-icon { background: var(--paper-2); color: var(--muted); border: 1px dashed var(--line-strong); box-shadow: none; }
+  .track-card.active .track-icon { margin-bottom: 10px; }
   .track-card.active .track-badge { color: var(--blue-deep); background: var(--blue-tint); }
   .track-card.active { border-color: #cfe1f7; }
   .track-card.planned { background: var(--paper-2); border-style: dashed; }
@@ -67,7 +78,7 @@
       <span class="nav-toggle-bars" aria-hidden="true"></span>
     </label>
     <div class="nav-links">
-        <a href="../syllabus/#schedule">Workshops</a>
+        <a href="../workshops/">Workshops</a>
         <a href="../tasks/" aria-current="page">Tasks</a>
         <a href="../syllabus/">Syllabus</a>
         <a href="../about/">About</a>
@@ -79,12 +90,14 @@
   <div class="wrap">
     <p class="kicker reveal">Maker skills tasks</p>
     <h1 class="reveal">Watch it, make it,<br><span class="accent">get it signed off</span></h1>
-    <p class="lead reveal">Each task is a short video, one file you make yourself, and written
-    criteria your file is checked against. Pass the checks, hand it in, and a TA signs the task
-    off. 8 tasks make the Laser-Ready File qualification.</p>
+    <p class="lead reveal">A task is a short video, something you make yourself, and written
+    criteria your work is checked against. Pass the checks, hand it in, and a TA signs the task
+    off. Tasks are grouped into <b>tracks</b> — one per skill the course teaches — and a track
+    is yours when every task in it is signed. <b>Laser-Ready File is open now;</b> the others are
+    on their way.</p>
     <div class="pills reveal">
-      <span class="pill">8 tasks</span>
-      <span class="pill">Onshape &rarr; DXF</span>
+      <span class="pill">5 tracks</span>
+      <span class="pill">8 tasks open now</span>
       <span class="pill">Checked on your own machine</span>
       <span class="pill">Signed by a person</span>
     </div>
@@ -98,8 +111,9 @@
 <main>
   <nav class="subnav" aria-label="On this page">
   <div class="wrap subnav-inner">
+      <a href="#tracks">Tracks</a>
       <a href="#map">The map</a>
-      <a href="#tasks">The tasks</a>
+      <a href="#tasks">Task list</a>
       <a href="#how">How it works</a>
   </div>
 </nav>
@@ -153,6 +167,76 @@
     </div>
   </section>
 
+  <section id="tracks" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head left"><h2>The tracks</h2></div>
+      <p class="lede">Every skill the course teaches has a track: a set of tasks, each one a
+      video, a thing you make, and a signoff. Finish the tasks and the track is yours.
+      <b>Laser-Ready File is open now.</b> The other 4 are
+      written down so you can see where the semester is going — their videos and checks are
+      still being built.</p>
+      <div class="track-grid">
+        <article class="track-card active">
+          <span class="track-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20V6a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/>
+        <path d="M14 4v5h5"/>
+        <circle cx="9" cy="14" r="2.4"/></svg></span>
+          <span class="track-badge">Open</span>
+          <h3>Laser-Ready File</h3>
+          <p>Eight tasks that take you from a blank Onshape document to a DXF you can hand to the laser cutter at Nolop. Each task is a short video, one file, and a signoff.</p>
+          <p class="track-meta">8 tasks &middot; signed off one at a time</p>
+          <a class="btn btn-primary btn-sm" href="unit-laser-ready.html">Open the track &rarr;</a>
+        </article>
+<article class="track-card planned">
+          <span class="track-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 8h18v6a2 2 0 0 1-2 2h-2"/>
+        <path d="M5 16H4a2 2 0 0 1-2-2V8"/>
+        <path d="M7 16h10v5H7z"/>
+        <path d="M7 8V3h10v5"/>
+        <path d="M9 22h6"/></svg></span>
+          <span class="track-badge">In development</span>
+          <h3>Print-Ready Model</h3>
+          <p>A 3D model that slices cleanly and prints without falling apart. The 3D counterpart to Laser-Ready File: CAD to STL to a sliced job the printer at Nolop accepts.</p>
+          <p class="track-meta">4 tasks planned &middot; not yet available</p>
+          <a class="btn btn-ghost btn-sm" href="unit-print-ready.html">See the plan &rarr;</a>
+        </article>
+<article class="track-card planned">
+          <span class="track-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12h3l2-5 3 10 2.5-7 2 4h5.5"/>
+        <circle cx="19" cy="14" r="2"/><circle cx="6" cy="12" r="1.4"/></svg></span>
+          <span class="track-badge">In development</span>
+          <h3>Working Circuit</h3>
+          <p>A breadboard circuit that is wired correctly and runs the code you wrote. The ESP32 kit, the sensors, and MicroPython — checked against the class&#x27;s own wiring reference rather than a photograph.</p>
+          <p class="track-meta">4 tasks planned &middot; not yet available</p>
+          <a class="btn btn-ghost btn-sm" href="unit-working-circuit.html">See the plan &rarr;</a>
+        </article>
+<article class="track-card planned">
+          <span class="track-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+        <path d="M8.5 15.5a5 5 0 0 1 7 0"/>
+        <path d="M5.5 12.2a9.5 9.5 0 0 1 13 0"/>
+        <path d="M2.8 9.2a14 14 0 0 1 18.4 0"/></svg></span>
+          <span class="track-badge">In development</span>
+          <h3>Connected Device</h3>
+          <p>A device you control from your phone. The board runs a web server, serves a page, and every control on that page does something real — the Week 6 build, where the interface is the point.</p>
+          <p class="track-meta">5 tasks planned &middot; not yet available</p>
+          <a class="btn btn-ghost btn-sm" href="unit-connected-device.html">See the plan &rarr;</a>
+        </article>
+<article class="track-card planned">
+          <span class="track-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="7" y="7" width="10" height="10" rx="2"/>
+        <path d="M12 9.5 10.8 12h2L11.6 14.5"/>
+        <path d="M10 7V4M14 7V4M10 20v-3M14 20v-3M7 10H4M7 14H4M20 10h-3M20 14h-3"/></svg></span>
+          <span class="track-badge">In development</span>
+          <h3>Intelligent Device</h3>
+          <p>A device that reaches outside itself: it calls a cloud API, puts a model behind a button, and keeps working when the network or the model does not. The Week 11 material — APIs and AI on real hardware.</p>
+          <p class="track-meta">5 tasks planned &middot; not yet available</p>
+          <a class="btn btn-ghost btn-sm" href="unit-intelligent-device.html">See the plan &rarr;</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section id="tasks" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head">
@@ -179,64 +263,17 @@
     </div>
   </section>
 
-  <section id="tracks" style="padding-top:0;">
-    <div class="wrap">
-      <div class="section-head left"><h2>The tracks</h2></div>
-      <p class="lede">One track per skill the course teaches. A track is a set of
-      tasks; sign each one and the track is yours. You are working on the first
-      one now — the others are written down so you can see where the course is
-      going.</p>
-      <div class="track-grid">
-        <article class="track-card active">
-          <span class="track-badge">Open</span>
-          <h3>Laser-Ready File</h3>
-          <p>Eight tasks that take you from a blank Onshape document to a DXF you can hand to the laser cutter at Nolop. Each task is a short video, one file, and a signoff.</p>
-          <p class="track-meta">0 tasks &middot; signed off one at a time</p>
-          <a class="btn btn-primary btn-sm" href="unit-laser-ready.html">Open the track &rarr;</a>
-        </article>
-<article class="track-card planned">
-          <span class="track-badge">In development</span>
-          <h3>Print-Ready Model</h3>
-          <p>A 3D model that slices cleanly and prints without falling apart. The 3D counterpart to Laser-Ready File: CAD to STL to a sliced job the printer at Nolop accepts.</p>
-          <p class="track-meta">4 tasks planned &middot; not yet available</p>
-          <a class="btn btn-ghost btn-sm" href="unit-print-ready.html">See the plan &rarr;</a>
-        </article>
-<article class="track-card planned">
-          <span class="track-badge">In development</span>
-          <h3>Working Circuit</h3>
-          <p>A breadboard circuit that is wired correctly and runs the code you wrote. The ESP32 kit, the sensors, and MicroPython — checked against the class&#x27;s own wiring reference rather than a photograph.</p>
-          <p class="track-meta">4 tasks planned &middot; not yet available</p>
-          <a class="btn btn-ghost btn-sm" href="unit-working-circuit.html">See the plan &rarr;</a>
-        </article>
-<article class="track-card planned">
-          <span class="track-badge">In development</span>
-          <h3>Connected Device</h3>
-          <p>A device on the network: it joins WiFi, exposes data, and calls an API — the AI-and-connectivity half of the course, from Week 6 through Week 11.</p>
-          <p class="track-meta">4 tasks planned &middot; not yet available</p>
-          <a class="btn btn-ghost btn-sm" href="unit-connected-device.html">See the plan &rarr;</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <section id="how" style="padding-top:0;">
     <div class="wrap">
-      <div class="section-head left"><h2>How it works</h2></div>
-      <div class="cards">
-        <div class="card"><span class="num">01</span><h3>Watch</h3>
-          <p>Each task has a short video made in Onshape at the class's settings: millimetres, Top plane.</p></div>
-        <div class="card"><span class="num">02</span><h3>Make</h3>
-          <p>Do it yourself in your own document. Nothing is timed and you can redo it as often as you need.</p></div>
-        <div class="card"><span class="num">03</span><h3>Check</h3>
-          <p>Ask opencode to check your file before you hand it in — the same criteria the TA uses, run on your laptop.</p></div>
-        <div class="card"><span class="num">04</span><h3>Signoff</h3>
-          <p>Upload the zip in Canvas. A TA confirms it, signs the task, and it counts toward the qualification.</p></div>
-      </div>
-
-      <div class="callout warm" style="margin-top:24px;">
-        <b>What a signoff does and does not mean.</b> A signed task means your <i>file</i> is
-        right. Using the laser itself needs Nolop's own in-person training and checkout — that
-        is separate on purpose, and it stays that way.
+      <div class="callout">
+        <h3 style="margin-top:0;">How a task works</h3>
+        <p>Watch a short video, make the thing yourself, then let opencode check your file
+        against the same criteria a TA uses. Fix anything it flags, upload the zip, and a TA
+        signs the task off.</p>
+        <div class="cta-row" style="margin-top:14px;">
+          <a class="btn btn-primary btn-sm" href="how-tasks-work.html">How tasks work &rarr;</a>
+          <a class="btn btn-ghost btn-sm" href="#map">See the map</a>
+        </div>
       </div>
     </div>
   </section>

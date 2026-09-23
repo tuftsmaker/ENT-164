@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Connected Device &mdash; ENT-164</title>
-<meta name="description" content="A device on the network: it joins WiFi, exposes data, and calls an API — the AI-and-connectivity half of the course, from Week 6 through Week 11.">
+<meta name="description" content="A device you control from your phone. The board runs a web server, serves a page, and every control on that page does something real — the Week 6 build, where the interface is the point.">
 <link rel="stylesheet" href="../assets/site.css">
 <style>
   .criterion { border: 1px solid var(--line); border-radius: 12px; background: var(--paper); padding: 14px 16px; }
@@ -35,12 +35,23 @@
   .tm-empty { color: var(--muted); text-align: center; padding: 30px; }
   /* Tracks: one card per skill. A planned track is dimmed and says so, so the
      page can document what is coming without implying it is available. */
-  .track-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+  /* Cap at three columns: five tracks then read as 3 + 2, rather than a full
+     row of four with one orphaned underneath. */
+  .track-grid { display: grid; gap: 16px;
+                 grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+  @media (min-width: 900px) { .track-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .track-card { position: relative; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); padding: 20px 22px; }
   .track-card h3 { margin: 10px 0 8px; font-size: 1.05rem; }
   .track-card p { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }
   .track-card .track-meta { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
   .track-card .track-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; }
+  /* The track icon: the SVG has no intrinsic size, so bound it here. */
+  .track-icon { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; margin-bottom: 2px;
+                 background: linear-gradient(145deg, #4c9ae6, #2f7cc9); color: #fff;
+                 box-shadow: 0 4px 12px rgba(62, 142, 222, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+  .track-icon svg { width: 24px; height: 24px; display: block; }
+  .track-card.planned .track-icon { background: var(--paper-2); color: var(--muted); border: 1px dashed var(--line-strong); box-shadow: none; }
+  .track-card.active .track-icon { margin-bottom: 10px; }
   .track-card.active .track-badge { color: var(--blue-deep); background: var(--blue-tint); }
   .track-card.active { border-color: #cfe1f7; }
   .track-card.planned { background: var(--paper-2); border-style: dashed; }
@@ -67,7 +78,7 @@
       <span class="nav-toggle-bars" aria-hidden="true"></span>
     </label>
     <div class="nav-links">
-        <a href="../syllabus/#schedule">Workshops</a>
+        <a href="../workshops/">Workshops</a>
         <a href="../tasks/" aria-current="page">Tasks</a>
         <a href="../syllabus/">Syllabus</a>
         <a href="../about/">About</a>
@@ -79,11 +90,12 @@
   <div class="wrap">
     <p class="kicker reveal">Track &middot; planned</p>
     <h1 class="reveal">Connected Device</h1>
-    <p class="lead reveal">A device on the network: it joins WiFi, exposes data, and calls an API — the
-AI-and-connectivity half of the course, from Week 6 through Week 11.</p>
+    <p class="lead reveal">A device you control from your phone. The board runs a web server, serves a
+page, and every control on that page does something real — the Week 6 build,
+where the interface is the point.</p>
     <div class="pills reveal">
       <span class="pill">Not available yet</span>
-      <span class="pill">4 tasks planned</span>
+      <span class="pill">5 tasks planned</span>
       <span class="pill">Signed off by a TA</span>
     </div>
   </div>
@@ -100,29 +112,34 @@ AI-and-connectivity half of the course, from Week 6 through Week 11.</p>
       </div>
 
       <div class="section-head left"><h2>Why this track</h2></div>
-      <p>Weeks 6, 10 and 11 build a smart light, then sensing and visualisation, then
-AI-backed devices. It is the least file-checkable part of the course and the
-part students find hardest to know when they are finished — which makes
-written criteria more valuable here, not less.</p>
+      <p>Week 6 is where students meet the idea that a device can *have* an interface —
+the board runs a web server, the page gets an address, the phone renders it,
+and a tap round-trips back to the hardware. That is a genuinely new mental
+model (no separate computer, no app to install), and it is also the thing
+students most often get &quot;working&quot; without it actually controlling anything.
+This track makes the interface the deliverable, one piece at a time.</p>
 
       <div class="section-head left"><h2>What it will contain</h2></div>
       <div class="criteria">
-        <div class="criterion"><span class="auto human">Planned</span><h4>Get the device on the network</h4><p>(to record) credentials, the MAC address, the class registration step</p><p><b>Evidence:</b> the script plus the device&#x27;s address</p><p><b>Would check:</b> the code connects and retries rather than assuming success</p></div>
-<div class="criterion"><span class="auto human">Planned</span><h4>Serve a page from the device</h4><p>(to record) the ESP32 as a web server</p><p><b>Evidence:</b> the script and a screenshot of the page on a phone</p><p><b>Would check:</b> the handler is a real route; the page renders without a client library</p></div>
-<div class="criterion"><span class="auto human">Planned</span><h4>Show a reading from the world</h4><p>(to record) sensor to data to a readable value</p><p><b>Evidence:</b> the script and a screenshot showing a live value</p><p><b>Would check:</b> the sensor&#x27;s pin is an input; the value is scaled to real units</p></div>
-<div class="criterion"><span class="auto human">Planned</span><h4>Reach an outside API</h4><p>(to record) keys, requests, and what to do when the call fails</p><p><b>Evidence:</b> the script, and a note on where the key lives</p><p><b>Would check:</b> no key hardcoded in the script; the call has a failure path</p></div>
+        <div class="criterion"><span class="auto human">Planned</span><h4>Get the device on the network</h4><p>(to record) credentials, the MAC address, the class registration step</p><p><b>Evidence:</b> the script plus the address the device reports</p><p><b>Would check:</b> the code connects and retries rather than assuming success; it prints its address so you can find it; credentials are read from config, not hardcoded</p></div>
+<div class="criterion"><span class="auto human">Planned</span><h4>Serve a page from the device</h4><p>(to record) the web server that lives on the board</p><p><b>Evidence:</b> the script and a screenshot of the page on a phone</p><p><b>Would check:</b> the handler is a real route rather than a bare response; the page renders in a phone browser with no client library; it still loads after a reboot</p></div>
+<div class="criterion"><span class="auto human">Planned</span><h4>Make a control that changes the hardware</h4><p>(to record) a button on the page, and what it does to the board</p><p><b>Evidence:</b> the script plus a short clip of the control being used</p><p><b>Would check:</b> the route behind the control changes device state rather than only returning a message; the change is visible on the hardware itself, not just in the browser</p></div>
+<div class="criterion"><span class="auto human">Planned</span><h4>Show the device&#x27;s state as it changes</h4><p>(to record) reading a sensor back into the page</p><p><b>Evidence:</b> the script and a screenshot of two different readings</p><p><b>Would check:</b> the value is refreshed rather than fetched once at boot; it is scaled to real units; the page reflects a change you make by hand</p></div>
+<div class="criterion"><span class="auto human">Planned</span><h4>Build the panel you actually want</h4><p>(to record) putting the pieces together into one interface</p><p><b>Evidence:</b> the script and a screenshot of the finished panel</p><p><b>Would check:</b> every control has a visible effect; the layout survives a phone screen; the page has a defined state while the device is busy</p></div>
       </div>
 
-      <div class="section-head left" style="margin-top:40px;"><h2>Then: Demonstrate the round trip</h2></div>
-      <p>Show it working with a TA present: the device answers, or the API responds.
-Most of this track&#x27;s evidence is a demo rather than a file, and that is
-deliberate.</p>
+      <div class="section-head left" style="margin-top:40px;"><h2>Then: Use it on a phone</h2></div>
+      <p>Open your device&#x27;s page on your own phone and operate it with a TA present:
+press the controls, watch the hardware respond, and show what the page does
+when the device is unreachable. The interface working is the signoff.</p>
 
       <div class="section-head left" style="margin-top:40px;"><h2>What it needs first</h2></div>
-      <p>Accept that the strongest evidence here is a demonstration, not a file. The
-code checks are real but narrow — no hardcoded keys, a failure path, a
-sensible pin — and a TA watching a round trip is what actually settles it.
-Expect this track to lean harder on the human step than the other three.</p>
+      <p>The checks here are structural and stop short of the real question, which is
+whether the interface is any good: whether a control does something you can
+see, whether the page is usable on a phone, whether it degrades when the
+device is asleep. A person judging the demo settles that, so this track leans
+on the supervised step more than the machine-backed ones. Reaching out to APIs
+and models from the page is the Intelligent Device track, not this one.</p>
 
       <div class="cta-row" style="margin-top:24px;">
         <a class="btn btn-ghost" href="index.html">&larr; All tracks</a>
