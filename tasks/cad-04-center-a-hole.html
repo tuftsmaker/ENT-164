@@ -25,6 +25,15 @@
   .submit-table th { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
   .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   .criteria { display: grid; gap: 10px; }
+  /* The task map: a generated SVG of the whole qualification. */
+  .tm-wrap { background: var(--paper-2); border: 1px solid var(--line); border-radius: 18px; padding: 18px 14px; overflow-x: auto; }
+  .tm-svg { display: block; width: 100%; height: auto; min-width: 760px; }
+  .tm-svg .tm-node { text-decoration: none; }
+  .tm-svg .tm-node rect { transition: stroke 0.15s ease, filter 0.15s ease; }
+  .tm-svg .tm-node:hover rect { stroke: var(--blue-deep); filter: drop-shadow(0 4px 10px rgba(31,111,208,0.16)); }
+  .tm-svg .tm-node:hover text { fill: var(--blue-deep); }
+  .tm-caption { max-width: 680px; margin: 16px auto 0; text-align: center; color: var(--muted); font-size: 14.5px; }
+  .tm-empty { color: var(--muted); text-align: center; padding: 30px; }
 </style>
 </head>
 <body class="page-class">
@@ -54,7 +63,7 @@
     <h1 class="reveal">Placing a Circle in the Center of a Rectangle</h1>
     <p class="lead reveal">A 100 × 60 mm rectangle with one 10 mm diameter hole, exactly in the centre.</p>
     <div class="pills reveal">
-      <span class="pill">108 video</span>
+      <span class="pill">1:48 video</span>
       <span class="pill">One Onshape sketch</span>
       <span class="pill">Signed off by a TA</span>
     </div>
@@ -65,7 +74,7 @@
   <section>
     <div class="wrap">
       <div class="callout">
-        <b>Watch first.</b> <a href="../onshape-tips/videos/circle-in-the-center.mp4">Placing a Circle in the Center of a Rectangle</a> (108).
+        <b>Watch first.</b> <a href="../onshape-tips/videos/circle-in-the-center.mp4">Placing a Circle in the Center of a Rectangle</a> (1:48).
         <br><img src="../onshape-tips/posters/circle-in-the-center.png" alt="Title card for the video" style="max-width:360px;border-radius:10px;margin-top:10px;">
       </div>
 

@@ -69,6 +69,8 @@ def _lint_task(name, task) -> list:
     missing = TASK_REQUIRED - set(task)
     if missing:
         problems.append(f"{name}: missing {sorted(missing)}")
+    if not isinstance(task.get("time"), str):
+        problems.append(f"{name}: `time` must be quoted in YAML (\"1:48\" not 1:48, which YAML reads as 108)")
     seen = set()
     for crit in task.get("criteria", []):
         unknown = set(crit) - CRITERION_KEYS

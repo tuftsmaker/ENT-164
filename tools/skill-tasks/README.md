@@ -17,6 +17,7 @@ skills/maker-tasks/            ← SHIPPED TO STUDENTS (served by Pages, run loc
 
 tools/skill-tasks/             ← THE TA'S AND THE REPO'S TOOLS (not shipped)
   catalog/build.py               tasks/*.yml  ->  tasks/*.html
+  catalog/map.py                 the task map: a generated SVG dependency graph
   canvas/sync.py                 create/update the Canvas assignments + rubric + module
   canvas/pull.py                 download submissions, run the checks, write reports
   canvas/ai_review.py            advisory notes (link + photo); never signs off
@@ -27,11 +28,27 @@ tools/skill-tasks/             ← THE TA'S AND THE REPO'S TOOLS (not shipped)
   fixtures/                      known-good and known-bad files, one per criterion
 
 tasks/                         ← THE PUBLIC CATALOG (generated; served by Pages)
+  index.html                     the task map, then the task list
+  cad-NN-*.html                  one page per task
+  unit-laser-ready.html          the qualification, with the same map
 ```
 
 The YAML is the single source of truth: the public page a student reads, the
-checker that runs on their file, the Canvas rubric, and the TA's report all come
-from it. Editing a task means editing one YAML file and rebuilding.
+checker that runs on their file, the Canvas rubric, the TA's report and the
+**task map** all come from it. Editing a task means editing one YAML file and
+rebuilding.
+
+## The task map
+
+`tasks/index.html` opens with a picture of the whole qualification: the six
+tasks laid out by dependency, then a band for the supervised cut and the
+qualification itself. It is **generated** from `prereqs` in the task files
+(`catalog/map.py`), so it cannot drift — add a task or change a prerequisite and
+the next `catalog/build.py` redraws it. Each node links to its task page.
+
+The bottom band is deliberately drawn differently from the tasks: the tasks are
+files a checker can read, and the supervised cut is a person watching you cut at
+Nolop. The map shows that boundary because it is the point of the whole design.
 
 ## The one rule
 

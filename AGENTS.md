@@ -316,6 +316,14 @@ film.
   `selftest.py` is the load-bearing one: each fixture in
   `tools/skill-tasks/fixtures/` declares in its own `fixture.json` what the
   report should say. Change a tolerance and a fixture disagrees, on purpose.
+- **The task map is generated, not drawn** (`catalog/map.py`): a dependency graph
+  laid out in columns by each task's depth, plus a band for the supervised cut
+  and the qualification. Add a task, or point a `prereqs` at a different task,
+  and the map redraws on the next `catalog/build.py` — there is nothing to keep
+  in step by hand. It appears on `tasks/index.html` and on the qualification
+  page, and each node links to its task.
+- **Quote a `time` in YAML.** `time: 1:48` is a sexagesimal integer to YAML and
+  arrives as `108`. `lint_tasks.py` fails on an unquoted one; keep them quoted.
 - **The checker ships inside the skill** (`skills/maker-tasks/check/`), because a
   student's opencode has no checkout of this repo. Keep the two halves in step:
   the skill runs the checks, `tools/skill-tasks/` drives Canvas and builds pages.

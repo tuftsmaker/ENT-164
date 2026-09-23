@@ -17,9 +17,11 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent.parent
+sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(REPO / "skills" / "maker-tasks" / "check"))
 
 import runner  # noqa: E402
+from map import render_svg as task_map_svg  # noqa: E402
 
 TASKS_DIR = REPO / "tasks"
 SITE = "https://tuftsmaker.github.io/ENT-164"
@@ -88,6 +90,15 @@ HEAD = """\
   .submit-table th {{ font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }}
   .mono {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }}
   .criteria {{ display: grid; gap: 10px; }}
+  /* The task map: a generated SVG of the whole qualification. */
+  .tm-wrap {{ background: var(--paper-2); border: 1px solid var(--line); border-radius: 18px; padding: 18px 14px; overflow-x: auto; }}
+  .tm-svg {{ display: block; width: 100%; height: auto; min-width: 760px; }}
+  .tm-svg .tm-node {{ text-decoration: none; }}
+  .tm-svg .tm-node rect {{ transition: stroke 0.15s ease, filter 0.15s ease; }}
+  .tm-svg .tm-node:hover rect {{ stroke: var(--blue-deep); filter: drop-shadow(0 4px 10px rgba(31,111,208,0.16)); }}
+  .tm-svg .tm-node:hover text {{ fill: var(--blue-deep); }}
+  .tm-caption {{ max-width: 680px; margin: 16px auto 0; text-align: center; color: var(--muted); font-size: 14.5px; }}
+  .tm-empty {{ color: var(--muted); text-align: center; padding: 30px; }}
 </style>
 </head>
 <body class="page-class">
@@ -276,6 +287,10 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
             f'<div class="go"><a class="btn btn-ghost btn-sm" href="{esc(tid)}.html">Open &rarr;</a></div></div>'
         )
     supervised = unit.get("supervised") or {}
+    sibling_tasks = sorted(
+        (t for t in all_tasks.values() if t.get("kind") != "unit"),
+        key=lambda t: t.get("order", 99),
+    )
     return HEAD.format(title=esc(unit["title"]), description=esc(unit.get("summary", ""))) + NAV + f"""
 <header class="hero">
   <div class="wrap">
@@ -293,8 +308,21 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
 <main>
   <section>
     <div class="wrap">
+      <div class="section-head">
+        <h2>What it takes</h2>
+        <p>Every task signed, then one cut with a TA watching. Anything still open shows as
+        unfinished on the map below.</p>
+      </div>
+      <div class="tm-wrap">
+        {task_map_svg(sibling_tasks, unit)}
+      </div>
+      <p class="tm-caption">{esc(unit.get("requirement","").strip().replace(chr(10), " "))}</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="wrap">
       <div class="section-head left"><h2>The tasks</h2></div>
-      <p class="lede">{esc(unit.get("requirement","").strip())}</p>
       <div class="task-list">
         {chr(10).join(rows)}
       </div>
@@ -356,18 +384,34 @@ def catalog_page(tasks: list, unit: dict | None) -> str:
       <span class="pill">Signed by a person</span>
     </div>
     <div class="cta-row reveal">
-      <a class="btn btn-primary" href="#tasks">See the tasks &rarr;</a>
-      <a class="btn btn-ghost" href="../onshape-tips/">New to Onshape? Start here</a>
+      <a class="btn btn-primary" href="#map">See the map &rarr;</a>
+      <a class="btn btn-ghost" href="#tasks">Jump to the task list</a>
     </div>
   </div>
 </header>
 
 <main>
-  <section id="tasks">
+  <section id="map">
     <div class="wrap">
       <div class="section-head">
-        <h2>The tasks</h2>
-        <p>In order. Each one builds on the last, and each has its own video.</p>
+        <h2>The whole thing on one page</h2>
+        <p>Six tasks, each building on the last. Follow the arrows — a task unlocks once the
+        ones pointing at it are signed off.</p>
+      </div>
+      <div class="tm-wrap">
+        {task_map_svg(tasks, unit)}
+      </div>
+      <p class="tm-caption">Every task is one video and one file. The last step is not a file at
+      all: you cut one of your own parts at Nolop, with a TA watching. That is what turns six
+      signed tasks into the qualification.</p>
+    </div>
+  </section>
+
+  <section id="tasks" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The tasks, one by one</h2>
+        <p>Same order as the map above, with the full criteria on each task's page.</p>
       </div>
       <div class="task-list">
         {chr(10).join(rows)}

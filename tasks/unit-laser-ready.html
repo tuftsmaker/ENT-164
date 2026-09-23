@@ -27,6 +27,15 @@ signoff.
   .submit-table th { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
   .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   .criteria { display: grid; gap: 10px; }
+  /* The task map: a generated SVG of the whole qualification. */
+  .tm-wrap { background: var(--paper-2); border: 1px solid var(--line); border-radius: 18px; padding: 18px 14px; overflow-x: auto; }
+  .tm-svg { display: block; width: 100%; height: auto; min-width: 760px; }
+  .tm-svg .tm-node { text-decoration: none; }
+  .tm-svg .tm-node rect { transition: stroke 0.15s ease, filter 0.15s ease; }
+  .tm-svg .tm-node:hover rect { stroke: var(--blue-deep); filter: drop-shadow(0 4px 10px rgba(31,111,208,0.16)); }
+  .tm-svg .tm-node:hover text { fill: var(--blue-deep); }
+  .tm-caption { max-width: 680px; margin: 16px auto 0; text-align: center; color: var(--muted); font-size: 14.5px; }
+  .tm-empty { color: var(--muted); text-align: center; padding: 30px; }
 </style>
 </head>
 <body class="page-class">
@@ -68,10 +77,51 @@ signoff.</p>
 <main>
   <section>
     <div class="wrap">
+      <div class="section-head">
+        <h2>What it takes</h2>
+        <p>Every task signed, then one cut with a TA watching. Anything still open shows as
+        unfinished on the map below.</p>
+      </div>
+      <div class="tm-wrap">
+        <svg class="tm-svg" viewBox="0 0 868 382" role="img" aria-labelledby="tm-title tm-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="tm-title">Maker skills task map</title>
+<desc id="tm-desc">Six tasks in their dependency order, then a supervised cut, then the Laser-Ready File qualification.</desc>
+  <defs>
+    <marker id="tm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6"
+            markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#d5dce7"/>
+    </marker>
+    <marker id="tm-arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6"
+            markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#1F6FD0"/>
+    </marker>
+  </defs>
+<path class="tm-edge" d="M 188.0 126.0 C 207.8 126.0, 212.2 42.0, 232.0 42.0" fill="none" stroke="#d5dce7" stroke-width="1.6" marker-end="url(#tm-arrow)"/>
+<path class="tm-edge" d="M 188.0 126.0 C 207.8 126.0, 212.2 126.0, 232.0 126.0" fill="none" stroke="#d5dce7" stroke-width="1.6" marker-end="url(#tm-arrow)"/>
+<path class="tm-edge" d="M 412.0 126.0 C 431.8 126.0, 436.2 126.0, 456.0 126.0" fill="none" stroke="#d5dce7" stroke-width="1.6" marker-end="url(#tm-arrow)"/>
+<path class="tm-edge" d="M 636.0 126.0 C 655.8 126.0, 660.2 126.0, 680.0 126.0" fill="none" stroke="#d5dce7" stroke-width="1.6" marker-end="url(#tm-arrow)"/>
+<path class="tm-edge" d="M 188.0 126.0 C 207.8 126.0, 212.2 210.0, 232.0 210.0" fill="none" stroke="#d5dce7" stroke-width="1.6" marker-end="url(#tm-arrow)"/>
+<a class="tm-node" href="cad-01-first-sketch.html" aria-label="A Basic Rectangle as My First Sketch"><rect x="8" y="92.0" width="180" height="68" rx="12" fill="#ffffff" stroke="#e6eaf1" stroke-width="1.2"/><circle cx="29" cy="113.0" r="11" fill="#1F6FD0"/><text x="29" y="117.0" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text><text x="48" y="118" font-size="12.0" fill="#0d1526">A Basic Rectangle</text><text x="48" y="133" font-size="12.0" fill="#0d1526">as My First Sketch</text><text x="174" y="149.0" text-anchor="end" font-size="10.5" fill="#5f6b7a">2:24 video</text></a>
+<a class="tm-node" href="cad-02-update-dimension.html" aria-label="Updating a Dimension"><rect x="232" y="8.0" width="180" height="68" rx="12" fill="#ffffff" stroke="#e6eaf1" stroke-width="1.2"/><circle cx="253" cy="29.0" r="11" fill="#1F6FD0"/><text x="253" y="33.0" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">2</text><text x="272" y="34" font-size="12.0" fill="#0d1526">Updating a Dimension</text><text x="398" y="65.0" text-anchor="end" font-size="10.5" fill="#5f6b7a">0:30 video</text></a>
+<a class="tm-node" href="cad-03-cut-a-hole.html" aria-label="Adding a Circle to Cut a Hole"><rect x="232" y="92.0" width="180" height="68" rx="12" fill="#ffffff" stroke="#e6eaf1" stroke-width="1.2"/><circle cx="253" cy="113.0" r="11" fill="#1F6FD0"/><text x="253" y="117.0" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">3</text><text x="272" y="118" font-size="12.0" fill="#0d1526">Adding a Circle</text><text x="272" y="133" font-size="12.0" fill="#0d1526">to Cut a Hole</text><text x="398" y="149.0" text-anchor="end" font-size="10.5" fill="#5f6b7a">0:34 video</text></a>
+<a class="tm-node" href="cad-04-center-a-hole.html" aria-label="Placing a Circle in the Center of a Rectangle"><rect x="456" y="92.0" width="180" height="68" rx="12" fill="#ffffff" stroke="#e6eaf1" stroke-width="1.2"/><circle cx="477" cy="113.0" r="11" fill="#1F6FD0"/><text x="477" y="117.0" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">4</text><text x="496" y="118" font-size="12.0" fill="#0d1526">Placing a Circle in the</text><text x="496" y="133" font-size="12.0" fill="#0d1526">Center of a Rectangle</text><text x="622" y="149.0" text-anchor="end" font-size="10.5" fill="#5f6b7a">1:48 video</text></a>
+<a class="tm-node" href="cad-05-corner-hole.html" aria-label="Adding a Circle at a Corner"><rect x="680" y="92.0" width="180" height="68" rx="12" fill="#ffffff" stroke="#e6eaf1" stroke-width="1.2"/><circle cx="701" cy="113.0" r="11" fill="#1F6FD0"/><text x="701" y="117.0" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">5</text><text x="720" y="118" font-size="12.0" fill="#0d1526">Adding a Circle</text><text x="720" y="133" font-size="12.0" fill="#0d1526">at a Corner</text><text x="846" y="149.0" text-anchor="end" font-size="10.5" fill="#5f6b7a">1:12 video</text></a>
+<a class="tm-node" href="cad-06-mirror.html" aria-label="Mirroring Entities"><rect x="232" y="176.0" width="180" height="68" rx="12" fill="#ffffff" stroke="#e6eaf1" stroke-width="1.2"/><circle cx="253" cy="197.0" r="11" fill="#1F6FD0"/><text x="253" y="201.0" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">6</text><text x="272" y="202" font-size="12.0" fill="#0d1526">Mirroring Entities</text><text x="398" y="233.0" text-anchor="end" font-size="10.5" fill="#5f6b7a">1:05 video</text></a>
+<line x1="8" y1="282" x2="354" y2="282" stroke="#e6eaf1" stroke-width="1.4"/>
+<line x1="514" y1="282" x2="860" y2="282" stroke="#e6eaf1" stroke-width="1.4"/>
+<text class="tm-rule-label" x="434" y="286" text-anchor="middle" font-size="11.5" fill="#5f6b7a">all six tasks signed off</text>
+<a class="tm-node" href="unit-laser-ready.html"><rect x="184.0" y="312" width="210" height="58" rx="14" fill="#ffffff" stroke="#1F6FD0" stroke-width="1.4" stroke-dasharray="5 4"/><text x="289" y="337" text-anchor="middle" font-size="13.5" font-weight="600" fill="#0d1526">Supervised cut</text><text x="289" y="355" text-anchor="middle" font-size="10.5" fill="#5f6b7a">at Nolop, with a TA</text></a>
+<path d="M 400 341 L 438 341" fill="none" stroke="#1F6FD0" stroke-width="1.6" marker-end="url(#tm-arrow-blue)"/>
+<a class="tm-node" href="unit-laser-ready.html"><rect x="444.0" y="312" width="240" height="58" rx="14" fill="#1F6FD0"/><text x="564" y="337" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Laser-Ready File</text><text x="564" y="355" text-anchor="middle" font-size="10.5" fill="#dceafa">the qualification</text></a>
+</svg>
+      </div>
+      <p class="tm-caption">Every task file must pass its checks, and a TA signs each one. Then a TA or instructor signs the qualification as a whole, after you cut one of these files in class under supervision.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="wrap">
       <div class="section-head left"><h2>The tasks</h2></div>
-      <p class="lede">Every task file must pass its checks, and a TA signs each one. Then a TA or
-instructor signs the qualification as a whole, after you cut one of these
-files in class under supervision.</p>
       <div class="task-list">
         <div class="task-row"><div class="n">1</div><div><h3><a href="cad-01-first-sketch.html">A Basic Rectangle as My First Sketch</a></h3><p>One rectangle, 100 mm × 60 mm.</p></div><div class="go"><a class="btn btn-ghost btn-sm" href="cad-01-first-sketch.html">Open &rarr;</a></div></div>
 <div class="task-row"><div class="n">2</div><div><h3><a href="cad-02-update-dimension.html">Updating a Dimension</a></h3><p>One rectangle, 80 mm × 60 mm, exported after the dimension change.</p></div><div class="go"><a class="btn btn-ghost btn-sm" href="cad-02-update-dimension.html">Open &rarr;</a></div></div>

@@ -25,6 +25,15 @@
   .submit-table th { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
   .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   .criteria { display: grid; gap: 10px; }
+  /* The task map: a generated SVG of the whole qualification. */
+  .tm-wrap { background: var(--paper-2); border: 1px solid var(--line); border-radius: 18px; padding: 18px 14px; overflow-x: auto; }
+  .tm-svg { display: block; width: 100%; height: auto; min-width: 760px; }
+  .tm-svg .tm-node { text-decoration: none; }
+  .tm-svg .tm-node rect { transition: stroke 0.15s ease, filter 0.15s ease; }
+  .tm-svg .tm-node:hover rect { stroke: var(--blue-deep); filter: drop-shadow(0 4px 10px rgba(31,111,208,0.16)); }
+  .tm-svg .tm-node:hover text { fill: var(--blue-deep); }
+  .tm-caption { max-width: 680px; margin: 16px auto 0; text-align: center; color: var(--muted); font-size: 14.5px; }
+  .tm-empty { color: var(--muted); text-align: center; padding: 30px; }
 </style>
 </head>
 <body class="page-class">
