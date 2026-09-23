@@ -39,6 +39,9 @@ def main() -> int:
     for path in sorted(runner.TASKS_DIR.glob("*.yml")):
         try:
             task = runner.load_task(path.stem)
+        except runner.MissingDependency as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
         except runner.TaskError as exc:
             problems.append(f"{path.name}: cannot load ({exc})")
             continue

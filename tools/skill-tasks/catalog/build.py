@@ -635,4 +635,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="build")
     parser.add_argument("--check", action="store_true", help="fail if the pages are stale")
     args = parser.parse_args()
-    raise SystemExit(build(check_only=args.check))
+    try:
+        rc = build(check_only=args.check)
+    except runner.MissingDependency as exc:
+        # Never report "up to date" over a catalog that could not be read.
+        print(f"error: {exc}", file=sys.stderr)
+        rc = 2
+    raise SystemExit(rc)

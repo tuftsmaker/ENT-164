@@ -7,12 +7,14 @@ on:
       - "skills/**"
       - "tasks/**"
       - "tools/skill-tasks/**"
+      - "requirements.txt"
       - ".github/workflows/skill-tasks.yml"
   pull_request:
     paths:
       - "skills/**"
       - "tasks/**"
       - "tools/skill-tasks/**"
+      - "requirements.txt"
   workflow_dispatch:
 
 permissions:
@@ -26,6 +28,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Install the checks' dependencies
+        run: python3 -m pip install -r requirements.txt
 
       - name: Task files name real checks, and read the same shape
         run: python3 tools/skill-tasks/lint_tasks.py

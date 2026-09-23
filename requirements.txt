@@ -1,0 +1,17 @@
+# Third-party dependencies for the repo's tooling and CI checks.
+#
+# The checks in .github/workflows/ run on a bare ubuntu-latest runner, which
+# ships Python but no packages. Anything imported by a checked script has to be
+# listed here or the check fails for a reason that has nothing to do with the
+# code - which is exactly what happened: `runner.load_task` needs PyYAML, CI did
+# not install it, and because load_task reports a missing module as a TaskError
+# that `list_tasks` swallows, the catalog build silently saw zero tasks and
+# regenerated tasks/index.html with "No tasks yet.".
+#
+# Install with:
+#     python3 -m pip install -r requirements.txt
+#
+# The runtime tools keep their dependencies out of the system Python (see the
+# YouTube note in AGENTS.md); this file is for the repo's own checks and for
+# scripts/pdf_buildinfo.py, which is stdlib-only by design.
+pyyaml>=6.0
