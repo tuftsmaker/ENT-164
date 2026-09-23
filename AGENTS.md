@@ -344,9 +344,12 @@ the manual; this is the contract.
 
 A CAP-style task system for maker skills: a task is a short video, a file the
 student makes, written criteria checked on that file, and a signoff by a person.
-Six tasks make the **Laser-Ready File** qualification. The pilot runs on the six
-CAD/laser tasks and reuses the Onshape tips as the task videos — nothing new to
-film.
+The **Laser-Ready File** track is open (8 tasks, all reusing the Onshape tips as
+task videos — nothing was filmed for it). Three further tracks — Print-Ready
+Model, Working Circuit, Connected Device — exist as `status: planned` units:
+documentation of what they will contain, shown dimmed on the site and refused by
+the runner. A planned unit uses `planned_tasks` (no real tasks) plus `why` and
+`needs`, and `lint_tasks.py` enforces that split.
 
 - **One source of truth: `skills/maker-tasks/tasks/*.yml`.** The public page, the
   checker, the Canvas rubric and the TA report all come from it. Change a task

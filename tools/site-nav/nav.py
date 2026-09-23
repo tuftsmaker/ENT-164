@@ -20,8 +20,8 @@ from __future__ import annotations
 # The site links. Order matters: it is the reading order of the site, not the
 # order the pages were built in.
 MAIN_LINKS = [
-    ("Tasks", "tasks/"),
     ("Workshops", "syllabus/#schedule"),
+    ("Tasks", "tasks/"),
     ("Syllabus", "syllabus/"),
     ("About", "about/"),
 ]
