@@ -31,6 +31,125 @@ SYLLABUS = {"page": "index.html", "tree": None, "buildinfo": "syllabus.buildinfo
 SYLLABUS_DIR = os.path.join("syllabus")
 
 
+# ---------------------------------------------------------------- projection
+#
+# The hash should answer "would the printed pages differ?", not "did the file
+# change?". A nav edit changes the HTML but is `display: none` in print, so it
+# must not invalidate a PDF; a sentence change must. Everything below exists to
+# tell those two apart.
+#
+# The hidden selectors are read out of the stylesheet's `@media print` block
+# rather than listed here, so this cannot drift from the CSS that actually
+# hides things. If a rule starts hiding something new in print, the projection
+# follows it automatically.
+
+PRINT_BLOCK = re.compile(r"@media\s+print\s*\{(.*)\n\}", re.S)
+CSS_RULE = re.compile(r"([^{}]+)\{([^}]*)\}", re.S)
+
+
+def print_hidden_selectors(css_path):
+    """Class names hidden in print, straight from the print CSS.
+
+    Returns the set of *class* names to drop. Selectors are reduced to their
+    classes because that is how the markup is matched; a bare `tag` selector
+    (like `footer`) is returned as `tag:footer` so both forms are supported.
+
+    Pseudo-elements are skipped: `.hero::before` hidden in print says nothing
+    about `.hero` itself, which still prints its heading. Treating the two the
+    same would drop printed content from the projection — a false negative,
+    the one direction this must never fail in.
+    """
+    if not os.path.isfile(css_path):
+        return set()
+    with open(css_path, "rb") as f:
+        css = f.read().decode("utf-8", "replace")
+    hidden = set()
+    for block in PRINT_BLOCK.findall(css):
+        for selectors, body in CSS_RULE.findall(block):
+            if "display: none" not in body.replace("display:none", "display: none"):
+                continue
+            for selector in selectors.split(","):
+                selector = selector.strip()
+                if not selector or selector == "@page":
+                    continue
+                if "::" in selector:
+                    continue  # a pseudo-element, not the element itself
+                parts = selector.split()
+                last = parts[-1]
+                if last.startswith("."):
+                    hidden.add(last[1:].split(":")[0].split("[")[0])
+                elif last and not last.startswith(":"):
+                    hidden.add("tag:" + last.split(":")[0].split("[")[0])
+    return hidden
+
+
+def visible_markup(html, hidden):
+    """The page with print-hidden elements removed.
+
+    A regex pass, not a parser: the pages are generated and regular, and a false
+    negative here only causes a spurious rebuild, never a missed one.
+
+    Nesting is tracked with a real stack of open tag names, because a hidden
+    element contains other elements with their own tags — a counter that only
+    watches for repeats of the *hidden* tag ends the drop too early and leaves
+    half the element behind.
+    """
+    if not hidden:
+        return html
+
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+            "link", "meta", "param", "source", "track", "wbr"}
+    tag = re.compile(r"<(/?)([a-zA-Z][a-zA-Z0-9]*)\b([^>]*?)(/?)>")
+
+    out = []
+    stack = []          # open tag names, outermost first
+    drop_from = None    # index in `out` where the current hidden element began
+    last = 0
+
+    for m in tag.finditer(html):
+        closing, name, attrs, self_close = m.groups()
+        name = name.lower()
+
+        if drop_from is not None:
+            # Skipping this element's subtree: track depth, emit nothing.
+            if not closing and not self_close and name not in VOID:
+                stack.append(name)
+            elif closing and stack and stack[-1] == name:
+                stack.pop()
+                if not stack:
+                    last = m.end()
+                    drop_from = None
+            continue
+
+        classes = set()
+        cm = re.search(r'class="([^"]*)"', attrs)
+        if cm:
+            classes = {c for c in cm.group(1).split() if c}
+        is_hidden = bool(classes & hidden) or ("tag:" + name) in hidden
+
+        if is_hidden and not closing:
+            out.append(html[last:m.start()])
+            last = m.end()
+            if not self_close and name not in VOID:
+                stack = [name]
+                drop_from = len(out)
+            continue
+
+        if not closing and not self_close and name not in VOID:
+            stack.append(name)
+        elif closing and stack and stack[-1] == name:
+            stack.pop()
+
+    out.append(html[last:])
+    return "".join(out)
+
+
+def normalise(text):
+    """Collapse whitespace: indentation is not a printed difference."""
+    return re.sub(r"\s+", " ", text).strip()
+
+
+
 def profile_for(page_dir):
     """Which profile a directory uses. Only the syllabus is not a deck."""
     if os.path.isfile(os.path.join(page_dir, DECK["page"])):
@@ -84,16 +203,25 @@ def source_hash(page_dir, root, profile=DECK):
     if not os.path.isfile(page):
         raise SystemExit(f"no {profile['page']} in {page_dir}")
     with open(page, "rb") as f:
-        page_html = f.read()
+        page_html = f.read().decode("utf-8", "replace")
+
+    # Hash what prints, not the bytes on disk. A nav edit is invisible in the
+    # PDF, so it must not invalidate one; a sentence change must. The hidden
+    # selectors come from the print CSS, so this tracks the stylesheet.
+    assets = sorted(referenced_assets(page_dir, root, profile))
+    hidden = set()
+    for path in assets:
+        if path.endswith(".css"):
+            hidden |= print_hidden_selectors(path)
     h.update(profile["page"].encode() + b"\0")
-    h.update(page_html)
+    h.update(normalise(visible_markup(page_html, hidden)).encode("utf-8"))
     add_tree(os.path.join(page_dir, profile["tree"]) if profile["tree"] else None)
 
     # Only the files under assets/ that this page actually references count, so
     # style changes elsewhere on the site do not invalidate it. A shared file
     # legitimately invalidates every page that loads it - the syllabus loads
     # site.css, so a change there means the syllabus PDF is rebuilt too.
-    for path in sorted(referenced_assets(page_dir, root, profile)):
+    for path in sorted(assets):
         add_file(path)
     return h.hexdigest()
 

@@ -4,29 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Workshops &mdash; ENT-164</title>
-<meta name="description" content="Every workshop in ENT-164 Intro to Making: the semester's classes in order, each with its own page and, where it is ready, the deck as a PDF.">
+<meta name="description" content="Every workshop in ENT-164 Intro to Making: the semester's classes in order, each with its own page, its deck and its assignment.">
 <link rel="stylesheet" href="../assets/site.css">
 <style>
-  /* The workshops list: one row per class, deck state visible at a glance. */
-  .ws-list { display: grid; gap: 14px; }
-  .ws-row { display: grid; grid-template-columns: 54px minmax(0,1fr) auto; gap: 18px;
-            align-items: start; border: 1px solid var(--line); border-radius: 14px;
-            background: var(--paper); padding: 18px 20px; }
-  .ws-row:hover { border-color: #cfe1f7; background: var(--blue-tint); }
-  .ws-num { font-size: 24px; font-weight: 800; color: var(--blue-deep); text-align: center; line-height: 1.1; }
-  .ws-body h3 { margin: 0 0 5px; font-size: 1.05rem; }
-  .ws-body h3 a { color: var(--ink); }
-  .ws-body p { margin: 0; color: var(--muted); font-size: 14.5px; }
-  .ws-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px;
-             color: var(--muted); font-size: 13px; }
-  .ws-state { white-space: nowrap; align-self: center; }
-  .ws-pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em;
-             text-transform: uppercase; border-radius: 999px; padding: 3px 10px; }
-  .ws-pill.ready { color: var(--blue-deep); background: var(--blue-tint); }
-  .ws-pill.soon { color: #8a5a00; background: #fff4e0; }
-  @media (max-width: 640px) {
-    .ws-row { grid-template-columns: 40px minmax(0,1fr); }
-    .ws-state { grid-column: 2; }
+  /* The hub's deck cards, reused: a workshop card shows a photo, the week, what
+     the week is about, and one link. That link goes to the workshop's *page*,
+     not to the PDF — the deck, the plan, the assignment and the reflection all
+     live on the page, and the PDF is one of its links. */
+  .deck-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+  .deck-card { display: grid; grid-template-columns: 40% minmax(0, 1fr);
+               border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+               background: var(--paper); box-shadow: var(--shadow-sm);
+               transition: border-color .2s ease, box-shadow .2s ease; }
+  .deck-card:hover { border-color: #cfe1f7; box-shadow: var(--shadow-md); }
+  .deck-card img { display: block; width: 100%; height: 100%; min-height: 230px; object-fit: cover; }
+  .deck-body { display: flex; flex-direction: column; padding: 22px 24px; }
+  .deck-week { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep);
+               font-weight: 700; margin: 0 0 8px; }
+  .deck-body h3 { margin: 0 0 8px; font-size: 1.1rem; letter-spacing: -.2px; }
+  .deck-body h3 a { color: var(--ink); }
+  .deck-body > p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+  .deck-body .tags { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; list-style: none;
+                     padding: 0; margin: 0 0 16px; }
+  .deck-body .tags li { font-size: 12.5px; color: var(--muted-2); border: 1px solid var(--line-strong);
+                        border-radius: 999px; padding: 4px 11px; background: var(--paper); }
+  .deck-body .tags li.pill-cell { border: 0; background: none; padding: 0; }
+  .deck-pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em;
+               text-transform: uppercase; border-radius: 999px; padding: 4px 11px; }
+  .deck-pill.ready { color: var(--blue-deep); background: var(--blue-tint); }
+  .deck-pill.soon { color: #8a5a00; background: #fff4e0; }
+  .deck-body .guide-actions { margin-top: auto; }
+  @media (max-width: 900px) {
+    .deck-grid { grid-template-columns: 1fr; }
+    .deck-card { grid-template-columns: 1fr; }
+    .deck-card img { min-height: 210px; aspect-ratio: 16 / 9; }
   }
 </style>
 </head>
@@ -82,117 +93,153 @@
     <div class="wrap">
       <div class="section-head">
         <h2>The semester</h2>
-        <p>In teaching order. A workshop with its deck ready works straight from the page;
-        one marked coming is a page with the plan while the deck is converted.</p>
+        <p>In teaching order. Every card opens the workshop's page — the deck, the plan and
+        what is due are all there.</p>
       </div>
-      <div class="ws-list">
-        <article class="ws-row">
-          <div class="ws-num">1</div>
-          <div class="ws-body">
-            <h3><a href="../class-01/">Introductions &amp;amp; Course Overview</a></h3>
+      <div class="deck-grid">
+        <article class="deck-card">
+          <img src="../classes/class-01/shots/product-evolution.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 1 &middot; Kickoff and Nolop Tour</p>
+            <h3><a href="../class-01/">Class 1 &middot; Introductions &amp; Course Overview</a></h3>
             <p>By the end of this course, you will be able to:</p>
-            <p class="ws-meta"><span>Thu, Sep 10</span> · <span>Kickoff and Nolop Tour</span> · <span>Week 1</span></p>
+            <ul class="tags"><li>Thu, Sep 10</li><li>20 slides</li><li>Week 1</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-01/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-01/">&lt;span class=&quot;ws-pill ready&quot;&gt;Deck ready&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">2</div>
-          <div class="ws-body">
-            <h3><a href="../class-02/">Hand Making &amp;amp; Robot Challenge Kickoff</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/class-02-robot-run.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 2 &middot; Ideation and Prototyping</p>
+            <h3><a href="../class-02/">Class 2 &middot; Hand Making &amp; Robot Challenge Kickoff</a></h3>
             <p>Design, build, and program a robot that moves as many balls as possible across the finish line in 5 minutes.</p>
-            <p class="ws-meta"><span>Thu, Sep 17</span> · <span>Ideation and Prototyping</span> · <span>Week 2</span></p>
+            <ul class="tags"><li>Thu, Sep 17</li><li>28 slides</li><li>Week 2</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-02/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-02/">&lt;span class=&quot;ws-pill ready&quot;&gt;Deck ready&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">3</div>
-          <div class="ws-body">
-            <h3><a href="../class-03/">From 2D to 3D Laser Cutting</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/laser-cut-projects.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 3 &middot; From Physical to Digital: 2D</p>
+            <h3><a href="../class-03/">Class 3 &middot; From 2D to 3D Laser Cutting</a></h3>
             <p>Six steps from sketch to race — Class 3 is step two. Today the design becomes a real, cut part.</p>
-            <p class="ws-meta"><span>Thu, Sep 24</span> · <span>From Physical to Digital: 2D</span> · <span>Week 3</span></p>
+            <ul class="tags"><li>Thu, Sep 24</li><li>23 slides</li><li>Week 3</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-03/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-03/">&lt;span class=&quot;ws-pill ready&quot;&gt;Deck ready&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">4</div>
-          <div class="ws-body">
-            <h3><a href="../class-04/">3D Printing</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/printed-medallion.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 4 &middot; From Physical to Digital: 3D</p>
+            <h3><a href="../class-04/">Class 4 &middot; 3D Printing</a></h3>
             <p>Six steps from sketch to race — Class 4 is step three. Today we 3D print the custom parts.</p>
-            <p class="ws-meta"><span>Thu, Oct 1</span> · <span>From Physical to Digital: 3D</span> · <span>Week 4</span></p>
+            <ul class="tags"><li>Thu, Oct 1</li><li>19 slides</li><li>Week 4</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-04/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-04/">&lt;span class=&quot;ws-pill ready&quot;&gt;Deck ready&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">5</div>
-          <div class="ws-body">
-            <h3><a href="../class-05/">Electronics</a></h3>
+<article class="deck-card">
+          <img src="../classes/class-05/shots/kit-contents.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 5 &middot; Basic Electronics and Microcontrollers</p>
+            <h3><a href="../class-05/">Class 5 &middot; Electronics</a></h3>
             <p>Seven weeks from sketch to race day. Today is WK4 — Electronics: wire motors, sensors, and controls, then program basic movements with MicroPython and AI.</p>
-            <p class="ws-meta"><span>Thu, Oct 8</span> · <span>Basic Electronics and Microcontrollers</span> · <span>Week 5</span></p>
+            <ul class="tags"><li>Thu, Oct 8</li><li>19 slides</li><li>Week 5</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-05/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-05/">&lt;span class=&quot;ws-pill ready&quot;&gt;Deck ready&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">6</div>
-          <div class="ws-body">
-            <h3><a href="../class-06/">Connectivity with AI</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/device-list-ui.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 6 &middot; AI Coding Agents</p>
+            <h3><a href="../class-06/">Class 6 &middot; Connectivity with AI</a></h3>
             <p>Before we go wireless — the three things you should have from last class.</p>
-            <p class="ws-meta"><span>Thu, Oct 15</span> · <span>AI Coding Agents</span> · <span>Week 6</span></p>
+            <ul class="tags"><li>Thu, Oct 15</li><li>13 slides</li><li>Week 6</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-06/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-06/">&lt;span class=&quot;ws-pill ready&quot;&gt;Deck ready&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">8</div>
-          <div class="ws-body">
-            <h3><a href="../class-08/">Robo Challenge</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/band-robot-challenge.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 8 &middot; Robo Challenge and Final Project Kickoff</p>
+            <h3><a href="../class-08/">Class 8 &middot; Robo Challenge</a></h3>
             <p>Class 8 is the finish line for the first module: a working robot, a full scoreboard, and the awards.</p>
-            <p class="ws-meta"><span>Thu, Oct 29</span> · <span>Robo Challenge and Final Project Kickoff</span> · <span>Week 8</span></p>
+            <ul class="tags"><li>Thu, Oct 29</li><li>Week 8</li><li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-08/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-08/">&lt;span class=&quot;ws-pill soon&quot;&gt;Deck coming&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">9</div>
-          <div class="ws-body">
-            <h3><a href="../class-09/">Final Project Kickoff</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/class-09-demo-1.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 9 &middot; Final Project Kickoff</p>
+            <h3><a href="../class-09/">Class 9 &middot; Final Project Kickoff</a></h3>
             <p>The race is over — robots built from scratch, a full scoreboard, and awards. One last piece of admin before the final project begins.</p>
-            <p class="ws-meta"><span>Thu, Nov 5</span> · <span>Final Project Kickoff</span> · <span>Week 9</span></p>
+            <ul class="tags"><li>Thu, Nov 5</li><li>11 slides</li><li>Week 9</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-09/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-09/">&lt;span class=&quot;ws-pill ready&quot;&gt;Deck ready&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">10</div>
-          <div class="ws-body">
-            <h3><a href="../class-10/">Sensing and Visualization</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/device-list-ui.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 10 &middot; Sensing and Visualization</p>
+            <h3><a href="../class-10/">Class 10 &middot; Sensing and Visualization</a></h3>
             <p>Class 10 opens with the pitches from last week&#x27;s brainstorming — five minutes per team.</p>
-            <p class="ws-meta"><span>Thu, Nov 12</span> · <span>Sensing and Visualization</span> · <span>Week 10</span></p>
+            <ul class="tags"><li>Thu, Nov 12</li><li>Week 10</li><li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-10/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-10/">&lt;span class=&quot;ws-pill soon&quot;&gt;Deck coming&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">11</div>
-          <div class="ws-body">
-            <h3><a href="../class-11/">Intelligent Devices with AI</a></h3>
+<article class="deck-card">
+          <img src="../classes/class-11/shots/poetic-typewriter.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 11 &middot; Making Devices Smart with AI</p>
+            <h3><a href="../class-11/">Class 11 &middot; Intelligent Devices with AI</a></h3>
             <p>Adding AI to a device to do smart things — no programming required. Your board asks a service for data or an action, and gets an answer back.</p>
-            <p class="ws-meta"><span>Thu, Nov 19</span> · <span>Making Devices Smart with AI</span> · <span>Week 11</span></p>
+            <ul class="tags"><li>Thu, Nov 19</li><li>13 slides</li><li>Week 11</li><li class="pill-cell"><span class="deck-pill ready">Deck ready</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-11/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-11/">&lt;span class=&quot;ws-pill ready&quot;&gt;Deck ready&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">12</div>
-          <div class="ws-body">
-            <h3><a href="../class-12/">Final Project Making Time</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/makerspace.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 12 &middot; Final Project Making Time</p>
+            <h3><a href="../class-12/">Class 12 &middot; Final Project Making Time</a></h3>
             <p>Workshop time goes fast. Come in with a list and leave with a working prototype.</p>
-            <p class="ws-meta"><span>Thu, Dec 3</span> · <span>Final Project Making Time</span> · <span>Week 12</span></p>
+            <ul class="tags"><li>Thu, Dec 3</li><li>Week 12</li><li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-12/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-12/">&lt;span class=&quot;ws-pill soon&quot;&gt;Deck coming&lt;/span&gt;</a></div>
         </article>
-<article class="ws-row">
-          <div class="ws-num">13</div>
-          <div class="ws-body">
-            <h3><a href="../class-13/">Final Project Showcase</a></h3>
+<article class="deck-card">
+          <img src="../assets/photos/class/student-builds.jpg" alt="">
+          <div class="deck-body">
+            <p class="deck-week">Week 13 &middot; Final Project Showcase</p>
+            <h3><a href="../class-13/">Class 13 &middot; Final Project Showcase</a></h3>
             <p>Final presentations and live product demos, open to the public — friends, family, and the wider Tufts community are welcome.</p>
-            <p class="ws-meta"><span>Thu, Dec 10</span> · <span>Final Project Showcase</span> · <span>Week 13</span></p>
+            <ul class="tags"><li>Thu, Dec 10</li><li>Week 13</li><li class="pill-cell"><span class="deck-pill soon">Deck coming</span></li></ul>
+            <div class="guide-actions">
+              <a class="btn btn-primary btn-sm" href="../class-13/">Open the workshop &rarr;</a>
+            </div>
           </div>
-          <div class="ws-state"><a class="btn btn-ghost btn-sm" href="../class-13/">&lt;span class=&quot;ws-pill soon&quot;&gt;Deck coming&lt;/span&gt;</a></div>
         </article>
       </div>
     </div>

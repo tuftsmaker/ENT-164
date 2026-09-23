@@ -1,8 +1,8 @@
 {
-  "class": "class-03",
+  "doc": "class-03",
   "pdf": "ENT-164-Class-3-Laser-Cutting.pdf",
-  "source_hash": "b929b1a325cec185af00f7a7326dfb0d7050f8c7b928d3fb9625e42291c91683",
-  "built_at": "2026-09-23T14:43:51Z",
+  "source_hash": "1aa1c02fc2077c33c3e526386c6323a1161bb82ac7bba568af84c01775fbce6c",
+  "built_at": "2026-09-23T18:18:50Z",
   "pages": 23,
   "pdf_bytes": 4407524
 }
