@@ -18,10 +18,11 @@
   "takes": [
     {
       "name": "take01",
-      "setup": "setup-workspace",
+      "setup": "setup-cut-joint",
       "scenes": [
         "s01"
       ]
     }
-  ]
+  ],
+  "documentUrl": "https://cad.onshape.com/documents/401bbcb1f925d6e3999f4854/w/4ecc2607a90cb1b64b507edf/e/9ca6467167d2310d4d92c79a"
 }

@@ -4,7 +4,7 @@
   "output": "~/Movies/ent164-onshape-tutorial/onshape-tips/basic-rectangle.mp4",
   "eyebrow": "ENT-164  \u00b7  ONSHAPE TIPS",
   "heading": "A Basic Rectangle as My First Sketch",
-  "subtitle": "Start a sketch on the Top plane and drive it with real numbers",
+  "subtitle": "Sketch it, size it, and export the DXF for the cutter",
   "footer": "Tufts University  \u00b7  Nolop Makerspace",
   "titleDuration": 4.0,
   "endHeading": "Happy making.",
@@ -21,6 +21,13 @@
       "setup": "setup-empty-studio",
       "scenes": [
         "s01"
+      ]
+    },
+    {
+      "name": "take02",
+      "setup": "setup-committed-sketch",
+      "scenes": [
+        "s02"
       ]
     }
   ],

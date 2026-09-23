@@ -30,11 +30,17 @@ WHISPER_MODEL = os.environ.get(
     'WHISPER_MODEL', os.path.expanduser('~/.cache/whisper.cpp/ggml-tiny.en.bin'))
 DEEPGRAM_KEY = os.path.expanduser('~/.config/deepgram/api_key')
 
-INK = (26, 32, 44)
-ACCENT = (214, 90, 49)
-WHITE = (255, 255, 255)
-MUTED = (170, 180, 196)
-DIM = (120, 132, 152)
+# Card colours follow the class website's light theme (assets/site.css), so the
+# title and end cards read as the same surface as the rest of the course.
+INK = (13, 21, 38)          # --ink
+ACCENT = (31, 111, 208)     # --accent / --blue-deep
+WHITE = (23, 32, 58)        # --text: headings are dark on light, not white
+MUTED = (95, 107, 122)      # --muted
+DIM = (139, 149, 163)       # a step lighter, for the footer
+PAPER_TOP = (247, 249, 252)  # --paper-2
+PAPER_BOTTOM = (238, 242, 248)  # the body gradient's lower stop
+RULE = (223, 229, 238)      # --line-strong
+TICK = (213, 220, 231)
 
 
 # ---------------------------------------------------------------- utilities
@@ -197,28 +203,51 @@ def _card(path, heading, subtitle, footer, eyebrow=None, heading_size=96):
     BOLD = '/System/Library/Fonts/Supplemental/Arial Bold.ttf'
     REG = '/System/Library/Fonts/Supplemental/Arial.ttf'
     W, H = 1920, 1080
-    img = Image.new('RGB', (W, H), INK)
+    # The site's soft vertical gradient, then a flat accent bar down the left.
+    img = Image.new('RGB', (W, H), PAPER_TOP)
     d = ImageDraw.Draw(img)
+    for y in range(H):
+        t = y / (H - 1)
+        d.line([0, y, W, y], fill=tuple(
+            round(PAPER_TOP[i] + (PAPER_BOTTOM[i] - PAPER_TOP[i]) * t) for i in range(3)))
     d.rectangle([0, 0, 14, H], fill=ACCENT)
     for (x, y, dx, dy) in [(120, 120, 1, 1), (W - 120, 120, -1, 1),
                            (120, H - 120, 1, -1), (W - 120, H - 120, -1, -1)]:
-        d.line([x, y, x + 70 * dx, y], fill=(60, 70, 88), width=3)
+        d.line([x, y, x + 70 * dx, y], fill=TICK, width=3)
     cx = W // 2
 
     def centred(text, font, y, fill):
         w = d.textlength(text, font=font)
         d.text((cx - w / 2, y), text, font=font, fill=fill)
 
+    def fit(text, font_path, size, max_w, floor=54):
+        """Largest size at or below `size` that keeps text on one line.
+
+        The headings are not all the same length - "Mirroring Entities to Avoid
+        Repetitive Drawing" is nearly twice "Updating Dimensions" - so a fixed
+        size runs the long ones off the sides of the card, in the title slide
+        and in the thumbnail.
+        """
+        s = size
+        while s > floor:
+            f = ImageFont.truetype(font_path, s)
+            if d.textlength(text, font=f) <= max_w:
+                return f
+            s -= 2
+        return ImageFont.truetype(font_path, floor)
+
+    safe_w = W - 2 * 155
+
     if eyebrow:
         centred(eyebrow, ImageFont.truetype(BOLD, 40), 330, ACCENT)
-        centred(heading, ImageFont.truetype(BOLD, heading_size), 410, WHITE)
-        d.line([cx - 320, 560, cx + 320, 560], fill=(70, 80, 100), width=2)
-        centred(subtitle, ImageFont.truetype(REG, 46), 605, MUTED)
+        centred(heading, fit(heading, BOLD, heading_size, safe_w), 410, WHITE)
+        d.line([cx - 320, 560, cx + 320, 560], fill=RULE, width=2)
+        centred(subtitle, fit(subtitle, REG, 46, safe_w), 605, MUTED)
     else:
-        centred(heading, ImageFont.truetype(BOLD, heading_size + 8), 400, WHITE)
-        d.line([cx - 260, 560, cx + 260, 560], fill=(70, 80, 100), width=2)
-        centred(subtitle, ImageFont.truetype(REG, 44), 605, MUTED)
-    centred(footer, ImageFont.truetype(REG, 34), 900, DIM)
+        centred(heading, fit(heading, BOLD, heading_size + 8, safe_w), 400, WHITE)
+        d.line([cx - 260, 560, cx + 260, 560], fill=RULE, width=2)
+        centred(subtitle, fit(subtitle, REG, 44, safe_w), 605, MUTED)
+    centred(footer, fit(footer, REG, 34, safe_w), 900, DIM)
     img.save(path)
 
 
@@ -512,7 +541,7 @@ def step_assemble(proj, cfg):
             ins += ['-loop', '1', '-t', f"{c['end'] - c['start']:.3f}", '-i', files[i - 1]]
             fc.append(f'[{i}:v]format=rgba,setsar=1,'
                       f"setpts=PTS-STARTPTS+{c['start']:.3f}/TB[c{i}]")
-            fc.append(f"[{last}][c{i}]overlay=0:0:format=auto:shortest=0:"
+            fc.append(f"[{last}][c{i}]overlay=0:0:format=auto:shortest=0:eof_action=pass:"
                       f"enable='between(t,{c['start']:.3f},{c['end']:.3f})'[v{i}]")
             last = f'v{i}'
 

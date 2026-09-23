@@ -87,7 +87,12 @@ await esc(); await P(250);
 B.mark('escaped');
 
 // "And I'm going to do the same thing from here to there."
+// The Construction toggle resets when the line tool is escaped, so it has to be
+// set again here - otherwise the second line is real geometry, and the laser
+// would cut it.
 await B.at(at(O, 's01', 12) + 0.3);
+await clickToolBtn('Construction', { settle: 320, moveMs: 400 });
+B.mark('construction-again');
 await clickToolBtn('Line', { settle: 400 });
 B.mark('line-tool-again');
 
