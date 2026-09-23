@@ -80,7 +80,18 @@ the manual; this is the contract.
   *highlights* it — the sketch plane is set only if the datum is selected
   **before** the Sketch tool; the green check **commits and closes** the sketch,
   so it must not be clicked until drawing is done; a right-*drag* orbits while a
-  right-*click* opens a context menu.
+  right-*click* opens a context menu. The **Construction toggle resets when the
+  tool is escaped**, so a second construction line needs it set again or it is
+  drawn as real geometry — and the laser cuts it.
+- **Exporting the DXF** (take02 of `basic-rectangle`): right-click the
+  *committed* sketch in the feature list — an open sketch has no context menu —
+  and choose `Export as DXF/DWG…`. The dialog defaults to DXF, millimetre units
+  and Download; press **Export**. It saves to the browser's download folder, so
+  the recording shows the dialog rather than a file picker.
+- Setups resolve their project through `/tmp/vid/vb-paths.json`, which **only
+  `record.sh` writes**. Running a setup by hand without refreshing that pointer
+  silently runs it against whichever project ran last — worth remembering when
+  probing.
 - **If browser-control keeps dropping mid-record**, check in this order:
   `browser-control status` (extension connected? relay reachable?),
   then reload the extension via chrome://extensions, then recycle a wedged
@@ -163,7 +174,19 @@ the manual; this is the contract.
 - Quota: `videos.insert` has its own bucket of **100 calls/day at 1 unit each**
   (the old "1,600 units, ~6/day" figure is obsolete). Separately, a channel has
   a per-account daily upload cap (`uploadLimitExceeded`) that is lower for new
-  or unverified channels.
+  or unverified channels. **It is the binding limit, not the API quota:** nine
+  uploads in a morning was enough to hit it, and the next attempt fails with
+  "this channel has hit YouTube's per-channel daily upload cap". Spread uploads
+  over days, or verify the channel. Thumbnails have their own limiter too —
+  setting several in a row returns `429 uploadRateLimitExceeded`; wait and
+  retry rather than assuming the thumbnail is broken.
+- `scripts/delete-youtube.py <id>` removes a video (`--yes` to confirm; it prints
+  title, views and privacy first). Deleting is permanent and also drops the
+  video from any playlist.
+- The title and end cards use the **class website's light theme**, not the dark
+  deck palette, and the heading auto-fits to one line: six of the nine tips had
+  headings too long for a fixed size and ran off the sides of the card, in the
+  title slide *and* in the thumbnail. If you add a tip, just check the card.
 - Source footage lives in `Photos/*.mp4` (untracked, unpublished). Do not commit
   video files to this repo.
 
