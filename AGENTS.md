@@ -23,8 +23,11 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   at the slides position pointing at the Pages PDF, e.g. Class 1 →
   `https://tuftsmaker.github.io/ENT-164/classes/class-01/ENT-164-Class-1-Introductions.pdf`.
   Pushing to `main` is the only sync step. Do not upload replacement PDFs.
-- Canvas API token and base URL live in `~/esp32/canvas_config.py` (outside the
-  repo). Never print, copy, commit, or echo the token.
+- Canvas credentials live in `~/.config/tuftsmaker/canvas_config.py` (outside the
+  repo, mode 0600, dir 0700 — the same directory as the YouTube credentials).
+  Never print, copy, commit, or echo the token. `COURSE_ID` in that file is
+  accepted but ignored: development targets the prototype (see the skill-tasks
+  section below).
 - Module map (course 76330). Converted classes point at their Pages PDF; the
   rest still point at Google Slides. After converting a class, verify the Pages
   URL returns 200 with the expected byte size, then create an ExternalUrl item
@@ -152,11 +155,14 @@ the manual; this is the contract.
   mean widening it breaks the other capability. The auth module checks a cached
   token's scopes and re-consents when one is missing, instead of failing later
   with a bare 403 "Insufficient Permission".
-- OAuth client secret and tokens live in `~/.config/tuftsmaker/`
-  (`youtube_config.py` + `client_secret.json` + the two token files, mode 0600,
-  dir 0700). Outside the repo, same rule as the Canvas token: never print, copy,
-  commit or echo them. The scripts load the config by absolute path, so no
-  `PYTHONPATH` is needed.
+- **`~/.config/tuftsmaker/` is the one place class secrets live** — outside any
+  project directory, mode 0600 for files and 0700 for the directory. It holds the
+  YouTube credentials (`youtube_config.py` + `client_secret.json` + the two token
+  files) and the Canvas one (`canvas_config.py`). Never print, copy, commit or
+  echo any of them; add new secrets here rather than inventing another folder.
+  Delete `__pycache__` if it appears: the directory is 0700 but the cache it
+  creates is not, and byte-compiled secrets are pure liability. The scripts load
+  their configs by absolute path, so no `PYTHONPATH` is needed.
 - Dependencies are NOT installed in the system Python (mixing them there breaks
   the anaconda `streamlit`, which needs `protobuf<6`). Use the dedicated venv:
   `~/.venvs/ent164-youtube/bin/python scripts/upload-youtube.py ...`

@@ -5,8 +5,14 @@ Signoffs live in Canvas — it is the system of record, it already holds the
 submissions, and it keeps student work out of this repo. Nothing here runs in a
 student's browser or in the skill; this is the TA's machine only.
 
-Credentials come from `~/esp32/canvas_config.py` (CANVAS_URL, CANVAS_TOKEN,
-COURSE_ID). That file is outside the repo and its token is never printed.
+Credentials live OUTSIDE this repo, with the rest of the class secrets, in
+`~/.config/tuftsmaker/canvas_config.py` (mode 0600, dir 0700):
+
+    CANVAS_URL   = "https://<institution>.instructure.com"
+    CANVAS_TOKEN = "<personal access token>"
+
+`COURSE_ID` is accepted but ignored: development targets the prototype course
+below, so a stale or copied config cannot decide which course these tools touch.
 
     python3 canvas/canvas_client.py whoami
     python3 canvas/canvas_client.py assignments
@@ -23,7 +29,21 @@ import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
-CONFIG_PATH = Path.home() / "esp32" / "canvas_config.py"
+CONFIG_DIR = Path.home() / ".config" / "tuftsmaker"
+CONFIG_PATH = CONFIG_DIR / "canvas_config.py"
+
+CONFIG_HINT = f"""\
+    Expected config file: {CONFIG_PATH}
+
+        CANVAS_URL   = "https://canvas.example.edu"
+        CANVAS_TOKEN = "<personal access token from User Settings>"
+
+    Create it with:
+        mkdir -p {CONFIG_DIR} && chmod 700 {CONFIG_DIR}
+        $EDITOR {CONFIG_PATH} && chmod 600 {CONFIG_PATH}
+
+    Same directory as the YouTube credentials — the class keeps its secrets in
+    one place, outside the repo, never committed.""".rstrip()
 
 # Which course these tools may touch. Everything in tools/ is in development
 # against the prototype; the live course is only ever reached deliberately.
@@ -53,14 +73,18 @@ class LiveCourseRefused(CanvasError):
 
 def load_config(path: Path = CONFIG_PATH) -> dict:
     if not path.exists():
-        raise CanvasError(
-            f"no Canvas config at {path}. It should define CANVAS_URL, CANVAS_TOKEN and COURSE_ID."
-        )
+        raise CanvasError(f"no Canvas config at {path}.\n\n{CONFIG_HINT}")
     namespace = {}
-    exec(compile(path.read_text(), str(path), "exec"), namespace)  # noqa: S102
-    missing = [k for k in ("CANVAS_URL", "CANVAS_TOKEN", "COURSE_ID") if not namespace.get(k)]
+    try:
+        exec(compile(path.read_text(), str(path), "exec"), namespace)  # noqa: S102
+    except SyntaxError as exc:
+        raise CanvasError(f"{path} is not valid Python: {exc}") from None
+    missing = [k for k in ("CANVAS_URL", "CANVAS_TOKEN") if not namespace.get(k)]
     if missing:
-        raise CanvasError(f"Canvas config is missing {', '.join(missing)}")
+        raise CanvasError(
+            f"{path} is missing {', '.join(missing)}.\n\n{CONFIG_HINT}"
+        )
+    _warn_if_readable_by_others(path)
     # Development points at the prototype, whatever the config's COURSE_ID says:
     # a stale or copied config must not decide which course tools touch.
     return {
@@ -68,6 +92,26 @@ def load_config(path: Path = CONFIG_PATH) -> dict:
         "token": str(namespace["CANVAS_TOKEN"]),
         "course_id": DEV_COURSE,
     }
+
+
+def _warn_if_readable_by_others(path: Path) -> None:
+    """A token file the whole machine can read is worth saying out loud once.
+    A warning, not an error: Windows and unusual umasks would otherwise make
+    the tools unusable over a permission bit that Canvas does not care about."""
+    import stat
+
+    try:
+        mode = path.stat().st_mode
+    except OSError:
+        return
+    if mode & (stat.S_IRGRP | stat.S_IROTH):
+        import sys
+
+        print(
+            f"warning: {path} is readable by other users "
+            f"(mode {stat.filemode(mode)}). Run: chmod 600 {path}",
+            file=sys.stderr,
+        )
 
 
 @dataclass

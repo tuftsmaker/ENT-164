@@ -173,8 +173,10 @@ Worth knowing before trusting a green report:
 - The Canvas client is read-mostly by design. `sync.py` creates and updates;
   `pull.py` only reads; `apply.py` is the only writer of grades, and only with
   `--reviewed`.
-- Credentials come from `~/esp32/canvas_config.py` (outside the repo). The token
-  is never printed, copied or committed.
+- Credentials come from `~/.config/tuftsmaker/canvas_config.py` (outside the
+  repo, mode 0600, dir 0700 — the same directory as the YouTube credentials).
+  The token is never printed, copied or committed. `COURSE_ID` is accepted but
+  ignored: the prototype is always the development target.
 
 ## Status
 
