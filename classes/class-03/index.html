@@ -75,11 +75,11 @@
 
     <section class="section-block" id="challenge">
       <h2>Where we are: from mockup to laser-cut assembly</h2>
-      <p class="lede">Six steps from sketch to race — Class 3 is step two. Today the design becomes a real, cut part.</p>
+      <p class="lede">Seven weeks from sketch to race — Class 3 is step two. Today the design becomes a real, cut part.</p>
       <div class="phases">
         <div class="phase">
           <p class="plabel">Week 2</p>
-          <h3>Sketch &amp; Prototype</h3>
+          <h3>Ideation and Prototyping</h3>
           <ul>
             <li>Rapidly sketch concept variations</li>
             <li>Build a foam core mockup to test form and mechanics</li>
@@ -87,7 +87,7 @@
         </div>
         <div class="phase accent">
           <p class="plabel">Week 3 · today</p>
-          <h3>Laser Cutting</h3>
+          <h3>From Physical to Digital: 2D</h3>
           <ul>
             <li>Create a laser-ready 2D design file from a sketch</li>
             <li>Laser cut structural components</li>
@@ -95,7 +95,7 @@
         </div>
         <div class="phase">
           <p class="plabel">Week 4</p>
-          <h3>3D Printing</h3>
+          <h3>From Physical to Digital: 3D</h3>
           <ul>
             <li>Model 3D parts — mounts, brackets, custom components</li>
             <li>3D print functional parts for your robot</li>
@@ -103,7 +103,7 @@
         </div>
         <div class="phase">
           <p class="plabel">Week 5</p>
-          <h3>Electronics</h3>
+          <h3>Basic Electronics and Microcontrollers</h3>
           <ul>
             <li>Wire motors, sensors, and controls on a breadboard</li>
             <li>Program basic movements using MicroPython and AI</li>
@@ -111,18 +111,26 @@
         </div>
         <div class="phase">
           <p class="plabel">Week 6</p>
-          <h3>Connectivity</h3>
+          <h3>AI Coding Agents</h3>
           <ul>
             <li>Connect a microcontroller to a wireless network</li>
             <li>Build a remote control interface</li>
           </ul>
         </div>
         <div class="phase">
-          <p class="plabel">Weeks 7–8</p>
-          <h3>Assemble &amp; Race</h3>
+          <p class="plabel">Week 7</p>
+          <h3>Final Robot Assembly and Testing</h3>
           <ul>
-            <li>Integrate all components and test runs</li>
-            <li>Demonstrate the robot with motors mounted</li>
+            <li>Integrate all components into a fully functional robot</li>
+            <li>Debug and iterate based on the test runs</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <p class="plabel">Week 8</p>
+          <h3>Robo Challenge and Final Project Kickoff</h3>
+          <ul>
+            <li>Race the robot under real-world conditions</li>
+            <li>Reflect, then start the final project</li>
           </ul>
         </div>
       </div>
@@ -175,7 +183,7 @@
         <div class="card accent">
           <span class="num">03</span>
           <h3>Material thickness</h3>
-          <p>Every slot has to match the plywood thickness — measure it with calipers, don't trust the label.</p>
+          <p>Every slot has to match the sheet's thickness — the class cuts 3 mm basswood. Measure it with calipers, don't trust the label.</p>
         </div>
       </div>
 
@@ -210,8 +218,12 @@
           <figcaption><b>Bolts, washers and nuts</b>An M3 bolt wants a clearance hole around 3.2 mm — the head and nut do the clamping.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="shots/self-tapping.png" alt="Two labelled diagrams: a self-tapping screw in a pre-drilled hole, and a self-drilling screw that drills its own hole">
-          <figcaption><b>Self-tapping vs self-drilling</b>One needs a pilot hole; the other drills its own. You can't drill with a laser.</figcaption>
+          <img src="shots/screw-pilot-hole.png" alt="Two panels: a drill bit cutting a pilot hole in a board, then a self-tapping screw driven into the hole" style="object-fit: contain; background: var(--paper);">
+          <figcaption><b>Self-tapping · pilot hole first</b>Drill a hole slightly smaller than the screw, then drive it in — for joins with no nut on the far side.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/screw-self-drilling.png" alt="A self-drilling screw whose point has bored through a board, with callouts for the drill point and the threads" style="object-fit: contain; background: var(--paper);">
+          <figcaption><b>Self-drilling · no pilot hole</b>The point bores its own hole and the threads cut into the wood — fast, but thin basswood can split.</figcaption>
         </figure>
       </div>
       <div class="callout warm"><b>On the laser:</b> cut a pilot hole slightly undersized and let a self-tapping screw cut its own thread — or cut a clearance hole and bolt it with a washer and nut.</div>
@@ -325,7 +337,7 @@
 
     <section class="section-block" id="cut">
       <h2>Laser cutting step by step</h2>
-      <p class="lede">Your DXF will look wrong when it opens in Inkscape — that's normal. Seven steps take it from file to finished cut.</p>
+      <p class="lede">Your DXF provides the outline of what needs to be laser cut. The colors determine how you cut those lines: red cuts all the way through, blue scores. Seven steps take it from file to finished cut.</p>
 
       <div class="callout"><b>Full walkthrough:</b> the <a href="../../laser-cutting/guide.html">Laser cutting at Nolop with Inkscape</a> guide covers all of this in detail, with screenshots of every dialog — installing Inkscape, importing your DXF, setting line colours, and setting up UCP. There is also a <a href="../../laser-cutting/laser-cutting-at-nolop-with-inkscape.pdf">printable PDF</a>. To see the Inkscape steps done for real, watch <a href="../../laser-cutting/#watch">Preparing a DXF in Inkscape</a> (3 min; also on <a href="https://youtu.be/_vzlJ2bEG5g" target="_blank" rel="noopener">YouTube</a>).</div>
 
@@ -468,19 +480,19 @@
           </ul>
         </div>
       </div>
-      <div class="callout" style="margin-top:16px;"><b>Cut a test first.</b> Cardboard is cheap and cuts in seconds. Prove the fit, then commit your plywood or acrylic to the design.</div>
+      <div class="callout" style="margin-top:16px;"><b>Cut a test first.</b> Cardboard is cheap and cuts in seconds. Prove the fit, then commit your basswood or acrylic to the design.</div>
       <div class="callout warm" style="margin-top:16px;">
-        <b>Practise the file skills as tasks.</b> The six
+        <b>Practise the file skills as tasks.</b> The nine
         <a href="../../tasks/">maker skills tasks</a> take you from a blank Onshape document to a
-        DXF that passes every check — the same checks the laser needs. Each one is a short video
-        and one file, signed off one at a time, and together they make the
+        file the laser can cut. Each one is a short video and one file, checked on your own
+        machine and signed off one at a time, and together they make the
         <a href="../../tasks/unit-laser-ready.html">Laser-Ready File</a> qualification. Do them
-        before you commit your plywood.
+        before you commit your basswood.
       </div>
     </section>
 
     <section class="section-block" style="padding-bottom: 0;">
-      <div class="callout warm"><b>Next class:</b> 3D Printing — model 3D parts in Onshape, prepare them in PrusaSlicer, and print the functional parts your robot needs. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
+      <div class="callout warm"><b>Next class:</b> From Physical to Digital: 3D — model 3D parts in Onshape, prepare them in PrusaSlicer, and print the functional parts your robot needs. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
     </section>
 
   </main>
