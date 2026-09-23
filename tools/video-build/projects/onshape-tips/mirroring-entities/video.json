@@ -18,10 +18,11 @@
   "takes": [
     {
       "name": "take01",
-      "setup": "setup-workspace",
+      "setup": "setup-centreline-half",
       "scenes": [
         "s01"
       ]
     }
-  ]
+  ],
+  "documentUrl": "https://cad.onshape.com/documents/fea0397874e10ec38b224677/w/036a90ca4db746a1b0ac9696/e/798e3d6eb1d7eaa7b1831981"
 }
