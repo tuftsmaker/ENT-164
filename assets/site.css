@@ -80,6 +80,48 @@ section[id] { scroll-margin-top: 92px; }
 }
 .nav-links a.nav-cta:hover { border-color: #cfe1f7; background: var(--blue-tint-2); }
 
+/* The nav links live in a <details>. Wide screens: `display: contents` makes it
+   vanish so the links lay out as an ordinary flex row. Narrow screens: it
+   becomes a menu button, because the links must not simply disappear — before
+   this, a phone could reach nothing but the one CTA. No JavaScript. */
+.nav-menu > summary { display: none; }
+.nav-menu[open] > summary { margin-bottom: 8px; }
+@media (min-width: 881px) {
+  .nav-menu { display: contents; }
+  .nav-menu > summary { display: none !important; }
+}
+@media (max-width: 880px) {
+  .nav-menu { position: relative; }
+  .nav-menu > summary {
+    display: flex; align-items: center; gap: 7px;
+    list-style: none; cursor: pointer;
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 7px 15px; background: var(--paper); color: var(--blue-deep);
+    font-size: 14px; font-weight: 600;
+  }
+  .nav-menu > summary::-webkit-details-marker { display: none; }
+  .nav-menu > summary::after {
+    content: ""; width: 7px; height: 7px; margin-top: -3px;
+    border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor;
+    transform: rotate(45deg); transition: transform 0.15s ease;
+  }
+  .nav-menu[open] > summary::after { transform: rotate(-135deg); margin-top: 3px; }
+  .nav-menu .nav-links {
+    position: absolute; right: 0; top: calc(100% + 10px); z-index: 60;
+    flex-direction: column; align-items: stretch; gap: 2px;
+    min-width: 210px; padding: 10px;
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 14px; box-shadow: var(--shadow-lg);
+  }
+  .nav-menu .nav-links a {
+    display: block; padding: 9px 12px; border-radius: 9px; font-size: 15px;
+  }
+  .nav-menu .nav-links a:hover { background: var(--blue-tint-2); }
+  .nav-menu .nav-links a.nav-cta {
+    border: none; background: var(--blue-tint-2); text-align: center; margin-top: 4px;
+  }
+}
+
 /* The page's own sections, under the main nav. Pages with a sidebar "On this
    page" block do not get one — the sidebar already does this job. */
 .subnav {
@@ -588,11 +630,11 @@ footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44
   .grade-bar { display: none; }
   .guide-list { grid-template-columns: 1fr; }
   .need { grid-template-columns: 1fr; }
-  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-links a:not(.nav-cta) { display: block; }
   .brand small { display: none; }
   .brand, .nav-links a.nav-cta { white-space: nowrap; }
-  /* The site links are hidden on a narrow screen, so the sub-nav is the only
-     way through the page: give it room and let it scroll. */
+  /* The main links are a menu at this width (see .nav-menu above), so the
+     sub-nav is what carries you through a long page: give it room to scroll. */
   .subnav { top: 64px; }
   .subnav-inner { height: 42px; }
 }

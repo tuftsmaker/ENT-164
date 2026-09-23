@@ -350,6 +350,30 @@ film.
 
 ## Class web pages
 
+- **Navigation is generated, not hand-written.** `tools/site-nav/nav.py` defines
+  the one main nav (`MAIN_LINKS`) and the per-page spec (CTA + which site
+  section a page belongs to). `tools/site-nav/apply.py` rewrites the
+  hand-authored pages from it; `tools/skill-tasks/catalog/build.py` imports the
+  same module for the generated `tasks/` pages, so the two can never disagree.
+  After editing a nav, a page's links, or adding a page:
+  ```bash
+  python3 tools/site-nav/apply.py            # rewrite the navs
+  python3 tools/site-nav/apply.py --check    # CI: every nav matches the spec
+  python3 tools/site-nav/verify-links.py     # links resolve, anchors exist
+  ```
+- **Main nav vs sub-nav.** The main nav holds *site* links only (Tasks, Class
+  slides, Syllabus, About) plus one contextual CTA that is allowed to differ per
+  page (a class page's "Download slides"). A page's own sections go in a
+  `.subnav` bar, or in the sidebar `On this page` block on class/syllabus pages —
+  never both, because the same links twice is noise.
+- **The main links live in a `<details class="nav-menu">`.** At ≥881px CSS
+  makes it `display: contents` so the links lay out as a plain flex row; below
+  that it becomes a real dropdown. This is how the nav survives mobile without
+  JavaScript — the previous rules just `display: none`d the links, leaving a
+  phone with nothing but the CTA. Keep it JS-free.
+- **Guide pages use a different component** (`site-nav`, from the same
+  `MAIN_LINKS`) because those pages are printed: `guide.css` hides it in print.
+  The class pages' `.pdf` CTAs are relative to the page, not the root.
 - `assets/site.css` is the shared light theme for the hub, syllabus, about and
   class pages; `assets/guide.css` is the same theme for the guide pages (US Letter
   print). Both follow the slide decks' palette. Style pages through these

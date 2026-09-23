@@ -399,6 +399,7 @@ def catalog_page(tasks: list, unit: dict | None) -> str:
 </header>
 
 <main>
+  {subnav("catalog")}
   <section id="map">
     <div class="wrap">
       <div class="section-head">
