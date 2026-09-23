@@ -44,7 +44,7 @@
     <div class="pills reveal" style="--d:.18s">
       <span class="pill">Thu, Sep 24</span>
       <span class="pill">JCC 301 / Nolop</span>
-      <span class="pill">Onshape + Illustrator</span>
+      <span class="pill">Onshape + Inkscape</span>
       <span class="pill">Individual laser-cut project due next week</span>
     </div>
     <div class="cta-row reveal" style="--d:.24s">
@@ -321,7 +321,9 @@
 
     <section class="section-block" id="cut">
       <h2>Laser cutting step by step</h2>
-      <p class="lede">Your DXF will look wrong when it opens in Illustrator — that's normal. Seven steps take it from file to finished cut.</p>
+      <p class="lede">Your DXF will look wrong when it opens in Inkscape — that's normal. Seven steps take it from file to finished cut.</p>
+
+      <div class="callout"><b>Full walkthrough:</b> the <a href="../laser-cutting/guide.html">Laser cutting at Nolop with Inkscape</a> guide covers all of this in detail, with screenshots of every dialog — installing Inkscape, importing your DXF, setting line colours, and setting up UCP. There is also a <a href="../laser-cutting/laser-cutting-at-nolop-with-inkscape.pdf">printable PDF</a>.</div>
 
       <div class="phases">
         <div class="phase">
@@ -329,75 +331,77 @@
           <h3>Set the stroke</h3>
           <ul>
             <li>File &gt; Open your DXF</li>
-            <li>Select All (Cmd/Ctrl+A)</li>
-            <li>Set Stroke to 0.001"</li>
+            <li>Choose "Read from file" scaling</li>
+            <li>Select All, set width to Hairline</li>
           </ul>
         </div>
         <div class="phase">
           <p class="plabel">Step 2</p>
-          <h3>Ungroup</h3>
+          <h3>Fill to No paint</h3>
           <ul>
-            <li>Right-click the drawing</li>
-            <li>Choose Ungroup</li>
-            <li>Now you can select single lines</li>
+            <li>Ungroup if it came in as one piece</li>
+            <li>Fill and Stroke &gt; Fill</li>
+            <li>Click the X for No paint</li>
           </ul>
         </div>
         <div class="phase accent">
           <p class="plabel">Step 3</p>
           <h3>Make cuts 100% red</h3>
           <ul>
-            <li>Click the Stroke colour box</li>
-            <li>Open the Color Mixer</li>
+            <li>Stroke paint &gt; Flat color</li>
             <li>Set R 255, G 0, B 0</li>
+            <li>Check opacity is 100%</li>
           </ul>
         </div>
       </div>
       <div class="phases" style="margin-top:16px;">
         <div class="phase">
           <p class="plabel">Step 4</p>
-          <h3>File &gt; Print</h3>
+          <h3>Materials &amp; thickness</h3>
           <ul>
-            <li>Send the design to the laser software</li>
-            <li>Click the Print button</li>
+            <li>In UCP, pick your material</li>
+            <li>Enter 3.00 mm, then Apply</li>
+            <li>Check the whiteboard for power and speed</li>
           </ul>
         </div>
         <div class="phase">
           <p class="plabel">Step 5</p>
-          <h3>Find UCP</h3>
+          <h3>Print from Inkscape</h3>
           <ul>
-            <li>A second app opens with your drawing</li>
+            <li>Ctrl/⌘+P to the VLS3.60/75 printer</li>
+            <li>UCP opens with your drawing</li>
             <li>Click the UCP icon if it hides</li>
           </ul>
         </div>
         <div class="phase">
           <p class="plabel">Steps 6–7</p>
-          <h3>Place, load, cut</h3>
+          <h3>Place, focus, cut</h3>
           <ul>
-            <li>Move the job to a corner to save wood</li>
-            <li>Load a sheet on the bed, then press play</li>
+            <li>Move the job to a corner to save material</li>
+            <li>Focus the laser, close the lid, press play</li>
           </ul>
         </div>
       </div>
 
-      <div class="callout warm"><b>The rule:</b> cuts are 100% red, engraves and text are 100% black. The laser reads colour, so anything in the wrong colour is the wrong operation.</div>
+      <div class="callout warm"><b>The rule:</b> cuts are 100% red, scores are 100% blue, engraves and text are 100% black. The laser reads colour, so anything in the wrong colour is the wrong operation.</div>
       <div class="callout warm"><b>Safety:</b> know where the fire extinguisher and the emergency stop are before you press play — and never leave the laser running unattended.</div>
 
       <div class="gallery">
         <figure class="shot">
-          <img src="shots/illustrator-stroke.jpg" alt="Adobe Illustrator's properties panel with the Stroke value highlighted and set to 0.001">
-          <figcaption><b>Step 1 · Set the stroke</b>Thin lines cut correctly; thick lines don't.</figcaption>
+          <img src="shots/inkscape-stroke-width.png" alt="The Inkscape Fill and Stroke dialog with the stroke width set to Hairline">
+          <figcaption><b>Step 1 · Set the stroke</b>Hairline lines cut correctly; thick lines don't.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="shots/illustrator-ungroup.jpg" alt="Right-click context menu in Illustrator with Ungroup selected over a drawing of box panels">
-          <figcaption><b>Step 2 · Ungroup</b>So you can select and recolour individual lines.</figcaption>
+          <img src="shots/inkscape-no-paint.png" alt="The Inkscape Fill and Stroke dialog with Fill set to No paint">
+          <figcaption><b>Step 2 · Fill to No paint</b>So the laser follows the line, not a shape.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="shots/illustrator-color-mixer.jpg" alt="Illustrator's colour mixer showing R 255, G 0, B 0 for a pure red stroke">
-          <figcaption><b>Step 3 · Red for cuts</b>R 255, G 0, B 0 — pure red, nothing else.</figcaption>
+          <img src="shots/inkscape-stroke-red.png" alt="The Inkscape Stroke paint tab with Flat color selected and RGB 255, 0, 0 entered">
+          <figcaption><b>Step 3 · Red for cuts</b>R 255, G 0, B 0 — pure red, at 100% opacity.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="shots/illustrator-print.jpg" alt="The Illustrator Print dialog with the Print button highlighted">
-          <figcaption><b>Step 4 · Print</b>Illustrator hands the job to the laser's driver.</figcaption>
+          <img src="shots/ucp-materials-database.png" alt="The UCP Materials Database with Birch plywood selected and 3.00 mm thickness entered">
+          <figcaption><b>Step 4 · Materials</b>Pick the material and thickness, then check the whiteboard for the real power and speed.</figcaption>
         </figure>
         <figure class="shot">
           <img src="shots/ucp-workplane.jpg" alt="The laser control software showing red cut paths laid out on a work plane with machine controls">

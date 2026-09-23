@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Laser cutting at Nolop with Inkscape — Beginner's Guide</title>
+<link rel="stylesheet" href="../assets/guide.css">
+<style>
+  /* Page-local: side-by-side figure rows and the line-colour swatches.
+     Add to assets/guide.css if another guide needs them. */
+  .figrow { display: flex; gap: 5mm; margin: 0 0 4mm; align-items: flex-start; }
+  .figrow figure { margin: 0; flex: 1 1 0; min-width: 0; }
+  .figrow img { width: 100%; display: block; }
+  .swatches { display: flex; gap: 6mm; margin: 0 0 5mm; }
+  .swatch { flex: 1 1 0; border: 1px solid var(--line-strong); border-radius: 8px; padding: 4mm; text-align: center; }
+  .swatch .chip { height: 9mm; border-radius: 4px; margin-bottom: 3mm; }
+  .swatch .chip.red { background: #ff0000; }
+  .swatch .chip.blue { background: #0000ff; }
+  .swatch .chip.black { background: #000000; }
+  .swatch b { display: block; font-size: 10pt; color: var(--ink); }
+  .swatch span { font-size: 8.5pt; color: var(--muted); }
+  figure.wide img { width: 100%; }
+  /* half-width figures keep portrait screenshots from eating a whole page */
+  figure.half { width: 78mm; margin: 0 0 4mm; }
+  /* keep a section heading with the table it introduces */
+  .step h3 { page-break-after: avoid; break-after: avoid; }
+  .step table { page-break-before: avoid; break-before: avoid; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="../">
+    <span class="mark"><img src="shots/class-hammer.svg" alt=""></span>
+    <span>ENT-164 <small>· Intro to Making</small></span>
+  </a>
+  <div class="links">
+    <a href="../classes/class-03/">Class 3</a>
+    <a href="../syllabus/">Syllabus</a>
+    <a class="pill-link" href="../">All materials &larr;</a>
+  </div>
+</nav>
+
+<!-- ================= COVER ================= -->
+<div class="cover cover-text">
+  <div class="mark"><img src="shots/class-hammer.svg" alt="Class mark"></div>
+  <div class="course">ENT-164 · Intro to Making</div>
+  <div class="kicker">Beginner's Guide · Class 3 handout · No experience needed</div>
+  <h1>Laser cutting at Nolop<br><span class="accent">with Inkscape</span></h1>
+  <div class="subtitle">Install Inkscape, bring in the DXF you exported from Onshape, set your cut lines to the colours the laser expects, and hand the job to the machine.</div>
+  <div class="pills">
+    <div class="pill">Inkscape is free</div>
+    <div class="pill">DXF and SVG</div>
+    <div class="pill">Red cuts, black engraves</div>
+    <div class="pill">Nolop Makerspace</div>
+  </div>
+  <div class="cover-middle">
+    <div class="paste">
+      <div class="label">The one rule</div>
+      <div class="say"><b>Cuts are pure red.</b> Engraves are pure black. The laser reads colour — the wrong colour is the wrong operation.</div>
+    </div>
+    <p class="cover-hint">Everything else in this guide is about getting your lines into those two colours and onto the bed.</p>
+  </div>
+  <div class="footer">
+    <span>Prepared for ENT-164 · Fall 2026</span>
+    <span>Based on the Nolop Makerspace laser guide</span>
+  </div>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<div class="page">
+
+  <p class="lead">At Nolop, the laser cutter is driven through a Mac in the makerspace. You prepare your file in <b>Inkscape</b> — a free, open-source drawing program — then send it to <b>UCP</b>, the laser's own control software. This guide walks the whole path: install Inkscape, import the DXF, set your lines to the right colours, and start the cut.</p>
+  <p>Nolop switched to Inkscape from Adobe Illustrator, so if you have older notes mentioning Illustrator, this guide replaces them. The steps are the same idea; the buttons just live in different places.</p>
+
+  <div class="callout">
+    <b>What you'll need</b>
+    <ul>
+      <li>Your DXF from Onshape — see the Class 3 slides for exporting it</li>
+      <li>Inkscape installed, either on the laser PC or your own laptop</li>
+      <li>3 mm plywood or acrylic, at most about 3 mm thick (the Nolop store sells both, precut to the bed)</li>
+      <li>Time at the machine — the first cut always takes longer than the second</li>
+    </ul>
+  </div>
+
+  <h3>How the pieces fit together</h3>
+  <table class="examples">
+    <thead><tr><th>Piece</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><b>Onshape</b></td><td>Where you draw the part and export a DXF.</td></tr>
+      <tr><td><b>Inkscape</b></td><td>Where you open that DXF, fix the line widths, and set the colours. This is the step people get wrong, and it is the one that decides whether the laser cuts or merely scratches.</td></tr>
+      <tr><td><b>UCP</b></td><td>The laser's control software. It receives your file, shows it as a layout on the bed, and drives the machine.</td></tr>
+      <tr><td><b>The laser</b></td><td>A VLS3.60/75. It cuts wood, plastic, leather, and rubber. It will not cut metal.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><h2>Install Inkscape</h2></div>
+    <p>Inkscape is free and runs on macOS and Windows. You can install it on your own laptop to prepare files at home, and it is also installed on the laser PC at Nolop. Either works — the file you bring to the machine is just a DXF or SVG.</p>
+    <p>Download it from <span class="mono">inkscape.org</span> and run the installer. Accept the defaults; there is nothing to configure.</p>
+    <div class="callout tip"><b>Which version?</b> Inkscape 1.x is what Nolop uses. If you already have an older 0.9x version, update — the menus moved in 1.x, and this guide describes 1.x.</div>
+    <p>On the laser PC, Inkscape sits in the taskbar at the bottom of the screen:</p>
+    <figure class="wide">
+      <img src="shots/inkscape-taskbar.png" alt="The Windows taskbar with the Inkscape icon among the other application icons">
+      <figcaption><b>Figure 1.</b> On the laser PC, click the Inkscape icon in the taskbar. You can also install Inkscape for free on your own computer to prep your cut.</figcaption>
+    </figure>
+    <div class="callout warn"><b>The laser PC is shared.</b> Log in with the class account the staff give you, and log out when you are done. Do not save personal files to it — keep your work on your own drive or the shared folder the staff point you to.</div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><h2>Pick your material first</h2></div>
+    <p>Decide what you are cutting <i>before</i> you set up the file, because the thickness changes how the laser is focused and how much power it needs.</p>
+    <ul>
+      <li>The laser can cut most wood, plastic, leather, and rubber up to roughly <b>3 mm</b> thick.</li>
+      <li>It <b>cannot</b> cut metal — it is not powerful enough.</li>
+      <li>The bed is <b>300 × 600 mm</b>, about 12 × 24 inches.</li>
+      <li>The Nolop store sells 3 mm plywood and acrylic precut to the size of the bed, which is the easy option.</li>
+    </ul>
+    <div class="callout tip"><b>Work in millimetres.</b> Onshape exports in millimetres and the laser thinks in millimetres. Import and export your files in mm so nothing needs converting.</div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">3</div><h2>Open your DXF in Inkscape</h2></div>
+    <p>Start Inkscape, then <span class="ui">File</span> → <span class="ui">Open</span> and pick your DXF. Inkscape can read both DXF and SVG.</p>
+    <p>DXF import asks how to interpret the file. The important setting is <b>Method of Scaling</b> — choose <span class="ui">Read from file</span> so Inkscape trusts the units recorded in the DXF rather than guessing.</p>
+    <figure class="wide">
+      <img src="shots/inkscape-dxf-import.png" alt="The Inkscape DXF import dialog with Read from file selected as the Method of Scaling">
+      <figcaption><b>Figure 2.</b> In the import dialog, set Method of Scaling to <b>Read from file</b>. Leave the rest alone.</figcaption>
+    </figure>
+    <p>If a second dialog appears about character encoding or text, just press <span class="ui">OK</span> — it is only reporting that text was interpreted.</p>
+    <div class="callout warn"><b>Check the size before you cut anything.</b> Measure your drawing in Inkscape (see Step 5) and confirm it matches the real part. If it came in at the wrong scale, delete it, reopen the DXF, and check the scaling setting above.</div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">4</div><h2>Fix the line width</h2></div>
+    <p>A DXF stores lines as mathematical curves with almost no width. When Inkscape opens it, those lines can be invisible or hair-thin. The laser wants them thin too — <b>hairline</b> — but it needs to be able to see them.</p>
+    <ol>
+      <li>Select everything: <span class="keycap">Ctrl</span>+<span class="keycap">A</span> (on a Mac, <span class="keycap">⌘</span>+<span class="keycap">A</span>).</li>
+      <li>Open <span class="ui">Object</span> → <span class="ui">Fill and Stroke…</span></li>
+      <li>In the dialog, choose the <span class="ui">Stroke style</span> tab.</li>
+      <li>Set <b>Width</b> to <span class="ui">Hairline</span>.</li>
+    </ol>
+    <p>The Fill and Stroke dialog docks on the right of the window. If you cannot find it, it is the same dialog you will use in the next two steps.</p>
+    <figure class="half">
+      <img src="shots/inkscape-stroke-width.png" alt="The Inkscape Fill and Stroke dialog on the Stroke style tab, with Width set to Hairline">
+      <figcaption><b>Figure 3.</b> Stroke style → Width → <b>Hairline</b>.</figcaption>
+    </figure>
+    <div class="callout tip"><b>Why hairline?</b> The laser follows the centre of the line it is given. A thick line gives it nothing useful to follow, and can make it fire twice. Hairline means "treat this as a path, not a shape".</div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">5</div><h2>Set the colours the laser reads</h2></div>
+    <p>This is the step that matters most. UCP decides what to do with each line by its <b>colour</b>:</p>
+
+    <div class="swatches">
+      <div class="swatch">
+        <div class="chip red"></div>
+        <b>Red</b>
+        <span>cut through<br>RGB 255, 0, 0</span>
+      </div>
+      <div class="swatch">
+        <div class="chip blue"></div>
+        <b>Blue</b>
+        <span>shallow cut / score<br>RGB 0, 0, 255</span>
+      </div>
+      <div class="swatch">
+        <div class="chip black"></div>
+        <b>Black</b>
+        <span>engrave (raster)<br>RGB 0, 0, 0</span>
+      </div>
+    </div>
+
+    <p>To set a line's colour:</p>
+    <ol>
+      <li>Select the lines you want to change. If the whole drawing came in as one group, <span class="ui">Object</span> → <span class="ui">Ungroup</span> first so you can select individual lines.</li>
+      <li>In <span class="ui">Fill and Stroke…</span>, open the <span class="ui">Fill</span> tab and click the <b>X</b> so the fill is set to <b>No paint</b>. A filled shape would be treated as an engrave, not a cut.</li>
+      <li>Open the <span class="ui">Stroke paint</span> tab. Choose the flat colour button (not gradient), then set the exact RGB values for the operation you want.</li>
+      <li>Confirm the line is <b>100% opaque</b>. A semi-transparent line is a different colour as far as the laser is concerned.</li>
+    </ol>
+
+    <div class="figrow">
+      <figure>
+        <img src="shots/inkscape-no-paint.png" alt="The Inkscape Fill and Stroke dialog with the Fill tab showing No paint selected, and the drawing on canvas with a dashed selection outline">
+        <figcaption><b>No paint for fill.</b> Cuts are paths, not filled shapes — a filled shape would engrave.</figcaption>
+      </figure>
+      <figure>
+        <img src="shots/inkscape-stroke-red.png" alt="The Inkscape Stroke paint tab with Flat color selected and the RGB values 255, 0, 0 typed in">
+        <figcaption><b>Pure red for cuts.</b> Type the exact numbers: R 255, G 0, B 0.</figcaption>
+      </figure>
+    </div>
+
+    <p>For a shallow cut or score line, the same dialog but pure blue — R 0, G 0, B 255:</p>
+    <figure class="half">
+      <img src="shots/inkscape-stroke-blue.png" alt="The Inkscape Stroke paint tab with Flat color selected and the RGB values 0, 0, 255 typed in">
+      <figcaption><b>Figure 4.</b> Blue scores instead of cutting through.</figcaption>
+    </figure>
+
+    <div class="figrow">
+      <figure>
+        <img src="shots/inkscape-operation-legend.png" alt="A legend showing a red outlined square labelled Cut, a blue outlined square labelled Shallow Cut, and a photograph labelled Raster (everything else)">
+        <figcaption><b>The three operations.</b> Red cuts, blue scores, everything else rasters.</figcaption>
+      </figure>
+      <figure>
+        <img src="shots/ucp-workplane-colors.png" alt="UCP showing a red cut path, a blue score path, and a black engraved image side by side on the work plane">
+        <figcaption><b>How UCP sees them.</b> One file, three separate operations.</figcaption>
+      </figure>
+    </div>
+
+    <div class="callout warn"><b>Zoom in and check.</b> After recolouring, zoom into a corner of your drawing and confirm the lines really are pure red or pure blue — not dark red, not purple. If UCP later shows the wrong colours, come back here first: it is almost always this step.</div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">6</div><h2>Check the size and scale</h2></div>
+    <p>Before you send anything to the laser, confirm your part is the size you designed and fits on the bed.</p>
+    <ul>
+      <li>Use <span class="ui">Object</span> → <span class="ui">Transform…</span> or the selection tool's toolbar to read the width and height of your drawing in millimetres.</li>
+      <li>Compare against your Onshape sketch. <b>If it is wrong, fix it here</b> — it is much harder to correct inside UCP.</li>
+      <li>Keep everything inside <b>300 × 600 mm</b>. Leave a margin at the edges so your part is not at the very corner of the sheet.</li>
+    </ul>
+    <div class="callout tip"><b>One habit worth having:</b> draw a small rectangle around your whole drawing in a colour you are not using, and delete it once you have confirmed the size. It gives you something obvious to measure against.</div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">7</div><h2>Print the file to the laser</h2></div>
+    <p>Inkscape sends the job to the laser through a normal print dialog — Inkscape thinks it is printing to a paper printer, and the laser driver takes over from there.</p>
+    <ol>
+      <li>Press <span class="keycap">Ctrl</span>+<span class="keycap">P</span> (<span class="keycap">⌘</span>+<span class="keycap">P</span> on a Mac).</li>
+      <li>Choose the printer called <b>VLS3.60/75</b>.</li>
+      <li>Check the preview in the bottom left of the print window looks right, then click <span class="ui">Print</span>.</li>
+    </ol>
+    <div class="callout tip"><b>Clicking Print will not start the laser.</b> It only sends the file to UCP. The machine does nothing until you press the green run button in Step 11, with the lid closed.</div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">8</div><h2>Find your job in UCP</h2></div>
+    <p>UCP (the red icon in the taskbar) should open automatically and show your file. If it does not, click its icon in the taskbar to bring it up.</p>
+    <figure class="wide">
+      <img src="shots/ucp-job-loaded.png" alt="The UCP control panel with a red cut path, a blue score path and a black engraved image loaded on the work plane">
+      <figcaption><b>Figure 5.</b> Your drawing arrives in UCP laid out on the bed. The white area represents the laser bed itself.</figcaption>
+    </figure>
+    <p>Confirm every operation arrived: your cuts red, your scores blue, your engraves black. Nothing missing.</p>
+    <div class="callout warn"><b>If the file is missing or the colours are wrong:</b> go back to Step 7 and print again, checking that the print preview looks correct and no error appears. Then re-check the line colours and opacity from Step 5. Those two causes cover almost every case.</div>
+  </div>
+
+  <!-- STEP 9 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">9</div><h2>Set the material and thickness</h2></div>
+    <p>Open the settings menu at the bottom right of UCP. This is where you tell the laser what it is cutting.</p>
+    <ol>
+      <li>Click the <span class="ui">Materials Database</span> tab at the top of the menu.</li>
+      <li>Find your material. The two you are most likely to use:
+        <ul>
+          <li><b>Birch plywood</b> — <span class="mono">Natural → Wood → Medium Wood → Birch</span></li>
+          <li><b>Cast acrylic</b> — <span class="mono">Plastic → Acrylic → Cast Acrylic → Cast Acrylic</span></li>
+        </ul>
+      </li>
+      <li>Type the thickness — usually <b>3.00 mm</b>.</li>
+      <li>Click <span class="ui">Apply</span> to load the defaults for that material.</li>
+    </ol>
+    <figure class="wide">
+      <img src="shots/ucp-materials-database.png" alt="The UCP Materials Database tab with Birch selected in the material tree and material thickness set to 3.00 mm">
+      <figcaption><b>Figure 6.</b> Pick the material, set the thickness, then Apply.</figcaption>
+    </figure>
+    <div class="callout warn"><b>The stored settings are not always right.</b> The whiteboards near each laser have more accurate power and speed settings for cutting wood and acrylic than the built-in database. <b>Read the whiteboard and use its numbers.</b></div>
+  </div>
+
+  <!-- STEP 10 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">10</div><h2>Set the power and speed yourself</h2></div>
+    <p>Because the database defaults may be off, set the cutting values by hand from the whiteboard:</p>
+    <ol>
+      <li>Open the <span class="ui">Manual Control</span> tab of the settings dialog.</li>
+      <li>Click the <span class="ui">Red</span> colour row.</li>
+      <li>Set the <b>power</b> and <b>speed</b> for the laser you are using, from the whiteboard.</li>
+      <li>Click <span class="ui">Set</span>.</li>
+      <li>Click <span class="ui">Apply</span>.</li>
+      <li>Click <span class="ui">OK</span> to close the dialog.</li>
+    </ol>
+    <figure class="wide">
+      <img src="shots/ucp-manual-control.png" alt="The UCP Manual Control tab showing the Red colour row highlighted with power 100 percent and speed 16 percent, and Set, Apply and OK buttons">
+      <figcaption><b>Figure 7.</b> Manual Control: pick the colour, set power and speed, then Set → Apply → OK.</figcaption>
+    </figure>
+  </div>
+
+  <!-- STEP 11 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">11</div><h2>Position the job on the material</h2></div>
+    <p>UCP's white canvas represents the laser bed, but it does not know where your sheet of material physically sits. You have to line the two up.</p>
+    <p>The trick is the <b>Focus View</b> tool, which shows where the laser head is and where your mouse is. Clicking on the canvas moves the head to that spot, and while the lid is open the laser projects a <b>red dot</b> straight down onto the material — so you can see exactly where a point in your drawing will land.</p>
+    <ol>
+      <li>Click <span class="ui">Focus View</span> on the right middle of the screen. It shows the laser head position and the mouse position relative to the top-left corner of the bed.</li>
+      <li>Move the laser head to the spot on your material that you want to be the <b>top-left corner</b> of your cuts. You should see the red dot land there.</li>
+      <li>Your imported file has small handle nodes around it. Drag the file by a node so that its top-left corner sits on that point.</li>
+      <li>Or click the node, then click <span class="ui">To Pointer</span> in the bottom right to move the highlighted node straight to the laser head's current position.</li>
+      <li>Click near each corner of your cuts in Focus View, and watch the red dot. Every corner must be <b>on the bed</b> and <b>on your material</b>.</li>
+    </ol>
+    <div class="figrow">
+      <figure>
+        <img src="shots/ucp-to-pointer.png" alt="The UCP To Pointer, Settings and Close buttons in the bottom right of the window">
+        <figcaption><b>To Pointer.</b> Sends the selected node to the laser head.</figcaption>
+      </figure>
+      <figure>
+        <img src="shots/ucp-run-controls.png" alt="The UCP run controls showing the green play button, pause button, arrow buttons and Home xy and Home z buttons">
+        <figcaption><b>Movement and run controls.</b> Arrows jog the head; green plays the job.</figcaption>
+      </figure>
+    </div>
+    <div class="callout warn"><b>Check outward, not exactly.</b> Bias your corner checks a few millimetres <i>outside</i> the cut, so you are confirming there is material around the part, not just underneath the line. Check that no corner is off the bed or over a hole in your material.</div>
+  </div>
+
+  <!-- STEP 12 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">12</div><h2>Focus the laser</h2></div>
+    <p>If the laser is not focused on the surface of your material, it may not cut all the way through.</p>
+    <ol>
+      <li>Take the focusing gauge from the left side of the laser.</li>
+      <li>Stand its black base on the material you are cutting.</li>
+      <li>Using the arrow buttons on the control panel at the front right of the laser, move the bed up or down until the laser head starts to knock the white part of the gauge to the side.</li>
+      <li>Remove the gauge.</li>
+    </ol>
+    <figure class="wide">
+      <img src="shots/laser-focus-controls.png" alt="The laser's control panel showing the green start button and the up and down arrow buttons used to move the bed">
+      <figcaption><b>Figure 8.</b> The arrow buttons move the bed up and down. The arrows indicate which way the bed moves when pressed.</figcaption>
+    </figure>
+    <div class="callout tip"><b>Once per material, not once per cut.</b> You only focus at the start of a session and whenever you change material thickness. Cutting several parts from the same sheet does not need re-focusing.</div>
+  </div>
+
+  <!-- STEP 13 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">13</div><h2>Start the cut</h2></div>
+    <ol>
+      <li><b>Close the lid.</b> The laser will not run with it open, and it should not.</li>
+      <li>Back in UCP, click the <b>green arrow</b> (run button) at the upper right of the window.</li>
+      <li><b>Stay with the machine</b> until the job finishes.</li>
+    </ol>
+    <div class="callout warn"><b>Never leave the laser unattended.</b> Sometimes the laser sets your material on fire. There is a fire blanket on the side of each laser, and it works well — but only if you are standing there to notice and use it. The blanket will not deploy itself.</div>
+    <figure class="half">
+      <img src="shots/laser-lid-open.jpg" alt="The laser cutter with its lid open, showing the honeycomb bed inside and the blue safety glass on the front">
+      <figcaption><b>Figure 9.</b> The honeycomb bed inside the laser. Close the lid before you start the job — the machine will not run with it open.</figcaption>
+    </figure>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <div class="step">
+    <h3>Questions people actually ask</h3>
+    <table class="flow">
+      <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+      <tbody>
+        <tr><td>Why can't I leave the laser unattended?</td><td>Because sometimes the laser sets your material on fire. There is a fire blanket on the side of each laser, which works great if you are there to detect the fire. It will not deploy itself.</td></tr>
+        <tr><td>What if I need to cut something really thick or really big?</td><td>The laser across the street in Bray is more powerful and has a larger bed.</td></tr>
+        <tr><td>My drawing opened at the wrong size. What went wrong?</td><td>The DXF scaling. Re-open it and choose <b>Read from file</b> as the Method of Scaling, then measure again in Inkscape before printing.</td></tr>
+        <tr><td>My file isn't showing up in UCP.</td><td>Print again from Inkscape (Step 7) and check the print preview and any error message. Then verify the line colours and that opacity is 100% (Step 5).</td></tr>
+        <tr><td>The colours look right in Inkscape but wrong in UCP.</td><td>Almost always opacity. A line that is 90% red is not pure red. Set opacity to 100%.</td></tr>
+        <tr><td>Can I prepare files on my own laptop?</td><td>Yes. Install Inkscape at home, do Steps 1–10 there, and bring the DXF or SVG in. You still have to do Steps 11–13 at the machine.</td></tr>
+        <tr><td>Have a question that isn't here?</td><td>Come up to the staff desk at Nolop and an employee will be happy to help.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GLOSSARY -->
+  <div class="step" style="break-inside: avoid;">
+    <h3>Words you'll see</h3>
+    <table class="glossary">
+      <tbody>
+        <tr><td>DXF</td><td>The file format Onshape exports for laser cutting. It stores your drawing as lines and curves, without colour or width — which is why you fix those in Inkscape.</td></tr>
+        <tr><td>SVG</td><td>Inkscape's native format. Also accepted by UCP, and a good choice if you want to save a version with your colours already set.</td></tr>
+        <tr><td>Hairline</td><td>The thinnest possible stroke width. Tells the laser to follow the line rather than treat it as a shape.</td></tr>
+        <tr><td>Vector / raster</td><td>A vector is a path the laser follows — that is cutting and scoring. A raster is an image the laser sweeps back and forth like a printer — that is engraving.</td></tr>
+        <tr><td>Shallow cut / score</td><td>A cut that only marks the surface. Drawn in blue.</td></tr>
+        <tr><td>UCP</td><td>Universal Control Panel — the software that talks to the laser.</td></tr>
+        <tr><td>Focus</td><td>Setting the bed height so the laser's beam is sharpest at the surface of your material.</td></tr>
+        <tr><td>Raster</td><td>An engraving pass. Anything in your file that is not a red or blue line ends up here.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Where everything lives</h3>
+    <table>
+      <thead><tr><th>What you want</th><th>Where to find it</th></tr></thead>
+      <tbody>
+        <tr><td>Inkscape, free download</td><td><span class="mono">inkscape.org</span></td></tr>
+        <tr><td>Inkscape on the laser PC</td><td>The taskbar at the bottom of the screen</td></tr>
+        <tr><td>UCP on the laser PC</td><td>The red icon in the taskbar</td></tr>
+        <tr><td>Accurate power and speed settings</td><td>The whiteboards next to each laser — more accurate than the built-in materials database</td></tr>
+        <tr><td>Material</td><td>The Nolop store sells 3 mm plywood and acrylic precut to the bed size</td></tr>
+        <tr><td>Help</td><td>The staff desk at Nolop</td></tr>
+        <tr><td>The Class 3 slides</td><td><a href="../classes/class-03/">tuftsmaker.github.io/ENT-164/classes/class-03/</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <b>Source and credit.</b> This guide follows the <b>Nolop Makerspace laser cutting guide</b> (Tufts University), adapted for ENT-164 with Inkscape replacing Adobe Illustrator. The UCP screenshots are from that guide. Nolop guide contributors: Yufeng Wu, Jeremy Kanovsky, Brandon Stafford, Aiden Auretto, Sara Murillo. Licensed Creative Commons BY-SA.
+  </div>
+
+  <div class="doc-footer"><img class="foot-mark" src="shots/class-hammer-blue.svg" alt="">ENT-164 · Intro to Making — Laser cutting at Nolop with Inkscape · Beginner's guide · Fall 2026</div>
+</div>
+
+</body>
+</html>

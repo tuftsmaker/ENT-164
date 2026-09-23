@@ -197,15 +197,29 @@ the manual; this is the contract.
   PDF with headless Chrome after editing. It is US Letter and must stay on one
   page — check with `pdftotext -f 2 -l 2 ...` (anything printed = it spilled).
 - `add-class-tools/guide.html` is the fuller web version of that one-pager,
-  with figures and its own A4 `add-class-tools-to-opencode.pdf`. Edit both
+  with figures and its own US Letter `add-class-tools-to-opencode.pdf`. Edit both
   together when the instructions change, and rebuild the guide PDF with
   headless Chrome (`--headless=new --no-pdf-header-footer
   --print-to-pdf=add-class-tools/add-class-tools-to-opencode.pdf`).
+- **Guide pages are US Letter, not A4.** The class is at a US university and
+  students print these. `assets/guide.css` sets `@page { size: Letter }` and
+  sizes the on-screen page column to 215.9mm; the `.cover` height is 279.4mm
+  and must stay equal to the Letter content height, or the cover spills onto a
+  blank second page. If you change the page size, change all three together and
+  rebuild **every** guide PDF — `add-class-tools`, both `opencode-deepseek-guide-*`
+  and `laser-cutting` are all built from that one stylesheet. Verify with
+  `pdfinfo <pdf> | grep 'Page size'` (expect `612 x 792 pts (letter)`).
+- `laser-cutting/guide.html` is the Nolop laser-cutting walkthrough (Inkscape →
+  UCP → cut), built on the official Nolop Makerspace guide. Its `shots/`
+  contains screenshots reused from that guide under CC BY-SA, with credit kept
+  in the page footer — retain the attribution if you move or reuse them.
+  Class 3's deck and page draw their Inkscape/UCP screenshots from here, so
+  editing a shot means copying it into `classes/class-03/shots/` too.
 
 ## Class web pages
 
 - `assets/site.css` is the shared light theme for the hub, syllabus, about and
-  class pages; `assets/guide.css` is the same theme for the guide pages (A4
+  class pages; `assets/guide.css` is the same theme for the guide pages (US Letter
   print). Both follow the slide decks' palette. Style pages through these
   files — do not reintroduce per-page `<style>` blocks.
 - Photography on the site comes from the instructor's own class photos

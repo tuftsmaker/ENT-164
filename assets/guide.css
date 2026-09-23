@@ -22,7 +22,7 @@
   --blue-tint: #f2f7fd;
   --blue-tint-2: #eaf3fd;
 }
-@page { size: A4; margin: 0; }
+@page { size: Letter; margin: 0; }
 * { box-sizing: border-box; }
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 body {
@@ -37,7 +37,9 @@ body {
 
 /* ---------- cover ---------- */
 .cover {
-  height: 297mm;
+  /* US Letter content height: 11in = 279.4mm. Must match @page size above,
+     or the cover spills onto a second page. */
+  height: 279.4mm;
   background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
   color: var(--text);
   padding: 22mm 20mm 14mm;
@@ -149,13 +151,14 @@ tr:last-child td { border-bottom: none; }
 @media (max-width: 640px) { .site-nav .brand small { display: none; } }
 @media print { .site-nav { display: none !important; } }
 
-/* On screen the guide is a document: keep it at A4 width so lines stay a
+/* On screen the guide is a document: keep it at Letter width so lines stay a
    comfortable reading length, centred on a soft page background. Print and
-   the generated PDFs already use A4 and are not affected by this block. */
+   the generated PDFs use US Letter (215.9 x 279.4 mm) and are not affected by
+   this block. */
 @media screen {
   body { background: var(--paper-2); }
-  .cover, .page { width: 210mm; max-width: 100%; margin-left: auto; margin-right: auto; }
+  .cover, .page { width: 215.9mm; max-width: 100%; margin-left: auto; margin-right: auto; }
   .cover { box-shadow: 0 1px 0 rgba(13, 21, 38, 0.05), 0 16px 40px rgba(13, 21, 38, 0.07); }
   .page { margin-top: 24px; margin-bottom: 64px; box-shadow: 0 1px 0 rgba(13, 21, 38, 0.05), 0 16px 40px rgba(13, 21, 38, 0.07); }
-  .site-nav { padding-left: max(16px, calc((100vw - 210mm) / 2)); padding-right: max(16px, calc((100vw - 210mm) / 2)); }
+  .site-nav { padding-left: max(16px, calc((100vw - 215.9mm) / 2)); padding-right: max(16px, calc((100vw - 215.9mm) / 2)); }
 }
