@@ -91,16 +91,16 @@ the manual; this is the contract.
   a fresh `session new` is cheaper than reusing a broken one. Recording needs
   five consecutive operations (setup, preflight, start, take, stop), so the
   connection has to hold for the whole take, not just one command.
-- **The legacy tip re-shoots are half done.** Under
+- **The legacy tip re-shoots are nearly done.** Under
   `tools/video-build/projects/onshape-tips/`, these have a `documentUrl`, a
   setup, a take and a finished MP4: `updating-dimensions`, `circle-to-cut-a-hole`,
-  `trim-tool`, `mirroring-entities`, `circle-on-a-corner`. Still to do (scripts
-  and narration are ready, no document/setup/take yet): `workspace-overview`
-  (its narration still describes the Create-a-document flow, which a take cannot
-  show — it opens a new tab — so it needs a re-tightened script), `basic-rectangle`
-  and `circle-in-the-center` (both need the sketch built on camera), and
-  `laser-cut-joints` (recovered narration is 68 words for 5:17, so it needs
-  writing rather than tightening).
+  `trim-tool`, `mirroring-entities`, `circle-on-a-corner`, `basic-rectangle` and
+  `circle-in-the-center`. Still to do (narration, cards and captions are ready,
+  no document/setup/take yet): `workspace-overview`, whose narration still
+  describes the Create-a-document flow — a take cannot show that, because
+  Onshape opens the new document in a new tab — so it needs a re-tightened
+  script; and `laser-cut-joints`, whose recovered narration is 68 words for a
+  5:17 original, so it needs writing rather than tightening.
 
 ## YouTube: uploads via API, credentials outside the repo (TuftsMaker)
 
