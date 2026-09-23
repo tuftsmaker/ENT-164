@@ -366,11 +366,16 @@ film.
   page (a class page's "Download slides"). A page's own sections go in a
   `.subnav` bar, or in the sidebar `On this page` block on class/syllabus pages —
   never both, because the same links twice is noise.
-- **The main links live in a `<details class="nav-menu">`.** At ≥881px CSS
-  makes it `display: contents` so the links lay out as a plain flex row; below
-  that it becomes a real dropdown. This is how the nav survives mobile without
-  JavaScript — the previous rules just `display: none`d the links, leaving a
-  phone with nothing but the CTA. Keep it JS-free.
+- **The main links are a checkbox-driven menu below 881px.** A hidden
+  `.nav-toggle` checkbox plus the `~` combinator shows/hides `.nav-links`; no
+  JavaScript. On wider screens the links are a plain flex row. Two hard-won
+  rules here: (1) do **not** put the links inside a `<details>` — a closed
+  `<details>` hides its children whatever CSS says about its `display`, so
+  `display: contents` on the desktop nav silently rendered it *empty*;
+  (2) the mobile menu exists because the old CSS `display: none`d every main
+  link, leaving a phone with nothing but the CTA. `verify-render.py` is the
+  only check that can see either failure, because it looks at painted pixels
+  rather than CSS properties — keep it in CI.
 - **Guide pages use a different component** (`site-nav`, from the same
   `MAIN_LINKS`) because those pages are printed: `guide.css` hides it in print.
   The class pages' `.pdf` CTAs are relative to the page, not the root.

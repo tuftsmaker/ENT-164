@@ -48,11 +48,12 @@ def main_nav(depth: int, cta_href: str, cta_label: str, active: str | None = Non
     action, e.g. a class page's "Download slides". `active` names the site
     section the page belongs to, so the current one can be marked.
 
-    The links sit inside a `<details>`, which on a wide screen is `display:
-    contents` (so it disappears and the links lay out as a normal flex row) and
-    on a narrow screen becomes a real menu button. No JavaScript: opencode's
-    audience should not need scripting for the nav, and the site has no other
-    JS on these pages.
+    On a wide screen the links are a plain flex row. On a narrow one they
+    collapse behind a "Menu" button, driven by a checkbox and the `~`
+    combinator — no JavaScript, and critically, no element whose *state* can
+    hide the links on a wide screen. (A previous attempt used `<details>`;
+    a closed `<details>` hides its children whatever CSS says about its
+    `display`, which rendered the desktop nav empty.)
     """
     root = root_prefix(depth)
     items = []
@@ -69,12 +70,14 @@ def main_nav(depth: int, cta_href: str, cta_label: str, active: str | None = Non
       {MARK_SVG}
       <span>ENT-164 <small>&middot; Intro to Making</small></span>
     </a>
-    <details class="nav-menu">
-      <summary aria-label="Site menu"><span>Menu</span></summary>
-      <div class="nav-links">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label">
+      <span class="nav-toggle-text">Menu</span>
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </label>
+    <div class="nav-links">
         {body}
-      </div>
-    </details>
+    </div>
   </div>
 </nav>"""
 

@@ -36,3 +36,5 @@ jobs:
         run: python3 tools/skill-tasks/catalog/build.py --check
       - name: Every nav link resolves, and every sub-nav anchor exists
         run: python3 tools/site-nav/verify-links.py
+      - name: The nav actually renders (real browser, two widths)
+        run: python3 tools/site-nav/verify-render.py
