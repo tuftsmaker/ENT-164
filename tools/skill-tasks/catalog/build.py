@@ -430,7 +430,7 @@ def catalog_page(tasks: list, unit: dict | None, units: list | None = None) -> s
       <span class="pill">Signed by a person</span>
     </div>
     <div class="cta-row reveal">
-      <a class="btn btn-primary" href="#map">See the map &rarr;</a>
+      <a class="btn btn-primary" href="#tracks">See the tracks &rarr;</a>
       <a class="btn btn-ghost" href="#tasks">Jump to the task list</a>
     </div>
   </div>
@@ -438,6 +438,24 @@ def catalog_page(tasks: list, unit: dict | None, units: list | None = None) -> s
 
 <main>
   {subnav("catalog")}
+  <section id="tracks" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head left"><h2>The tracks</h2></div>
+      <div class="track-grid">
+        {chr(10).join(track_card(u, tasks) for u in (units or []))}
+      </div>
+      <div class="callout" style="margin-top:26px;">
+        <h3 style="margin-top:0;">What a track is</h3>
+        <p>Every skill the course teaches has a track: a set of tasks, each one a video, a
+        thing you make, and a signoff. opencode checks your file on your own machine, a TA
+        signs each task off, and when every task in the track is signed it is yours.
+        <b>Laser-Ready File is open now.</b> The other {len([u for u in (units or []) if u.get("status") == "planned"])} are
+        written down so you can see where the semester is going — their videos and checks are
+        still being built.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="map">
     <div class="wrap">
       <div class="section-head">
@@ -451,20 +469,6 @@ def catalog_page(tasks: list, unit: dict | None, units: list | None = None) -> s
       <p class="tm-caption">Every task is one video and one file. The last step is not a file at
       all: you cut one of your own parts at Nolop, with a TA watching. That is what turns {n}
       signed tasks into the qualification.</p>
-    </div>
-  </section>
-
-  <section id="tracks" style="padding-top:0;">
-    <div class="wrap">
-      <div class="section-head left"><h2>The tracks</h2></div>
-      <p class="lede">Every skill the course teaches has a track: a set of tasks, each one a
-      video, a thing you make, and a signoff. Finish the tasks and the track is yours.
-      <b>Laser-Ready File is open now.</b> The other {len([u for u in (units or []) if u.get("status") == "planned"])} are
-      written down so you can see where the semester is going — their videos and checks are
-      still being built.</p>
-      <div class="track-grid">
-        {chr(10).join(track_card(u, tasks) for u in (units or []))}
-      </div>
     </div>
   </section>
 
