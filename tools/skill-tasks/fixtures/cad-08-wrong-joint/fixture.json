@@ -1,0 +1,10 @@
+{
+  "task": "cad-08-laser-joints",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "joints"
+    ]
+  },
+  "note": "2 mm joints against 3 mm material \u2014 too small by 1 mm"
+}

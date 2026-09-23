@@ -29,7 +29,11 @@ import nav as site_nav  # noqa: E402
 TASKS_DIR = REPO / "tasks"
 SITE = "https://tuftsmaker.github.io/ENT-164"
 
-NAV = site_nav.main_nav(1, "./", "Start with task 1 &rarr;", "tasks")
+def nav(cta_href="./", cta_label="Start with task 1 &rarr;"):
+    """The task pages share the site nav, but each carries its own call to
+    action: an open track goes to its first task, a planned one back to the
+    tracks, and the catalog to task 1."""
+    return site_nav.main_nav(1, cta_href, cta_label, "tasks")
 
 FOOTER = """\
 <footer>
@@ -82,6 +86,19 @@ HEAD = """\
   .tm-svg .tm-node:hover text {{ fill: var(--blue-deep); }}
   .tm-caption {{ max-width: 680px; margin: 16px auto 0; text-align: center; color: var(--muted); font-size: 14.5px; }}
   .tm-empty {{ color: var(--muted); text-align: center; padding: 30px; }}
+  /* Tracks: one card per skill. A planned track is dimmed and says so, so the
+     page can document what is coming without implying it is available. */
+  .track-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }}
+  .track-card {{ position: relative; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); padding: 20px 22px; }}
+  .track-card h3 {{ margin: 10px 0 8px; font-size: 1.05rem; }}
+  .track-card p {{ margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }}
+  .track-card .track-meta {{ font-size: 13px; color: var(--muted); margin-bottom: 14px; }}
+  .track-card .track-badge {{ display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; }}
+  .track-card.active .track-badge {{ color: var(--blue-deep); background: var(--blue-tint); }}
+  .track-card.active {{ border-color: #cfe1f7; }}
+  .track-card.planned {{ background: var(--paper-2); border-style: dashed; }}
+  .track-card.planned .track-badge {{ color: #8a5a00; background: #fff4e0; }}
+  .track-card.planned h3 {{ color: var(--muted-2); }}
 </style>
 </head>
 <body class="page-class">
@@ -223,7 +240,7 @@ def task_page(task: dict, all_tasks: dict) -> str:
         if i < len(siblings) - 1:
             next_link = f'<a class="btn btn-primary btn-sm" href="{esc(siblings[i+1]["id"])}.html">{esc(siblings[i+1]["title"])} &rarr;</a>'
 
-    return HEAD.format(title=esc(task["title"]), description=esc(task["spec"])) + NAV + f"""
+    return HEAD.format(title=esc(task["title"]), description=esc(task["spec"])) + nav() + f"""
 <header class="hero">
   <div class="wrap">
     <p class="kicker reveal">Task {task.get('order','')} &middot; Laser-Ready File</p>
@@ -298,7 +315,7 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
         (t for t in all_tasks.values() if t.get("kind") != "unit"),
         key=lambda t: t.get("order", 99),
     )
-    return HEAD.format(title=esc(unit["title"]), description=esc(unit.get("summary", ""))) + NAV + f"""
+    return HEAD.format(title=esc(unit["title"]), description=esc(unit.get("summary", ""))) + nav() + f"""
 <header class="hero">
   <div class="wrap">
     <p class="kicker reveal">Qualification</p>
@@ -306,7 +323,7 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
     <p class="lead reveal">{esc(unit.get("summary","").strip())}</p>
     <div class="pills reveal">
       <span class="pill">{len(unit["tasks"])} tasks</span>
-      <span class="pill">Six DXFs</span>
+      <span class="pill">{len(unit["tasks"])} DXFs</span>
       <span class="pill">One supervised cut</span>
     </div>
   </div>
@@ -355,7 +372,8 @@ def unit_page(unit: dict, all_tasks: dict) -> str:
 """
 
 
-def catalog_page(tasks: list, unit: dict | None) -> str:
+def catalog_page(tasks: list, unit: dict | None, units: list | None = None) -> str:
+    n = len(tasks)
     rows = []
     for t in tasks:
         rows.append(
@@ -368,7 +386,7 @@ def catalog_page(tasks: list, unit: dict | None) -> str:
     if unit:
         unit_line = f"""\
       <div class="callout" style="margin-top:26px;">
-        <h3 style="margin-top:0;">These six tasks are one qualification</h3>
+        <h3 style="margin-top:0;">These {n} tasks are one qualification</h3>
         <p>{esc(unit.get("summary","").strip().replace(chr(10), " "))}</p>
         <div class="cta-row" style="margin-top:14px;">
           <a class="btn btn-primary" href="unit-laser-ready.html">See the qualification &rarr;</a>
@@ -376,17 +394,17 @@ def catalog_page(tasks: list, unit: dict | None) -> str:
       </div>"""
     return HEAD.format(
         title="Maker skills tasks",
-        description="Six short tasks that take you from a blank Onshape document to a laser-ready DXF, each signed off against written criteria.",
-    ) + NAV + f"""
+        description=f"{n} short tasks that take you from a blank Onshape document to a laser-ready DXF, each signed off against written criteria.",
+    ) + nav() + f"""
 <header class="hero">
   <div class="wrap">
     <p class="kicker reveal">Maker skills tasks</p>
     <h1 class="reveal">Watch it, make it,<br><span class="accent">get it signed off</span></h1>
     <p class="lead reveal">Each task is a short video, one file you make yourself, and written
     criteria your file is checked against. Pass the checks, hand it in, and a TA signs the task
-    off. Six tasks make the Laser-Ready File qualification.</p>
+    off. {n} tasks make the Laser-Ready File qualification.</p>
     <div class="pills reveal">
-      <span class="pill">6 tasks</span>
+      <span class="pill">{n} tasks</span>
       <span class="pill">Onshape &rarr; DXF</span>
       <span class="pill">Checked on your own machine</span>
       <span class="pill">Signed by a person</span>
@@ -404,14 +422,14 @@ def catalog_page(tasks: list, unit: dict | None) -> str:
     <div class="wrap">
       <div class="section-head">
         <h2>The whole thing on one page</h2>
-        <p>Six tasks, each building on the last. Follow the arrows — a task unlocks once the
+        <p>{n} tasks, each building on the last. Follow the arrows — a task unlocks once the
         ones pointing at it are signed off.</p>
       </div>
       <div class="tm-wrap">
         {task_map_svg(tasks, unit)}
       </div>
       <p class="tm-caption">Every task is one video and one file. The last step is not a file at
-      all: you cut one of your own parts at Nolop, with a TA watching. That is what turns six
+      all: you cut one of your own parts at Nolop, with a TA watching. That is what turns {n}
       signed tasks into the qualification.</p>
     </div>
   </section>
@@ -426,6 +444,19 @@ def catalog_page(tasks: list, unit: dict | None) -> str:
         {chr(10).join(rows)}
       </div>
 {unit_line}
+    </div>
+  </section>
+
+  <section id="tracks" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head left"><h2>The tracks</h2></div>
+      <p class="lede">One track per skill the course teaches. A track is a set of
+      tasks; sign each one and the track is yours. You are working on the first
+      one now — the others are written down so you can see where the course is
+      going.</p>
+      <div class="track-grid">
+        {chr(10).join(track_card(u, tasks) for u in (units or []))}
+      </div>
     </div>
   </section>
 
@@ -457,21 +488,123 @@ def catalog_page(tasks: list, unit: dict | None) -> str:
 """
 
 
+def planned_unit_page(unit: dict) -> str:
+    """A track that is documented but not built. Shown dimmed, with no tasks to
+    click: the point is that students and the instructor can see what is coming
+    and why, not that they can start it."""
+    planned = unit.get("planned_tasks") or []
+    rows = []
+    for item in planned:
+        rows.append(
+            f'<div class="criterion"><span class="auto human">Planned</span>'
+            f'<h4>{esc(item.get("title",""))}</h4>'
+            f'<p>{esc(item.get("video",""))}</p>'
+            f'<p><b>Evidence:</b> {esc(item.get("evidence",""))}</p>'
+            f'<p><b>Would check:</b> {esc(item.get("checks",""))}</p></div>'
+        )
+    needs = unit.get("needs", "").strip()
+    supervised = unit.get("supervised") or {}
+    return HEAD.format(
+        title=esc(unit["title"]),
+        description=esc(unit.get("summary", "").strip().replace("\n", " ")),
+    ) + nav("./", "All tracks &rarr;") + f"""
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker reveal">Track &middot; planned</p>
+    <h1 class="reveal">{esc(unit["title"])}</h1>
+    <p class="lead reveal">{esc(unit.get("summary","").strip())}</p>
+    <div class="pills reveal">
+      <span class="pill">Not available yet</span>
+      <span class="pill">{len(planned)} tasks planned</span>
+      <span class="pill">Signed off by a TA</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap">
+      <div class="callout warn">
+        <b>This track is not open yet.</b> The tasks below are what it will
+        contain, written down so the shape of it is clear. The videos have not
+        been recorded and the checks have not been built, so nothing here can be
+        submitted or signed off.
+      </div>
+
+      <div class="section-head left"><h2>Why this track</h2></div>
+      {para(unit.get("why",""))}
+
+      <div class="section-head left"><h2>What it will contain</h2></div>
+      <div class="criteria">
+        {chr(10).join(rows)}
+      </div>
+
+      <div class="section-head left" style="margin-top:40px;"><h2>Then: {esc(supervised.get('title','Supervised step'))}</h2></div>
+      {para(supervised.get("detail",""))}
+
+      <div class="section-head left" style="margin-top:40px;"><h2>What it needs first</h2></div>
+      {para(needs)}
+
+      <div class="cta-row" style="margin-top:24px;">
+        <a class="btn btn-ghost" href="index.html">&larr; All tracks</a>
+      </div>
+    </div>
+  </section>
+</main>
+{FOOTER}
+</body>
+</html>
+"""
+
+
+def track_card(unit: dict, tasks: list) -> str:
+    """One track on the catalog page. Active tracks link through; planned ones
+    are dimmed and say so."""
+    planned = unit.get("status") == "planned"
+    n = len(unit.get("planned_tasks") or []) if planned else len(
+        [t for t in tasks if t.get("unit") == unit["id"]]
+    )
+    label = "In development" if planned else "Open"
+    badge = "planned" if planned else "active"
+    body = esc(unit.get("summary", "").strip().replace("\n", " "))
+    if planned:
+        return f"""<article class="track-card {badge}">
+          <span class="track-badge">{label}</span>
+          <h3>{esc(unit["title"])}</h3>
+          <p>{body}</p>
+          <p class="track-meta">{n} tasks planned &middot; not yet available</p>
+          <a class="btn btn-ghost btn-sm" href="{esc(unit['id'])}.html">See the plan &rarr;</a>
+        </article>"""
+    return f"""<article class="track-card {badge}">
+          <span class="track-badge">{label}</span>
+          <h3>{esc(unit["title"])}</h3>
+          <p>{body}</p>
+          <p class="track-meta">{n} tasks &middot; signed off one at a time</p>
+          <a class="btn btn-primary btn-sm" href="{esc(unit['id'])}.html">Open the track &rarr;</a>
+        </article>"""
+
+
 def build(check_only=False) -> int:
     tasks = {}
-    unit = None
+    units = []
     for t in runner.list_tasks():
         if t.get("kind") == "unit":
-            unit = t
+            units.append(t)
         else:
             tasks[t["id"]] = t
 
+    units.sort(key=lambda u: u.get("order", 99))
+    active = next((u for u in units if u.get("status") != "planned"), None)
+
     ordered = sorted(tasks.values(), key=lambda t: t.get("order", 99))
-    pages = {"index.html": catalog_page(ordered, unit)}
+    pages = {"index.html": catalog_page(ordered, active, units)}
     for t in ordered:
         pages[f"{t['id']}.html"] = task_page(t, tasks)
-    if unit:
-        pages[f"{unit['id']}.html"] = unit_page(unit, tasks)
+    for unit in units:
+        if unit.get("status") == "planned":
+            pages[f"{unit['id']}.html"] = planned_unit_page(unit)
+        else:
+            pages[f"{unit['id']}.html"] = unit_page(unit, tasks)
 
     TASKS_DIR.mkdir(parents=True, exist_ok=True)
     stale = []

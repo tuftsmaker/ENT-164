@@ -4,7 +4,7 @@ A dependency graph built from each task's `prereqs`, so it cannot drift from
 the task files: change a prerequisite and the map redraws. Tasks sit in columns
 by how deep they are in the chain, and every node links to its task page.
 
-The bottom band is the part that is not a file: all six tasks signed, then one
+The bottom band is the part that is not a file: every task signed, then one
 supervised cut, then the qualification. It is drawn differently on purpose —
 that step happens at Nolop, with a person watching.
 """
@@ -27,7 +27,7 @@ TITLE_SIZE = 12.0
 TITLE_LINE = 15.0
 META_SIZE = 10.5
 
-GATE_GAP_BEFORE = 38  # space between the graph and the "all six" rule
+GATE_GAP_BEFORE = 38  # space between the graph and the "all tasks" rule
 GATE_GAP_AFTER = 30
 GATE_H = 58
 SUPERVISED_W = 210
@@ -123,7 +123,7 @@ def render_svg(tasks, unit=None) -> str:
     gate_y = rule_y + GATE_GAP_AFTER
     height = gate_y + GATE_H + 12
 
-    # -- the gate band: all six -> supervised cut -> qualification -------
+    # -- the gate band: every task -> supervised cut -> qualification -----
     gate_total = SUPERVISED_W + GATE_ARROW + QUALIFICATION_W
     gate_x = center_x - gate_total / 2
     supervised_x = gate_x
@@ -134,7 +134,7 @@ def render_svg(tasks, unit=None) -> str:
         f'role="img" aria-labelledby="tm-title tm-desc" '
         f'xmlns="http://www.w3.org/2000/svg">',
         "<title id=\"tm-title\">Maker skills task map</title>",
-        f'<desc id="tm-desc">Six tasks in their dependency order, then a '
+        f'<desc id="tm-desc">{len(tasks)} tasks in their dependency order, then a '
         f'supervised cut, then the {html.escape(str((unit or {}).get("title", "qualification")))} '
         f"qualification.</desc>",
         _defs(),
@@ -161,8 +161,8 @@ def render_svg(tasks, unit=None) -> str:
         x, y = positions[task["id"]]
         parts.append(_task_node(task, x, y))
 
-    # -- the rule that collects all six ----------------------------------
-    label = "all six tasks signed off"
+    # -- the rule that collects every task --------------------------------
+    label = "all {n} tasks signed off".format(n=len(tasks))
     label_w = len(label) * 5.6 + 26
     parts.append(
         f'<line x1="{MARGIN}" y1="{rule_y:.0f}" x2="{center_x - label_w/2:.0f}" '

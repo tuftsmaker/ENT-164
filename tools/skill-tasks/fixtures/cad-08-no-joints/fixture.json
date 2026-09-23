@@ -1,0 +1,10 @@
+{
+  "task": "cad-08-laser-joints",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "joints"
+    ]
+  },
+  "note": "a plain rectangle: no slots or fingers at all"
+}

@@ -1,0 +1,8 @@
+{
+  "task": "cad-08-laser-joints",
+  "expect": {
+    "verdict": "ready",
+    "fails": []
+  },
+  "note": "3 mm fingers matching the 3 mm measured material"
+}

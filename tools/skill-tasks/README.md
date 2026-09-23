@@ -169,7 +169,8 @@ Worth knowing before trusting a green report:
   a rubric whose rows are the criteria — the rubric assessment is the signoff
   record, in SpeedGrader, where a TA already works.
 - The **module** "Skill tasks · Laser-ready file" is the qualification view: all
-  six assignments complete means the six tasks are signed.
+  the laser track's assignments complete means its tasks are signed. The
+  other three tracks are `status: planned`: documented units with no tasks yet.
 - The Canvas client is read-mostly by design. `sync.py` creates and updates;
   `pull.py` only reads; `apply.py` is the only writer of grades, and only with
   `--reviewed`.
@@ -180,7 +181,7 @@ Worth knowing before trusting a green report:
 
 ## Status
 
-- Checker: 6 tasks, 21 fixtures, all agreeing.
+- Checker: 8 tasks, 27 fixtures, all agreeing.
 - Catalog: 8 pages generated.
 - Canvas: the group and module exist; assignments are created by `sync.py` and
   deliberately left unpublished until the pilot starts.

@@ -20,8 +20,8 @@ from __future__ import annotations
 # The site links. Order matters: it is the reading order of the site, not the
 # order the pages were built in.
 MAIN_LINKS = [
-    ("Tasks", "tasks/"),
     ("Workshops", "syllabus/#schedule"),
+    ("Tasks", "tasks/"),
     ("Syllabus", "syllabus/"),
     ("About", "about/"),
 ]
@@ -126,7 +126,7 @@ def sub_nav(sections: list, current: str | None = None) -> str:
 PAGES = {
     "index.html": ("syllabus/", "Start here &rarr;", None),
     "syllabus/index.html": (
-        "ENT164%20FA26%20Introduction%20to%20Making%20Syllabus.pdf", "Download PDF", "syllabus",
+        "ENT-164-Syllabus-Fall-2026.pdf", "Download PDF", "syllabus",
     ),
     "about/index.html": ("../opencode-deepseek-guide-mac/guide.html", "Start with opencode &rarr;", "about"),
     "onshape-tips/index.html": ("../laser-cutting/", "Laser cutting guide &rarr;", None),
@@ -137,8 +137,12 @@ PAGES = {
     "classes/class-04/index.html": ("ENT-164-Class-4-3D-Printing.pdf", "Download slides", None),
     "classes/class-05/index.html": ("ENT-164-Class-5-Electronics.pdf", "Download slides", None),
     "classes/class-06/index.html": ("ENT-164-Class-6-Connectivity-with-AI.pdf", "Download slides", None),
+    "classes/class-08/index.html": ("../../syllabus/#schedule", "Class 8 in the syllabus", None),
     "classes/class-09/index.html": ("ENT-164-Class-9-Final-Project-Kickoff.pdf", "Download slides", None),
+    "classes/class-10/index.html": ("../../syllabus/#schedule", "Class 10 in the syllabus", None),
     "classes/class-11/index.html": ("ENT-164-Class-11-Intelligent-Devices-with-AI.pdf", "Download slides", None),
+    "classes/class-12/index.html": ("../../syllabus/#schedule", "Class 12 in the syllabus", None),
+    "classes/class-13/index.html": ("../../syllabus/#schedule", "Class 13 in the syllabus", None),
 }
 
 # guide page -> (cta href, cta label)

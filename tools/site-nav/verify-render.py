@@ -43,7 +43,9 @@ PAGES = [
     "tasks/cad-03-cut-a-hole.html",
     "tasks/unit-laser-ready.html",
     "classes/class-03/index.html",
+    "classes/class-08/index.html",
     "classes/class-11/index.html",
+    "classes/class-13/index.html",
 ]
 
 WIDE, NARROW = 1200, 720

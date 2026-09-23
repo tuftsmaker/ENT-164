@@ -1,0 +1,10 @@
+{
+  "task": "cad-07-trim-tool",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "curved"
+    ]
+  },
+  "note": "no arc at all \u2014 the plain rectangle"
+}

@@ -35,6 +35,19 @@ left edge and 20 mm up from the bottom edge.
   .tm-svg .tm-node:hover text { fill: var(--blue-deep); }
   .tm-caption { max-width: 680px; margin: 16px auto 0; text-align: center; color: var(--muted); font-size: 14.5px; }
   .tm-empty { color: var(--muted); text-align: center; padding: 30px; }
+  /* Tracks: one card per skill. A planned track is dimmed and says so, so the
+     page can document what is coming without implying it is available. */
+  .track-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+  .track-card { position: relative; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); padding: 20px 22px; }
+  .track-card h3 { margin: 10px 0 8px; font-size: 1.05rem; }
+  .track-card p { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }
+  .track-card .track-meta { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .track-card .track-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; }
+  .track-card.active .track-badge { color: var(--blue-deep); background: var(--blue-tint); }
+  .track-card.active { border-color: #cfe1f7; }
+  .track-card.planned { background: var(--paper-2); border-style: dashed; }
+  .track-card.planned .track-badge { color: #8a5a00; background: #fff4e0; }
+  .track-card.planned h3 { color: var(--muted-2); }
 </style>
 </head>
 <body class="page-class">
@@ -56,8 +69,8 @@ left edge and 20 mm up from the bottom edge.
       <span class="nav-toggle-bars" aria-hidden="true"></span>
     </label>
     <div class="nav-links">
-        <a href="../tasks/" aria-current="page">Tasks</a>
         <a href="../syllabus/#schedule">Workshops</a>
+        <a href="../tasks/" aria-current="page">Tasks</a>
         <a href="../syllabus/">Syllabus</a>
         <a href="../about/">About</a>
         <a class="nav-cta" href="./">Start with task 1 &rarr;</a>

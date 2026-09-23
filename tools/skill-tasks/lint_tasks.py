@@ -23,7 +23,12 @@ import runner  # noqa: E402
 
 KNOWN_HUMAN_CHECKS = {"human_photo", "human_only"}
 
-UNIT_KEYS = {"kind", "id", "title", "order", "summary", "requirement", "tasks", "supervised", "safety"}
+UNIT_KEYS = {
+    "kind", "id", "title", "order", "summary", "requirement", "tasks",
+    "supervised", "safety",
+    # planned (not yet buildable) units declare what they will contain
+    "status", "planned_tasks", "why", "needs",
+}
 TASK_REQUIRED = {"id", "title", "unit", "order", "video", "goal", "spec", "submit", "prereqs", "signoff", "criteria"}
 CRITERION_KEYS = {"id", "title", "check", "args", "fail", "detail", "human", "review"}
 
@@ -99,8 +104,27 @@ def _lint_unit(name, task, tasks) -> list:
     unknown = set(task) - UNIT_KEYS
     if unknown:
         problems.append(f"{name}: unknown keys {sorted(unknown)}")
-    if not task.get("tasks"):
-        problems.append(f"{name}: lists no tasks")
+
+    status = task.get("status", "active")
+    if status not in ("active", "planned"):
+        problems.append(f"{name}: status must be 'active' or 'planned', not {status!r}")
+
+    if status == "planned":
+        # A planned track is documentation: it names the tasks it will contain
+        # but none of them exist yet, so it needs `planned_tasks` + `why`.
+        if task.get("tasks"):
+            problems.append(
+                f"{name}: a planned unit must not list real `tasks` — those would "
+                f"have to exist. Use `planned_tasks`."
+            )
+        if not task.get("planned_tasks"):
+            problems.append(f"{name}: a planned unit must say what it will contain (`planned_tasks`)")
+        if not task.get("why"):
+            problems.append(f"{name}: a planned unit must say `why` it is planned")
+    else:
+        if not task.get("tasks"):
+            problems.append(f"{name}: lists no tasks")
+
     return problems
 
 

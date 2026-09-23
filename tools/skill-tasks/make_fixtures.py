@@ -66,6 +66,17 @@ def circle(layer, cx, cy, r):
     )
 
 
+def arc(layer, cx, cy, r, start_deg, end_deg):
+    """An ARC entity, the way Onshape exports a sketch arc."""
+    return pairs(
+        (0, "ARC"), (8, layer), (100, "AcDbEntity"), (100, "AcDbCircle"),
+        (10, f"{cx}"), (20, f"{cy}"), (30, "0.0"),
+        (40, f"{r}"),
+        (100, "AcDbArc"),
+        (50, f"{start_deg}"), (51, f"{end_deg}"),
+    )
+
+
 def polyline(layer, points, closed=True):
     """A closed LWPOLYLINE — what Inkscape/Illustrator write, and what a
     student gets after 'join' operations."""
@@ -297,6 +308,100 @@ def main():
         task="cad-06-mirror",
         expect={"verdict": "fix", "fails": ["dims"]},
         note="still the 100 mm rectangle",
+        manifest=MANIFEST,
+    )
+
+    # -- cad-07: the trim tool -------------------------------------------
+    # Rectangle 100x60 whose right edge is replaced by an arc bulging to x=112.
+    # The arc's circle has centre (68.5, 30) and radius 43.5, so it meets both
+    # right corners exactly.
+    TRIMMED = [
+        line(ONSHAPE_LAYER, 0, 0, 100, 0),
+        arc(ONSHAPE_LAYER, 68.5, 30, 43.5, -43.6028, 43.6028),
+        line(ONSHAPE_LAYER, 100, 60, 0, 60),
+        line(ONSHAPE_LAYER, 0, 60, 0, 0),
+    ]
+    write(
+        "cad-07-good",
+        entities(TRIMMED),
+        task="cad-07-trim-tool",
+        expect={"verdict": "ready", "fails": []},
+        note="arc worked into the outline, straight edge trimmed away",
+        manifest=MANIFEST,
+    )
+    # Untrimmed: the straight right edge is still there AND the arc is present,
+    # so there are two closed regions — the rectangle, and the lens the arc makes
+    # against that edge. That is the drawing the video warns about.
+    write(
+        "cad-07-untrimmed",
+        entities([
+            line(ONSHAPE_LAYER, 0, 0, 100, 0),
+            line(ONSHAPE_LAYER, 100, 0, 100, 60),
+            arc(ONSHAPE_LAYER, 68.5, 30, 43.5, -43.6028, 43.6028),
+            line(ONSHAPE_LAYER, 100, 60, 0, 60),
+            line(ONSHAPE_LAYER, 0, 60, 0, 0),
+        ]),
+        task="cad-07-trim-tool",
+        expect={"verdict": "fix", "fails": ["single"]},
+        note="straight edge and arc both present: leftover geometry the laser would cut",
+        manifest=MANIFEST,
+    )
+    write(
+        "cad-07-no-curve",
+        entities(rectangle(0, 0, 100, 60)),
+        task="cad-07-trim-tool",
+        expect={"verdict": "fix", "fails": ["curved"]},
+        note="no arc at all — the plain rectangle",
+        manifest=MANIFEST,
+    )
+
+    # -- cad-08: laser cut joints ----------------------------------------
+    # An outline with fingers on the left and right, each 3 mm wide.
+    def finger_outline(t):
+        """100x60 with 3 fingers of width `t` on the left and right edges."""
+        pts = []
+        # bottom edge, left to right
+        pts += [(0, 0), (100, 0)]
+        # right edge: three tabs sticking out by 6 mm, `t` wide, spaced `t` apart
+        y = 0.0
+        for i in range(3):
+            y0, y1 = y + t, y + 2 * t
+            pts += [(100, y0), (106, y0), (106, y1), (100, y1)]
+            y = y1
+        pts += [(100, 60)]
+        # top edge back to the left
+        pts += [(0, 60)]
+        # left edge: matching slots cut in by 6 mm
+        y = 0.0
+        for i in range(3):
+            y0, y1 = y + t, y + 2 * t
+            pts += [(0, y1), (-6, y1), (-6, y0), (0, y0)]
+            y = y1
+        pts += [(0, 0)]
+        return pts
+
+    write(
+        "cad-08-good",
+        entities([polyline(ONSHAPE_LAYER, finger_outline(3.0))]),
+        task="cad-08-laser-joints",
+        expect={"verdict": "ready", "fails": []},
+        note="3 mm fingers matching the 3 mm measured material",
+        manifest=MANIFEST,
+    )
+    write(
+        "cad-08-wrong-joint",
+        entities([polyline(ONSHAPE_LAYER, finger_outline(2.0))]),
+        task="cad-08-laser-joints",
+        expect={"verdict": "fix", "fails": ["joints"]},
+        note="2 mm joints against 3 mm material — too small by 1 mm",
+        manifest=MANIFEST,
+    )
+    write(
+        "cad-08-no-joints",
+        entities(rectangle(0, 0, 100, 60)),
+        task="cad-08-laser-joints",
+        expect={"verdict": "fix", "fails": ["joints"]},
+        note="a plain rectangle: no slots or fingers at all",
         manifest=MANIFEST,
     )
 

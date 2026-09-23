@@ -1,0 +1,10 @@
+{
+  "task": "cad-07-trim-tool",
+  "expect": {
+    "verdict": "fix",
+    "fails": [
+      "single"
+    ]
+  },
+  "note": "straight edge and arc both present: leftover geometry the laser would cut"
+}
