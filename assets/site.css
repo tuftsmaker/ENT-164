@@ -579,6 +579,26 @@ footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 34px 0 44
   .deck-card img { min-height: 210px; aspect-ratio: 16 / 9; }
   .principles { grid-template-columns: 1fr; }
 }
+/* ---- Onshape tips: self-hosted screen recordings -------------------------
+   The finished MP4s live in onshape-tips/videos/ and play inline. They are
+   small (the whole set is ~19MB) because they are 1080p captures of a mostly
+   static application window, and hosting them here keeps the series working
+   without depending on a video platform. */
+.tip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.tip-card {
+  border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  background: var(--paper); box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.tip-card:hover { border-color: #cfe1f7; box-shadow: var(--shadow-md); }
+.tip-card video { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--ink); }
+.tip-body { display: flex; flex-direction: column; padding: 20px 22px 22px; }
+.tip-step { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 6px; }
+.tip-body h3 { margin: 0 0 8px; font-size: 1.08rem; letter-spacing: -0.2px; color: var(--ink); }
+.tip-body p { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+.tip-body .tip-time { margin: auto 0 0; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) { .tip-grid { grid-template-columns: 1fr; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { animation: none; opacity: 1; }

@@ -56,10 +56,18 @@ Tutorial videos are built from a narration script plus **real browser
 recordings** driven through `browser-control`. `tools/video-build/README.md` is
 the manual; this is the contract.
 
-- **Media never enters the repo.** Recordings, narration audio and intermediates
-  go to the project's `workDir` (from `video.json`, default
-  `~/Movies/ent164-onshape-tutorial/<slug>-build/`). Only scripts and config are
-  committed.
+- **Media never enters the repo — except the finished tips.** Recordings,
+  narration audio and intermediates go to the project's `workDir` (from
+  `video.json`, default `~/Movies/ent164-onshape-tutorial/<slug>-build/`). Only
+  scripts and config are committed. The one exception is the *rendered* Onshape
+  tips: the class hosts them itself, so each finished MP4 is copied to
+  `onshape-tips/videos/<slug>.mp4` with its title card as
+  `onshape-tips/posters/<slug>.png`, and committed. They are small — the set is
+  ~19MB, because 1080p captures of a mostly static application window compress
+  well — and self-hosting avoids both the platform upload cap and any
+  dependency on it. When a tip is re-rendered, copy the new file over the old
+  one; git keeps the history, so the repo grows by the size of a rebuild each
+  time.
 - Pipeline: `tts -> align -> cards -> captions -> plan -> assemble`, with
   `./tools/video-build/record.sh <project>` driving the takes. Everything after
   `align` is deterministic given the recordings, so re-running is safe.
@@ -260,6 +268,20 @@ the manual; this is the contract.
   in the page footer — retain the attribution if you move or reuse them.
   Class 3's deck and page draw their Inkscape/UCP screenshots from here, so
   editing a shot means copying it into `classes/class-03/shots/` too.
+
+## Onshape tips (the video series)
+
+- The series lives at `onshape-tips/index.html`, served from this repo like any
+  other page, with the videos in `onshape-tips/videos/` and their title cards as
+  posters. It is linked from the hub's walkthroughs section and from class 3.
+- Rebuild the page if the set changes: it is generated from each project's
+  `video.json` (heading + subtitle) plus the file's duration, in the teaching
+  order workspace-overview, basic-rectangle, updating-dimensions,
+  circle-to-cut-a-hole, circle-in-the-center, circle-on-a-corner,
+  mirroring-entities, trim-tool, laser-cut-joints.
+- Publishing here is just a push — no upload cap, and a re-render is one commit.
+  The same videos are also on the TuftsMaker channel; the site does not depend
+  on that.
 
 ## Class web pages
 
