@@ -30,7 +30,8 @@ B.mark('the-stray-circle');
 
 // "First, let me get rid of this one. I'll select it and delete it."
 await B.at(at(O, 's01', 2) + 0.4);
-await clickAt(GEO.circleC[0], GEO.circleC[1], 600, 550);
+// Click the rim: a click in the middle of a circle does not select it.
+await clickAt(GEO.circleC[0] + 30, GEO.circleC[1], 600, 550);
 B.mark('circle-selected');
 await B.at(at(O, 's01', 3) + 0.2);
 await page.keyboard.press('Delete');

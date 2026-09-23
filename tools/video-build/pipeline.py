@@ -451,12 +451,17 @@ def _caption_track(length, files, caps, out_path):
          f'concat=n={len(labels)}:v=1:a=0[out]'
     run(['ffmpeg', '-v', 'error', '-y'] + inputs +
         ['-filter_complex', fc, '-map', '[out]',
-         '-c:v', 'qtrle', '-pix_fmt', 'argb', '-r', str(FPS), out_path])
+         # A mezzanine codec with an alpha channel. qtrle is the obvious pick,
+         # but it is effectively uncompressed: a two-minute caption track runs
+         # to ~38GB, which is slow to write and can fill the disk mid-assemble.
+         # ProRes 4444 is ~10x smaller and encodes faster.
+         '-c:v', 'prores_ks', '-profile:v', '4444', '-pix_fmt', 'yuva444p10le',
+         '-r', str(FPS), out_path])
     actual = dur(out_path)
     if actual > length + 0.02:
         tmp = out_path + '.trim.mov'
         run(['ffmpeg', '-v', 'error', '-y', '-i', out_path, '-t', f'{length:.3f}',
-             '-c:v', 'qtrle', '-pix_fmt', 'argb', tmp])
+             '-c:v', 'prores_ks', '-profile:v', '4444', '-pix_fmt', 'yuva444p10le', tmp])
         os.replace(tmp, out_path)
     return dur(out_path)
 
@@ -489,18 +494,32 @@ def step_assemble(proj, cfg):
              '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16',
              '-pix_fmt', 'yuv420p', '-r', str(FPS), cut])
 
-        ctrack = os.path.join(build, take + '.caps.mov')
-        actual = _caption_track(length, capfiles[take], caps[take]['captions'], ctrack)
-        if abs(actual - length) > 0.12:
-            print(f'    note: caption track {actual:.3f}s vs take {length:.3f}s')
-
-        comp = os.path.join(build, take + '.comp.mp4')
+        # Burn the captions in the same pass that cuts the take: each caption
+        # PNG is an input, shifted to its own start and overlaid only for its
+        # own window. Rendering a full-length caption track first needs an
+        # alpha-capable codec, and every such codec writes tens of gigabytes for
+        # a two-minute video (qtrle gave ~38GB and was still growing, because
+        # the track is a full 1920x1080 canvas holding one small box) - slow, and
+        # enough to fill the disk mid-assemble.
+        ccaps = caps[take]['captions']
+        files = capfiles[take]
         pad = max(0.0, length - dur(cut))
         pre = f'tpad=stop_mode=clone:stop_duration={pad:.3f},' if pad > 0.02 else ''
-        run(['ffmpeg', '-v', 'error', '-y', '-i', cut, '-i', ctrack,
-             '-filter_complex',
-             f'[0:v]{pre}setpts=PTS-STARTPTS[base];[base][1:v]overlay=0:0:format=auto:shortest=0[v]',
-             '-map', '[v]', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16',
+        ins = ['-i', cut]
+        fc = [f'[0:v]{pre}setpts=PTS-STARTPTS[base]']
+        last = 'base'
+        for i, c in enumerate(ccaps, start=1):
+            ins += ['-loop', '1', '-t', f"{c['end'] - c['start']:.3f}", '-i', files[i - 1]]
+            fc.append(f'[{i}:v]format=rgba,setsar=1,'
+                      f"setpts=PTS-STARTPTS+{c['start']:.3f}/TB[c{i}]")
+            fc.append(f"[{last}][c{i}]overlay=0:0:format=auto:shortest=0:"
+                      f"enable='between(t,{c['start']:.3f},{c['end']:.3f})'[v{i}]")
+            last = f'v{i}'
+
+        comp = os.path.join(build, take + '.comp.mp4')
+        run(['ffmpeg', '-v', 'error', '-y'] + ins +
+            ['-filter_complex', ';'.join(fc), '-map', f'[{last}]',
+             '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16',
              '-pix_fmt', 'yuv420p', '-r', str(FPS), comp])
         pieces.append(comp)
 
