@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create or update the Canvas assignments, rubric and module for the tasks.
+"""Create or update the Canvas assignments and their rubrics for the tasks.
 
 Idempotent: run it as often as you like. It finds assignments by name, creates
 what is missing, and updates descriptions to match the task files. Nothing is
@@ -27,7 +27,6 @@ from canvas_client import (  # noqa: E402
     Client,
     GROUP_NAME,
     GROUP_WEIGHT,
-    MODULE_NAME,
     load_config,
 )
 
@@ -120,19 +119,15 @@ def main(argv=None) -> int:
 
     try:
         if args.dry_run:
-            # Look, do not touch: ensure_group/ensure_module create on the way, so
+            # Look, do not touch: ensure_group creates on the way, so
             # calling them here made --dry-run write to Canvas.
             group = next((g for g in client.assignment_groups()
                           if g["name"] == GROUP_NAME), None)
-            module = next((m for m in client.modules() if m["name"] == MODULE_NAME), None)
-            print(f"group  {group['id'] if group else '(would create)'}  {GROUP_NAME} "
+            print(f"category  {group['id'] if group else '(would create)'}  {GROUP_NAME} "
                   f"(weight {GROUP_WEIGHT})")
-            print(f"module {module['id'] if module else '(would create)'}  {MODULE_NAME}")
         else:
             group = client.ensure_group()
-            module = client.ensure_module()
-            print(f"group  {group['id']}  {group['name']} (weight {group.get('group_weight')})")
-            print(f"module {module['id']}  {module['name']}")
+            print(f"category  {group['id']}  {group['name']} (weight {group.get('group_weight')})")
         for task in tasks:
             name = assignment_name(task)
             existing = client.find_assignment(name)
@@ -141,7 +136,6 @@ def main(argv=None) -> int:
             print(f"   video: {task['video']}")
             if args.dry_run:
                 print(f"   would set {len(rubric_rows(task))} rubric rows")
-                print("   would add to the module" if not existing else "   already in the module, if linked")
                 continue
 
             if existing:
@@ -165,19 +159,6 @@ def main(argv=None) -> int:
             rows = rubric_rows(task)
             client.create_rubric(assignment["id"], rows)
             print(f"   rubric: {len(rows)} rows")
-
-            items = client.module_items(module["id"])
-            already = [i for i in items if i.get("title") == name]
-            if already:
-                print(f"   module item {already[0]['id']} already present")
-            else:
-                item = client.add_module_item(
-                    module["id"],
-                    title=name,
-                    type="Assignment",
-                    content_id=assignment["id"],
-                )
-                print(f"   module item {item['id']} added")
     except CanvasError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1

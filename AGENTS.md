@@ -341,10 +341,26 @@ film.
   outcome rather than by looking for construction geometry. Colour and hairline
   width belong to the laser-cutting guide, not here.
 - **Canvas** (course 76330): a 0-weight group "Skill tasks (not graded)", one
-  assignment per task with a rubric whose rows are the criteria, and a module
-  "Skill tasks · Laser-ready file" as the qualification view. All of it is
-  **feedback-only** — 0 points, by decision, this semester. `sync.py` creates
-  and leaves assignments **unpublished** unless given `--publish`.
+  assignment per task with a rubric whose rows are the criteria. All of it is
+  **feedback-only** — 0 points, by decision, this semester. `sync.py` creates and
+  leaves assignments **unpublished** unless given `--publish`.
+- **Modules are classes, and only classes. Tasks are assignments.** The tasks are
+  grouped by *assignment category* — the "Skill tasks (not graded)" group — and
+  deliberately not by a module, which is the class structure. `sync.py` no longer
+  creates one.
+- **Both Canvas tools take `--course`.** Without it they use `COURSE_ID` from the
+  config, which is the live course, so a "trial" run would write to it —
+  `sync.py` had exactly that hole. Target **71548, "Intro to Making Prototype"**,
+  to try anything first; it exists for that and everything in it is disposable.
+- `tools/canvas-course/populate.py` builds the course structure from the site:
+  one module per class, with the deck PDF, the class page, and the site content
+  that belongs to that class (the setup guides with Class 1, the tips and the
+  cutting guide with Class 3). Links only, never copies. `--prune` clears modules
+  outside the plan and assignments the task sync does not own, and refuses to run
+  against the live course without `--i-know`. Canvas creates modules and items
+  unpublished; publishing a module publishes its items with it.
+- `sync.py --dry-run` used to call `ensure_group()`/`ensure_module()`, which
+  create on the way, so a dry run wrote to Canvas. Both dry runs now only look.
 - Student submissions live in Canvas and in the TA's `~/ent164/grading/`. They
   never enter this repo, same rule as every other student artifact.
 
