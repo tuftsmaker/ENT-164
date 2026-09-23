@@ -191,6 +191,19 @@ the manual; this is the contract.
 - `scripts/delete-youtube.py <id>` removes a video (`--yes` to confirm; it prints
   title, views and privacy first). Deleting is permanent and also drops the
   video from any playlist.
+- **`scripts/sync-youtube-series.py` is how the tips get (re)published.** It
+  reads the video-build projects, uploads whatever is not on the channel yet,
+  publishes it, sets its title card as the thumbnail, and records the id in
+  `onshape-tips/youtube.json`. Because the upload cap interrupts a batch, it is
+  built to be re-run: it skips what is already up and stops at the cap.
+  `--prune` deletes superseded uploads (only for slugs whose replacement is
+  published, so it can never empty the channel), and `--rebuild-playlist`
+  recreates the playlist in teaching order.
+  ```bash
+  scripts/sync-youtube-series.py --dry-run
+  scripts/sync-youtube-series.py                     # repeat until it stops saying "capped"
+  scripts/sync-youtube-series.py --prune --rebuild-playlist
+  ```
 - The title and end cards use the **class website's light theme**, not the dark
   deck palette, and the heading auto-fits to one line: six of the nine tips had
   headings too long for a fixed size and ran off the sides of the card, in the
