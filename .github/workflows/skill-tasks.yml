@@ -38,5 +38,30 @@ jobs:
       - name: The checker agrees with every fixture
         run: python3 tools/skill-tasks/selftest.py
 
+      - name: The DXF -> laser-ready SVG converter matches its known answers
+        run: python3 tools/skill-tasks/test_laser_svg.py
+
+      - name: The DXF -> laser-ready SVG converter works, and writes red hairlines
+        run: |
+          python3 skills/maker-tasks/check/laser_svg.py \
+              tools/skill-tasks/fixtures/cad-07-good/part.dxf -o /tmp/cut.svg
+          python3 - <<'PY'
+          import re, sys
+          svg = open("/tmp/cut.svg").read()
+          # Every cut path: pure red, no fill, hairline, opaque.
+          styles = re.findall(r'style="([^"]+)"', svg)
+          assert styles, "no styled geometry written"
+          for s in styles:
+              for want in ("stroke:#ff0000", "fill:none", "stroke-opacity:1",
+                           "-inkscape-stroke:hairline"):
+                  assert want in s, f"{want} missing from {s}"
+              assert "stroke-width:1px" in s, "hairline backup width missing"
+          m = re.search(r'width="([0-9.]+)mm" height="([0-9.]+)mm"', svg)
+          assert m, "no mm page size"
+          w, h = float(m.group(1)), float(m.group(2))
+          assert abs(w - 112) < 0.01 and abs(h - 60) < 0.01, f"page {w}x{h}, expected 112x60"
+          print(f"ok: {len(styles)} cut paths, page {w}x{h} mm, red hairlines")
+          PY
+
       - name: The catalog pages match the task files
         run: python3 tools/skill-tasks/catalog/build.py --check

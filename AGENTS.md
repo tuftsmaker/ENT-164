@@ -345,11 +345,11 @@ the manual; this is the contract.
 A CAP-style task system for maker skills: a task is a short video, a file the
 student makes, written criteria checked on that file, and a signoff by a person.
 The **Laser-Ready File** track is open (8 tasks, all reusing the Onshape tips as
-task videos — nothing was filmed for it). Three further tracks — Print-Ready
-Model, Working Circuit, Connected Device — exist as `status: planned` units:
-documentation of what they will contain, shown dimmed on the site and refused by
-the runner. A planned unit uses `planned_tasks` (no real tasks) plus `why` and
-`needs`, and `lint_tasks.py` enforces that split.
+task videos — nothing was filmed for it). Four further tracks — Print-Ready
+Model, Working Circuit, Connected Device, Intelligent Device — exist as
+`status: planned` units: documentation of what they will contain, shown dimmed on
+the site and refused by the runner. A planned unit uses `planned_tasks` (no real
+tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
 
 - **One source of truth: `skills/maker-tasks/tasks/*.yml`.** The public page, the
   checker, the Canvas rubric and the TA report all come from it. Change a task
@@ -385,8 +385,28 @@ the runner. A planned unit uses `planned_tasks` (no real tasks) plus `why` and
   colours** — it is geometry on one layer, and construction lines are not
   exported at all. So sizes are checked by measurement against the task's stated
   dimensions (an inch export reads ~25× too small), and centring is checked by
-  outcome rather than by looking for construction geometry. Colour and hairline
-  width belong to the laser-cutting guide, not here.
+  outcome rather than by looking for construction geometry. The *checks* stay
+  colour-blind; the one thing that writes colour is the converter below.
+- **`check/laser_svg.py` writes the laser-ready SVG, and hairline is a trap.**
+  `cli.py --svg` (or the module alone) turns any checked DXF into pure-red
+  (`#ff0000`), unfilled, hairline cut paths — the colours UCP reads (see the
+  laser-cutting guide). It is stdlib-only, like the rest of the checker, so it
+  needs no Inkscape installed.
+  - The obvious `stroke-width="hairline"` is **wrong**: Inkscape does not read
+    it as the UI's Hairline and falls back to **1 mm**, exactly the thick line
+    the guide warns makes the laser fire twice (measured: 1.016 mm vs 0.042 mm).
+    Inkscape's own serialisation is three declarations together —
+    `stroke-width:1px;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline`
+    — and that string is what the converter writes. Keep all three.
+  - An **arc's page box** must come from its endpoints plus only the axis
+    crossings the sweep passes through. Using the whole circle's box pads the
+    page around geometry that is not there (112×60 became 112×87 and shifted the
+    part down). Verified by rasterising the converted SVG and comparing inked
+    pixels against the DXF's own tessellation, arc sweep direction included.
+  - DXF is Y-up and SVG is Y-down, so the Y-flip mirrors the drawing: a CCW CAD
+    arc stays CCW on screen, which is SVG `sweep-flag 0`.
+  - It reports rather than hides: spline/ellipse approximations, polyline bulge
+    vertices, and geometry on unexpected layers are all printed.
 - **Canvas writes stop at the prototype. This is enforced in code, not by habit.**
   `canvas_client._guard` refuses any POST/PUT/DELETE that is not aimed at course
   **71548, "Intro to Making Prototype"** — including the case where a client was
@@ -442,8 +462,18 @@ the runner. A planned unit uses `planned_tasks` (no real tasks) plus `why` and
   ```bash
   python3 tools/site-nav/apply.py            # rewrite the navs
   python3 tools/site-nav/apply.py --check    # CI: every nav matches the spec
-  python3 tools/site-nav/verify-links.py     # links resolve, anchors exist
+  python3 tools/site-nav/verify-links.py     # every link on the site resolves
   ```
+- **`verify-links.py` checks the whole document, not just the nav.** It reported
+  "every nav link resolves" while all twelve workshop cards pointed at
+  `../class-01/` — no `classes/` segment — because it only read `<nav>` blocks.
+  It now walks every `href` and `src` on every page, and distinguishes nav links
+  from body links in its output. That distinction matters: a nav mistake is
+  generated and appears on every page at once, while a body mistake hides on
+  one page, and the second kind is the one that shipped. It has since found and
+  fixed three links in class 3 that had been broken since the page was written.
+  When you add a builder, run it after: a relative path one level short is the
+  failure this catches, and it is easy to write.
 - **Main nav vs sub-nav.** The main nav holds *site* links only (Tasks, Class
   slides, Syllabus, About) plus one contextual CTA that is allowed to differ per
   page (a class page's "Download slides"). A page's own sections go in a

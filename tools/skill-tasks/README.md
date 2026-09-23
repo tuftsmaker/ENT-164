@@ -13,6 +13,7 @@ videos that already exist. Nothing new had to be filmed.
 skills/maker-tasks/            ← SHIPPED TO STUDENTS (served by Pages, run locally)
   SKILL.md                       the instructions opencode loads
   check/                         the checker: DXF reader, checks, report, CLI
+  check/laser_svg.py             DXF -> laser-ready SVG (pure-red hairlines)
   tasks/*.yml                    the task definitions — the source of truth
 
 tools/skill-tasks/             ← THE TA'S AND THE REPO'S TOOLS (not shipped)
@@ -72,8 +73,21 @@ This is enforced in the code, not just the prose:
 Nothing to install: the skill ships the checker. See `skills/maker-tasks/SKILL.md`.
 
 ```bash
+# check a submission
 python3 <skill>/check/check_submission.py --task cad-03-cut-a-hole ~/ent164/cad-03 --zip
+
+# check it and also write the laser-ready SVG in one go
+python3 <skill>/check/cli.py --task cad-03-cut-a-hole part.dxf --svg
+
+# the converter alone, on any DXF
+python3 <skill>/check/laser_svg.py part.dxf -o part-laser-ready.svg
 ```
+
+`laser_svg.py` needs nothing but Python: it writes pure red (`#ff0000`),
+unfilled, hairline cut paths, which is what UCP reads. The hairline is
+Inkscape's own serialisation (`stroke-width:1px; vector-effect:non-scaling-stroke;
+-inkscape-stroke:hairline`) — *not* `stroke-width="hairline"`, which Inkscape
+renders as a 1 mm line. Standard library only, like the rest of the checker.
 
 ### The TA
 
@@ -102,6 +116,7 @@ python3 tools/skill-tasks/catalog/build.py
 ```bash
 python3 tools/skill-tasks/lint_tasks.py     # every criterion names a real check
 python3 tools/skill-tasks/selftest.py       # every fixture gives the expected verdict
+python3 tools/skill-tasks/test_laser_svg.py # the SVG converter's known answers
 python3 tools/skill-tasks/catalog/build.py --check   # catalog matches the YAML
 ```
 

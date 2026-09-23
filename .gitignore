@@ -6,6 +6,11 @@ __pycache__/
 # regenerable: skills/maker/render.py -o out/<name>
 /out/
 
+# skill-publish's build tree (tools/skill-publish/build-index.py --dist default).
+# It is a copy of skills/ plus a generated index.json, so committing it would
+# publish a second, stale set of skills from a path nothing serves.
+/tools/skill-publish/dist/
+
 # ---- local working copies of source material (never commit) ----------------
 # These hold large source media that must stay on disk but do not belong in git:
 #   Photos/   raw instructor photos and phone video (the site uses the resized,
