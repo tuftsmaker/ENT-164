@@ -21,7 +21,7 @@ from __future__ import annotations
 # order the pages were built in.
 MAIN_LINKS = [
     ("Tasks", "tasks/"),
-    ("Class slides", "syllabus/#schedule"),
+    ("Workshops", "syllabus/#schedule"),
     ("Syllabus", "syllabus/"),
     ("About", "about/"),
 ]
@@ -157,7 +157,7 @@ SUBNav_PAGES = {
         ("making", "Hands-on"),
         ("syllabus", "The semester"),
         ("guides", "Walkthroughs"),
-        ("classes", "In-class decks"),
+        ("classes", "Workshops"),
         ("before", "What you'll need"),
         ("instructor", "Instructor"),
     ],

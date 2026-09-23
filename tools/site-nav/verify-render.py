@@ -47,7 +47,7 @@ PAGES = [
 ]
 
 WIDE, NARROW = 1200, 720
-EXPECTED = 5  # Tasks, Class slides, Syllabus, About, + the page's own CTA
+EXPECTED = 5  # Tasks, Workshops, Syllabus, About, + the page's own CTA
 
 PROBE = """
 <script>

@@ -38,3 +38,9 @@ tools/video-build/**/cap/
 *.wav
 *.aiff
 *.m4a
+
+# ---- site-nav render probes (never commit) ---------------------------------
+# verify-render.py injects a probe into each page and writes it to the repo root
+# so the page's relative asset paths still resolve. It removes each one, but an
+# interrupted run would otherwise leave a page copy staged for publishing.
+/.render-probe-*.html
