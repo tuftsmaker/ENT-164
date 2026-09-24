@@ -11,6 +11,6 @@
     {"at": {"scene": "s02_import", "sent": 3, "off": 2.8}, "do": [{"click": ["dxf:ok"]}]},
     {"at": {"scene": "s02_import", "sent": 4, "off": 1.2}, "do": [{"dismiss": true}]},
     {"at": {"scene": "s02_import", "sent": 4, "off": 1.4}, "do": [{"window": [0, 33, 1512, 868]}]},
-    {"at": {"scene": "s02_import", "sent": 4, "off": 2.2}, "do": [{"zoom": "drawing"}]}
+    {"at": {"scene": "s02_import", "sent": 4, "off": 2.2}, "do": [{"key": ["4", "cmd"]}]}
   ]
 }

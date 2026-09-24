@@ -113,24 +113,34 @@ def _cliclick(*cmds):
         raise RuntimeError(f"cliclick failed: {r.stderr.strip()[:200]}")
 
 
+# Seconds the pointer rests on a target before the button goes down. The move
+# is smooth but the click used to land at the end of the glide, which reads as
+# a cursor flying past what it clicked; the hold lets a viewer see where the
+# click is going to happen.
+CLICK_HOLD = 0.4
+
+
 def move(x, y, dur=0.35):
     """Move the pointer smoothly, so the recording reads as real mouse motion."""
     _cliclick("-e", str(int(dur * 1000)), f"m:{int(round(x))},{int(round(y))}")
 
 
-def click(x, y, dur=0.35):
+def click(x, y, dur=0.35, hold=CLICK_HOLD):
     move(x, y, dur)
+    time.sleep(hold)
     _cliclick(f"c:{int(round(x))},{int(round(y))}")
 
 
-def right_click(x, y, dur=0.35):
+def right_click(x, y, dur=0.35, hold=CLICK_HOLD):
     move(x, y, dur)
+    time.sleep(hold)
     _cliclick(f"rc:{int(round(x))},{int(round(y))}")
 
 
-def shift_click(x, y, dur=0.35):
+def shift_click(x, y, dur=0.35, hold=CLICK_HOLD):
     """Click with Shift held, for adding to a selection."""
     move(x, y, dur)
+    time.sleep(hold)
     _cliclick("kd:shift")
     _cliclick(f"c:{int(round(x))},{int(round(y))}")
     _cliclick("ku:shift")
@@ -138,6 +148,7 @@ def shift_click(x, y, dur=0.35):
 
 def drag(x1, y1, x2, y2, dur=0.6):
     move(x1, y1)
+    time.sleep(CLICK_HOLD)
     _cliclick("-e", str(int(dur * 1000 / 10)), "kd:alt")
     _cliclick(f"dd:{x1},{y1}")
     time.sleep(0.15)
@@ -227,7 +238,7 @@ def _menu_atomic(*items):
     )
 
 
-def menu(*items, key_gap=0.12):
+def menu(*items, key_gap=0.07):
     """Walk the menu bar with the keyboard, so the dropdowns show on camera.
 
     menu("File", "Open...")                    -> File > Open...
@@ -282,7 +293,10 @@ def menu(*items, key_gap=0.12):
                     raise RuntimeError(f"{target!r} is not in {' > '.join(items[:depth])}")
                 steps = names.index(target)
                 if depth == len(items) - 1:
-                    _key_codes([125] * steps + [36], gap=key_gap)
+                    # Let the highlight rest on the item before it is taken.
+                    _key_codes([125] * steps, gap=key_gap)
+                    time.sleep(0.45)
+                    _key_codes([36], gap=0)
                 else:
                     _key_codes([125] * steps + [124], gap=key_gap)
                     time.sleep(0.25)
@@ -310,22 +324,29 @@ def set_window(x, y, w, h):
     )
 
 
-def document_window_index():
+def document_window_index(tries=3):
     """Index of the largest Inkscape window big enough to be the document window.
 
     Hover tooltips and transient popups are windows too, and can be 332x51, so
     "the largest" alone is not enough — a small window is never the document.
+    The window list can also briefly report only a popup (seen mid-take, with
+    the document window absent for a moment), so retry before giving up.
     """
     best, best_area = 1, 0
-    for i in range(1, window_count() + 1):
-        try:
-            g = window_xywh(i)
-        except Exception:
-            continue
-        if not g or g["w"] < 300 or g["h"] < 300:
-            continue
-        if g["w"] * g["h"] > best_area:
-            best, best_area = i, g["w"] * g["h"]
+    for _ in range(tries):
+        best, best_area = 1, 0
+        for i in range(1, window_count() + 1):
+            try:
+                g = window_xywh(i)
+            except Exception:
+                continue
+            if not g or g["w"] < 300 or g["h"] < 300:
+                continue
+            if g["w"] * g["h"] > best_area:
+                best, best_area = i, g["w"] * g["h"]
+        if best_area >= 300 * 300:
+            break
+        time.sleep(0.4)
     return best
 
 
@@ -365,39 +386,139 @@ def launch(path=None, timeout=60):
 DOCK_LEFT = 988
 
 
-def set_dock_width(target=DOCK_LEFT, tries=4):
-    """Make sure the right dock is no wider than TARGET.
+# Inkscape restores the dock from this file at launch. Two things make the dock
+# come up as wide as the video cannot have: the dialogs pinned in it (a docked
+# dialog with a large minimum pins the divider — with Export and Text and Font
+# in the notebook the divider refuses to move past dock_left ~920), and whatever
+# width was last used. Inkscape rewrites the file when it quits, so the setups
+# reset the list between launches and drag the divider afterwards.
+_DIALOGS_STATE = os.path.expanduser(
+    "~/Library/Application Support/org.inkscape.Inkscape/config/inkscape/"
+    "dialogs-state-ex.ini")
+_KEEP_DIALOGS = "Objects;FillStroke;AlignDistribute;"   # the dialogs takes use
+_DOCK_GRIP_TARGET = 990   # where the divider grip should end up (window x)
 
-    Inkscape does not restore the dock's width reliably between launches: a new
-    window comes up with the default, ~708 px dock, and the whole point of the
-    narrower panel is a video where it does not dominate the screen. Dragging
-    the divider with synthetic events is hit-and-miss (the grab area is a few
-    px, and some sessions refuse it entirely), but shrinking the window forces
-    the paned widget to squeeze the dock, and restoring the window keeps the
-    narrower width. That is the normalisation: no saved state, no divider drag.
 
-    A dock that is already narrower than the target is left alone — every panel
-    point is an offset from the dock's left edge, so it tracks whatever width
-    the dock happens to have.
-
-    Fill and Stroke is raised first: the pane cannot squeeze below the widest
-    dialog's minimum, and a restored Align and Distribute is the widest, so
-    without this the squeeze stalls at the wide width.
-    """
-    if dock_left() >= target - 8:
+def reset_dock_state():
+    """Trim the docked dialogs before the next launch, so the divider can move."""
+    try:
+        with open(_DIALOGS_STATE) as fh:
+            s = fh.read()
+    except OSError:
         return
-    menu("Object", "Fill and Stroke...")
-    time.sleep(0.8)
+    import re
+    s2 = re.sub(r'Notebook0Dialogs=[^\n]*', f'Notebook0Dialogs={_KEEP_DIALOGS}', s)
+    s2 = re.sub(r'Notebook0ActiveTab=\d+', 'Notebook0ActiveTab=1', s2)
+    if s2 != s:
+        with open(_DIALOGS_STATE, 'w') as fh:
+            fh.write(s2)
+        print("  dock state: dialogs trimmed")
+
+
+def _drag_slow(x1, y1, x2, y2, steps=30):
+    """Drag in small steps: the paned divider ignores a teleporting pointer."""
+    _cliclick(f"m:{int(round(x1))},{int(round(y1))}")
+    time.sleep(0.3)
+    _cliclick(f"dd:{int(round(x1))},{int(round(y1))}")
+    time.sleep(0.25)
+    for i in range(1, steps + 1):
+        _cliclick(f"dm:{int(round(x1 + (x2 - x1) * i / steps))},{int(round(y2))}")
+        time.sleep(0.02)
+    _cliclick(f"du:{int(round(x2))},{int(round(y2))}")
+    time.sleep(0.4)
+
+
+def _grip_point():
+    """The divider grip's (x, y): the little stack of dots on the pane divider.
+
+    Read from its pixels rather than from the dock's colours, because those
+    change with the interface theme while the grip is always a couple of tiny
+    bright dots drawn against the dark strip between the canvas and the dock.
+    The dot test (short bright runs, stacked, dark around) is what separates it
+    from the canvas scrollbar's thumb — a tall bright run a few px to its left —
+    which a plain "find something bright" search mistakes for the grip.
+    """
+    import tempfile
+    import numpy as np
+    from PIL import Image
+
+    fd, path = tempfile.mkstemp(suffix='.png')
+    os.close(fd)
+    try:
+        shot(path)
+        a = np.asarray(Image.open(path).convert('RGB')).astype(int)
+    finally:
+        os.unlink(path)
+    s = a.shape[1] / WIN["w"]
+    bright = a.sum(2) > 450
+    dark = a.sum(2) < 350
+    runs = []
+    for x in range(int(250 * s), min(int(1450 * s), a.shape[1])):
+        idx = np.where(bright[:, x])[0]
+        if len(idx) == 0:
+            continue
+        splits = np.where(np.diff(idx) > 1)[0]
+        starts = np.r_[0, splits + 1]
+        ends = np.r_[splits, len(idx) - 1]
+        for st, en in zip(starts, ends):
+            r0, r1 = idx[st], idx[en]
+            h = (r1 - r0 + 1) / s
+            yc = (r0 + r1) / 2 / s
+            if 2 <= h <= 26 and 400 <= yc <= 560:
+                runs.append((x / s, yc))
+    blobs = []
+    for x, y in runs:
+        for b in blobs:
+            if abs(b["x"] - x) <= 8 and abs(b["y"] - y) <= 40:
+                b["xs"].append(x)
+                b["ys"].append(y)
+                b["x"] = x
+                b["y"] = y
+                break
+        else:
+            blobs.append({"xs": [x], "ys": [y], "x": x, "y": y})
+    best = None
+    for b in blobs:
+        if len(b["xs"]) < 2:
+            continue
+        xc = sum(b["xs"]) / len(b["xs"])
+        yc = sum(b["ys"]) / len(b["ys"])
+        px, py = int(xc * s), int(yc * s)
+        around = dark[py - 20:py + 20, px - 40:px + 40].mean()
+        if around > 0.75 and (best is None or len(b["xs"]) > best[2]):
+            best = (xc, yc, len(b["xs"]))
+    return (best[0], best[1]) if best else None
+
+
+def set_dock_width(target=_DOCK_GRIP_TARGET, tries=4):
+    """Drag the dock's divider so the dock stops crowding the canvas.
+
+    Inkscape opens the dock about 900 px wide, and the pane cannot be reasoned
+    with: resizing the window gives the extra width to the dock (a narrower
+    window makes it *wider*), so the divider has to be dragged. The grip is
+    found by its pixels each time and the measured position is printed, so a
+    missed grab is retried rather than silently leaving a dock that would flood
+    the video.
+    """
+    last = None
     for _ in range(tries):
-        left = dock_left()
-        if left >= target - 8:
-            break
-        narrow = max(900, int(WIN["w"] - (target - left)))
-        set_window(WIN["x"], WIN["y"], narrow, WIN["h"])
-        time.sleep(1.0)
-        set_window(WIN["x"], WIN["y"], WIN["w"], WIN["h"])
-        time.sleep(1.0)
-    print(f"  dock left at {dock_left():.0f} (target {target})")
+        grip = _grip_point()
+        if not grip:
+            print("  dock: divider not found; leaving the dock as it is")
+            return
+        x, y = grip
+        if x >= target - 15:
+            print(f"  dock divider at {x:.0f} (target {target})")
+            return
+        if last is not None and abs(x - last) < 8:
+            # Two drags with no movement: the dock is at its minimum width.
+            print(f"  dock divider at {x:.0f} (target {target}, dock at minimum)")
+            return
+        last = x
+        _drag_slow(x, y, target, y)
+    g = _grip_point()
+    where = f"{g[0]:.0f}" if g else "not found"
+    print(f"  dock divider at {where} (target {target})  <-- NOT at target")
 
 
 def to_screen(x, y):
@@ -707,12 +828,28 @@ def palette_point(name):
     finally:
         os.unlink(path)
     s = a.shape[0] / WIN["h"]
-    strip = a[int(755 * s):int(840 * s), :]
+    # Find the palette's rows rather than assuming a y: the strip slides down
+    # when the canvas shows a scrollbar (which used to leave the search looking
+    # at the scrollbar and a line of the canvas). Saturated pixels mark the
+    # swatches, measured over the window's right-hand quarter where the only
+    # colour is the palette — the drawing lives on the canvas, to the left.
+    reg = a[int(650 * s):int(855 * s), int(WIN["w"] * 0.66 * s):]
+    sat = (reg.max(2) - reg.min(2)) > 60
+    rows = np.where(sat.mean(1) > 0.2)[0]
+    if len(rows) == 0:
+        from PIL import Image as _Image
+        _Image.fromarray(a.astype("uint8")).save("/tmp/palette-fail.png")
+        print(f"  palette_point debug: shape={a.shape} "
+              f"max sat={sat.mean(1).max():.3f}")
+        raise RuntimeError("palette_point: no palette rows found")
+    y0, y1 = rows.min(), rows.max()
+    band = a[int(650 * s) + y0:int(650 * s) + y1 + 1, :]
     tr, tg, tb = targets[name]
-    d = (strip[:, :, 0] - tr) ** 2 + (strip[:, :, 1] - tg) ** 2 + (strip[:, :, 2] - tb) ** 2
+    d = (band[:, :, 0] - tr) ** 2 + (band[:, :, 1] - tg) ** 2 + (band[:, :, 2] - tb) ** 2
     iy, ix = np.unravel_index(np.argmin(d), d.shape)
-    x, y = ix / s, (int(755 * s) + iy) / s
-    print(f"  {name} at {x:.0f},{y:.0f} ({tuple(strip[iy, ix])})")
+    x = ix / s
+    y = (int(650 * s) + y0 + iy) / s
+    print(f"  {name} at {x:.0f},{y:.0f} ({tuple(band[iy, ix])})")
     return x, y
 
 
@@ -852,6 +989,8 @@ def _apply(op, marks, started):
     elif kind == "dd":
         # double-click: the only way Inkscape's spin/combo widgets take focus
         x, y = v if screen_coords else to_screen(*v)
+        move(x, y)
+        time.sleep(CLICK_HOLD)
         _cliclick(f"dd:{int(round(x))},{int(round(y))}")
     elif kind == "drag":
         x1, y1 = to_screen(v[0], v[1])
@@ -935,7 +1074,12 @@ def document_window():
     windows of their own, which silently invalidates every coordinate derived
     from them. The document window is always the big one.
     """
-    return window_xywh(document_window_index()) or win_xywh()
+    g = window_xywh(document_window_index())
+    if g and g["w"] >= 300 and g["h"] >= 300:
+        return g
+    # System Events reported nothing but a popup; the setups keep the document
+    # window at the configured geometry, which beats aiming at the popup.
+    return {"x": WIN["x"], "y": WIN["y"], "w": WIN["w"], "h": WIN["h"]}
 
 
 def named_window_xywh(title):
@@ -1054,11 +1198,13 @@ def quit_app():
         r = subprocess.run(["pgrep", "-fi", "Inkscape.app/Contents/MacOS/inkscape"],
                            capture_output=True, text=True)
         if not r.stdout.strip():
+            reset_dock_state()
             return
     for pid in subprocess.run(["pgrep", "-fi", "Inkscape.app/Contents/MacOS/inkscape"],
                               capture_output=True, text=True).stdout.split():
         subprocess.run(["kill", "-9", pid], capture_output=True)
     time.sleep(1.5)
+    reset_dock_state()
 
 
 def prepare_dxf(cfg, work, setup="setup-open-dxf"):
@@ -1283,11 +1429,15 @@ def dismiss_notices(limit=6):
         w = _notice_window()
         if not w:
             return
+        # 23 px above the bottom centre is the OK button (verified against a
+        # 544x452 import notice with the button found by clicking it, not by
+        # pixel brightness — the message's last text line is brighter, which is
+        # what a pixel search finds). The other offsets cover a resized notice.
         for dy in (23, 45, 63):
             click(w["x"] + w["w"] // 2, w["y"] + w["h"] - dy)
-            time.sleep(0.8)
+            time.sleep(0.7)
             if not _notice_window():
-                time.sleep(0.5)
+                time.sleep(0.3)
                 return
 
 
@@ -1304,6 +1454,8 @@ def _set_field(x, y, text):
     *inserted* into the old value and Enter reverts it (a "0" field typed as
     "255" became "2550" → rejected), which looks like the click missed.
     """
+    move(x, y)
+    time.sleep(CLICK_HOLD)
     _cliclick(f"dd:{x},{y}")
     time.sleep(0.5)
     keystroke("a", "ctrl")                 # select the existing value
@@ -1374,9 +1526,14 @@ def record(project, take, fps=30):
     # 3024x1964 on this Retina panel, not the 1512x982 logical points AppleScript
     # reports — so the crop is expressed as a fraction of the captured frame
     # rather than in points. `-capture_cursor 1` keeps the pointer visible.
+    # Capture from the top of the screen, not from the window: the macOS menu
+    # bar has to be in the frame, because the take's menu interactions are part
+    # of what the video teaches and a dropdown with no menu bar above it reads
+    # as a stray list. The window sits below it (WIN["y"]).
     w = document_window()
     sw, sh = desktop_size()
-    d = {"x": w["x"] / sw, "y": w["y"] / sh, "w": w["w"] / sw, "h": w["h"] / sh}
+    d = {"x": w["x"] / sw, "y": 0.0, "w": w["w"] / sw,
+         "h": (w["y"] + w["h"]) / sh}
     vf = (f"crop='trunc(iw*{d['w']:.6f})':'trunc(ih*{d['h']:.6f})':"
           f"'trunc(iw*{d['x']:.6f})':'trunc(ih*{d['y']:.6f})',"
           f"scale=1920:1080:force_original_aspect_ratio=decrease,"
