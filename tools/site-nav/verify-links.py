@@ -30,7 +30,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 
 NAV_BLOCK = re.compile(r'<nav class="(?:nav|site-nav|subnav)".*?</nav>', re.S)
-SKIP_PARTS = {".git", "out", "brand", "node_modules"}
+# Site pages only: tool-local HTML (the Canvas home-page source, for one) is
+# not published as a page and has no nav to check.
+SKIP_PARTS = {".git", "out", "brand", "node_modules", "tools"}
 SKIP_SCHEMES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:")
 
 # href and src, in either quote style. srcset is deliberately out: it only
