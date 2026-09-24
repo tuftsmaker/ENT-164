@@ -94,6 +94,9 @@
             "Object",
             "Fill and Stroke..."
           ]
+        },
+        {
+          "wait": 0.5
         }
       ]
     },

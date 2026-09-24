@@ -14,7 +14,7 @@
   "voice": "aura-2-thalia-en",
   "sourceFile": "~/Movies/ent164-onshape-tutorial/laser-cutting-in-inkscape-build/ENT-164-bracket.dxf",
   "lead": 0.0,
-  "tail": 0.5,
+  "tail": 2.0,
   "driver": "ink-drive.py",
   "normaliseDxf": true,
   "takes": [

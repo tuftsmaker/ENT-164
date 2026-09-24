@@ -153,20 +153,67 @@ def type_text(s, per_char=0.03):
     subprocess.run([CLICLICK, "-w", str(int(per_char * 1000)), f"t:{s}"], check=True)
 
 
-def menu(*items):
-    """Click through the menu bar, including submenus.
+def _menu_element_pos(expr):
+    """Position and size (screen coords) of an AppleScript menu element."""
+    out = osa(
+        f'tell application "System Events" to tell process "{APP}"\n'
+        f'  set p to position of {expr}\n'
+        f'  set s to size of {expr}\n'
+        f'  return (item 1 of p) & "," & (item 2 of p) & "," & '
+        f'(item 1 of s) & "," & (item 2 of s)\n'
+        f'end tell')
+    nums = [int(v) for v in re.findall(r"-?\d+", out)]
+    if len(nums) < 4 or nums[2] <= 0 or nums[3] <= 0:
+        return None
+    return nums[0], nums[1], nums[2], nums[3]
 
-    menu("File", "Open...")                    -> File > Open...
-    menu("View", "Zoom", "Zoom Drawing")       -> View > Zoom > Zoom Drawing
 
-    Each leading item is a menu bar item, and each subsequent one is nested
-    inside the previous item's `menu 1`. Building the path by hand for the
-    multi-level case is fiddly — AppleScript needs the whole chain spelled out —
-    so walk it from the inside out.
+def _menu_centre(pos):
+    return pos[0] + pos[2] // 2, pos[1] + pos[3] // 2
+
+
+_MENUBAR_ORDER = ("Apple", "Inkscape", "File", "Edit", "View", "Layer",
+                  "Object", "Path", "Text", "Filters", "Extensions", "Help")
+
+
+def _menu_enabled_names(owner_expr):
+    """Names of the enabled items of a menu, in display order.
+
+    Separators and disabled items are left out because the arrow keys skip
+    them, so this list's order *is* the order Down walks through.
     """
-    if len(items) < 2:
-        raise ValueError("menu() needs at least a menu bar item and a menu item")
-    # Build from the inside out: the deepest item, then each enclosing submenu.
+    out = osa(
+        'tell application "System Events"\n'
+        f'  tell process "{APP}"\n'
+        '    set out to ""\n'
+        f'    repeat with mi in (every menu item of {owner_expr})\n'
+        '      try\n'
+        '        if (enabled of mi) is true then set out to out & (name of mi) & linefeed\n'
+        '      end try\n'
+        '    end repeat\n'
+        '  end tell\n'
+        '  return out\n'
+        'end tell')
+    return [line.strip() for line in out.splitlines() if line.strip()]
+
+
+def _key_codes(codes, gap=0.1):
+    """Send virtual key codes in one osascript call (a process per key is slow)."""
+    lines = []
+    for code in codes:
+        lines.append(f'  key code {code}')
+        if gap:
+            lines.append(f'  delay {gap}')
+    osa(
+        'tell application "System Events"\n'
+        f'  set frontmost of process "{APP}" to true\n'
+        f'  delay 0.15\n'
+        + "\n".join(lines) + "\nend tell"
+    )
+
+
+def _menu_atomic(*items):
+    """Select a menu path in a single event — fast, and invisible on screen."""
     expr = f'menu item "{items[-1]}"'
     for item in reversed(items[1:-1]):
         expr = f'{expr} of menu 1 of menu item "{item}"'
@@ -178,6 +225,74 @@ def menu(*items):
         f'  click {expr}\n'
         f'end tell'
     )
+
+
+def menu(*items, key_gap=0.12):
+    """Walk the menu bar with the keyboard, so the dropdowns show on camera.
+
+    menu("File", "Open...")                    -> File > Open...
+    menu("View", "Zoom", "Zoom Drawing")       -> View > Zoom > Zoom Drawing
+
+    AppleScript's `click menu item … of menu 1 of …` selects the whole path in
+    one event: the dropdown is on screen for a single frame at most, so a
+    recording looks like nothing happened. Menu *bar* item positions cannot be
+    clicked reliably either — System Events reports them in a space that does
+    not match where clicks land — so this drives the menus the way a person
+    does: Control+F2 arms the menu bar (its Apple menu highlights, no list
+    opens), Right walks the titles, Down opens the requested one, and Down/Up
+    counts come from the item names System Events reports for the open menu.
+    Each step leaves the menu on screen, so the recording shows it.
+    """
+    if len(items) < 2:
+        raise ValueError("menu() needs at least a menu bar item and a menu item")
+
+    def normalized(name):
+        return name.replace("\u2026", "...").strip().lower()
+
+    wanted = [normalized(i) for i in items]
+    if items[0] not in _MENUBAR_ORDER:
+        _menu_atomic(*items)
+        return
+    raise_app()
+    time.sleep(0.35)
+    # Arm the menu bar by clicking the Apple menu — a real click at the far left
+    # always lands, and it puts the bar under the keyboard. (Control+F2 works
+    # when sent by hand but was dropped mid-take, and the Right keys then nudged
+    # the selection instead of walking the titles.) The Apple list flashes for a
+    # moment; the first Right closes it and moves along the bar.
+    for attempt in range(2):
+        _cliclick("m:20,16", "c:20,16")     # arm: one process
+        time.sleep(0.25)
+        if _MENUBAR_ORDER.index(items[0]):
+            _key_codes([124] * _MENUBAR_ORDER.index(items[0]), gap=0.08)
+        time.sleep(0.2)
+        _key_codes([125], gap=0)             # opens the title's menu
+        time.sleep(0.25)
+        owner = f'menu 1 of menu bar item "{items[0]}" of menu bar 1'
+        try:
+            for depth, target in enumerate(wanted[1:], start=1):
+                # The first query can land before the menu has rendered; poll.
+                names = []
+                for _ in range(6):
+                    names = [normalized(n) for n in _menu_enabled_names(owner)]
+                    if names:
+                        break
+                    time.sleep(0.15)
+                if target not in names:
+                    raise RuntimeError(f"{target!r} is not in {' > '.join(items[:depth])}")
+                steps = names.index(target)
+                if depth == len(items) - 1:
+                    _key_codes([125] * steps + [36], gap=key_gap)
+                else:
+                    _key_codes([125] * steps + [124], gap=key_gap)
+                    time.sleep(0.25)
+                    owner = f'menu 1 of menu item "{items[depth]}" of {owner}'
+            return
+        except Exception as e:
+            print(f"  menu {items[0]!r}: retrying ({e})")
+            press("esc")
+            time.sleep(0.3)
+    _menu_atomic(*items)
 
 
 def win_xywh():
@@ -264,9 +379,15 @@ def set_dock_width(target=DOCK_LEFT, tries=4):
     A dock that is already narrower than the target is left alone — every panel
     point is an offset from the dock's left edge, so it tracks whatever width
     the dock happens to have.
+
+    Fill and Stroke is raised first: the pane cannot squeeze below the widest
+    dialog's minimum, and a restored Align and Distribute is the widest, so
+    without this the squeeze stalls at the wide width.
     """
     if dock_left() >= target - 8:
         return
+    menu("Object", "Fill and Stroke...")
+    time.sleep(0.8)
     for _ in range(tries):
         left = dock_left()
         if left >= target - 8:
@@ -1203,7 +1324,7 @@ _KEYCODES_TEXT = {
 }
 
 
-def _type_codes(s, delay=0.05):
+def _type_codes(s, delay=0.02):
     """Type a string with virtual key codes (unicode injection is ignored).
 
     All the keystrokes go in *one* osascript call: one process per character is
@@ -1241,7 +1362,10 @@ def record(project, take, fps=30):
     # Each scene's narration length, summed for this take.
     total = take_length(take_cfg["scenes"])
     tail = float(cfg.get("tail", 0.5))
-    budget = total + tail + 2.0          # a little slack so nothing is clipped
+    # Slack for the menus, which are driven visibly (open, arrow, Enter) and so
+    # take seconds rather than a fraction of one. The film is cut to the
+    # narration, so the extra recording is discarded, not shown.
+    budget = total + tail + 8.0
 
     out_mp4 = os.path.join(takes, take + ".mp4")
     os.makedirs(takes, exist_ok=True)
