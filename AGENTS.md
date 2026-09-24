@@ -470,6 +470,12 @@ tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
   against the live course without `--i-know` (the same gate as
   `CANVAS_ALLOW_LIVE=1`). Canvas creates modules and items
   unpublished; publishing a module publishes its items with it.
+- `tools/canvas-course/home.py` pushes the course **home page** from
+  `home-page.html` beside it — the hub's theme and content, links only. Canvas
+  strips `<style>` blocks and keeps a fixed property set, so the page is all
+  inline styles (no `box-shadow`, bold via `<b>`) and the script reports what
+  Canvas actually stored. It sets the page as the front page and points the
+  Home tab at it (`default_view=wiki`).
 - `sync.py --dry-run` used to call `ensure_group()`/`ensure_module()`, which
   create on the way, so a dry run wrote to Canvas. Both dry runs now only look.
 - Student submissions live in Canvas and in the TA's `~/ent164/grading/`. They
