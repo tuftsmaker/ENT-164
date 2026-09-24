@@ -9,11 +9,13 @@ that is unpublished.
     python3 canvas/sync.py --dry-run         # show what it would do
     python3 canvas/sync.py                   # create, leave unpublished
     python3 canvas/sync.py --publish         # make them visible to students
+    python3 canvas/sync.py --publish --write-map   # live only: task -> URL map
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -27,10 +29,14 @@ from canvas_client import (  # noqa: E402
     Client,
     GROUP_NAME,
     GROUP_WEIGHT,
+    LIVE_COURSE,
     load_config,
 )
 
 SITE = "https://tuftsmaker.github.io/ENT-164"
+# The task -> assignment URLs the public pages link to. Written only for the
+# live course, so the committed map can never point at the prototype.
+MAP_PATH = HERE / "assignments.json"
 
 
 def assignment_name(task: dict) -> str:
@@ -51,6 +57,12 @@ def description(task: dict, order: int) -> str:
         required = " (required)" if item.get("required") else ""
         lines.append(f"<li><code>{item['name']}</code>{required} — {item.get('note','')}</li>")
     lines.append("</ul>")
+    if any("manifest_source_link" in (crit.get("check") or "")
+           for crit in task.get("criteria", [])):
+        lines.append(
+            "<p><b>Your Onshape link.</b> Paste it in the comment box when you upload — "
+            "the checker reads it even if it is not in <code>manifest.md</code>.</p>"
+        )
     lines += [
         "<p><b>Check it before you upload.</b> In opencode, ask the "
         "<code>maker-tasks</code> skill to check your file. Fix anything it marks "
@@ -97,6 +109,8 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(prog="sync")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--publish", action="store_true", help="make assignments visible to students")
+    parser.add_argument("--write-map", action="store_true",
+                        help="record task -> assignment URLs for the site (live course only)")
     parser.add_argument("--task", help="only this task id")
     parser.add_argument("--course",
                         help="Canvas course id; defaults to the prototype. "
@@ -112,11 +126,30 @@ def main(argv=None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 
+    if args.write_map:
+        if args.dry_run:
+            print("error: --write-map needs a real run — assignment ids only exist in Canvas",
+                  file=sys.stderr)
+            return 2
+        if str(client.course_id) != LIVE_COURSE:
+            print(f"error: the pages link to the live course; run --course {LIVE_COURSE} "
+                  f"with CANVAS_ALLOW_LIVE=1 to write the map", file=sys.stderr)
+            return 2
+        if not args.publish:
+            print("error: --write-map without --publish would link students to hidden "
+                  "assignments", file=sys.stderr)
+            return 2
+        if args.task:
+            print("error: --write-map rewrites the whole map; run it without --task",
+                  file=sys.stderr)
+            return 2
+
     tasks = [t for t in runner.list_tasks() if t.get("kind") != "unit"]
     if args.task:
         tasks = [t for t in tasks if t["id"] == args.task]
     tasks.sort(key=lambda t: t.get("order", 99))
 
+    entries = {}
     try:
         if args.dry_run:
             # Look, do not touch: ensure_group creates on the way, so
@@ -159,9 +192,24 @@ def main(argv=None) -> int:
             rows = rubric_rows(task)
             client.create_rubric(assignment["id"], rows)
             print(f"   rubric: {len(rows)} rows")
+            entries[task["id"]] = {"id": assignment["id"], "name": name}
     except CanvasError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
+
+    if args.write_map:
+        base = f"{client.base}/courses/{client.course_id}"
+        data = {
+            "course_id": str(client.course_id),
+            "course_url": f"{base}/assignments",
+            "assignments": {
+                tid: {**entry, "url": f"{base}/assignments/{entry['id']}"}
+                for tid, entry in entries.items()
+            },
+        }
+        MAP_PATH.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+        print(f"\nwrote {MAP_PATH}")
+        print("Next: rebuild the catalog — python3 tools/skill-tasks/catalog/build.py")
 
     print()
     print("published" if args.publish else "assignments are UNPUBLISHED (students cannot see them yet)")

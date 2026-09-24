@@ -66,6 +66,13 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   Never print, copy, commit, or echo the token. `COURSE_ID` in that file is
   accepted but ignored: development targets the prototype (see the skill-tasks
   section below).
+- **Run the Canvas-side commands on the instructor's remote server.** That is
+  where the class credentials are (the instructor keeps them under `~/.local`
+  there). A checkout without credentials cannot run the Canvas tools at all —
+  they load the token before `--dry-run` does anything — so author and test
+  offline, then run `sync.py` / `pull.py` / `apply.py` on the server. Reconcile
+  the credentials path there with `CONFIG_PATH` in `canvas_client.py` if the
+  tools cannot find them.
 - Module map (course 76330). Converted classes point at their Pages PDF; the
   rest still point at Google Slides. After converting a class, verify the Pages
   URL returns 200 with the expected byte size, then create an ExternalUrl item
@@ -364,6 +371,13 @@ tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
   `selftest.py` is the load-bearing one: each fixture in
   `tools/skill-tasks/fixtures/` declares in its own `fixture.json` what the
   report should say. Change a tolerance and a fixture disagrees, on purpose.
+- **The manifest is minimal, and opencode writes it.** A task only asks for the
+  lines its checks read: the Onshape share link (`onshape_url`) for cad-01–08,
+  the caliper-measured `material_thickness` for cad-08, and the `source_dxf` for
+  cad-09. `SKILL.md` tells the agent to ask for those and write `manifest.md`;
+  `check_submission.py` seeds a starter with exactly those lines
+  (`manifest_fields()` mirrors the three `manifest_*` checks). Nothing asks for
+  `student`, `self_check` or `width_before` any more.
 - **The task map is generated, not drawn** (`catalog/map.py`): a dependency graph
   laid out in columns by each task's depth, plus a band for the supervised cut
   and the qualification. Add a task, or point a `prereqs` at a different task,
@@ -431,6 +445,14 @@ tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
   All of it is **feedback-only** — 0 points, by decision, this semester. The
   task tools create and leave assignments **unpublished** unless given
   `--publish`. Everything is developed against the prototype first.
+- **The submission comment carries the link, and the site links to the
+  assignment.** Canvas allows one submission type per submission, so a student
+  uploading a zip pastes the Onshape link into the submission comment;
+  `pull.py` reads the student's own comments (newest first) and uses the link
+  in place of a missing manifest line. `sync.py --write-map` (live course and
+  `--publish` only) writes `tools/skill-tasks/canvas/assignments.json`; when
+  that map is committed, `catalog/build.py` renders a "Hand in on Canvas"
+  button on each task page. The map is never written for the prototype.
 - **Modules are classes, and only classes. Tasks are assignments.** The tasks are
   grouped by *assignment category* — the "Skill tasks (not graded)" group — and
   deliberately not by a module, which is the class structure. `sync.py` no longer

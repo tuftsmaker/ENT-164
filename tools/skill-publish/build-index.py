@@ -82,12 +82,16 @@ def collect_files(root):
 
 
 def content_version(root, files):
-    """Deterministic version: same content => same version => no re-download."""
+    """Deterministic version: same content => same version => no re-download.
+
+    Text is hashed with LF endings, so the same commit produces the same
+    version whether it was checked out on Windows (CRLF) or macOS (LF).
+    """
     digest = hashlib.sha256()
     for rel in files:
         digest.update(rel.encode("utf-8"))
         with open(os.path.join(root, rel), "rb") as fh:
-            digest.update(fh.read())
+            digest.update(fh.read().replace(b"\r\n", b"\n"))
     return digest.hexdigest()[:12]
 
 

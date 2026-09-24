@@ -44,6 +44,9 @@ jobs:
       - name: The finger-joint cutter obeys the depth rule
         run: python3 tools/skill-tasks/test_finger_joints.py
 
+      - name: The Canvas comment link is read correctly
+        run: python3 tools/skill-tasks/canvas/test_pull.py
+
       - name: The DXF -> laser-ready SVG converter works, and writes red hairlines
         run: |
           python3 skills/maker-tasks/check/laser_svg.py \

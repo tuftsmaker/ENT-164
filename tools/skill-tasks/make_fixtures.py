@@ -129,11 +129,10 @@ def write(name, body, **meta):
 
 
 MANIFEST = {
-    "student": "Test Student",
     "onshape_url": "https://cad.onshape.com/documents/aaaaaaaaaaaaaaaaaaaaaaaa/w/bbbbbbbbbbbbbbbbbbbbbbbb/e/cccccccccccccccccccccccc",
-    "material_thickness": "3.0",
-    "self_check": "ready to submit",
 }
+# cad-08 also reads the thickness the student measured.
+JOINTS_MANIFEST = {**MANIFEST, "material_thickness": "3.0"}
 
 
 def main():
@@ -180,7 +179,7 @@ def main():
         task="cad-02-update-dimension",
         expect={"verdict": "ready", "fails": []},
         note="80x60 after the edit",
-        manifest={**MANIFEST, "width_before": "100"},
+        manifest=MANIFEST,
     )
     write(
         "cad-02-not-changed",
@@ -188,7 +187,7 @@ def main():
         task="cad-02-update-dimension",
         expect={"verdict": "fix", "fails": ["dims"]},
         note="still 100 wide: the dimension was never changed",
-        manifest={**MANIFEST, "width_before": "100"},
+        manifest=MANIFEST,
     )
 
     # -- cad-03: the hole ------------------------------------------------
@@ -389,7 +388,7 @@ def main():
         task="cad-08-laser-joints",
         expect={"verdict": "ready", "fails": []},
         note="3 mm fingers matching the 3 mm measured material",
-        manifest=MANIFEST,
+        manifest=JOINTS_MANIFEST,
     )
     write(
         "cad-08-wrong-joint",
@@ -397,7 +396,7 @@ def main():
         task="cad-08-laser-joints",
         expect={"verdict": "fix", "fails": ["joints"]},
         note="2 mm joints against 3 mm material — too small by 1 mm",
-        manifest=MANIFEST,
+        manifest=JOINTS_MANIFEST,
     )
     write(
         "cad-08-no-joints",
@@ -405,7 +404,7 @@ def main():
         task="cad-08-laser-joints",
         expect={"verdict": "fix", "fails": ["joints"]},
         note="a plain rectangle: no slots or fingers at all",
-        manifest=MANIFEST,
+        manifest=JOINTS_MANIFEST,
     )
 
     # -- cad-09: the laser-ready SVG ------------------------------------
@@ -413,11 +412,8 @@ def main():
     # student would add in Inkscape. The bad ones break one thing each, the two
     # the video warns about: lines left black, and a non-hairline width.
     svg_manifest = {
-        "student": "Test Student",
         "source_dxf": "part.dxf — cad-08-laser-joints",
-        "self_check": "ready to submit",
     }
-    no_selfcheck = {k: v for k, v in svg_manifest.items() if k != "self_check"}
 
     def write_svg(name, body, transform=None, expect=None, note="", manifest=None):
         folder = FIXTURES / name
@@ -453,14 +449,14 @@ def main():
     write_svg(
         "cad-09-black-lines", ready,
         transform=lambda s: s.replace("stroke:#ff0000", "stroke:#000000"),
-        manifest=no_selfcheck,
+        manifest=svg_manifest,
         expect={"verdict": "fix", "fails": ["colours"]},
         note="the DXF's default black lines: nothing will cut",
     )
     write_svg(
         "cad-09-not-hairline", ready,
         transform=lambda s: s.replace("-inkscape-stroke:hairline", ""),
-        manifest=no_selfcheck,
+        manifest=svg_manifest,
         expect={"verdict": "fix", "fails": ["colours"]},
         note="red, but a wide line: the laser follows the centre of a hairline",
     )

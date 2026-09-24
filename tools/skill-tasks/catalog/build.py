@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import sys
 from pathlib import Path
 
@@ -28,6 +29,9 @@ import nav as site_nav  # noqa: E402
 
 TASKS_DIR = REPO / "tasks"
 SITE = "https://tuftsmaker.github.io/ENT-164"
+# `sync.py --write-map` writes this for the live course; without it the pages
+# simply do not carry the Canvas button.
+CANVAS_MAP = HERE.parent / "canvas" / "assignments.json"
 
 def nav(cta_href="./", cta_label="Start with task 1 &rarr;"):
     """The task pages share the site nav, but each carries its own call to
@@ -185,8 +189,7 @@ def table_lookup(check: str, args: dict) -> str:
         "dxf_no_construction_lines": "No stray lines: guides are not exported, so a line in the file gets cut.",
         "dxf_aspect": f'Four straight sides at right angles, in the {args.get("width","?")}:{args.get("height","?")} proportion.',
         "manifest_source_link": "A TA opens your Onshape link to confirm the sketch is yours.",
-        "manifest_selfcheck": "You ran the checker on this same file before submitting it.",
-        "manifest_field": f'Your manifest records "{args.get("field","")}".',
+        "manifest_field": f'Your manifest records "{args.get("field","")}" — opencode writes this line for you.',
     }
     return table.get(check, "Checked on your file.")
 
@@ -206,6 +209,21 @@ def subnav(kind: str) -> str:
       {links}
   </div>
 </nav>"""
+
+
+def canvas_links() -> dict:
+    """task id -> Canvas assignment URL, from the map sync.py writes."""
+    if not CANVAS_MAP.exists():
+        return {}
+    try:
+        data = json.loads(CANVAS_MAP.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return {
+        tid: entry["url"]
+        for tid, entry in (data.get("assignments") or {}).items()
+        if entry.get("url")
+    }
 
 
 def task_page(task: dict, all_tasks: dict) -> str:
@@ -237,6 +255,14 @@ def task_page(task: dict, all_tasks: dict) -> str:
             f'<a href="{esc(p)}.html">{esc(all_tasks[p]["title"])}</a>' for p in prereqs if p in all_tasks
         )
         prereq_line = f'<p><b>Do first:</b> {links}.</p>'
+
+    canvas_url = canvas_links().get(task["id"])
+    canvas_cta = (
+        '      <div class="cta-row" style="margin-top:18px;">\n'
+        f'        <a class="btn btn-primary btn-sm" href="{esc(canvas_url)}">Hand in on Canvas &rarr;</a>\n'
+        '      </div>'
+        if canvas_url else ""
+    )
 
     siblings = sorted(
         (t for t in all_tasks.values() if t.get("kind") != "unit"),
@@ -282,12 +308,13 @@ def task_page(task: dict, all_tasks: dict) -> str:
       </table>
       <p style="color:var(--muted);font-size:14px;margin-top:12px;">
         Put both files in one folder, run the checker, and upload the zip in Canvas.
-        Ask opencode: <span class="mono">check my cad-01 submission</span>.
+        Ask opencode: <span class="mono">check my {esc(task['id'])} submission</span>.
       </p>
+{canvas_cta}
       <p style="color:var(--muted);font-size:14px;">
         When the file is ready, the same checker writes the file the laser reads —
         pure red hairlines, in millimetres, with nothing to install:
-        <span class="mono">check my cad-01 submission and write the laser SVG</span>.
+        <span class="mono">check my {esc(task['id'])} submission and write the laser SVG</span>.
         <a href="../laser-cutting/">The laser-cutting guide</a> covers what it does and
         how to edit it in Inkscape afterwards.
       </p>

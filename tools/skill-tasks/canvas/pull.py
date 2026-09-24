@@ -2,8 +2,11 @@
 """Pull ungraded submissions for one task and check them.
 
 Downloads each student's upload into a working directory (outside the repo),
-runs the checks, and writes one report per student. Nothing is posted back to
-Canvas — that is `apply.py`, and only after a person has read the reports.
+runs the checks, and writes one report per student. The Onshape link may come
+from the manifest or from the student's own submission comment — Canvas allows
+one submission type per submission, so the comment box is where a link can
+ride along with an uploaded zip. Nothing is posted back to Canvas — that is
+`apply.py`, and only after a person has read the reports.
 
     python3 canvas/pull.py --task cad-01-first-sketch
     python3 canvas/pull.py --task cad-03-cut-a-hole --workdir ~/ent164/grading
@@ -30,6 +33,27 @@ DEFAULT_WORKDIR = Path.home() / "ent164" / "grading"
 
 def safe(name: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]+", "-", name).strip("-").lower() or "unknown"
+
+
+ONSHAPE_LINK = re.compile(r"https?://[^\s<>\"']+onshape\.com/documents/[^\s<>\"')\]]+")
+
+
+def link_from_comments(submission: dict, user_id) -> str | None:
+    """The Onshape link the student pasted into a Canvas submission comment.
+
+    Only the student's own comments count, and the newest one wins, so a
+    corrected link posted later beats the manifest. Returns None when no
+    student comment carries one.
+    """
+    comments = submission.get("submission_comments") or []
+    ordered = sorted(comments, key=lambda c: str(c.get("created_at") or ""), reverse=True)
+    for comment in ordered:
+        if user_id is not None and comment.get("author_id") != user_id:
+            continue
+        match = ONSHAPE_LINK.search(comment.get("comment") or "")
+        if match:
+            return match.group(0).rstrip(".,;")
+    return None
 
 
 def main(argv=None) -> int:
@@ -118,15 +142,36 @@ def main(argv=None) -> int:
 
         source = files[0] if len(files) == 1 else folder
         try:
-            report = runner.run(task, source)
+            submission = runner.load_submission(source)
+            canvas_link = link_from_comments(sub, sub.get("user_id"))
+            if canvas_link:
+                # The comment is the student's latest word on the link; it
+                # beats a stale line in the manifest.
+                submission.manifest = {
+                    **(submission.manifest or {}),
+                    "onshape_url": canvas_link,
+                }
+            report = runner.run(task, submission)
         except runner.TaskError as exc:
             print(f"  ! {name}: {exc}")
             continue
 
         report.student = name
+        if canvas_link:
+            report.notes.append("Onshape link read from the student's Canvas comment.")
         (folder / "check-report.txt").write_text(report.to_text() + "\n", encoding="utf-8")
         (folder / "check-report.json").write_text(
-            json.dumps({**report.to_dict(), "canvas": {"user_id": sub["user_id"], "assignment_id": assignment["id"]}}, indent=2) + "\n",
+            json.dumps(
+                {
+                    **report.to_dict(),
+                    # ai_review.py looks here for the link, and a zip's manifest
+                    # is unpacked to a temp dir that outlives this script.
+                    "manifest": submission.manifest or {},
+                    "canvas": {"user_id": sub.get("user_id"), "assignment_id": assignment["id"]},
+                },
+                indent=2,
+            )
+            + "\n",
             encoding="utf-8",
         )
 

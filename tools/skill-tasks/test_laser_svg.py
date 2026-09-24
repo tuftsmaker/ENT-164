@@ -248,8 +248,7 @@ def main() -> int:
 
             sub = runner.Submission(source=out.parent)
             sub.files["part-laser-ready.svg"] = out
-            sub.manifest = {"material_thickness": "3.0", "source_dxf": dxf.name,
-                            "self_check": "ready"}
+            sub.manifest = {"source_dxf": dxf.name}
             task_def = runner.load_task("cad-09-laser-ready")
             report = runner.run(task_def, sub)
             bad = [c.id for c in report.failures]
