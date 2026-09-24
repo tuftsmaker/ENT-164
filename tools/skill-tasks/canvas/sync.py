@@ -2,7 +2,9 @@
 """Create or update the Canvas assignments and their rubrics for the tasks.
 
 Idempotent: run it as often as you like. It finds assignments by name, creates
-what is missing, and updates descriptions to match the task files. Nothing is
+what is missing, and updates descriptions to match the task files. The
+assignment category is the open track's: it is named after the unit's title in
+the task files, and existing assignments are moved into it. Nothing is
 published unless you pass --publish, and no student ever sees an assignment
 that is unpublished.
 
@@ -27,7 +29,6 @@ import runner  # noqa: E402
 from canvas_client import (  # noqa: E402
     CanvasError,
     Client,
-    GROUP_NAME,
     GROUP_WEIGHT,
     LIVE_COURSE,
     load_config,
@@ -144,7 +145,18 @@ def main(argv=None) -> int:
                   file=sys.stderr)
             return 2
 
-    tasks = [t for t in runner.list_tasks() if t.get("kind") != "unit"]
+    items = runner.list_tasks()
+    open_tracks = [t for t in items
+                   if t.get("kind") == "unit" and t.get("status", "active") != "planned"]
+    if len(open_tracks) != 1:
+        found = ", ".join(t["id"] for t in open_tracks) or "none"
+        print(f"error: the Canvas category is named after the open track, so exactly "
+              f"one track must be open; found {len(open_tracks)}: {found}",
+              file=sys.stderr)
+        return 2
+    group_name = open_tracks[0]["title"]
+
+    tasks = [t for t in items if t.get("kind") != "unit"]
     if args.task:
         tasks = [t for t in tasks if t["id"] == args.task]
     tasks.sort(key=lambda t: t.get("order", 99))
@@ -155,11 +167,11 @@ def main(argv=None) -> int:
             # Look, do not touch: ensure_group creates on the way, so
             # calling them here made --dry-run write to Canvas.
             group = next((g for g in client.assignment_groups()
-                          if g["name"] == GROUP_NAME), None)
-            print(f"category  {group['id'] if group else '(would create)'}  {GROUP_NAME} "
+                          if g["name"] == group_name), None)
+            print(f"category  {group['id'] if group else '(would create)'}  {group_name} "
                   f"(weight {GROUP_WEIGHT})")
         else:
-            group = client.ensure_group()
+            group = client.ensure_group(name=group_name)
             print(f"category  {group['id']}  {group['name']} (weight {group.get('group_weight')})")
         for task in tasks:
             name = assignment_name(task)
@@ -172,10 +184,13 @@ def main(argv=None) -> int:
                 continue
 
             if existing:
+                # The category is the track's: an assignment that predates the
+                # current name is moved into the right group.
                 client.update_assignment(
                     existing["id"],
                     description=description(task, task["order"]),
                     points_possible=0.0,
+                    assignment_group_id=group["id"],
                     published="true" if args.publish else "false",
                 )
                 assignment = existing

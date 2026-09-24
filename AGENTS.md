@@ -440,8 +440,9 @@ tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
     placeholder, not a filter — there is no syntax for pinning a course. Personal
     access tokens (what we have) are unscoped and inherit the user's full
     permissions across all their courses.
-- **Canvas** (course 76330, the live course): a 0-weight group "Skill tasks (not
-  graded)", one assignment per task with a rubric whose rows are the criteria.
+- **Canvas** (course 76330, the live course): a 0-weight group named after the
+  track ("Laser-Ready File" — the open unit's title, read by `sync.py`), one
+  assignment per task with a rubric whose rows are the criteria.
   All of it is **feedback-only** — 0 points, by decision, this semester. The
   task tools create and leave assignments **unpublished** unless given
   `--publish`. Everything is developed against the prototype first.
@@ -454,9 +455,9 @@ tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
   that map is committed, `catalog/build.py` renders a "Hand in on Canvas"
   button on each task page. The map is never written for the prototype.
 - **Modules are classes, and only classes. Tasks are assignments.** The tasks are
-  grouped by *assignment category* — the "Skill tasks (not graded)" group — and
-  deliberately not by a module, which is the class structure. `sync.py` no longer
-  creates one.
+  grouped by *assignment category* — one group per track, named after it (today
+  "Laser-Ready File", the open unit's title) — and deliberately not by a module,
+  which is the class structure. `sync.py` no longer creates one.
 - **All the Canvas tools take `--course`**, defaulting to the prototype:
   `sync.py`, `apply.py`, `pull.py` (the skill-task loop) and `populate.py`.
   `apply.py` is the one that writes student records, so being able to rehearse it

@@ -182,14 +182,15 @@ Worth knowing before trusting a green report:
 
 ## Canvas notes
 
-- The tasks sit in a **0-weight assignment group** and carry **0 points**: they
-  record completion, not a grade. Feedback-only, by decision.
+- The tasks sit in a **0-weight assignment group named after the track** — the
+  open unit's title in the task files, read by `sync.py` — and carry **0
+  points**: they record completion, not a grade. Feedback-only, by decision.
 - Each task is one assignment with an **online-file-upload** submission type and
   a rubric whose rows are the criteria — the rubric assessment is the signoff
   record, in SpeedGrader, where a TA already works.
-- The **module** "Skill tasks · Laser-ready file" is the qualification view: all
-  the laser track's assignments complete means its tasks are signed. The
-  other three tracks are `status: planned`: documented units with no tasks yet.
+- The **group** is the qualification view: all the laser track's assignments
+  complete means its tasks are signed. The other three tracks are
+  `status: planned`: documented units with no tasks yet.
 - The Canvas client is read-mostly by design. `sync.py` creates and updates;
   `pull.py` only reads; `apply.py` is the only writer of grades, and only with
   `--reviewed`.
@@ -202,7 +203,7 @@ Worth knowing before trusting a green report:
 
 - Checker: 9 tasks, 30 fixtures, all agreeing.
 - Catalog: 16 pages generated.
-- Canvas: the group and module exist; assignments are created by `sync.py` and
-  deliberately left unpublished until the pilot starts.
+- Canvas: the group exists and is named for the track; assignments are created
+  and updated by `sync.py` and are published on the prototype.
 - AI tier: wired, guarded, and off unless `opencode` and `browser-control` are
   both present.

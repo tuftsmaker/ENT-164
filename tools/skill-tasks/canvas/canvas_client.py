@@ -56,10 +56,10 @@ DEV_COURSE = PROTOTYPE_COURSE
 # point is that reaching the live course must be a decision, not a typo.
 OVERRIDE_ENV = "CANVAS_ALLOW_LIVE"
 
-# The module the tasks live in, and the weight: 0.0 keeps them off the grade
-# while still recording completion. Feedback-only this semester, by design.
-MODULE_NAME = "Skill tasks · Laser-ready file"
-GROUP_NAME = "Skill tasks (not graded)"
+# The weight of the tasks' assignment category: 0.0 keeps them off the grade
+# while still recording completion. Feedback-only this semester, by design. The
+# category is named after the open track — sync.py reads the unit's title in
+# `skills/maker-tasks/tasks/`.
 GROUP_WEIGHT = 0.0
 
 
@@ -225,7 +225,7 @@ class Client:
     def assignment_groups(self):
         return self.get(f"/courses/{self.course_id}/assignment_groups")
 
-    def ensure_group(self, name=GROUP_NAME, weight=GROUP_WEIGHT):
+    def ensure_group(self, name, weight=GROUP_WEIGHT):
         for group in self.assignment_groups():
             if group["name"] == name:
                 return group
@@ -238,7 +238,7 @@ class Client:
     def modules(self):
         return self.get(f"/courses/{self.course_id}/modules")
 
-    def ensure_module(self, name=MODULE_NAME, position=None):
+    def ensure_module(self, name, position=None):
         for mod in self.modules():
             if mod["name"] == name:
                 return mod
