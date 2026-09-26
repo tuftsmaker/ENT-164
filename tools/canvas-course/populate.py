@@ -17,7 +17,9 @@ CANVAS_ALLOW_LIVE=1 in the environment *and* --course, and is refused
 otherwise by canvas_client.
 
 Idempotent: modules are found by name and items by title, so re-running after a
-class is added only creates what is missing.
+class is added only creates what is missing. `--prune` reconciles the other
+direction: it removes modules outside the plan, items a module no longer lists
+(a renamed or retired link), and assignments the task sync does not own.
 """
 import argparse
 import os
@@ -148,7 +150,8 @@ def main():
                     help=f'allow --prune against the live course (same gate as '
                          f'{OVERRIDE_ENV}=1)')
     ap.add_argument('--prune', action='store_true',
-                    help='delete modules that are not in the plan (prototype cleanup)')
+                    help='delete modules, items and assignments that are not in the '
+                         'plan (prototype cleanup)')
     ap.add_argument('--publish', action='store_true',
                     help='publish the modules and items (Canvas creates them unpublished)')
     args = ap.parse_args()
@@ -181,10 +184,22 @@ def main():
                 f'or set {OVERRIDE_ENV}=1'
             )
         wanted = {name for name, _ in mods}
+        wanted_items = {name: {title for title, _ in items} for name, items in mods}
         for mod in client.modules():
             if mod['name'] not in wanted:
                 client._request('DELETE', f'/courses/{client.course_id}/modules/{mod["id"]}')
                 print(f'  - removed module {mod["name"]}')
+                continue
+            # A module that stays can still carry an item the plan no longer
+            # has — a link that was renamed, merged or retired. Delete those,
+            # or the course keeps pointing at a URL the site no longer serves.
+            for item in client.module_items(mod['id']):
+                if item['title'] not in wanted_items[mod['name']]:
+                    client._request(
+                        'DELETE',
+                        f'/courses/{client.course_id}/modules/{mod["id"]}/items/{item["id"]}',
+                    )
+                    print(f'  - removed item {item["title"]} (from {mod["name"]})')
         # Assignments belong to the task sync, so "prune" here means the leftovers
         # - the test assignments a prototype course accumulates. Anything the task
         # sync owns is left alone.
@@ -194,7 +209,7 @@ def main():
                 client._request('DELETE', f'/courses/{client.course_id}/assignments/{a["id"]}')
                 print(f'  - removed assignment {a["name"]}')
 
-    created_mod, created_item, skipped, published = 0, 0, 0, 0
+    created_mod, created_item, skipped, published, moved = 0, 0, 0, 0, 0
     for position, (name, items) in enumerate(mods, start=1):
         existing = next((m for m in client.modules() if m['name'] == name), None)
         if existing:
@@ -203,6 +218,13 @@ def main():
             mod = client.ensure_module(name=name, position=position)
             created_mod += 1
             print(f'  + module {name}')
+        # The plan is in week order, and a module created later (a class page
+        # added since) lands at the end. Re-seat every module by its position
+        # in the plan, or the course list reads out of order.
+        if mod.get('position') != position:
+            client.put(f'/courses/{client.course_id}/modules/{mod["id"]}',
+                       module={'position': position})
+            moved += 1
         if args.publish and not mod.get('published'):
             client.put(f'/courses/{client.course_id}/modules/{mod["id"]}',
                        module={'published': True})
@@ -215,6 +237,11 @@ def main():
                     client.put(f'/courses/{client.course_id}/modules/{mod["id"]}'
                                f'/items/{have[title]["id"]}', module_item={'published': True})
                     published += 1
+                if have[title].get('position') != pos:
+                    # A retired item above this one left a gap; keep the list
+                    # numbered 1..n so it reads as the plan does.
+                    client.put(f'/courses/{client.course_id}/modules/{mod["id"]}'
+                               f'/items/{have[title]["id"]}', module_item={'position': pos})
                 continue
             item = client.add_module_item(mod['id'], type='ExternalUrl', title=title,
                                           external_url=url, position=pos, new_tab=True)
@@ -227,6 +254,7 @@ def main():
 
     print(f'\n  {created_mod} module(s) and {created_item} item(s) created, '
           f'{skipped} already there'
+          + (f', {moved} reordered' if moved else '')
           + (f', {published} published' if args.publish else ' (unpublished - pass --publish)'))
     print(f'  https://canvas.tufts.edu/courses/{args.course}/modules')
 
