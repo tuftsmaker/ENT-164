@@ -351,8 +351,12 @@ the manual; this is the contract.
   option in that dialog is explicitly the service-account path — do not point
   students at it. During authorization the student must **switch the workspace
   to ENT-164**, or the app connects to the wrong workspace with no class
-  models/budget. Screenshots come from the desktop app (V2, 2.0.16) driven over
-  CDP in an isolated profile.
+  models/budget. Note the app's settings sidebar changes shape when **more
+  than one server** is configured: Projects/Providers/Models/Extensions then
+  live inside each server entry under a **Servers** group instead of at the
+  top level; the guide carries a callout for that, and the same menu is
+  reproduced by seeding an `ssh.servers` entry. Screenshots come from the
+  desktop app (V2, 2.0.16) driven over CDP in an isolated profile.
 
 ## Onshape tips (the video series)
 
