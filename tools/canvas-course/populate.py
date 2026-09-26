@@ -120,10 +120,8 @@ def plan():
     cutting guide - goes with Class 3. The tasks are not here at all: they are
     assignments (tools/skill-tasks/canvas/sync.py).
     """
-    setups = [('Set up OpenCode + DeepSeek (macOS)',
-               f'{SITE}/opencode-deepseek-guide-mac/guide.html'),
-              ('Set up OpenCode + DeepSeek (Windows)',
-               f'{SITE}/opencode-deepseek-guide-win/guide.html'),
+    setups = [('Set up OpenCode + DeepSeek',
+               f'{SITE}/opencode-deepseek-guide/guide.html'),
               ('Add your class tools to opencode', f'{SITE}/add-class-tools/guide.html')]
     laser = [('Laser cutting at Nolop with Inkscape', f'{SITE}/laser-cutting/guide.html')]
     laser += [(title, f'{SITE}/onshape-tips/videos/{slug}.mp4') for title, slug in tips()]

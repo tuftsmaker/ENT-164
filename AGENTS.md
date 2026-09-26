@@ -323,7 +323,7 @@ the manual; this is the contract.
   sizes the on-screen page column to 215.9mm; the `.cover` height is 279.4mm
   and must stay equal to the Letter content height, or the cover spills onto a
   blank second page. If you change the page size, change all three together and
-  rebuild **every** guide PDF — `add-class-tools`, both `opencode-deepseek-guide-*`
+  rebuild **every** guide PDF — `add-class-tools`, `opencode-deepseek-guide`
   and `laser-cutting` are all built from that one stylesheet. Verify with
   `pdfinfo <pdf> | grep 'Page size'` (expect `612 x 792 pts (letter)`).
 - `laser-cutting/guide.html` is the Nolop laser-cutting walkthrough (Inkscape →
@@ -332,6 +332,17 @@ the manual; this is the contract.
   in the page footer — retain the attribution if you move or reuse them.
   Class 3's deck and page draw their Inkscape/UCP screenshots from here, so
   editing a shot means copying it into `classes/class-03/shots/` too.
+- **`opencode-deepseek-guide/` is one guide for both operating systems**, with
+  `shots/` and `opencode-deepseek-v4.1-flash-setup.pdf`. It replaced the former
+  `opencode-deepseek-guide-mac/` and `-win/` pair: the only real differences
+  were the download link and the install steps, so those are the only places
+  the page branches (it names both OSes, macOS first). Its provider is
+  **OpenCode Zen**, not OpenRouter — students accept an invitation from the
+  instructor to the class workspace, copy their API key from
+  `opencode.ai/console`, then connect the in-app provider labelled simply
+  **OpenCode** (Settings → Providers). The app calls it "Connect OpenCode Zen"
+  in the dialog; the provider list calls it "OpenCode". Screenshots come from
+  the desktop app's own V2 renderer driven over CDP.
 
 ## Onshape tips (the video series)
 

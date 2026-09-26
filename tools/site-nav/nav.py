@@ -128,7 +128,7 @@ PAGES = {
     "syllabus/index.html": (
         "ENT-164-Syllabus-Fall-2026.pdf", "Download PDF", "syllabus",
     ),
-    "about/index.html": ("../opencode-deepseek-guide-mac/guide.html", "Start with opencode &rarr;", "about"),
+    "about/index.html": ("../opencode-deepseek-guide/guide.html", "Start with opencode &rarr;", "about"),
     "onshape-tips/index.html": ("../laser-cutting/", "Laser cutting guide &rarr;", None),
     "laser-cutting/index.html": ("guide.html", "Read the guide &rarr;", None),
     "classes/class-01/index.html": ("ENT-164-Class-1-Introductions.pdf", "Download slides", None),
@@ -149,8 +149,7 @@ PAGES = {
 GUIDE_PAGES = {
     "laser-cutting/guide.html": ("../classes/class-03/", "Class 3"),
     "add-class-tools/guide.html": ("../syllabus/", "Syllabus"),
-    "opencode-deepseek-guide-mac/guide.html": ("../syllabus/", "Syllabus"),
-    "opencode-deepseek-guide-win/guide.html": ("../syllabus/", "Syllabus"),
+    "opencode-deepseek-guide/guide.html": ("../syllabus/", "Syllabus"),
 }
 
 # Pages that need a section bar because they have no sidebar. Pages with a
