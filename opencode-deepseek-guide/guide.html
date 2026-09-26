@@ -27,11 +27,11 @@
   <div class="course">ENT-164 · Intro to Making</div>
   <div class="kicker">Beginner's Guide · macOS &amp; Windows · No experience needed</div>
   <h1>Making with AI<br><span class="accent">OpenCode + DeepSeek V4.1 Flash</span></h1>
-  <div class="subtitle">Download the OpenCode app, connect it to OpenCode Zen, and start asking questions. No terminal, no coding — just a normal app.</div>
+  <div class="subtitle">Download the OpenCode app, sign in to the class workspace, and start asking questions. No terminal, no coding — just a normal app.</div>
   <div class="pills">
     <div class="pill">About 15 minutes</div>
     <div class="pill">For macOS &amp; Windows</div>
-    <div class="pill">Provider: OpenCode Zen</div>
+    <div class="pill">Provider: OpenCode Console</div>
     <div class="pill">Model: DeepSeek V4.1 Flash</div>
   </div>
   <div class="hero">
@@ -47,8 +47,8 @@
 <!-- ================= CONTENT ================= -->
 <div class="page">
 
-  <p class="lead"><b>OpenCode</b> is an AI helper that runs as an app on your computer. You type to it in plain English, and it can explain code, help with class projects, and walk you through technical tasks. <b>DeepSeek V4.1 Flash</b> is the AI "brain" that writes the answers, and <b>OpenCode Zen</b> is the service that connects the app to it.</p>
-  <p>Think of it this way: OpenCode is your phone, OpenCode Zen is your phone company, and DeepSeek V4.1 Flash is the person you're calling. This guide sets all three up. You won't need to use a terminal or write any code.</p>
+  <p class="lead"><b>OpenCode</b> is an AI helper that runs as an app on your computer. You type to it in plain English, and it can explain code, help with class projects, and walk you through technical tasks. <b>DeepSeek V4.1 Flash</b> is the AI "brain" that writes the answers, and <b>OpenCode Console</b> is the service that connects the app to it.</p>
+  <p>Think of it this way: OpenCode is your phone, OpenCode Console is your phone company, and DeepSeek V4.1 Flash is the person you're calling. This guide sets all three up. You won't need to use a terminal or write any code.</p>
 
   <div class="callout">
     <b>Why DeepSeek V4.1 Flash for this class?</b>
@@ -56,7 +56,7 @@
       <li><b>Built for this work</b> — it's designed for reasoning and agentic coding with reliable tool use, so it can genuinely help with your class projects.</li>
       <li><b>Open weights</b> — the model itself is openly licensed and inspectable, which fits a making class better than a closed black box.</li>
       <li><b>Big context, tiny cost</b> — it can read entire files (up to 1M tokens) for a fraction of a cent per question, so our shared class budget lasts the term.</li>
-      <li><b>One connection</b> — because Zen gives us access to it, you set up one account and one key, and you can explore other models later without starting over.</li>
+      <li><b>One connection</b> — because Console gives us access to it, you set up one account and one sign-in, and you can explore other models later without starting over.</li>
     </ul>
   </div>
 
@@ -68,7 +68,7 @@
     <li>Nothing to pay — the class budget covers AI usage for your coursework</li>
   </ul>
 
-  <div class="callout"><b>New word alert.</b> <b>OpenCode Zen</b> is the OpenCode team's service that gives one account access to a set of AI models they have tested and chosen. Instead of signing up with each model company separately, you connect Zen once and pick a model.</div>
+  <div class="callout"><b>New word alert.</b> <b>OpenCode Console</b> is the OpenCode team's service that gives one account access to a set of AI models they have tested and chosen (you may also see it called <b>OpenCode Zen</b> in older class notes — it's the same service). The app calls it <b>OpenCode Console</b> everywhere, so that's the name this guide uses.</div>
 
   <!-- STEP 1 -->
   <div class="step">
@@ -106,51 +106,45 @@
   <!-- STEP 3 -->
   <div class="step">
     <div class="step-header"><div class="step-num">3</div><h2>Accept your class invitation</h2></div>
-    <p>Your instructor adds you to the class workspace on OpenCode Zen using your <b>Tufts email</b>. The invitation arrives by email, and you accept it once.</p>
+    <p>Your instructor adds you to the class workspace on OpenCode Console using your <b>Tufts email</b>. The invitation arrives by email, and you accept it once.</p>
     <ol>
       <li>Check your Tufts inbox for an invitation to the class workspace and click the link in it.</li>
       <li>Sign in with your <b>Tufts email</b> (for example <span class="mono">yourname@tufts.edu</span>). Using the <span class="ui">Google</span> button skips creating a separate password.</li>
-      <li>You land in the class workspace, which is named for the course (for example <b>ENT-164 Intro to Making</b>).</li>
+      <li>You land in the class workspace, which is named for the course (for example <b>ENT-164</b>).</li>
     </ol>
     <div class="callout warn"><b>Use your Tufts email.</b> The workspace is tied to the <span class="mono">tufts.edu</span> domain. If you sign in with a different email, you won't see the class workspace or be able to use the class budget.</div>
   </div>
 
   <!-- STEP 4 -->
   <div class="step">
-    <div class="step-header"><div class="step-num">4</div><h2>Copy your own API key</h2></div>
-    <p>An <b>API key</b> is a long password that lets the app use OpenCode Zen on your behalf. It starts with <span class="mono">sk-</span> for a personal key (a team <b>service account</b> key starts with <span class="mono">oc_sk_</span>). Treat it like a bank password: don't share it or post it anywhere.</p>
+    <div class="step-header"><div class="step-num">4</div><h2>Sign in to OpenCode Console</h2></div>
+    <p>This step connects the app to your class account. You sign in — you do <b>not</b> need an API key or any password to copy.</p>
     <ol>
-      <li>In the same browser, go to the OpenCode Console at <b>opencode.ai/console</b> and sign in if it asks.</li>
-      <li>Make sure your class workspace is the one selected, then open the <b>API keys</b> section.</li>
-      <li>Copy your key — or click <span class="ui">Create API key</span> first if you don't have one yet, and copy it then (the site shows it only once). Paste it somewhere temporary — Notes or Notepad is fine — for the next step.</li>
-      <li>You don't need to add money or a card: the class budget covers your usage.</li>
+      <li>Open OpenCode and click <b>Settings</b> in the panel on the left.</li>
+      <li>Click <b>Providers</b> in the settings list.</li>
+      <li>Under <b>Popular providers</b>, find <b>OpenCode Console</b> (marked <b>Recommended</b>) and click <span class="ui">Connect</span>.</li>
     </ol>
-    <div class="callout"><b>Your access is on the class budget.</b> The instructor pays for AI usage through a shared class budget, so there's nothing for you to buy. Because that budget is shared, please keep your questions focused on class work and avoid long, off-topic chats — that keeps it available for everyone through the term.</div>
+    <figure>
+      <img src="shots/app-02-provider.png" alt="The Providers page with the OpenCode Console card and its Connect button">
+      <figcaption><b>Figure 2.</b> In <b>Settings → Providers</b>, the <b>OpenCode Console</b> card is under <b>Popular providers</b>. Click its <b>Connect</b> button.</figcaption>
+    </figure>
+    <ol start="4">
+      <li>The app shows a <b>device code</b> and says "Continue in your browser". Your web browser opens the OpenCode sign-in page. If it doesn't open, click <span class="ui">Copy sign-in link</span> and paste it into your browser.</li>
+      <li>Sign in on that page with your <b>Tufts email</b>.</li>
+      <li><b>Check the workspace.</b> The authorization page must show the class workspace, <b>ENT-164</b>. If it shows a different workspace, switch it to <b>ENT-164</b> before you approve.</li>
+      <li>Confirm the code on the page matches the code in the app, and approve the sign-in.</li>
+      <li>Switch back to OpenCode. The window now says <b>OpenCode connected</b>, and OpenCode Console appears under <b>Connected providers</b>. You only do this once — the app remembers you.</li>
+    </ol>
+    <figure class="narrow">
+      <img src="shots/app-03-connect-crop.png" alt="The Connecting to OpenCode Console dialog showing a device code">
+      <figcaption><b>Figure 3.</b> The device code in the app. Your browser opens to the sign-in page; after you sign in there and approve, this dialog finishes on its own.</figcaption>
+    </figure>
+    <div class="callout warn"><b>Ignore "Use API key".</b> The dialog offers it under "Service account?" — that is for shared team setups, not for you. Students sign in with their account, so you never create or paste a key.</div>
   </div>
 
   <!-- STEP 5 -->
   <div class="step">
-    <div class="step-header"><div class="step-num">5</div><h2>Connect OpenCode Zen in the app</h2></div>
-    <ol>
-      <li>Open OpenCode and click <b>Settings</b> in the panel on the left.</li>
-      <li>Click <b>Providers</b> in the settings list.</li>
-      <li>Under <b>Popular providers</b>, find <b>OpenCode</b> — it's the entry described as "Curated models including Claude, GPT, Gemini and more" — and click <span class="ui">Connect</span>.</li>
-      <li>When the dialog asks how to sign in, choose <b>API key</b>.</li>
-      <li>Paste your <span class="mono">sk-…</span> key into the box and click <span class="ui">Continue</span>.</li>
-    </ol>
-    <figure>
-      <img src="shots/app-03-connect-crop.png" alt="The Connect OpenCode Zen dialog in OpenCode with the API key field">
-      <figcaption><b>Figure 2.</b> The Connect OpenCode Zen dialog. Paste the key you copied in Step 4 and click <b>Continue</b>.</figcaption>
-    </figure>
-    <figure class="narrow">
-      <img src="shots/app-04-connected-crop.png" alt="OpenCode confirming OpenCode Zen is connected">
-      <figcaption><b>Figure 3.</b> Success — a message in the corner confirms <b>OpenCode Zen connected</b>. You only do this once; the app remembers the key.</figcaption>
-    </figure>
-  </div>
-
-  <!-- STEP 6 -->
-  <div class="step">
-    <div class="step-header"><div class="step-num">6</div><h2>Choose DeepSeek V4.1 Flash</h2></div>
+    <div class="step-header"><div class="step-num">5</div><h2>Choose DeepSeek V4.1 Flash</h2></div>
     <p>Click the model button under the message box (it shows the model you're using, such as <span class="ui">Big Pickle</span>), then:</p>
     <ol>
       <li>Type <b>v4.1</b> in the search box at the top of the panel.</li>
@@ -159,14 +153,14 @@
     </ol>
     <figure>
       <img src="shots/app-06-pick-crop.png" alt="The model list filtered to v4.1, showing DeepSeek V4.1 Flash under Default / OpenCode">
-      <figcaption><b>Figure 4.</b> In the model list, type <b>v4.1</b> and click <b>DeepSeek V4.1 Flash</b>, listed under <b>OpenCode</b>. <b>Manage models</b> is the last row if you need to switch it on first.</figcaption>
+      <figcaption><b>Figure 4.</b> In the model list, type <b>v4.1</b> and click <b>DeepSeek V4.1 Flash</b>. <b>Manage models</b> is the last row if you need to switch it on first.</figcaption>
     </figure>
     <div class="callout tip"><b>Did it work?</b> The button under the message box now shows <b>DeepSeek V4.1 Flash</b>. That's the model every new question will use.</div>
   </div>
 
-  <!-- STEP 7 -->
+  <!-- STEP 6 -->
   <div class="step">
-    <div class="step-header"><div class="step-num">7</div><h2>Ask your first question</h2></div>
+    <div class="step-header"><div class="step-num">6</div><h2>Ask your first question</h2></div>
     <ol>
       <li>Click the message box at the bottom that says "Ask anything…".</li>
       <li>Type a question in plain English, for example: <i>"I'm new to coding. What can you help me with?"</i></li>
@@ -190,11 +184,12 @@
         <tr><td>Your computer won't open the app</td><td>Mac: in Applications, right-click (Control-click) OpenCode and choose <b>Open</b>, or use System Settings → Privacy &amp; Security → <b>Open Anyway</b>. Windows: in the installer warning, click <b>More info</b> → <b>Run anyway</b>.</td></tr>
         <tr><td>No invitation email</td><td>Check your Tufts inbox's spam folder, and confirm your instructor has your correct <span class="mono">tufts.edu</span> address. Invitations can be sent again.</td></tr>
         <tr><td>Can't find the provider panel</td><td>Click <b>Settings</b> in the left panel, then <b>Providers</b>. Everything provider-related is reached from there.</td></tr>
-        <tr><td>OpenCode (Zen) isn't in the list</td><td>It's in <b>Popular providers</b> near the top. If you still don't see it, click <b>Show more providers</b>.</td></tr>
-        <tr><td>Can't find the API keys page</td><td>Sign in at <b>opencode.ai/console</b> with your Tufts email and make sure your class workspace is selected in the workspace menu.</td></tr>
-        <tr><td>"Invalid API key"</td><td>The key was copied incompletely. Copy it again from the Console and paste it once more, starting with <span class="mono">sk-</span>.</td></tr>
-        <tr><td>An error about credits or balance</td><td>Don't add credit yourself. Check that the class workspace is selected in the Console, then tell your instructor — the shared class budget may be out of funds.</td></tr>
-        <tr><td>DeepSeek V4.1 Flash isn't in the list</td><td>Use <b>Manage models</b> in the model panel, search <b>v4.1</b>, and switch it on.</td></tr>
+        <tr><td>OpenCode Console isn't in the list</td><td>It's in <b>Popular providers</b> near the top, marked <b>Recommended</b>. If you still don't see it, click <b>Show more providers</b>.</td></tr>
+        <tr><td>The browser doesn't open for sign-in</td><td>Click <span class="ui">Copy sign-in link</span> in the app, then paste it into your browser's address bar.</td></tr>
+        <tr><td>"This sign-in request has expired"</td><td>That's just the device code timing out. Click <b>Try again</b> to get a fresh one, and finish the sign-in a little faster.</td></tr>
+        <tr><td>Signed in but DeepSeek isn't in the model list</td><td>You may have authorized a different workspace. Go back to <b>Settings → Providers</b>, <b>Disconnect</b> OpenCode Console, connect again, and this time switch the workspace to <b>ENT-164</b> on the authorization page. If it still doesn't appear, use <b>Manage models</b> in the model panel, search <b>v4.1</b>, and switch it on.</td></tr>
+        <tr><td>An error about credits or balance</td><td>Don't add credit yourself. Check that you signed in to the <b>ENT-164</b> workspace, then tell your instructor — the shared class budget may be out of funds.</td></tr>
+        <tr><td>It asks for an API key</td><td>You don't need one. Close that dialog and use the account sign-in instead; the API key option is only for shared service accounts.</td></tr>
         <tr><td>No answer, or it seems stuck</td><td>Wait ten seconds — the first reply can be slow. Check your internet, then ask again. Quitting and reopening the app also helps.</td></tr>
       </tbody>
     </table>
@@ -206,10 +201,12 @@
     <table class="glossary">
       <tbody>
         <tr><td>OpenCode</td><td>The app on your computer where you chat with the AI.</td></tr>
-        <tr><td>OpenCode Zen</td><td>The service that connects the app to a tested set of AI models. Needs an account and an API key.</td></tr>
-        <tr><td>API key</td><td>A secret password (starts with <span class="mono">sk-</span>) that lets the app use your OpenCode Zen account. Never share it.</td></tr>
-        <tr><td>Provider</td><td>The company or service that runs the AI connection — here, OpenCode Zen.</td></tr>
+        <tr><td>OpenCode Console</td><td>The service that connects the app to a tested set of AI models. You reach it by signing in with your class account.</td></tr>
+        <tr><td>Device code</td><td>The short code the app shows during sign-in. Your browser shows the same code, and you approve it there.</td></tr>
+        <tr><td>Workspace</td><td>The shared class area in OpenCode Console — here, <b>ENT-164</b>. Choose it when the sign-in page asks.</td></tr>
+        <tr><td>Provider</td><td>The company or service that runs the AI connection — here, OpenCode Console.</td></tr>
         <tr><td>Model</td><td>The specific AI "brain" you talk to — here, DeepSeek V4.1 Flash.</td></tr>
+        <tr><td>Session / tab</td><td>One conversation. Each tab at the top of the app is a separate chat.</td></tr>
       </tbody>
     </table>
 
@@ -218,8 +215,9 @@
       <thead><tr><th>What you want</th><th>Where to click</th></tr></thead>
       <tbody>
         <tr><td>Accept the class invitation</td><td>The link in the email your instructor sent to your Tufts address</td></tr>
-        <tr><td>Copy or create your API key</td><td>opencode.ai/console → your class workspace → <b>API keys</b></td></tr>
-        <tr><td>Connect or fix your provider</td><td><b>Settings</b> → <b>Providers</b> → <b>OpenCode</b> → <b>Connect</b></td></tr>
+        <tr><td>Sign in or manage your account</td><td>opencode.ai/console — sign in with your Tufts email</td></tr>
+        <tr><td>Connect or fix your provider</td><td><b>Settings</b> → <b>Providers</b> → <b>OpenCode Console</b> → <b>Connect</b></td></tr>
+        <tr><td>Switch to the class workspace</td><td>On the authorization page during sign-in, choose <b>ENT-164</b></td></tr>
         <tr><td>Start a new conversation</td><td>The <b>+</b> next to the tabs at the very top</td></tr>
         <tr><td>Change the model</td><td>The model button under the message box (shows "DeepSeek V4.1 Flash")</td></tr>
         <tr><td>Show more models in the list</td><td>Model button → <span class="ui">Manage models</span></td></tr>

@@ -343,12 +343,16 @@ the manual; this is the contract.
   `opencode-deepseek-guide-mac/` and `-win/` pair: the only real differences
   were the download link and the install steps, so those are the only places
   the page branches (it names both OSes, macOS first). Its provider is
-  **OpenCode Zen**, not OpenRouter — students accept an invitation from the
-  instructor to the class workspace, copy their API key from
-  `opencode.ai/console`, then connect the in-app provider labelled simply
-  **OpenCode** (Settings → Providers). The app calls it "Connect OpenCode Zen"
-  in the dialog; the provider list calls it "OpenCode". Screenshots come from
-  the desktop app's own V2 renderer driven over CDP.
+  **OpenCode Console** (called OpenCode Zen in older materials), not OpenRouter.
+  Students do **not** create or paste an API key: they accept the instructor's
+  invitation, then connect the in-app provider labelled **OpenCode Console**
+  (Settings → Providers → Connect), which opens a **device-code browser
+  sign-in** ("Continue in your browser. Confirm the code..."). The API-key
+  option in that dialog is explicitly the service-account path — do not point
+  students at it. During authorization the student must **switch the workspace
+  to ENT-164**, or the app connects to the wrong workspace with no class
+  models/budget. Screenshots come from the desktop app (V2, 2.0.16) driven over
+  CDP in an isolated profile.
 
 ## Onshape tips (the video series)
 
