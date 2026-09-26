@@ -361,7 +361,7 @@
           <ul style="margin-top: 3mm;">
             <li>Meet your kit and the ESP32 board</li>
             <li>Install the MicroPython operating system</li>
-            <li>Blink an LED from Thonny</li>
+            <li>Blink an LED with opencode</li>
             <li>Move a servo with AI-generated code</li>
             <li>Wire the robot at Nolop</li>
           </ul>
@@ -537,13 +537,12 @@
     <div class="grid g2" style="grid-template-columns: 1.08fr 0.92fr;">
       <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
         <article class="card accent">
-          <p class="s-kicker" style="margin-bottom: 3mm;">Follow the instructions</p>
-          <p style="font-size: 12pt; color: var(--text); margin-bottom: 4mm;">"Put the snake on the plane" — flash MicroPython onto your ESP32, then connect with Thonny.</p>
-          <span class="mono" style="font-size: 13pt; color: var(--blue-deep);">go.tufts.edu/esp32</span>
+          <p class="s-kicker" style="margin-bottom: 3mm;">Ask opencode</p>
+          <p style="font-size: 12pt; color: var(--text); margin-bottom: 0;">"Put the snake on the plane" — opencode flashes MicroPython onto your ESP32.</p>
         </article>
         <article class="card tight">
           <h3>One-time setup</h3>
-          <p>Do this once per board. After that, Thonny connects and runs your code on the robot.</p>
+          <p>Do this once per board. After that, opencode runs your code on the robot.</p>
         </article>
       </div>
       <figure style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
@@ -563,7 +562,7 @@
   <header class="s-head">
     <p class="s-kicker">First program</p>
     <h2>Make an LED <span class="accent">blink</span></h2>
-    <p class="s-sub">Type it in Thonny (or ask AI for it), then run it on the board.</p>
+    <p class="s-sub">Ask opencode to write it, then run it on the board.</p>
   </header>
   <div class="s-body">
     <div class="grid g2" style="grid-template-columns: 1.06fr 0.94fr;">
@@ -581,9 +580,11 @@ while True:
     time.sleep(1)   # Wait 1 second</pre>
       </article>
       <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
-        <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); flex: 1; min-height: 0;">
-          <img src="shots/thonny-blink.jpg" alt="The Thonny editor connected to the MicroPython device, showing the blink program" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;">
-        </figure>
+        <article class="card tight accent" style="flex: 1; justify-content: center;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Run it</p>
+          <p style="font-size: 11.5pt;">Ask opencode: <span class="mono" style="font-size: 10.5pt;">“Run this blink program on my ESP32.”</span></p>
+          <p style="font-size: 10.5pt; color: var(--muted); margin-bottom: 0;">It puts the code on the board and shows you what the program prints.</p>
+        </article>
         <article class="card tight" style="flex: 0 0 auto;">
           <p class="s-kicker" style="margin-bottom: 2mm;">Challenge</p>
           <p style="font-size: 11.5pt;">Can you make it blink faster or slower?</p>
