@@ -281,8 +281,8 @@ the manual; this is the contract.
 
 - Push to `main` publishes the site. After pushing, curl the live URL and check
   status/byte size before pointing Canvas at it.
-- Intentionally unpublished: `slides/*.pptx` (source decks) and stray files
-  (`TVdV.png`, `Profile (10).pdf`) stay untracked; do not include them.
+- Intentionally unpublished: `slides/*.pptx` (source decks) stay untracked; do
+  not include them.
 - `.github/workflows/slides-sync.yml` runs `scripts/build-class.sh --check --all`
   on pushes and PRs touching `classes/`, `assets/` or `scripts/`, and fails when
   a committed PDF drifts from its sources. It does not block Pages deploys, so a
