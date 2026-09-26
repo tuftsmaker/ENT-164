@@ -322,10 +322,16 @@ the manual; this is the contract.
   students print these. `assets/guide.css` sets `@page { size: Letter }` and
   sizes the on-screen page column to 215.9mm; the `.cover` height is 279.4mm
   and must stay equal to the Letter content height, or the cover spills onto a
-  blank second page. If you change the page size, change all three together and
-  rebuild **every** guide PDF — `add-class-tools`, `opencode-deepseek-guide`
-  and `laser-cutting` are all built from that one stylesheet. Verify with
-  `pdfinfo <pdf> | grep 'Page size'` (expect `612 x 792 pts (letter)`).
+  blank second page. **Print margins live on the page box** (`@page { margin:
+  15mm 18mm 12mm }`), not as padding on `.page`: a padded `.page` div only pads
+  the first and last page of the run, so continuation pages print to the sheet
+  edge. The cover opts out as a named page (`page: cover` + `@page cover {
+  margin: 0 }`) so it stays full-bleed. If you change the page size, change all
+  three together and rebuild **every** guide PDF — `add-class-tools`,
+  `opencode-deepseek-guide` and `laser-cutting` are all built from that one
+  stylesheet. Verify with `pdfinfo <pdf> | grep 'Page size'` (expect
+  `612 x 792 pts (letter)`) and spot-check that content pages share the same
+  top and bottom margins.
 - `laser-cutting/guide.html` is the Nolop laser-cutting walkthrough (Inkscape →
   UCP → cut), built on the official Nolop Makerspace guide. Its `shots/`
   contains screenshots reused from that guide under CC BY-SA, with credit kept

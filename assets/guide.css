@@ -22,7 +22,10 @@
   --blue-tint: #f2f7fd;
   --blue-tint-2: #eaf3fd;
 }
-@page { size: Letter; margin: 0; }
+@page { size: Letter; margin: 15mm 18mm 12mm; }
+/* The cover is a full-bleed page: it names its own page box so it alone
+   prints to the sheet edge. Every other page gets the margins above. */
+@page cover { margin: 0; }
 * { box-sizing: border-box; }
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 body {
@@ -37,8 +40,10 @@ body {
 
 /* ---------- cover ---------- */
 .cover {
-  /* US Letter content height: 11in = 279.4mm. Must match @page size above,
+  /* Full-bleed page: named `cover` above so it prints with no page margin.
+     US Letter content height: 11in = 279.4mm — it must equal the @page size,
      or the cover spills onto a second page. */
+  page: cover;
   height: 279.4mm;
   background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
   color: var(--text);
@@ -149,7 +154,12 @@ tr:last-child td { border-bottom: none; }
 .site-nav .pill-link { border: 1px solid var(--line-strong); border-radius: 999px; padding: 5px 14px; background: var(--paper); color: var(--blue-deep); }
 .site-nav .pill-link:hover { border-color: #cfe1f7; background: var(--blue-tint-2); }
 @media (max-width: 640px) { .site-nav .brand small { display: none; } }
-@media print { .site-nav { display: none !important; } }
+@media print {
+  .site-nav { display: none !important; }
+  /* Margins come from the page box in print; a padded .page div only pads
+     the first and last page of the run, leaving continuation pages bare. */
+  .page { padding: 0; }
+}
 
 /* On screen the guide is a document: keep it at Letter width so lines stay a
    comfortable reading length, centred on a soft page background. Print and
