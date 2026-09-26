@@ -117,27 +117,27 @@ def _cliclick(*cmds):
 # is smooth but the click used to land at the end of the glide, which reads as
 # a cursor flying past what it clicked; the hold lets a viewer see where the
 # click is going to happen.
-CLICK_HOLD = 0.4
+CLICK_HOLD = 0.25
 
 
-def move(x, y, dur=0.35):
+def move(x, y, dur=0.25):
     """Move the pointer smoothly, so the recording reads as real mouse motion."""
     _cliclick("-e", str(int(dur * 1000)), f"m:{int(round(x))},{int(round(y))}")
 
 
-def click(x, y, dur=0.35, hold=CLICK_HOLD):
+def click(x, y, dur=0.25, hold=CLICK_HOLD):
     move(x, y, dur)
     time.sleep(hold)
     _cliclick(f"c:{int(round(x))},{int(round(y))}")
 
 
-def right_click(x, y, dur=0.35, hold=CLICK_HOLD):
+def right_click(x, y, dur=0.25, hold=CLICK_HOLD):
     move(x, y, dur)
     time.sleep(hold)
     _cliclick(f"rc:{int(round(x))},{int(round(y))}")
 
 
-def shift_click(x, y, dur=0.35, hold=CLICK_HOLD):
+def shift_click(x, y, dur=0.25, hold=CLICK_HOLD):
     """Click with Shift held, for adding to a selection."""
     move(x, y, dur)
     time.sleep(hold)
@@ -209,12 +209,18 @@ def _menu_enabled_names(owner_expr):
 
 
 def _key_codes(codes, gap=0.1):
-    """Send virtual key codes in one osascript call (a process per key is slow)."""
+    """Send virtual key codes in one osascript call (a process per key is slow).
+
+    Each entry is a code, or a (code, gap) pair to give that key its own pause —
+    how a menu walk rests on the item before taking it without paying for a
+    second osascript.
+    """
     lines = []
-    for code in codes:
+    for entry in codes:
+        code, g = entry if isinstance(entry, tuple) else (entry, gap)
         lines.append(f'  key code {code}')
-        if gap:
-            lines.append(f'  delay {gap}')
+        if g:
+            lines.append(f'  delay {g}')
     osa(
         'tell application "System Events"\n'
         f'  set frontmost of process "{APP}" to true\n'
@@ -293,13 +299,15 @@ def menu(*items, key_gap=0.07):
                     raise RuntimeError(f"{target!r} is not in {' > '.join(items[:depth])}")
                 steps = names.index(target)
                 if depth == len(items) - 1:
-                    # Let the highlight rest on the item before it is taken.
-                    _key_codes([125] * steps, gap=key_gap)
-                    time.sleep(0.45)
-                    _key_codes([36], gap=0)
+                    # Walk down, rest on the item, then take it — one osascript,
+                    # with the resting pause carried by the last Down's gap.
+                    seq = [(125, key_gap)] * steps + [(36, 0)]
+                    if steps:
+                        seq[steps - 1] = (125, 0.35)
+                    _key_codes(seq, gap=key_gap)
                 else:
                     _key_codes([125] * steps + [124], gap=key_gap)
-                    time.sleep(0.25)
+                    time.sleep(0.2)
                     owner = f'menu 1 of menu item "{items[depth]}" of {owner}'
             return
         except Exception as e:
@@ -315,6 +323,7 @@ def win_xywh():
 
 def set_window(x, y, w, h):
     """Move/resize the document window (not window 1: a tooltip may be in front)."""
+    clear_dock_cache()
     idx = document_window_index()
     osa(
         f'tell application "System Events" to tell process "{APP}"\n'
@@ -535,7 +544,14 @@ _PLATE = None
 _PANEL = {}
 
 
-def dock_left():
+_DOCK_CACHE = {"left": None}
+
+
+def clear_dock_cache():
+    _DOCK_CACHE["left"] = None
+
+
+def dock_left(force=False):
     """x of the right dock's left edge, found from the canvas/dock boundary.
 
     The dock grows to fit its widest dialog (Align and Distribute is wider than
@@ -546,6 +562,8 @@ def dock_left():
     the same rows, and a leftmost test reports the shadow (~x 648) instead of
     the dock (~x 819), which moves every panel click ~170 px off.
     """
+    if _DOCK_CACHE["left"] is not None and not force:
+        return _DOCK_CACHE["left"]
     import tempfile
     from PIL import Image
     import numpy as np
@@ -575,6 +593,7 @@ def dock_left():
     if not runs:
         raise RuntimeError("dock_left: no dock found")
     left = max(runs, key=lambda r: r[1] - r[0])[0] / s
+    _DOCK_CACHE["left"] = left
     print(f"  dock left at {left:.0f}")
     return left
 
@@ -898,9 +917,12 @@ def run_actions(actions, marks=None, t0=None, verbose=True):
         if delay > 0:
             time.sleep(delay)
 
+        # The action waits for its narration moment, but cannot rewind: when
+        # the steps before it ran long, this is how far behind the words it is.
+        drift = (time.time() - started) - target
         for op in a.get("do", []):
             if verbose:
-                print(f"    [{time.time() - started:6.2f}s] {op}")
+                print(f"    [{time.time() - started:6.2f}s {drift:+5.1f}] {op}")
             _apply(op, marks, started)
 
     return {"marks": marks, "elapsed": time.time() - started}
