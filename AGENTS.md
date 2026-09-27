@@ -345,18 +345,21 @@ the manual; this is the contract.
   the page branches (it names both OSes, macOS first). Its provider is
   **OpenCode Console** (called OpenCode Zen in older materials), not OpenRouter.
   Students do **not** create or paste an API key: they accept the instructor's
-  invitation, then connect the in-app provider labelled **OpenCode Console**
-  (Settings → Providers → Connect), which opens a **device-code browser
-  sign-in** ("Continue in your browser. Confirm the code..."). The API-key
-  option in that dialog is explicitly the service-account path — do not point
-  students at it. During authorization the student must **switch the workspace
-  to ENT-164**, or the app connects to the wrong workspace with no class
-  models/budget. Note the app's settings sidebar changes shape when **more
-  than one server** is configured: Projects/Providers/Models/Extensions then
-  live inside each server entry under a **Servers** group instead of at the
-  top level; the guide carries a callout for that, and the same menu is
-  reproduced by seeding an `ssh.servers` entry. Screenshots come from the
-  desktop app (V2, 2.0.16) driven over CDP in an isolated profile.
+  invitation, then connect the in-app provider labelled **OpenCode Console**.
+  The guide teaches the **`/connect` slash command** (type it in the message
+  box → pick OpenCode Console from the Connect provider list) as the primary
+  path; Settings → Providers reaches the same list and is kept as a fallback
+  note. Connecting opens a **device-code browser sign-in** ("Continue in your
+  browser. Confirm the code..."). The API-key option in that dialog is
+  explicitly the service-account path — do not point students at it. During
+  authorization the student must **switch the workspace to ENT-164**, or the
+  app connects to the wrong workspace with no class models/budget. Note the
+  app's settings sidebar changes shape when **more than one server** is
+  configured: Projects/Providers/Models/Extensions then live inside each
+  server entry under a **Servers** group instead of at the top level; the
+  guide carries a callout for that, and the same menu is reproduced by seeding
+  an `ssh.servers` entry. Screenshots come from the desktop app (V2, 2.0.16)
+  driven over CDP in an isolated profile.
 
 ## Onshape tips (the video series)
 

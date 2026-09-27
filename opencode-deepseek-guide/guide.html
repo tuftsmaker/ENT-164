@@ -120,14 +120,13 @@
     <div class="step-header"><div class="step-num">4</div><h2>Sign in to OpenCode Console</h2></div>
     <p>This step connects the app to your class account. You sign in — you do <b>not</b> need an API key or any password to copy.</p>
     <ol>
-      <li>Open OpenCode and click <b>Settings</b> in the panel on the left.</li>
-      <li>Click <b>Providers</b> in the settings list.</li>
-      <li>Under <b>Popular providers</b>, find <b>OpenCode Console</b> (marked <b>Recommended</b>) and click <span class="ui">Connect</span>.</li>
+      <li>Open OpenCode. At the bottom is the message box — the same box you type questions in.</li>
+      <li>Type <b>/connect</b> and press <span class="keycap">Enter</span>. A <b>Connect provider</b> list opens.</li>
+      <li>Click <b>OpenCode Console</b> — it's in the <b>Popular</b> section, marked <b>Recommended</b>.</li>
     </ol>
-    <div class="callout"><b>Don't see "Providers" in Settings?</b> If the settings sidebar shows a <b>Servers</b> list instead, click the server you're using — usually <b>Local Server</b> — and Providers, Models and Extensions are inside it.</div>
     <figure>
-      <img src="shots/app-02-provider.png" alt="The Providers page with the OpenCode Console card and its Connect button">
-      <figcaption><b>Figure 2.</b> In <b>Settings → Providers</b>, the <b>OpenCode Console</b> card is under <b>Popular providers</b>. Click its <b>Connect</b> button.</figcaption>
+      <img src="shots/app-02-provider.png" alt="The Connect provider dialog with OpenCode Console in the Popular section">
+      <figcaption><b>Figure 2.</b> Typing <b>/connect</b> opens the provider list. Click <b>OpenCode Console</b>.</figcaption>
     </figure>
     <ol start="4">
       <li>The app shows a <b>device code</b> and says "Continue in your browser". Your web browser opens the OpenCode sign-in page. If it doesn't open, click <span class="ui">Copy sign-in link</span> and paste it into your browser.</li>
@@ -141,6 +140,7 @@
       <figcaption><b>Figure 3.</b> The device code in the app. Your browser opens to the sign-in page; after you sign in there and approve, this dialog finishes on its own.</figcaption>
     </figure>
     <div class="callout warn"><b>Ignore "Use API key".</b> The dialog offers it under "Service account?" — that is for shared team setups, not for you. Students sign in with their account, so you never create or paste a key.</div>
+    <div class="callout"><b>Prefer menus?</b> The same provider list is at <b>Settings → Providers</b> → <b>OpenCode Console</b> → <b>Connect</b>. If your Settings sidebar shows a <b>Servers</b> list, open your server first — usually <b>Local Server</b> — and Providers is inside it.</div>
   </div>
 
   <!-- STEP 5 -->
@@ -184,7 +184,7 @@
       <tbody>
         <tr><td>Your computer won't open the app</td><td>Mac: in Applications, right-click (Control-click) OpenCode and choose <b>Open</b>, or use System Settings → Privacy &amp; Security → <b>Open Anyway</b>. Windows: in the installer warning, click <b>More info</b> → <b>Run anyway</b>.</td></tr>
         <tr><td>No invitation email</td><td>Check your Tufts inbox's spam folder, and confirm your instructor has your correct <span class="mono">tufts.edu</span> address. Invitations can be sent again.</td></tr>
-        <tr><td>Can't find the provider panel</td><td>Click <b>Settings</b> in the left panel, then <b>Providers</b>. If your Settings sidebar shows a <b>Servers</b> list instead, open your server first (usually <b>Local Server</b>) — Providers, Models and Extensions are inside it.</td></tr>
+        <tr><td>Can't find the provider panel</td><td>Type <b>/connect</b> in the message box — the provider list opens right there. (The same list is under <b>Settings → Providers</b>; if Settings shows a <b>Servers</b> list, open your server first — usually <b>Local Server</b> — and Providers is inside it.)</td></tr>
         <tr><td>OpenCode Console isn't in the list</td><td>It's in <b>Popular providers</b> near the top, marked <b>Recommended</b>. If you still don't see it, click <b>Show more providers</b>.</td></tr>
         <tr><td>The browser doesn't open for sign-in</td><td>Click <span class="ui">Copy sign-in link</span> in the app, then paste it into your browser's address bar.</td></tr>
         <tr><td>"This sign-in request has expired"</td><td>That's just the device code timing out. Click <b>Try again</b> to get a fresh one, and finish the sign-in a little faster.</td></tr>
@@ -211,13 +211,14 @@
       </tbody>
     </table>
 
-    <h3>Where everything lives</h3>
-    <table>
+    <div style="break-inside: avoid;">
+      <h3>Where everything lives</h3>
+      <table>
       <thead><tr><th>What you want</th><th>Where to click</th></tr></thead>
       <tbody>
         <tr><td>Accept the class invitation</td><td>The link in the email your instructor sent to your Tufts address</td></tr>
         <tr><td>Sign in or manage your account</td><td>opencode.ai/console — sign in with your Tufts email</td></tr>
-        <tr><td>Connect or fix your provider</td><td><b>Settings</b> → <b>Providers</b> → <b>OpenCode Console</b> → <b>Connect</b> (if Settings shows a <b>Servers</b> list, open your server first — usually <b>Local Server</b>)</td></tr>
+        <tr><td>Connect or fix your provider</td><td>Type <b>/connect</b> in the message box → <b>OpenCode Console</b> (or <b>Settings → Providers</b> → <b>OpenCode Console</b> → <b>Connect</b>; if Settings shows a <b>Servers</b> list, open your server first — usually <b>Local Server</b>)</td></tr>
         <tr><td>Switch to the class workspace</td><td>On the authorization page during sign-in, choose <b>ENT-164</b></td></tr>
         <tr><td>Start a new conversation</td><td>The <b>+</b> next to the tabs at the very top</td></tr>
         <tr><td>Change the model</td><td>The model button under the message box (shows "DeepSeek V4.1 Flash")</td></tr>
@@ -225,6 +226,7 @@
         <tr><td>Quit the app</td><td>Mac: <span class="keycap">⌘</span>+<span class="keycap">Q</span> · Windows: close the window or <span class="keycap">Alt</span>+<span class="keycap">F4</span></td></tr>
       </tbody>
     </table>
+    </div>
 
     <h3>Things to try in your first week</h3>
     <p>You don't need to know any code to start. Ask in plain English:</p>
