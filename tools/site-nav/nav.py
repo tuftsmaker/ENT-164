@@ -148,7 +148,6 @@ PAGES = {
 # guide page -> (cta href, cta label)
 GUIDE_PAGES = {
     "laser-cutting/guide.html": ("../classes/class-03/", "Class 3"),
-    "add-class-tools/guide.html": ("../syllabus/", "Syllabus"),
     "opencode-deepseek-guide/guide.html": ("../syllabus/", "Syllabus"),
 }
 

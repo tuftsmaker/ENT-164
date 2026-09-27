@@ -313,11 +313,10 @@ the manual; this is the contract.
 - `handouts/add-class-tools.html` is the student-facing one-pager; rebuild its
   PDF with headless Chrome after editing. It is US Letter and must stay on one
   page — check with `pdftotext -f 2 -l 2 ...` (anything printed = it spilled).
-- `add-class-tools/guide.html` is the fuller web version of that one-pager,
-  with figures and its own US Letter `add-class-tools-to-opencode.pdf`. Edit both
-  together when the instructions change, and rebuild the guide PDF with
-  headless Chrome (`--headless=new --no-pdf-header-footer
-  --print-to-pdf=add-class-tools/add-class-tools-to-opencode.pdf`).
+- The fuller web version of that one-pager, `add-class-tools/guide.html` (with
+  its own `add-class-tools-to-opencode.pdf`), was **retired** when its steps
+  moved into `opencode-deepseek-guide/` as Step 7. `handouts/add-class-tools.*`
+  is now the only class-tools handout; edit it when that sentence changes.
 - **Guide pages are US Letter, not A4.** The class is at a US university and
   students print these. `assets/guide.css` sets `@page { size: Letter }` and
   sizes the on-screen page column to 215.9mm; the `.cover` height is 279.4mm
@@ -327,9 +326,9 @@ the manual; this is the contract.
   the first and last page of the run, so continuation pages print to the sheet
   edge. The cover opts out as a named page (`page: cover` + `@page cover {
   margin: 0 }`) so it stays full-bleed. If you change the page size, change all
-  three together and rebuild **every** guide PDF — `add-class-tools`,
-  `opencode-deepseek-guide` and `laser-cutting` are all built from that one
-  stylesheet. Verify with `pdfinfo <pdf> | grep 'Page size'` (expect
+  three together and rebuild **every** guide PDF — `opencode-deepseek-guide`
+  and `laser-cutting` are both built from that one stylesheet. Verify with
+  `pdfinfo <pdf> | grep 'Page size'` (expect
   `612 x 792 pts (letter)`) and spot-check that content pages share the same
   top and bottom margins.
 - `laser-cutting/guide.html` is the Nolop laser-cutting walkthrough (Inkscape →
@@ -352,14 +351,22 @@ the manual; this is the contract.
   note. Connecting opens a **device-code browser sign-in** ("Continue in your
   browser. Confirm the code..."). The API-key option in that dialog is
   explicitly the service-account path — do not point students at it. During
-  authorization the student must **switch the workspace to ENT-164**, or the
-  app connects to the wrong workspace with no class models/budget. Note the
+  authorization the student must **switch the workspace to ENT-164 Intro to
+  Making** (the class workspace's exact name — an account can also belong to
+  "ENT-164 FA26 Intro to Making", so the dropdown lists both; do not confuse
+  them), or the app connects to the wrong workspace with no class
+  models/budget. **Step 7 absorbed the retired `add-class-tools/guide.html`:**
+  paste "Add my class skills to opencode:
+  https://tuftmaker.github.io/ENT-164/skills/", allow the settings change,
+  restart, and test with **"I am a maker. How can you help me?"**. Note the
   app's settings sidebar changes shape when **more than one server** is
   configured: Projects/Providers/Models/Extensions then live inside each
   server entry under a **Servers** group instead of at the top level; the
   guide carries a callout for that, and the same menu is reproduced by seeding
   an `ssh.servers` entry. Screenshots come from the desktop app (V2, 2.0.16)
-  driven over CDP in an isolated profile.
+  driven over CDP in an isolated profile; the invitation and browser
+  authorization figures come from a real class account, and the download and
+  provider figures carry red outlines.
 
 ## Onshape tips (the video series)
 

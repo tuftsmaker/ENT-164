@@ -117,14 +117,13 @@ def plan():
     """The course structure, as (module name, [(title, url), ...]).
 
     Modules are classes and only classes. Site content is filed under the class
-    it belongs to rather than in a module of its own: the setup guides go with
+    it belongs to rather than in a module of its own: the setup guide goes with
     Class 1, and everything about getting a file to the laser - the tips, the
     cutting guide - goes with Class 3. The tasks are not here at all: they are
     assignments (tools/skill-tasks/canvas/sync.py).
     """
     setups = [('Set up OpenCode + DeepSeek',
-               f'{SITE}/opencode-deepseek-guide/guide.html'),
-              ('Add your class tools to opencode', f'{SITE}/add-class-tools/guide.html')]
+               f'{SITE}/opencode-deepseek-guide/guide.html')]
     laser = [('Laser cutting at Nolop with Inkscape', f'{SITE}/laser-cutting/guide.html')]
     laser += [(title, f'{SITE}/onshape-tips/videos/{slug}.mp4') for title, slug in tips()]
     laser.append(('All nine tips, on the course site', f'{SITE}/onshape-tips/'))
