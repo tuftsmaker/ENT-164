@@ -1,9 +1,9 @@
 # Third-party dependencies for the repo's tooling and CI checks.
 #
-# There are currently none: the site-nav checks, the deck and syllabus
-# build/verify scripts, and the laser-ready SVG converter are all standard
-# library only. The file is kept so the CI workflows can install it
-# unconditionally, and so a future dependency has an obvious home.
+# There are currently none: the site-nav checks and the deck and syllabus
+# build/verify scripts are all standard library only. The file is kept so the
+# CI workflows can install it unconditionally, and so a future dependency has
+# an obvious home.
 #
 # Install with:
 #     python3 -m pip install -r requirements.txt

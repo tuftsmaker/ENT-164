@@ -316,56 +316,25 @@ the manual; this is the contract.
   a committed PDF drifts from its sources. It does not block Pages deploys, so a
   red run means: rebuild the PDF, commit, push again.
 
-## Class skills for opencode (`skills/`)
+## Class skills for opencode (now in the `tuftsmaker/skills` repo)
 
-- `skills/` is served by Pages at `https://tuftsmaker.github.io/ENT-164/skills/`
-  and consumed by opencode via `skills.urls`. `skills/` is the **source of
-  truth** — there is no separate source tree; edit in place.
-- Skills are **student-facing**. Repo-internal build processes (the deck
-  pipeline, `tools/video-build/`, the Canvas and YouTube scripts) do not belong
-  here — they go in AGENTS.md and the tool's own README. A skill is distributed
-  to student machines and publicly served, so publishing build tooling there
-  only pushes irrelevant files at students.
-- `skills/box/` generates **laser-ready finger-jointed parts** — `box.py` makes
-  an open tray with an optional slip-on lid, `birdhouse.py` a gabled birdhouse
-  with an entrance hole and optional engraved text — from outside dimensions and
-  the material thickness (default 3 mm, the Nolop store's stock > `--thickness`).
-  Both are stdlib-only, share `box.py`'s joint primitives, write the red-hairline
-  SVG the laser cuts (and, for engraving, **pure-black** strokes it rasters),
-  pack the panels to fit the bed (300 × 600 mm) and print whether they do. The
-  engraved text uses a real system font via **Pillow**, rasterised to a black
-  PNG the laser engraves — the package lives in the shared class sandbox
-  (`~/.venvs/ent164-maker`), never in the student's Python; the laser-cutting
-  guide's colours are the rule: red cuts, black engraves. This is the
-  *generator* beside the `maker-tasks` skill, which is the
-  *converter* for a DXF the student drew.
-- **Every skill runs on one pinned Python sandbox — never the student's Python.**
-  Each skill carries `ensure-runtime.sh` / `ensure-runtime.ps1`, and the first
-  one a student runs installs **uv** (a user-space binary, installed with
-  `UV_NO_MODIFY_PATH`, so no shell profile is touched), has uv download a
-  **pinned CPython** (3.12.14, exact patch — deliberately not whatever Python
-  the student has, even a matching one), and builds the shared venv at
-  **`~/.venvs/ent164-maker`** with pinned Pillow and PyYAML. It is idempotent
-  (0.14 s when healthy) and rebuilds a venv that an older setup made from the
-  student's Python; skills run every command through the interpreter it prints
-  (`ENT164_PYTHON=…`). `skills/box/env.py` now only *locates* the sandbox —
-  nothing installs into or falls back to another Python. The three copies of
-  each script are byte-identical by design; `rebuild.sh` checks that. Python is
-  no longer a student prerequisite, so the setup guide no longer teaches
-  installing it (a locked-down machine that blocks the download gets the
-  instructor).
-- opencode re-downloads a skill only when its `version` changes, and the version
-  is a hash of the skill's contents. So after editing anything under `skills/`:
-  run `tools/skill-publish/rebuild.sh`, then commit and push. Editing without
-  rebuilding means students silently keep the old copy.
-- Never hand-edit `skills/index.json`. `rebuild.sh` derives the file list and
-  version from the directory; a hand-edited index will not match what is served.
-- **`.nojekyll` at the repo root is load-bearing.** Without it Pages runs Jekyll
-  over `skills/`, which converts `maker/SKILL.md` to HTML (so the `.md` 404s) and
-  skips `bbd/__init__.py` because it starts with an underscore. Do not delete it.
-- Failures are silent — a 404ing file just means the skill never appears, with
-  only a log line on the student's machine. After pushing, curl `index.json` and
-  confirm every listed file returns 200 (see `tools/skill-publish/README.md`).
+- The three skills — `breadboard-wiring` (diagrams), `laser-ready` (DXF to
+  laser SVG, finger joints) and `box-maker` (finger-jointed boxes; the birdhouse
+  is its worked example) — live in their own repo, served at
+  `https://tuftsmaker.github.io/skills/` and consumed by opencode via
+  `skills.urls`. That repo is the **source of truth**, including the pinned
+  Python sandbox each skill carries, the publisher and the CI; its `README.md`
+  and `AGENTS.md` hold the conventions. `skills/` and `tools/skill-publish/`
+  moved out of this repo in September 2026.
+- This repo references that URL in two student-facing documents:
+  `opencode-deepseek-guide/guide.html` (Step 7 and the "where everything
+  lives" table) and `handouts/add-class-tools.html`. When a skills change
+  alters what those pages say, update them here and rebuild their PDFs (below).
+- Make a change to the skills in the skills repo, never by copying files back
+  into this one.
+- **`.nojekyll` at the repo root stays.** It was load-bearing while the skills
+  were here (Jekyll converts `SKILL.md` and skips underscore files); it is
+  harmless now and keeps a future underscore path from being silently dropped.
 - `handouts/add-class-tools.html` is the student-facing one-pager; rebuild its
   PDF with headless Chrome after editing. It is US Letter and must stay on one
   page — check with `pdftotext -f 2 -l 2 ...` (anything printed = it spilled).
