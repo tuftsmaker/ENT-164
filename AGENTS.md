@@ -524,7 +524,9 @@ The ID is never resolved at run time.
   repo authors (`summary`, `week`, `audience`) and entries Canvas does not have
   (`source: repo` — create on push; `source: schedule` — site-only).
   Descriptions are scrubbed of Canvas injections (dp_app, `data-api-*`,
-  verifier tokens) and their Canvas file links are noted, not chased.
+  verifier tokens) and of secret-shaped strings — a shared key stays in Canvas,
+  where students read it, never in this public repo; their Canvas file links
+  are noted, not chased.
 - `render-assignments.py` writes the syllabus week chips from that data between
   the `<!-- assignments:begin -->` / `end` markers; `--check` proves the page
   matches the files. Run it after editing assignments or the syllabus.

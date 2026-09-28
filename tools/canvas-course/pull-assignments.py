@@ -47,6 +47,19 @@ _DP_SCRIPT = re.compile(r"<script[^>]*dp_app\.js[^>]*>\s*</script>\s*", re.I)
 _DATA_API = re.compile(r'\s+data-api-[a-z-]+="[^"]*"', re.I)
 _CANVAS_FILE = re.compile(r"/courses/\d+/files/\d+")
 
+# Key-shaped strings do not belong in a public repo, and GitHub's push
+# protection blocks them anyway. Canvas descriptions are imported verbatim, so
+# redact them here and say so: the key stays in Canvas, where students read it.
+_SECRETS = re.compile(
+    r"sk-ant-[A-Za-z0-9_-]{20,}"              # Anthropic
+    r"|sk-[A-Za-z0-9]{20,}"                   # OpenAI-style
+    r"|AKIA[0-9A-Z]{16}"                      # AWS access key id
+    r"|ghp_[A-Za-z0-9]{36}"                   # GitHub personal access token
+    r"|github_pat_[A-Za-z0-9_]{20,}"          # GitHub fine-grained token
+    r"|xox[bpsa]-[A-Za-z0-9-]{10,}"           # Slack
+    r"|-----BEGIN [A-Z ]*PRIVATE KEY-----"    # PEM
+)
+
 
 def slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
@@ -61,12 +74,18 @@ def _clean_url(match: re.Match) -> str:
     return f'{attr}="{urllib.parse.urlunsplit(parts._replace(query=urllib.parse.urlencode(query)))}"'
 
 
-def scrub(html: str) -> str:
-    """Canvas's injections out; the authored HTML stays."""
+def scrub(html: str, where: str = "") -> str:
+    """Canvas's injections out; the authored HTML stays, minus secrets."""
     html = _DP_APP.sub("", html)
     html = _DP_SCRIPT.sub("", html)
     html = _DATA_API.sub("", html)
-    return _URL_ATTR.sub(_clean_url, html)
+    html = _URL_ATTR.sub(_clean_url, html)
+    html, redacted = _SECRETS.subn("[redacted secret]", html)
+    if redacted:
+        print(f"warning: redacted {redacted} secret-shaped string(s) from "
+              f"{where or 'a description'} — keep secrets in Canvas, never in "
+              f"the repo", file=sys.stderr)
+    return html
 
 
 def client_for(course_id: str) -> Client:
@@ -120,7 +139,7 @@ def build_entries(course: dict, overrides: dict) -> list:
                 f"entry in {COURSE_YML.name}."
             )
         spot = next((s for s in spots if s["class"] == home), None)
-        html = scrub(assignment.get("description") or "")
+        html = scrub(assignment.get("description") or "", where=name)
         entry = {
             "slug": slugify(name),
             "name": name,
