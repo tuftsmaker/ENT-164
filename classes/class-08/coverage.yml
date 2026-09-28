@@ -1,0 +1,15 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "../../assets/photos/class/challenge-teams.jpg"
+hero_alt: "A team with their robot after the Robo Challenge"
+
+topics:
+  - title: "Race day: the course, the runs, and the scoreboard"
+    learn: "The arena, the timed runs, and the awards that close the first module."
+  - title: "How the challenge is scored"
+    learn: "What counts, what's penalised, and how teams are ranked."
+  - title: "The Robo Challenge reflection"
+    learn: "The third milestone: what the challenge taught you about building and working as a team."
+  - title: "What comes next: the final project begins"
+    learn: "How the next phase starts and what it expects from you."

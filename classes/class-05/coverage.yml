@@ -1,0 +1,19 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "shots/kit-contents.jpg"
+hero_alt: "The Freenove ESP32 starter kit laid out: board, breadboard, wires, and parts"
+
+topics:
+  - title: "The ESP32-WROVER and breadboard basics"
+    learn: "What the microcontroller does, and how the breadboard's rows and rails connect."
+  - title: "MicroPython on the board, and your first blink"
+    learn: "Installing the board's software and getting an LED to blink from your own code."
+  - title: "Inputs: knobs, joysticks, and sensors"
+    learn: "Reading real-world signals as inputs your robot can act on."
+  - title: "Outputs: servos, motors, and the L298N driver"
+    learn: "Making things move: steering with a servo, driving wheels with the motor driver."
+  - title: "The robot wiring map, wired one part at a time"
+    learn: "The full picture of your robot's wiring, and building it piece by piece at Nolop."
+  - title: "The AI-assisted electronics assignment"
+    learn: "The working circuit you'll build and hand in, with AI as your coding partner."

@@ -1,0 +1,19 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "shots/esp32-wired-breadboard.jpg"
+hero_alt: "An ESP32 wired to an RGB LED on a breadboard, lit purple"
+
+topics:
+  - title: "Bluetooth vs WiFi, and client/server designs"
+    learn: "The two ways an ESP32 connects, and when a client, server, or hybrid fits."
+  - title: "Wiring the smart light"
+    learn: "Adding the parts that let a light be controlled from your phone and the web."
+  - title: "Registering your ESP32 with Tufts IT, and its IP"
+    learn: "The one-time network setup, and reaching your board by address."
+  - title: "Asking AI for the code in plain English"
+    learn: "Describing the behaviour you want, and getting code and wiring back."
+  - title: "What happens under the hood, and what to try next"
+    learn: "What the board, the server, and your browser are each doing when the light responds."
+  - title: "The connectivity reflection"
+    learn: "A pause on what connecting a device taught you."

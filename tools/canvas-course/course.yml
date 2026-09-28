@@ -1,0 +1,35 @@
+# The Canvas courses the repo mirrors and rehearses against.
+#
+# Content lives in the repo; Canvas keeps people, submissions and grades, and
+# the tools cannot read those (canvas_client._guard allows content routes only).
+# The ids here are for reports and the per-course id map (canvas-ids.yml);
+# writes are pinned to the prototype constant in canvas_client.py, by design.
+courses:
+  live: "76330"
+  prototype: "81044"
+
+# Where students open Canvas — used for the generated "Hand in on Canvas" links.
+canvas_web: "https://canvas.tufts.edu"
+
+# A Canvas module is a workshop when its name starts like this — e.g.
+# "Class 3 - Digital to Physical: 2D". Modules that do not match are reported,
+# never adopted.
+module_pattern: '^Class\s+(\d+)\b'
+
+# Canvas assignment groups, by name (the totals are part of the name). The
+# Reflections group does not exist in Canvas yet — the push creates it; its
+# five 2-point reflections are authored in the repo (source: repo).
+groups:
+  - "Team Assignments (35 points)"
+  - "Individual Assignments (35 points)"
+  - "Peer- and Self-Evaluations (20 points)"
+  - "Reflections and Participation (10 points)"
+
+# Where an assignment with no module item — or sitting in more than one —
+# homes in the repo. Everything else homes in the module it sits in; the pull
+# stops and names anything it cannot place.
+home_class_overrides:
+  "Final Product Presentation": class-13
+  "Final Peer Reviews": class-13
+  "Final Self Review": class-13
+  "Individual Assignment: AI-Assisted Electronics Project": class-06

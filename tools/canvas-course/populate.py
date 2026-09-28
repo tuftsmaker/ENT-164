@@ -18,8 +18,10 @@ otherwise by canvas_client.
 
 Idempotent: modules are found by name and items by title, so re-running after a
 class is added only creates what is missing. `--prune` reconciles the other
-direction: it removes modules outside the plan, items a module no longer lists
-(a renamed or retired link), and assignments the task sync does not own.
+direction: it removes modules outside the plan and items a module no longer
+lists (a renamed or retired link). Removing more than half the modules, or any
+module that still holds items, needs `--force-prune`: a name-drift mismatch
+looks exactly like a full cleanup, and deleting a module deletes its items.
 """
 import argparse
 import os
@@ -27,11 +29,12 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.join(ROOT, 'tools', 'skill-tasks', 'canvas'))
+sys.path.insert(0, os.path.join(ROOT, 'tools', 'canvas-course'))
 from canvas_client import (  # noqa: E402
     DEV_COURSE,
     LIVE_COURSE,
     OVERRIDE_ENV,
+    CanvasError,
     Client,
     LiveCourseRefused,
     load_config,
@@ -95,32 +98,13 @@ def tips():
     return out
 
 
-def tasks():
-    """(id, title) for every task, as the task sync names its assignments."""
-    import yaml
-    base = os.path.join(ROOT, 'skills', 'maker-tasks', 'tasks')
-    out = []
-    for name in sorted(os.listdir(base)):
-        if not name.endswith('.yml'):
-            continue
-        t = yaml.safe_load(open(os.path.join(base, name)))
-        out.append((t.get('id', name[:-4]), t.get('title', name[:-4])))
-    return out
-
-
-def task_assignment_names():
-    """The assignment names the task sync owns: '<task id> · <title>'."""
-    return {f'{tid} · {title}' for tid, title in tasks()}
-
-
 def plan():
     """The course structure, as (module name, [(title, url), ...]).
 
     Modules are classes and only classes. Site content is filed under the class
     it belongs to rather than in a module of its own: the setup guide goes with
     Class 1, and everything about getting a file to the laser - the tips, the
-    cutting guide - goes with Class 3. The tasks are not here at all: they are
-    assignments (tools/skill-tasks/canvas/sync.py).
+    cutting guide - goes with Class 3.
     """
     setups = [('Set up OpenCode + DeepSeek',
                f'{SITE}/opencode-deepseek-guide/guide.html')]
@@ -132,8 +116,6 @@ def plan():
     mods = []
     for c in classes():
         items = []
-        if c['deck']:
-            items.append(('Slides (PDF)', f'{SITE}/classes/{c["slug"]}/{c["deck"]}'))
         items.append(('Class page', f'{SITE}/classes/{c["slug"]}/'))
         items += extra.get(c['week'], [])
         mods.append((f'Class {c["week"]} · {c["title"]}', items))
@@ -149,8 +131,11 @@ def main():
                     help=f'allow --prune against the live course (same gate as '
                          f'{OVERRIDE_ENV}=1)')
     ap.add_argument('--prune', action='store_true',
-                    help='delete modules, items and assignments that are not in the '
-                         'plan (prototype cleanup)')
+                    help='delete modules and items that are not in the plan '
+                         '(prototype cleanup)')
+    ap.add_argument('--force-prune', action='store_true',
+                    help='allow --prune to remove more than half the modules, or '
+                         'modules that still hold items (content loss)')
     ap.add_argument('--publish', action='store_true',
                     help='publish the modules and items (Canvas creates them unpublished)')
     args = ap.parse_args()
@@ -184,10 +169,49 @@ def main():
             )
         wanted = {name for name, _ in mods}
         wanted_items = {name: {title for title, _ in items} for name, items in mods}
-        for mod in client.modules():
-            if mod['name'] not in wanted:
-                client._request('DELETE', f'/courses/{client.course_id}/modules/{mod["id"]}')
-                print(f'  - removed module {mod["name"]}')
+        existing = client.modules()
+
+        # The plan matches modules by name, so a course whose names have drifted
+        # looks exactly like a course whose content is stale — except that
+        # pruning it would delete all of it. Stop before that: more than half
+        # the modules, or a module that still holds items, is not a cleanup.
+        removals = [m for m in existing if m['name'] not in wanted]
+        if not args.force_prune:
+            problems = []
+            if len(removals) > max(1, len(existing) // 2):
+                problems.append(
+                    f'more than half the modules ({len(removals)} of {len(existing)})'
+                )
+            elif removals:
+                # Only fetch each module's items when the count alone did not
+                # stop us: on a mismatch the count fires first, and a flaky
+                # network must not turn a big delete into a partial one.
+                try:
+                    heavy = [m for m in removals if client.module_items(m['id'])]
+                except (CanvasError, OSError):
+                    heavy = None
+                if heavy is None:
+                    problems.append(
+                        'could not check whether the modules to remove still hold items'
+                    )
+                elif heavy:
+                    names = ', '.join(f'"{m["name"]}"' for m in heavy[:3])
+                    if len(heavy) > 3:
+                        names += f' and {len(heavy) - 3} more'
+                    problems.append(f'module(s) that still hold items: {names}')
+            if problems:
+                sys.exit(
+                    'refusing to prune ' + ' and '.join(problems) + '.\n'
+                    '  The plan matches modules by name, so this usually means the\n'
+                    '  plan and the course have drifted apart. Pass --force-prune\n'
+                    '  if the content loss is intended.'
+                )
+
+        for mod in removals:
+            client._request('DELETE', f'/courses/{client.course_id}/modules/{mod["id"]}')
+            print(f'  - removed module {mod["name"]}')
+        for mod in existing:
+            if mod['name'] not in wanted_items:
                 continue
             # A module that stays can still carry an item the plan no longer
             # has — a link that was renamed, merged or retired. Delete those,
@@ -199,14 +223,6 @@ def main():
                         f'/courses/{client.course_id}/modules/{mod["id"]}/items/{item["id"]}',
                     )
                     print(f'  - removed item {item["title"]} (from {mod["name"]})')
-        # Assignments belong to the task sync, so "prune" here means the leftovers
-        # - the test assignments a prototype course accumulates. Anything the task
-        # sync owns is left alone.
-        keep = task_assignment_names()
-        for a in client.assignments():
-            if a['name'] not in keep:
-                client._request('DELETE', f'/courses/{client.course_id}/assignments/{a["id"]}')
-                print(f'  - removed assignment {a["name"]}')
 
     created_mod, created_item, skipped, published, moved = 0, 0, 0, 0, 0
     for position, (name, items) in enumerate(mods, start=1):

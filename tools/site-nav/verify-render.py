@@ -9,7 +9,7 @@ can see that.
 
 So this drives headless Chrome and asks each page, at two widths:
 
-  * are all five main links painted (width and height > 0)?
+  * are all four main links painted (width and height > 0)?
   * on a narrow screen, does the menu button appear, and does opening it
     reveal the links?
 
@@ -39,9 +39,6 @@ PAGES = [
     "about/index.html",
     "onshape-tips/index.html",
     "laser-cutting/index.html",
-    "tasks/index.html",
-    "tasks/cad-03-cut-a-hole.html",
-    "tasks/unit-laser-ready.html",
     "classes/class-03/index.html",
     "classes/class-08/index.html",
     "classes/class-11/index.html",
@@ -49,7 +46,7 @@ PAGES = [
 ]
 
 WIDE, NARROW = 1200, 720
-EXPECTED = 5  # Tasks, Workshops, Syllabus, About, + the page's own CTA
+EXPECTED = 4  # Workshops, Syllabus, About, + the page's own CTA
 
 PROBE = """
 <script>

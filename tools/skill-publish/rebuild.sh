@@ -29,6 +29,22 @@ if ! command -v "$PY" >/dev/null 2>&1; then
   exit 1
 fi
 
+# The sandbox bootstrap is deliberately duplicated into every skill (students
+# download skills independently, so each must carry it), which means the
+# copies must stay identical — a drifted copy is a different runtime.
+for name in ensure-runtime.sh ensure-runtime.ps1; do
+  ref="$SKILLS/maker/$name"
+  [ -f "$ref" ] || continue
+  for copy in "$SKILLS"/*/"$name"; do
+    [ -f "$copy" ] || continue
+    [ "$copy" = "$ref" ] && continue
+    if ! cmp -s "$ref" "$copy"; then
+      echo "error: $copy differs from $ref — keep the copies identical" >&2
+      exit 1
+    fi
+  done
+done
+
 echo "==> rebuilding $SKILLS/index.json"
 "$PY" "$HERE/build-index.py" --in-place --src "$SKILLS"
 

@@ -1,8 +1,0 @@
-{
-  "task": "cad-07-trim-tool",
-  "expect": {
-    "verdict": "ready",
-    "fails": []
-  },
-  "note": "arc worked into the outline, straight edge trimmed away"
-}

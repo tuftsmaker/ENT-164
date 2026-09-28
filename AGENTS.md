@@ -55,16 +55,44 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   - Git does not version `.git/hooks`, which is why the hook lives in
     `scripts/git-hooks/` and is wired up by the installer.
 
-## Canvas: links only, never copies (course 76330, Fa26-ENT-0164-01)
+## Canvas: generated pages, linked artifacts (course 76330, Fa26-ENT-0164-01)
 
-- Canvas never stores a deck copy. Each class module has an **ExternalUrl** item
-  at the slides position pointing at the Pages PDF, e.g. Class 1 →
-  `https://tuftsmaker.github.io/ENT-164/classes/class-01/ENT-164-Class-1-Introductions.pdf`.
-  Pushing to `main` is the only sync step. Do not upload replacement PDFs.
+- **Pages are generated from the site masters; artifacts stay links.** The home
+  page (`home.py`), the syllabus (`syllabus.py`) and the class pages + the
+  workshops index (`pages.py`) are pushed as Canvas content — one source,
+  regenerated on demand. Deck PDFs, the handout and the tip videos are never
+  copied into Canvas. A class page links its own deck — the "Download the
+  slides (PDF)" button, a Pages URL such as
+  `https://tuftsmaker.github.io/ENT-164/classes/class-01/ENT-164-Class-1-Introductions.pdf`
+  — plus its due assignments, so the class module carries no slides item at all
+  (Class page → readings → assignments). The handout and the tip videos stay
+  **ExternalUrl** links where they are filed. Pushing to `main` is the only site
+  sync step. Do not upload replacement PDFs.
+- `pages.py` converts the class pages with `site_page.py` (inline styles,
+  hotlinked images, links rewritten to Canvas pages or the site) and gives each
+  class module a "Class page" **Page** item at position 2. **Canvas builds a
+  page's URL from its title and ignores a requested URL**, so the title is the
+  page's identity: pages are found/created by title, and the URL Canvas returns
+  is recorded in `canvas-ids.yml` under `pages` — the module items and
+  `home-page.html`'s `{{page:…}}` tokens use that, never a guessed slug.
+  Internal links are written the way the rich-content editor writes them — an
+  absolute URL plus `data-api-endpoint` and `data-api-returntype`
+  (`site_page.annotate_internal_links`). Canvas **absolutizes** root-relative
+  hrefs on save, so those attributes are what mark a link as course content;
+  artifacts (deck PDFs, tip videos) stay ordinary site links. `--check`
+  compares link targets too — a text-only comparison cannot see a link change.
+- **A class page is a summary, not a copy of the deck.** It carries a hero
+  card (title, dates, the deck button), one hero image and the "What we'll
+  cover" cards — from the class's `coverage.yml` (`hero:`/`hero_alt:`,
+  `topics:`, `links:`) — a due-today / due-next-week reminder read from the
+  assignment data, and the class's own "What's due" and notes. A resource that
+  used to be a bare module item (a signup, a tutorial series) belongs in
+  `links:` and shows as a "Class resources" card instead. Module items link
+  the page and the assignments; the deck lives on the page and in the PDF.
 - Canvas credentials live in `~/.config/tuftsmaker/canvas_config.py` (outside the
   repo, mode 0600, dir 0700 — the same directory as the YouTube credentials).
   Never print, copy, commit, or echo the token. `COURSE_ID` in that file is
-  accepted but ignored: development targets the prototype (see the skill-tasks
+  accepted but ignored: development targets the prototype (see the Canvas
   section below).
 - **Run the Canvas-side commands on the instructor's remote server.** That is
   where the class credentials are (the instructor keeps them under `~/.local`
@@ -73,11 +101,11 @@ via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
   offline, then run `sync.py` / `pull.py` / `apply.py` on the server. Reconcile
   the credentials path there with `CONFIG_PATH` in `canvas_client.py` if the
   tools cannot find them.
-- Module map (course 76330). Converted classes point at their Pages PDF; the
+- Module map (course 76330). Converted classes point at their Pages pages; the
   rest still point at Google Slides. After converting a class, verify the Pages
-  URL returns 200 with the expected byte size, then create an ExternalUrl item
-  at the slides position and delete the old item (module item type cannot be
-  changed in place):
+  URL returns 200 with the expected byte size, then **delete** the module's
+  slides item — the class page links the deck now, so nothing replaces it (the
+  ids below are the items to remove):
 
   | Class | module id | slides item |
   |-------|-----------|-------------|
@@ -298,6 +326,34 @@ the manual; this is the contract.
   here — they go in AGENTS.md and the tool's own README. A skill is distributed
   to student machines and publicly served, so publishing build tooling there
   only pushes irrelevant files at students.
+- `skills/box/` generates **laser-ready finger-jointed parts** — `box.py` makes
+  an open tray with an optional slip-on lid, `birdhouse.py` a gabled birdhouse
+  with an entrance hole and optional engraved text — from outside dimensions and
+  the material thickness (default 3 mm, the Nolop store's stock > `--thickness`).
+  Both are stdlib-only, share `box.py`'s joint primitives, write the red-hairline
+  SVG the laser cuts (and, for engraving, **pure-black** strokes it rasters),
+  pack the panels to fit the bed (300 × 600 mm) and print whether they do. The
+  engraved text uses a real system font via **Pillow**, rasterised to a black
+  PNG the laser engraves — the package lives in the shared class sandbox
+  (`~/.venvs/ent164-maker`), never in the student's Python; the laser-cutting
+  guide's colours are the rule: red cuts, black engraves. This is the
+  *generator* beside the `maker-tasks` skill, which is the
+  *converter* for a DXF the student drew.
+- **Every skill runs on one pinned Python sandbox — never the student's Python.**
+  Each skill carries `ensure-runtime.sh` / `ensure-runtime.ps1`, and the first
+  one a student runs installs **uv** (a user-space binary, installed with
+  `UV_NO_MODIFY_PATH`, so no shell profile is touched), has uv download a
+  **pinned CPython** (3.12.14, exact patch — deliberately not whatever Python
+  the student has, even a matching one), and builds the shared venv at
+  **`~/.venvs/ent164-maker`** with pinned Pillow and PyYAML. It is idempotent
+  (0.14 s when healthy) and rebuilds a venv that an older setup made from the
+  student's Python; skills run every command through the interpreter it prints
+  (`ENT164_PYTHON=…`). `skills/box/env.py` now only *locates* the sandbox —
+  nothing installs into or falls back to another Python. The three copies of
+  each script are byte-identical by design; `rebuild.sh` checks that. Python is
+  no longer a student prerequisite, so the setup guide no longer teaches
+  installing it (a locked-down machine that blocks the download gets the
+  instructor).
 - opencode re-downloads a skill only when its `version` changes, and the version
   is a hash of the skill's contents. So after editing anything under `skills/`:
   run `tools/skill-publish/rebuild.sh`, then commit and push. Editing without
@@ -357,7 +413,7 @@ the manual; this is the contract.
   them), or the app connects to the wrong workspace with no class
   models/budget. **Step 7 absorbed the retired `add-class-tools/guide.html`:**
   paste "Add my class skills to opencode:
-  https://tuftmaker.github.io/ENT-164/skills/", allow the settings change,
+  https://tuftsmaker.github.io/ENT-164/skills/", allow the settings change,
   restart, and test with **"I am a maker. How can you help me?"**. Note the
   app's settings sidebar changes shape when **more than one server** is
   configured: Projects/Providers/Models/Extensions then live inside each
@@ -382,126 +438,102 @@ the manual; this is the contract.
   The same videos are also on the TuftsMaker channel; the site does not depend
   on that.
 
-## Maker skill tasks (`tools/skill-tasks/`, `skills/maker-tasks/`, `tasks/`)
+## Laser-ready SVG (`skills/maker-tasks/`)
 
-A CAP-style task system for maker skills: a task is a short video, a file the
-student makes, written criteria checked on that file, and a signoff by a person.
-The **Laser-Ready File** track is open (9 tasks; the first eight reuse the
-Onshape tips as task videos, and the ninth — preparing the DXF for the laser —
-uses the class's Inkscape tutorial). Four further tracks — Print-Ready
-Model, Working Circuit, Connected Device, Intelligent Device — exist as
-`status: planned` units: documentation of what they will contain, shown dimmed on
-the site and refused by the runner. A planned unit uses `planned_tasks` (no real
-tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
+The `maker-tasks` skill prepares a DXF for the laser. It does **not** grade or
+check: a student exports a sketch from Onshape, and the skill turns it into the
+SVG the cutter at Nolop reads — pure-red, unfilled, hairline cut paths on a
+millimetre page. The former task/qualification system (task YAML, criteria,
+fixtures, the public `tasks/` catalog and the Canvas signoff loop) was removed;
+only this converter remains.
 
-- **One source of truth: `skills/maker-tasks/tasks/*.yml`.** The public page, the
-  checker, the Canvas rubric and the TA report all come from it. Change a task
-  there, then rebuild all three:
-  ```bash
-  python3 tools/skill-tasks/lint_tasks.py        # criteria name real checks
-  python3 tools/skill-tasks/selftest.py          # fixtures still agree
-  python3 tools/skill-tasks/catalog/build.py     # tasks/*.html
-  ./tools/skill-publish/rebuild.sh               # students' copy of the skill
-  ```
-  `selftest.py` is the load-bearing one: each fixture in
-  `tools/skill-tasks/fixtures/` declares in its own `fixture.json` what the
-  report should say. Change a tolerance and a fixture disagrees, on purpose.
-- **The manifest is minimal, and opencode writes it.** A task only asks for the
-  lines its checks read: the Onshape share link (`onshape_url`) for cad-01–08,
-  the caliper-measured `material_thickness` for cad-08, and the `source_dxf` for
-  cad-09. `SKILL.md` tells the agent to ask for those and write `manifest.md`;
-  `check_submission.py` seeds a starter with exactly those lines
-  (`manifest_fields()` mirrors the three `manifest_*` checks). Nothing asks for
-  `student`, `self_check` or `width_before` any more.
-- **The task map is generated, not drawn** (`catalog/map.py`): a dependency graph
-  laid out in columns by each task's depth, plus a band for the supervised cut
-  and the qualification. Add a task, or point a `prereqs` at a different task,
-  and the map redraws on the next `catalog/build.py` — there is nothing to keep
-  in step by hand. It appears on `tasks/index.html` and on the qualification
-  page, and each node links to its task.
-- **Quote a `time` in YAML.** `time: 1:48` is a sexagesimal integer to YAML and
-  arrives as `108`. `lint_tasks.py` fails on an unquoted one; keep them quoted.
-- **The checker ships inside the skill** (`skills/maker-tasks/check/`), because a
-  student's opencode has no checkout of this repo. Keep the two halves in step:
-  the skill runs the checks, `tools/skill-tasks/` drives Canvas and builds pages.
-  Never let a repo-only import creep into `skills/maker-tasks/check/`.
-- **Signoff is human, and the code enforces it.** A report's verdict is `ready`
-  or `fix`, never `qualified`; `review` is a third state for criteria a person
-  must judge; `canvas/apply.py` posts nothing without `--reviewed`; the AI tier
-  (`canvas/ai_review.py`) writes advisory notes with evidence and cannot change
-  a verdict. The qualification means *the file is ready* — running the laser
-  stays with Nolop's own checkout, and that separation is deliberate.
-- **What the checks can see.** Onshape's DXF export has **no unit header and no
-  colours** — it is geometry on one layer, and construction lines are not
-  exported at all. So sizes are checked by measurement against the task's stated
-  dimensions (an inch export reads ~25× too small), and centring is checked by
-  outcome rather than by looking for construction geometry. The *checks* stay
-  colour-blind; the one thing that writes colour is the converter below.
-- **`check/laser_svg.py` writes the laser-ready SVG, and hairline is a trap.**
-  `cli.py --svg` (or the module alone) turns any checked DXF into pure-red
-  (`#ff0000`), unfilled, hairline cut paths — the colours UCP reads (see the
-  laser-cutting guide). It is stdlib-only, like the rest of the checker, so it
-  needs no Inkscape installed.
-  - The obvious `stroke-width="hairline"` is **wrong**: Inkscape does not read
-    it as the UI's Hairline and falls back to **1 mm**, exactly the thick line
-    the guide warns makes the laser fire twice (measured: 1.016 mm vs 0.042 mm).
-    Inkscape's own serialisation is three declarations together —
-    `stroke-width:1px;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline`
-    — and that string is what the converter writes. Keep all three.
-  - An **arc's page box** must come from its endpoints plus only the axis
-    crossings the sweep passes through. Using the whole circle's box pads the
-    page around geometry that is not there (112×60 became 112×87 and shifted the
-    part down). Verified by rasterising the converted SVG and comparing inked
-    pixels against the DXF's own tessellation, arc sweep direction included.
-  - DXF is Y-up and SVG is Y-down, so the Y-flip mirrors the drawing: a CCW CAD
-    arc stays CCW on screen, which is SVG `sweep-flag 0`.
-  - It reports rather than hides: spline/ellipse approximations, polyline bulge
-    vertices, and geometry on unexpected layers are all printed.
-- **Canvas writes stop at the prototype. This is enforced in code, not by habit.**
-  `canvas_client._guard` refuses any POST/PUT/DELETE that is not aimed at course
-  **71548, "Intro to Making Prototype"** — including the case where a client was
+- **One converter: `skills/maker-tasks/laser/laser_svg.py`.** Its own CLI is the
+  entry point — `python3 laser/laser_svg.py part.dxf` writes
+  `part-laser-ready.svg` beside the DXF (`-o` and `--margin` to change that).
+  It imports `dxf_reader.py` and `geom.py` from the same folder, all stdlib-only,
+  so a student's opencode needs no checkout and nothing is installed. `SKILL.md`
+  is the student-facing instruction.
+- **Finger joints live beside it: `skills/maker-tasks/laser/finger_joints.py`.**
+  Given a seam (`--seam x0,y0,x1,y1`), the measured `--thickness`, a `--side` and
+  an optional `--fingers` count, it appends one zigzag cut path per seam so two
+  pieces meet with matching fingers and slots (and no doubled path, which would
+  make the laser fire twice). A finger is one thickness wide and **never deeper
+  than one thickness** — asserted on write and re-measured by `--check`. It
+  shares `dxf_reader.py`, so it is stdlib-only too. For a drawing a student
+  attached, `--list` enumerates the straight seams (collinear pieces merged) and
+  `--preview PATH` writes them numbered and coloured for the student to pick;
+  `--pick N` then joints that one. By default a straight LINE already drawn along
+  the seam is **removed** so the comb is cut once (`--keep-seam` to append
+  instead), and only geometry it cannot remove — a seam inside a polyline — is
+  reported as still doubled. Both tools know the Nolop machine: stock up to
+  **3 mm** (the store sells 3 mm plywood/acrylic), bed **300 × 600 mm**, and each
+  prints a `CHECK` line when its output page is larger than the bed. Both take
+  `--open`, which shows the written SVG in the student's browser (on the joint
+  tool, after converting the jointed DXF); the agent can also preview the `.svg`
+  in opencode itself.
+- **Hairline is a trap.** The obvious `stroke-width="hairline"` is **wrong**:
+  Inkscape does not read it as the UI's Hairline and falls back to **1 mm**,
+  exactly the thick line that makes the laser fire twice (measured: 1.016 mm vs
+  0.042 mm). Inkscape's own serialisation is three declarations together —
+  `stroke-width:1px;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline`
+  — and that string is what the converter writes. Keep all three.
+- **An arc's page box** must come from its endpoints plus only the axis
+  crossings the sweep passes through. Using the whole circle's box pads the page
+  around geometry that is not there (112×60 became 112×87 and shifted the part
+  down). Verified by rasterising the converted SVG and comparing inked pixels
+  against the DXF's own tessellation, arc sweep direction included.
+- **DXF is Y-up and SVG is Y-down**, so the Y-flip mirrors the drawing: a CCW CAD
+  arc stays CCW on screen, which is SVG `sweep-flag 0`.
+- **It reports rather than hides:** spline/ellipse approximations, polyline
+  bulge vertices, geometry on unexpected layers, and lines drawn twice on the
+  same line are all printed.
+
+## Canvas (`tools/canvas-course/`)
+
+Links only, never copies. `canvas_client.py` is the shared API client;
+`populate.py` builds the course modules from the site, and `home.py` pushes the
+home page from `home-page.html`.
+
+Course IDs are constants in the client (`PROTOTYPE_COURSE`, `LIVE_COURSE`);
+`python3 tools/canvas-course/canvas_client.py courses` lists what the token can
+see, which is how the live ID is refreshed when a semester rolls over — and how
+the prototype ID was found when the course was recreated (`71548` → `81044`).
+The ID is never resolved at run time.
+
+- **Canvas access is content-only, and writes stop at the prototype. Both are
+  enforced in code, not by habit.** `canvas_client._guard` runs every request:
+  reads must be one of `READ_FAMILIES` (course metadata, modules, items,
+  assignments, groups, pages, single files) and may not ask for people through
+  `include[]=`, and any POST/PUT/DELETE not aimed at course **81044, "Intro to
+  Making Prototype"** is refused — including the case where a client was
   *constructed* for the live course, which is precisely the mistake it exists to
-  catch. Reads pass through, so comparing against the live course still works.
+  catch. Rosters, enrollments, submissions, grades and discussion posts cannot
+  be fetched even by a script that asks; comparing against the live course still
+  works.
   - `load_config()` returns the prototype regardless of the config's `COURSE_ID`,
     because a stale or copied config must not decide which course tools touch.
   - The single escape hatch is `CANVAS_ALLOW_LIVE=1` in the environment. It is
     deliberately not a bare CLI flag, so reaching the live course is a decision
     rather than a typo. `populate.py --i-know` is the same gate.
-  - `python3 tools/skill-tasks/canvas/test_guard.py` proves it offline: 12 cases,
-    no network, covering writes, deletes, rubrics, grades, account-level routes
-    and the override. **Run it after touching the client.**
+  - `python3 tools/canvas-course/test_guard.py` proves both offline, no network:
+    content reads allowed, rosters/enrollments/submissions/gradebook/
+    discussions refused, writes/deletes/account-level routes stopped at the
+    prototype, and the override still works. **Run it after touching the
+    client.**
   - Why it is our job: Canvas token scopes cannot do this. Scopes restrict which
     *endpoints* a token may call, and `:course_id` in a scope is a path
     placeholder, not a filter — there is no syntax for pinning a course. Personal
     access tokens (what we have) are unscoped and inherit the user's full
     permissions across all their courses.
-- **Canvas** (course 76330, the live course): a 0-weight group named after the
-  track ("Laser-Ready File" — the open unit's title, read by `sync.py`), one
-  assignment per task with a rubric whose rows are the criteria.
-  All of it is **feedback-only** — 0 points, by decision, this semester. The
-  task tools create and leave assignments **unpublished** unless given
-  `--publish`. Everything is developed against the prototype first.
-- **The submission comment carries the link, and the site links to the
-  assignment.** Canvas allows one submission type per submission, so a student
-  uploading a zip pastes the Onshape link into the submission comment;
-  `pull.py` reads the student's own comments (newest first) and uses the link
-  in place of a missing manifest line. `sync.py --write-map` (live course and
-  `--publish` only) writes `tools/skill-tasks/canvas/assignments.json`; when
-  that map is committed, `catalog/build.py` renders a "Hand in on Canvas"
-  button on each task page. The map is never written for the prototype.
-- **Modules are classes, and only classes. Tasks are assignments.** The tasks are
-  grouped by *assignment category* — one group per track, named after it (today
-  "Laser-Ready File", the open unit's title) — and deliberately not by a module,
-  which is the class structure. `sync.py` no longer creates one.
-- **All the Canvas tools take `--course`**, defaulting to the prototype:
-  `sync.py`, `apply.py`, `pull.py` (the skill-task loop) and `populate.py`.
-  `apply.py` is the one that writes student records, so being able to rehearse it
-  on the prototype matters most.
+- **Canvas** (course 76330, the live course): modules and items only, and the
+  home page. All of it is developed against the prototype first.
 - `tools/canvas-course/populate.py` builds the course structure from the site:
   one module per class, with the deck PDF, the class page, and the site content
   that belongs to that class (the setup guides with Class 1, the tips and the
   cutting guide with Class 3). Links only, never copies. `--prune` clears modules
-  outside the plan and assignments the task sync does not own, and refuses to run
+  and items outside the plan; more than half the modules, or a module that still
+  holds items, needs `--force-prune` — a name-drift mismatch would otherwise
+  look like a full cleanup. It refuses to run
   against the live course without `--i-know` (the same gate as
   `CANVAS_ALLOW_LIVE=1`). Canvas creates modules and items
   unpublished; publishing a module publishes its items with it.
@@ -510,19 +542,49 @@ tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
   strips `<style>` blocks and keeps a fixed property set, so the page is all
   inline styles (no `box-shadow`, bold via `<b>`) and the script reports what
   Canvas actually stored. It sets the page as the front page and points the
-  Home tab at it (`default_view=wiki`).
-- `sync.py --dry-run` used to call `ensure_group()`/`ensure_module()`, which
-  create on the way, so a dry run wrote to Canvas. Both dry runs now only look.
-- Student submissions live in Canvas and in the TA's `~/ent164/grading/`. They
-  never enter this repo, same rule as every other student artifact.
+  Home tab at it (`default_view=wiki`). `{{syllabus_url}}` and
+  `{{page:class-NN}}` in the page are resolved per course: the course's syllabus
+  tab, and the Canvas page URLs recorded by `pages.py`.
+- **Assignments live in the repo.** `classes/class-NN/assignments.yml` plus its
+  `assignments/<slug>.html` descriptions are the master copy of every
+  assignment. `tools/canvas-course/course.yml` names the courses, groups and
+  the module→class pattern; `canvas-ids.yml` records Canvas ids per course,
+  generated (`pull-assignments.py`), because ids change when a course is copied
+  and the repo's identity is the slug. `pull-assignments.py` imports from live
+  (`--report`, `--check`, `--ids COURSE`); it preserves the display fields the
+  repo authors (`summary`, `week`, `audience`) and entries Canvas does not have
+  (`source: repo` — create on push; `source: schedule` — site-only).
+  Descriptions are scrubbed of Canvas injections (dp_app, `data-api-*`,
+  verifier tokens) and their Canvas file links are noted, not chased.
+- `render-assignments.py` writes the syllabus week chips from that data between
+  the `<!-- assignments:begin -->` / `end` markers; `--check` proves the page
+  matches the files. Run it after editing assignments or the syllabus.
+- `syllabus.py` generates the Canvas **syllabus** from `syllabus/index.html`
+  (the master) — inline-styled, links rewritten to the site — and pushes it as
+  `course[syllabus_body]`, replacing the Google Doc link it used to hold.
+  `--check` compares what Canvas stores (tags stripped, entities unescaped);
+  `--dry-run` and `--out` preview. Canvas re-adds its dp_app injections on
+  save, which the comparison reads through.
+- `push-assignments.py` is the other direction, rehearsed on the prototype: it
+  creates missing groups, assignments and module items, and updates the fields
+  the repo owns (name, points, due/unlock/lock, submission types, group,
+  placement) — never descriptions, `published`, or anything about people.
+  Matching is by slug through `canvas-ids.yml`, then by exact name (adopted and
+  recorded), else created; created assignments are **unpublished** on purpose.
+  `--dry-run` first; re-running is a no-op when Canvas matches.
+- `test_client.py` pins the form encoding (hashes bracketed, arrays repeated
+  `[]` — a dict silently dropped all but the last array element) and
+  `test_guard.py` pins the read/write boundary. Run both after touching
+  `canvas_client.py`.
+- Student work never enters this repo, same rule as every other student
+  artifact.
 
 ## Class web pages
 
 - **Navigation is generated, not hand-written.** `tools/site-nav/nav.py` defines
   the one main nav (`MAIN_LINKS`) and the per-page spec (CTA + which site
   section a page belongs to). `tools/site-nav/apply.py` rewrites the
-  hand-authored pages from it; `tools/skill-tasks/catalog/build.py` imports the
-  same module for the generated `tasks/` pages, so the two can never disagree.
+  hand-authored pages from it, so the pages can never drift.
   After editing a nav, a page's links, or adding a page:
   ```bash
   python3 tools/site-nav/apply.py            # rewrite the navs
@@ -539,8 +601,8 @@ tasks) plus `why` and `needs`, and `lint_tasks.py` enforces that split.
   fixed three links in class 3 that had been broken since the page was written.
   When you add a builder, run it after: a relative path one level short is the
   failure this catches, and it is easy to write.
-- **Main nav vs sub-nav.** The main nav holds *site* links only (Tasks, Class
-  slides, Syllabus, About) plus one contextual CTA that is allowed to differ per
+- **Main nav vs sub-nav.** The main nav holds *site* links only (Workshops,
+  Syllabus, About) plus one contextual CTA that is allowed to differ per
   page (a class page's "Download slides"). A page's own sections go in a
   `.subnav` bar, or in the sidebar `On this page` block on class/syllabus pages —
   never both, because the same links twice is noise.

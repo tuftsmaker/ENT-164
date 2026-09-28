@@ -1,0 +1,17 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "shots/robo-challenge-scores.jpg"
+hero_alt: "Team scores tallied on a whiteboard after the Robo Challenge"
+
+topics:
+  - title: "Robo Challenge awards and mid-term reviews"
+    learn: "The results and awards, plus the self and peer reviews due the next day."
+  - title: "Demo Day and the final project requirements"
+    learn: "The date, the audience, and what your final build must include."
+  - title: "The 5-minute concept pitch"
+    learn: "The brief pitch each team gives next class to open the final project."
+  - title: "Note-and-Vote: choosing your team's idea"
+    learn: "A silent brainstorm-and-vote method for picking an idea quickly."
+  - title: "From sticky notes to a build plan"
+    learn: "Turning a wall of ideas into one team concept you can start building."

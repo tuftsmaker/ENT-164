@@ -1,0 +1,17 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "shots/prusa-mk4-printer.jpg"
+hero_alt: "A Prusa 3D printer with filament spools above it"
+
+topics:
+  - title: "Inside a 3D printer: filament, heat, and motion"
+    learn: "How filament is melted and laid down, and how temperature and materials matter."
+  - title: "The print pipeline: model, slice, export"
+    learn: "Designing in Onshape, arranging the part, slicing it, and exporting the file."
+  - title: "Tips and pitfalls that ruin a print"
+    learn: "The settings and mistakes that decide whether a print comes out clean."
+  - title: "The mid-point assembly check and how it's judged"
+    learn: "What to demonstrate, what to submit, and the criteria the assembly is checked against."
+  - title: "The individual print assignment and reflection"
+    learn: "The part you'll print for credit, and the reflection that follows it."

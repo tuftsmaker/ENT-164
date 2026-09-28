@@ -1,0 +1,13 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "../../assets/photos/class/class-09-demo-3.jpg"
+hero_alt: "Students presenting a device design with a circuit diagram on screen"
+
+topics:
+  - title: "Demo Day: presenting and live demos"
+    learn: "Presenting your build and running live demos for a public audience."
+  - title: "What to bring to keep your build running"
+    learn: "Everything your project needs on the day: power, parts, and backups."
+  - title: "The final reflection: the course, end to end"
+    learn: "The last milestone — what you learned across the whole semester."

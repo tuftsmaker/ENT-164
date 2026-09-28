@@ -1,0 +1,14 @@
+# class-03 assignments — imported from Canvas by tools/canvas-course/pull-assignments.py.
+# The repo is the master copy of the content; edit here and push.
+- slug: individual-assignment-laser-cut-object
+  name: 'Individual Assignment: Laser Cut Object'
+  summary: Laser cut project — present a functional laser-cut creation
+  group: Individual Assignments (35 points)
+  points: 5.0
+  due: '2026-10-01T16:00:00Z'
+  submission_types:
+  - online_upload
+  module_item:
+    position: 7
+    section: Assignments
+  description: assignments/individual-assignment-laser-cut-object.html

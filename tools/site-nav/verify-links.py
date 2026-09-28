@@ -126,9 +126,11 @@ def main() -> int:
 
         # A published page should have a nav. Slide decks and print handouts are
         # deliberately out: they are the printed artifact, and the in-browser
-        # render outputs under out/ are skipped above.
+        # render outputs under out/ are skipped above. Assignment descriptions
+        # are content fragments (their published copy is in Canvas), not pages.
         is_print_only = "slides.html" in path.name or path.parent.name == "handouts"
-        if not has_nav and not is_print_only:
+        is_fragment = path.parent.name == "assignments"
+        if not has_nav and not is_print_only and not is_fragment:
             no_nav.append(str(path.relative_to(ROOT)))
 
     print(f"{scanned} html files scanned")

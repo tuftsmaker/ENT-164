@@ -1,0 +1,15 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "../../assets/photos/class/breadboard-esp32.jpg"
+hero_alt: "An ESP32 on a breadboard with sensor wiring"
+
+topics:
+  - title: "Five-minute concept pitches"
+    learn: "Each team pitches its idea, then takes questions and feedback."
+  - title: "Collecting data with your Class 5–6 sensors"
+    learn: "Putting the same boards and sensors to work gathering real readings."
+  - title: "Making data readable at a glance"
+    learn: "The three moves that turn raw numbers into something a person can read."
+  - title: "Making a sensor reliable for the final project"
+    learn: "Calibrating and steadying a sensor so your project can depend on it."

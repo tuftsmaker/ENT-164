@@ -1,0 +1,17 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "shots/cardboard-robot-prototype.jpg"
+hero_alt: "A cardboard and foam robot prototype with motors and a battery pack on a workbench"
+
+topics:
+  - title: "The Robo Challenge: arena, rules, and scoring"
+    learn: "How the race runs, how points are scored, and what the course and drop-off zones look like."
+  - title: "Your kit: motors, wheels, servos, and electronics"
+    learn: "What each part does, from the drive motors to the servo and the rest of the electronics."
+  - title: "Shop safety and the hand tools you'll use"
+    learn: "Safe habits in the shop, and the hand tools and materials you'll work with at Nolop."
+  - title: "Foam core technique: cutting, corners, curves"
+    learn: "Turning sketches into sturdy mockups: clean cuts, four corner joints, and curved forms."
+  - title: "Clay, phone 3D scanning, and exporting a model"
+    learn: "Sculpting organic shapes, scanning them with your phone, and exporting an STL."

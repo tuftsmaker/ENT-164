@@ -1,0 +1,27 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "shots/laser-cutting-closeup.jpg"
+hero_alt: "A hand lifting a freshly laser-cut panel from the laser bed"
+
+links:
+  - title: "Register for an Onshape Education account"
+    url: "https://www.onshape.com/en/education/sign-up"
+    note: "Free with your Tufts email — do this before the design demo."
+  - title: "Onshape 2D design mini tutorials"
+    url: "../../onshape-tips/"
+    note: "Nine short videos from the class: workspace tour, basic rectangle, dimensions, circles, mirroring, and the trim tool."
+
+topics:
+  - title: "Reading your sketch: top, side, and axle views"
+    learn: "Turning top, side, and axle views into the dimensions a laser-cut part needs."
+  - title: "Real numbers: datasheets, callipers, and fasteners"
+    learn: "Using datasheets and callipers, and choosing bolts, washers, nuts, or self-drilling screws."
+  - title: "Drawing laser-ready parts in Onshape"
+    learn: "Modelling precise parts in a browser-based CAD tool and knowing what the cutter needs."
+  - title: "Laser cutting vs 3D printing: picking the machine"
+    learn: "Which machine suits which part, and why — flat parts, holes, and thickness."
+  - title: "At Nolop: Inkscape, the laser software, and the cut"
+    learn: "The full workflow: fixing lines, sending the job, placing material, and cutting."
+  - title: "The individual laser-cut assignment"
+    learn: "The object you'll design, cut, and hand in — and how it's judged."

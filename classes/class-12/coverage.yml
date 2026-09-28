@@ -1,0 +1,13 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "../../assets/photos/class/student-builds.jpg"
+hero_alt: "Students building in the classroom"
+
+topics:
+  - title: "Planning the session to end with progress"
+    learn: "Coming in with a list, and leaving with a working prototype."
+  - title: "The last-hour checklist for Demo Day"
+    learn: "The checks to run before you present: power, code, and spare parts."
+  - title: "Getting help from instructors and TAs"
+    learn: "Who is on the floor, and how to get unstuck quickly."

@@ -333,8 +333,7 @@ def page() -> str:
         <b>How a workshop runs.</b> We meet in the JCC classroom for a short introduction
         to the skill, then move to Nolop where the work is hands-on. The
         <a href="../syllabus/">syllabus</a> has the learning outcomes, grading and
-        policies; the <a href="../tasks/">maker skills tasks</a> are where you get each
-        skill signed off.
+        policies.
       </div>
     </div>
   </section>
@@ -348,7 +347,6 @@ def page() -> str:
     <div class="foot-links">
       <a href="../">All materials</a>
       <a href="../syllabus/">Course syllabus</a>
-      <a href="../tasks/">Maker skills tasks</a>
     </div>
   </div>
 </footer>

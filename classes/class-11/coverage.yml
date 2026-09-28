@@ -1,0 +1,17 @@
+# What this class covers — the Canvas class page's "What we'll cover"
+# cards: a reading of the deck, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "shots/poetic-typewriter.jpg"
+hero_alt: "A vintage typewriter with glowing butterflies rising from the page"
+
+topics:
+  - title: "What “smart” means for your final project"
+    learn: "Choosing an idea where AI does something genuinely useful for the build."
+  - title: "Cloud APIs: find one, get a key, make requests"
+    learn: "Connecting an ESP32 to an online service, step by step."
+  - title: "Case study: the poetic light"
+    learn: "How one sentence became a working, voice-driven device."
+  - title: "Your role vs AI's, and where each excels"
+    learn: "Which parts of the work you own, which the AI handles, and why."
+  - title: "Patterns that got a build finished"
+    learn: "The engineering habits and prompts that kept the project moving."

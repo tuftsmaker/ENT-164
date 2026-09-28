@@ -8,7 +8,6 @@ on:
       - "assets/site.css"
       - "assets/guide.css"
       - "tools/site-nav/**"
-      - "tools/skill-tasks/catalog/**"
       - "requirements.txt"
       - ".github/workflows/site-nav.yml"
   pull_request:
@@ -17,7 +16,6 @@ on:
       - "assets/site.css"
       - "assets/guide.css"
       - "tools/site-nav/**"
-      - "tools/skill-tasks/catalog/**"
       - "requirements.txt"
   workflow_dispatch:
 
@@ -36,8 +34,6 @@ jobs:
         run: python3 -m pip install -r requirements.txt
       - name: The main nav on every page matches the shared spec
         run: python3 tools/site-nav/apply.py --check
-      - name: The generated task pages match their builder
-        run: python3 tools/skill-tasks/catalog/build.py --check
       - name: Every nav link resolves, and every sub-nav anchor exists
         run: python3 tools/site-nav/verify-links.py
       - name: The nav actually renders (real browser, two widths)

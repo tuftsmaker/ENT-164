@@ -8,9 +8,8 @@ Two components, used by every published page:
   pages that have no sidebar. Class and syllabus pages already carry a sidebar
   "On this page" block, so they do not get a second copy.
 
-`tools/site-nav/apply.py` rewrites the hand-authored pages from this;
-`tools/skill-tasks/catalog/build.py` imports it for the generated `tasks/`
-pages. One definition, so the two can never drift apart.
+`tools/site-nav/apply.py` rewrites the hand-authored pages from this. One
+definition, so the pages can never drift apart.
 """
 
 from __future__ import annotations
@@ -21,7 +20,6 @@ from __future__ import annotations
 # order the pages were built in.
 MAIN_LINKS = [
     ("Workshops", "workshops/"),
-    ("Tasks", "tasks/"),
     ("Syllabus", "syllabus/"),
     ("About", "about/"),
 ]
@@ -153,7 +151,7 @@ GUIDE_PAGES = {
 
 # Pages that need a section bar because they have no sidebar. Pages with a
 # sidebar (class-*, syllabus) are deliberately absent — a second copy of the
-# same links is noise. The generated tasks pages are handled by their builder.
+# same links is noise.
 SUBNav_PAGES = {
     "index.html": [
         ("making", "Hands-on"),
