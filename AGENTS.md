@@ -96,33 +96,21 @@ Load the student-writing-style skill before writing or editing any student-facin
   Never print, copy, commit, or echo the token. `COURSE_ID` in that file is
   accepted but ignored: development targets the prototype (see the Canvas
   section below).
-- **Run the Canvas-side commands on the instructor's remote server.** That is
-  where the class credentials are (the instructor keeps them under `~/.local`
-  there). A checkout without credentials cannot run the Canvas tools at all —
-  they load the token before `--dry-run` does anything — so author and test
-  offline, then run `sync.py` / `pull.py` / `apply.py` on the server. Reconcile
-  the credentials path there with `CONFIG_PATH` in `canvas_client.py` if the
-  tools cannot find them.
+- **The Canvas tools run wherever the credentials are.** They live in
+  `~/.config/tuftsmaker/canvas_config.py`; a checkout without them cannot run a
+  Canvas tool at all — the token is loaded before `--dry-run` does anything. The
+  push commands are `pages.py`, `syllabus.py`, `home.py` and
+  `push-assignments.py`; each defaults to the prototype, and reaching the live
+  course takes `--course 76330` plus `CANVAS_ALLOW_LIVE=1` (and `--i-know` on
+  `syllabus.py` / `push-assignments.py`).
 - Module map (course 76330). Converted classes point at their Pages pages; the
   rest still point at Google Slides. After converting a class, verify the Pages
   URL returns 200 with the expected byte size, then **delete** the module's
-  slides item — the class page links the deck now, so nothing replaces it (the
-  ids below are the items to remove):
-
-  | Class | module id | slides item |
-  |-------|-----------|-------------|
-  | 1     | 314490    | 2151234 (ExternalUrl → Pages PDF) |
-  | 2     | 314491    | 2151268 (ExternalUrl → Pages PDF) |
-  | 3     | 314492    | 2140693 (Google Slides — no source pptx yet) |
-  | 4     | 314493    | 2151269 (ExternalUrl → Pages PDF) |
-  | 5     | 314494    | 2151270 (ExternalUrl → Pages PDF) |
-  | 6     | 314495    | 2151271 (ExternalUrl → Pages PDF) |
-  | 8     | 314496    | 2140716 (Google Slides — no source pptx yet) |
-  | 9     | 314497    | 2151272 (ExternalUrl → Pages PDF) |
-  | 10    | 314498    | 2140726 (Google Slides — Smart Devices; no source pptx yet) |
-  | 11    | 314499    | 2151273 (ExternalUrl → Pages PDF) |
-  | 12    | 314500    | 2140733 (Google Slides — no source pptx yet) |
-  | 13    | 314501    | 2140736 (Google Slides — no source pptx yet) |
+  slides item — the class page links the deck now, so nothing replaces it.
+  On 2026-09-30 the live course was synced: classes 1, 2, 3, 4, 5, 6, 9 and 11
+  carry their converted Pages pages, with the old slides item removed from each
+  module. The classes still being converted (8, 10, 12, 13 — modules 314496,
+  314498, 314500, 314501) keep their Google Slides items until their decks land.
 
   Note: the source file `ENT-164 Class 10 - Intelligent Devices with AI.pptx`
   is the deck for **Class 11** (syllabus Week 11, Thu Nov 19) — module 314499.
