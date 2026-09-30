@@ -131,10 +131,12 @@ def links_of(page_path: Path) -> list:
 
 
 def hero_of(page_path: Path):
-    """A class's overview image from `coverage.yml`, as (site url, alt text).
+    """A class's overview image from `coverage.yml`, as (site url, alt, cap).
 
     The image is hotlinked from the class site like every other page image;
     `hero_alt` is required with it, so a slow or blocked load still reads.
+    `hero_max` caps the width in pixels for a photo that would otherwise run
+    the full column — a portrait shot renders very tall at 980px wide.
     """
     config = page_path.parent / "coverage.yml"
     if not config.exists():
@@ -144,7 +146,8 @@ def hero_of(page_path: Path):
     if not src:
         return None
     where = posixpath.normpath(posixpath.join(page_path.parent.relative_to(ROOT).as_posix(), src))
-    return SITE + where, str(data.get("hero_alt") or "").strip()
+    cap = str(data.get("hero_max") or "").strip()
+    return SITE + where, str(data.get("hero_alt") or "").strip(), (int(cap) if cap.isdigit() else None)
 
 
 def due_block(slug: str, ctx: dict) -> str:
@@ -319,9 +322,12 @@ def build(path: Path, page_dir: str, map_href, summary: bool = False,
     if main and summary:
         image = hero_of(path)
         if image:
-            src, alt = image
+            src, alt, cap = image
+            style = HERO_IMAGE if not cap else (
+                f"display:block;width:100%;max-width:{cap}px;height:auto;"
+                "border-radius:14px;border:1px solid #e6eaf1;")
             parts.append(f'<div style="margin: 0 0 4px;">'
-                         f'<img src="{src}" alt="{escape(alt)}" style="{HERO_IMAGE}"></div>')
+                         f'<img src="{src}" alt="{escape(alt)}" style="{style}"></div>')
         due = due_block(path.parent.name, ctx) if ctx else ""
         if due:
             parts.append(due)

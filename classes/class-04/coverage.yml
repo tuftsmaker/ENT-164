@@ -3,6 +3,8 @@
 # generated from these, so edit here rather than in Canvas.
 hero: "shots/prusa-mk4-printer.jpg"
 hero_alt: "A Prusa 3D printer with filament spools above it"
+# A portrait photo: cap it, or it runs the full column on the Canvas page.
+hero_max: 380
 
 topics:
   - title: "Inside a 3D printer: filament, heat, and motion"
