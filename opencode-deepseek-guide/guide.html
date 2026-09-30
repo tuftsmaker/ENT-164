@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>OpenCode + DeepSeek V4.1 Flash — Beginner's Setup Guide</title>
+<title>AI Coding Agent Setup Guide</title>
 <link rel="stylesheet" href="../assets/guide.css">
 </head>
 <body>
@@ -25,8 +25,8 @@
   <div class="mark"><img src="shots/class-hammer.svg" alt="Class mark"></div>
   <div class="course">ENT-164 · Intro to Making</div>
   <div class="kicker">Beginner's Guide · macOS &amp; Windows · No experience needed</div>
-  <h1>Making with AI<br><span class="accent">OpenCode + DeepSeek V4.1 Flash</span></h1>
-  <div class="subtitle">Download the OpenCode app, sign in to the class workspace, and start asking questions. No terminal, no coding — just a normal app.</div>
+  <h1>AI Coding Agent<br><span class="accent">Setup Guide</span></h1>
+  <div class="subtitle">Download the OpenCode app, sign in to the class workspace, and start asking questions. No terminal, no coding. It's a normal app.</div>
   <div class="pills">
     <div class="pill">About 20 minutes</div>
     <div class="pill">For macOS &amp; Windows</div>
@@ -34,8 +34,8 @@
     <div class="pill">Model: DeepSeek V4.1 Flash</div>
   </div>
   <div class="hero">
-    <img src="shots/app-00-start-crop.png" alt="The OpenCode message box with DeepSeek V4.1 Flash selected">
-    <div class="cap">The OpenCode message box, with DeepSeek V4.1 Flash already selected. This is where you type your questions.</div>
+    <img src="shots/app-00-message-box.png" alt="The OpenCode message box, ready for a question">
+    <div class="cap">The OpenCode message box. Type your questions here.</div>
   </div>
   <div class="footer">
     <span>Prepared September 27, 2026</span>
@@ -46,16 +46,21 @@
 <!-- ================= CONTENT ================= -->
 <div class="page">
 
-  <p class="lead"><b>OpenCode</b> is an AI helper that runs as an app on your computer. You type to it in plain English, and it can explain code, help with class projects, and walk you through technical tasks. <b>DeepSeek V4.1 Flash</b> is the AI "brain" that writes the answers, and <b>OpenCode Console</b> is the service that connects the app to it.</p>
-  <p>Think of it this way: OpenCode is your phone, OpenCode Console is your phone company, and DeepSeek V4.1 Flash is the person you're calling. This guide sets all three up. You won't need to use a terminal or write any code.</p>
+  <p class="lead"><b>OpenCode</b> is an AI helper that runs as an app on your computer. You ask questions in plain English, and it answers them, explains code, and walks you through technical work. That includes the wiring diagrams, the Onshape questions, and the error messages you can't read.</p>
+  <p><b>DeepSeek V4.1 Flash</b> is the model that writes the answers. <b>OpenCode Console</b> is the service that connects the app to it with your class account.</p>
+  <figure>
+    <img src="shots/system-diagram.svg" alt="A diagram of four parts, left to right: you at your computer, OpenCode the app, OpenCode Console the service, and DeepSeek V4.1 Flash the model.">
+    <figcaption><b>Figure 1.</b> The parts of the system. You type in OpenCode. The app connects to OpenCode Console, which calls DeepSeek V4.1 Flash.</figcaption>
+  </figure>
+  <p>One way to keep them straight: OpenCode is your phone, OpenCode Console is the phone company, and DeepSeek V4.1 Flash is the person you're calling. This guide gets all three working. You won't touch a terminal or write any code.</p>
 
   <div class="callout">
     <b>Why DeepSeek V4.1 Flash for this class?</b>
     <ul>
-      <li><b>Built for this work</b> — it's designed for reasoning and agentic coding with reliable tool use, so it can genuinely help with your class projects.</li>
-      <li><b>Open weights</b> — the model itself is openly licensed and inspectable, which fits a making class better than a closed black box.</li>
-      <li><b>Big context, tiny cost</b> — it can read entire files (up to 1M tokens) for a fraction of a cent per question, so our shared class budget lasts the term.</li>
-      <li><b>One connection</b> — because Console gives us access to it, you set up one account and one sign-in, and you can explore other models later without starting over.</li>
+      <li><b>Built for this work.</b> It's tuned for reasoning and for using tools, which is most of what your projects ask of it.</li>
+      <li><b>Open weights.</b> ChatGPT, Claude and Gemini are closed: you can use them, but you cannot look inside. DeepSeek publishes this model under an open licence, so anyone can inspect it and run it themselves. That fits a class where you take things apart to learn how they work.</li>
+      <li><b>Long sessions.</b> Coding needs a lot of working memory. Free ChatGPT and Claude sessions are limited, and they often run out in the middle of a job. This model holds a million tokens at once, about the length of a long novel, so the code, the errors and the conversation stay with it until the work is done.</li>
+      <li><b>One account.</b> Console gives us access to it, so you sign in once. You can try other models later without starting over.</li>
     </ul>
   </div>
 
@@ -63,13 +68,15 @@
   <ul class="checklist">
     <li>A laptop running macOS 13 or newer, or Windows 10 or 11</li>
     <li>An internet connection</li>
-    <li>Your Tufts email — the class invitation goes to it, and you sign in with it in Step 3</li>
-    <li>Nothing to pay — the class budget covers AI usage for your coursework</li>
+    <li>Your Tufts email. The class invitation goes there, and you sign in with it in Step 3</li>
+    <li>Nothing to pay. The class budget covers AI use for your coursework</li>
   </ul>
 
-  <div class="callout"><b>New word alert.</b> <b>OpenCode Console</b> is the OpenCode team's service that gives one account access to a set of AI models they have tested and chosen (you may also see it called <b>OpenCode Zen</b> in older class notes — it's the same service). The app calls it <b>OpenCode Console</b> everywhere, so that's the name this guide uses.</div>
+  <div class="callout"><b>One name you'll see twice.</b> <b>OpenCode Console</b> is the OpenCode team's service: one account, and a set of AI models they have tested and picked. In the app it sometimes appears as <b>OpenCode Zen</b>, as in the screenshot above. Same service, two names, and this guide uses OpenCode Console, like the sign-in page does.</div>
 
-  <div class="callout"><b>About Python: you install nothing.</b> The class's making skills (wiring diagrams, laser files, boxes) bring their own Python — the first time you use one, it downloads a pinned, private copy into <code>~/.venvs/ent164-maker</code> on your computer and runs there. It never uses or changes any Python you already have, and that one-time setup is the only part that needs an internet connection. If your machine blocks the download, tell the instructor.</div>
+  <div class="callout"><b>The maker skills.</b> The class website publishes a set of maker skills for OpenCode. They cover the work this course does: drawing wiring diagrams for your ESP32 kit, preparing a file for the laser cutter, and building finger-jointed boxes. OpenCode installs them in Step 7, and your instructor keeps them up to date.</div>
+
+  <div class="callout"><b>About Python.</b> The maker skills are programs, so they need Python. You do not install anything by hand: the first time a skill runs, OpenCode sets up a private Python environment for the class in <code>~/.venvs/ent164-maker</code> and installs what the skills need there. It never touches the Python you already have.<br><br>The one catch is the base Python 3 that environment needs. Macs and Windows machines usually do not come with it. If yours is missing, OpenCode offers to install it: on a Mac that opens the Command Line Tools dialog, and on Windows it runs <code>winget install Python.Python.3.12</code>.</div>
 
   <!-- STEP 1 -->
   <div class="step">
@@ -77,11 +84,11 @@
     <ol>
       <li>Open your browser and go to <b>opencode.ai/download</b>.</li>
       <li>Under <b>OpenCode Desktop</b>, click the download for your computer: <b>macOS</b> (Apple Silicon or Intel) or <b>Windows (x64)</b>.</li>
-      <li>The download starts — you'll find the file in your <b>Downloads</b> folder.</li>
+      <li>The download starts. The file lands in your <b>Downloads</b> folder.</li>
     </ol>
     <figure>
       <img src="shots/app-01-download.png" alt="The OpenCode download page with the desktop installers for macOS and Windows">
-      <figcaption><b>Figure 1.</b> The download page. Under <b>OpenCode Desktop</b>, pick the installer for your computer — the page lists both macOS and Windows.</figcaption>
+      <figcaption><b>Figure 2.</b> The download page. Under <b>OpenCode Desktop</b>, pick the installer for your computer. Both are on the page.</figcaption>
     </figure>
   </div>
 
@@ -90,82 +97,82 @@
     <div class="step-header"><div class="step-num">2</div><h2>Install the app</h2></div>
     <p><b>On a Mac:</b></p>
     <ol>
-      <li>Open the downloaded file (click it in your <b>Downloads</b> folder, or in the notification Safari shows).</li>
+      <li>Open the downloaded file. Click it in your <b>Downloads</b> folder, or in the notification your browser shows.</li>
       <li>A small window opens showing the <b>OpenCode</b> icon and your <b>Applications</b> folder.</li>
       <li><b>Drag the OpenCode icon onto the Applications folder</b>, exactly like the arrow shows.</li>
-      <li>Close that window, then open <b>OpenCode</b> from your Applications folder (or press <span class="keycap">⌘</span>+<span class="keycap">Space</span>, type <b>OpenCode</b>, and press <span class="keycap">Enter</span>).</li>
+      <li>Close that window, open <b>OpenCode</b> from your Applications folder (or press <span class="keycap">⌘</span>+<span class="keycap">Space</span>, type <b>OpenCode</b>, and press <span class="keycap">Enter</span>).</li>
     </ol>
     <p><b>On Windows:</b></p>
     <ol>
-      <li>Open your <b>Downloads</b> folder and double-click the OpenCode installer (the file ends in <span class="mono">.exe</span>).</li>
+      <li>Open your <b>Downloads</b> folder and double-click the OpenCode installer. The file ends in <span class="mono">.exe</span>.</li>
       <li>Follow the prompts. If Windows shows <b>"Windows protected your PC"</b>, click <b>More info</b>, then <b>Run anyway</b>.</li>
       <li>When it finishes, open OpenCode from the <b>Start menu</b>: press the <span class="keycap">Windows</span> key, type <b>OpenCode</b>, and press <span class="keycap">Enter</span>.</li>
     </ol>
-    <div class="callout warn"><b>Your computer warns you about the app?</b> That's the standard message for apps downloaded from the internet. On a Mac, right-click (or Control-click) <b>OpenCode</b> in Applications, choose <b>Open</b>, and confirm. On Windows, click <b>More info</b> → <b>Run anyway</b>. The app is signed and comes directly from opencode.ai.</div>
+    <div class="callout warn"><b>If your computer warns about the app.</b> Yes, it looks alarming, and it is the warning every app gets when it arrives from the internet rather than an app store. On a Mac, right-click (Control-click) <b>OpenCode</b> in Applications, choose <b>Open</b>, and confirm; on Windows, click <b>More info</b>, then <b>Run anyway</b>. The app is signed and comes straight from opencode.ai.</div>
   </div>
 
   <!-- STEP 3 -->
   <div class="step">
     <div class="step-header"><div class="step-num">3</div><h2>Accept your class invitation</h2></div>
-    <p>Your instructor adds you to the class workspace on OpenCode Console using your <b>Tufts email</b>. The invitation arrives by email, and you accept it once.</p>
+    <p>Your instructor adds you to the class workspace with your <b>Tufts email</b>. The invitation arrives by email. You accept it once.</p>
     <ol>
       <li>Check your Tufts inbox for an invitation to the class workspace and click the link in it.</li>
-      <li>Sign in with your <b>Tufts email</b> (for example <span class="mono">yourname@tufts.edu</span>). Using the <span class="ui">Google</span> button skips creating a separate password.</li>
-      <li>You land in the class workspace — it's named <b>ENT-164 Intro to Making</b>.</li>
+      <li>Sign in with your <b>Tufts email</b> (for example <span class="mono">yourname@tufts.edu</span>). The <span class="ui">Google</span> button saves you a password.</li>
+      <li>You land in the class workspace, <b>ENT-164 Intro to Making</b>.</li>
     </ol>
     <figure class="narrow">
       <img src="shots/app-00-invite.png" alt="The class invitation email with the Join workspace button">
-      <figcaption><b>Figure 2.</b> The invitation email. Click <b>Join workspace</b> and sign in with the same Tufts address the email was sent to.</figcaption>
+      <figcaption><b>Figure 3.</b> The invitation email. Click <b>Join workspace</b> and sign in with the same Tufts address the email was sent to.</figcaption>
     </figure>
-    <div class="callout warn"><b>Use your Tufts email.</b> The invitation is tied to the address your instructor invited. If you sign in with a different email, you won't see the class workspace or be able to use the class budget.</div>
+    <div class="callout warn"><b>Use your Tufts email.</b> The invitation is tied to the address your instructor invited. Sign in with anything else and you won't see the class workspace, and the class budget won't apply.</div>
   </div>
 
   <!-- STEP 4 -->
   <div class="step">
     <div class="step-header"><div class="step-num">4</div><h2>Sign in to OpenCode Console</h2></div>
-    <p>This step connects the app to your class account. You sign in — you do <b>not</b> need an API key or any password to copy.</p>
+    <p>This step connects the app to your class account. You sign in, and that is the whole step: no API key, no password to copy. If a dialog offers you a key, it is offering the wrong thing.</p>
     <ol>
-      <li>Open OpenCode. At the bottom is the message box — the same box you type questions in.</li>
+      <li>Open OpenCode. The message box sits at the bottom, the same box you type questions in.</li>
       <li>Type <b>/connect</b> and press <span class="keycap">Enter</span>. A <b>Connect provider</b> list opens.</li>
-      <li>Click <b>OpenCode Console</b> — it's in the <b>Popular</b> section, marked <b>Recommended</b>.</li>
+      <li>Click <b>OpenCode Console</b>. It's in the <b>Popular</b> section, marked <b>Recommended</b>.</li>
     </ol>
     <figure>
       <img src="shots/app-02-provider.png" alt="The Connect provider dialog with OpenCode Console in the Popular section">
-      <figcaption><b>Figure 3.</b> Typing <b>/connect</b> opens the provider list. Click <b>OpenCode Console</b> — outlined in red.</figcaption>
+      <figcaption><b>Figure 4.</b> Typing <b>/connect</b> opens the provider list. Click <b>OpenCode Console</b>, outlined in red.</figcaption>
     </figure>
     <ol start="4">
-      <li>The app shows a <b>device code</b> and says "Continue in your browser". Your web browser opens the OpenCode sign-in page. If it doesn't open, click <span class="ui">Copy sign-in link</span> and paste it into your browser.</li>
+      <li>The app shows a <b>device code</b>, a short number that proves the sign-in is yours, and says "Continue in your browser". Your web browser opens the OpenCode sign-in page. If it doesn't open, click <span class="ui">Copy sign-in link</span> and paste it into your browser yourself.</li>
       <li>Sign in on that page with your <b>Tufts email</b>.</li>
       <li><b>Check the workspace.</b> The authorization page must show the class workspace, <b>ENT-164 Intro to Making</b>. If it shows a different workspace, click it and choose <b>ENT-164 Intro to Making</b> before you approve.</li>
       <li>Confirm the code on the page matches the code in the app, and approve the sign-in.</li>
-      <li>Switch back to OpenCode. The window now says <b>OpenCode connected</b>, and OpenCode Console appears under <b>Connected providers</b>. You only do this once — the app remembers you.</li>
+      <li>Switch back to OpenCode. The window now says <b>OpenCode connected</b>, and OpenCode Console appears under <b>Connected providers</b>. You do this once. The app remembers you.</li>
     </ol>
     <figure class="narrow">
       <img src="shots/app-03-connect-crop.png" alt="The Connecting to OpenCode Console dialog showing a device code">
-      <figcaption><b>Figure 4.</b> The device code in the app. Your browser opens to the sign-in page; after you sign in there and approve, this dialog finishes on its own.</figcaption>
+      <figcaption><b>Figure 5.</b> The device code in the app. Your browser opens to the sign-in page. Sign in there, approve, and this dialog finishes on its own.</figcaption>
     </figure>
     <figure class="narrow">
       <img src="shots/app-04-auth-crop.png" alt="The browser authorization page with Workspace set to ENT-164 Intro to Making, outlined in red">
-      <figcaption><b>Figure 5.</b> The authorization page in your browser. <b>Workspace</b> must say <b>ENT-164 Intro to Making</b> (outlined in red) — if it shows a different workspace, click it and choose the class one before you approve.</figcaption>
+      <figcaption><b>Figure 6.</b> The authorization page in your browser. <b>Workspace</b> must say <b>ENT-164 Intro to Making</b>, outlined in red. If it says something else, click it and choose the class workspace before you approve.</figcaption>
     </figure>
-    <div class="callout warn"><b>Ignore "Use API key".</b> The dialog offers it under "Service account?" — that is for shared team setups, not for you. Students sign in with their account, so you never create or paste a key.</div>
-    <div class="callout"><b>Prefer menus?</b> The same provider list is at <b>Settings → Providers</b> → <b>OpenCode Console</b> → <b>Connect</b>. If your Settings sidebar shows a <b>Servers</b> list, open your server first — usually <b>Local Server</b> — and Providers is inside it.</div>
+    <div class="callout warn"><b>Ignore "Use API key".</b> The dialog offers it under "Service account?", which is for shared team setups. Your class doesn't use one. You sign in with your own account and never paste a key.</div>
+    <div class="callout"><b>Prefer menus?</b> The same provider list is at <b>Settings → Providers</b> → <b>OpenCode Console</b> → <b>Connect</b>. If your Settings sidebar shows a <b>Servers</b> list, open your server first (usually <b>Local Server</b>). Providers is inside it.</div>
   </div>
 
   <!-- STEP 5 -->
   <div class="step">
     <div class="step-header"><div class="step-num">5</div><h2>Choose DeepSeek V4.1 Flash</h2></div>
-    <p>Click the model button under the message box (it shows the model you're using, such as <span class="ui">Big Pickle</span>), then:</p>
+    <p>Click the model button under the message box. It shows the model you're using, something like <span class="ui">Big Pickle</span>. Then:</p>
     <ol>
       <li>Type <b>v4.1</b> in the search box at the top of the panel.</li>
-      <li>Click <b>DeepSeek V4.1 Flash</b> — it's listed under <b>Default / OpenCode</b>.</li>
-      <li>If it doesn't appear, click <span class="ui">Manage models</span> at the bottom, search <b>v4.1</b>, and turn on the switch next to <b>DeepSeek V4.1 Flash</b>. Then close that panel and pick it in the model list.</li>
+      <li>Click <b>DeepSeek V4.1 Flash</b>. It's listed under <b>Default / OpenCode</b>.</li>
+      <li>If it doesn't appear, click <span class="ui">Manage models</span> at the bottom, search <b>v4.1</b>, and turn on the switch next to <b>DeepSeek V4.1 Flash</b>. The list is a catalogue; the switch is what puts a model on your menu. Close the panel and pick it from the list.</li>
     </ol>
     <figure>
       <img src="shots/app-06-pick-crop.png" alt="The model list filtered to v4.1, showing DeepSeek V4.1 Flash under Default / OpenCode">
-      <figcaption><b>Figure 6.</b> In the model list, type <b>v4.1</b> and click <b>DeepSeek V4.1 Flash</b>. <b>Manage models</b> is the last row if you need to switch it on first.</figcaption>
+      <figcaption><b>Figure 7.</b> In the model list, type <b>v4.1</b> and click <b>DeepSeek V4.1 Flash</b>. <b>Manage models</b> is the last row if you need to switch it on first.</figcaption>
     </figure>
-    <div class="callout tip"><b>Did it work?</b> The button under the message box now shows <b>DeepSeek V4.1 Flash</b>. That's the model every new question will use.</div>
+    <div class="callout tip"><b>How to tell it worked.</b> The button under the message box says <b>DeepSeek V4.1 Flash</b>. Every new question uses that model. The old one is still in the list if you want it back.</div>
   </div>
 
   <!-- STEP 6 -->
@@ -174,38 +181,40 @@
     <ol>
       <li>Click the message box at the bottom that says "Ask anything…".</li>
       <li>Type a question in plain English, for example: <i>"I'm new to coding. What can you help me with?"</i></li>
-      <li>Press <span class="keycap">Enter</span> (or click the arrow button at the right) and wait a few seconds.</li>
+      <li>Press <span class="keycap">Enter</span> (or click the arrow button at the right) and wait a few seconds. The answer appears under your question.</li>
     </ol>
     <figure>
       <img src="shots/app-07-chat.png" alt="An OpenCode conversation: question and answer with DeepSeek V4.1 Flash">
-      <figcaption><b>Figure 7.</b> Your question appears in the bubble on the right; the answer gets written below it. The model's name is always visible under the message box.</figcaption>
+      <figcaption><b>Figure 8.</b> Your question appears in the bubble on the right; the answer gets written below it. The model's name is always visible under the message box.</figcaption>
     </figure>
-    <div class="callout"><b>To quit:</b> on a Mac, press <span class="keycap">⌘</span>+<span class="keycap">Q</span>; on Windows, close the window or press <span class="keycap">Alt</span>+<span class="keycap">F4</span>. To come back later, just open OpenCode again — your conversations are saved as tabs at the top.</div>
+    <div class="callout"><b>To quit:</b> on a Mac, press <span class="keycap">⌘</span>+<span class="keycap">Q</span>; on Windows, close the window or press <span class="keycap">Alt</span>+<span class="keycap">F4</span>. To come back later, open OpenCode again. Your conversations wait as tabs at the top.</div>
   </div>
 
   <!-- STEP 7 -->
   <div class="step">
     <div class="step-header"><div class="step-num">7</div><h2>Add your class tools</h2></div>
-    <p>OpenCode can switch on a set of <b>class tools</b> from the class website — extra abilities your instructor keeps up to date. The main one is a <b>wiring-diagram maker</b> for your ESP32 kit: describe a circuit and OpenCode draws a labelled breadboard picture with the jumper wires routed for you.</p>
+    <p>OpenCode can add a set of <b>class tools</b> from the class website, and your instructor keeps them up to date. The first one draws <b>wiring diagrams</b> for your ESP32 kit. Describe a circuit, and OpenCode draws a labelled breadboard picture with the jumper wires already routed, and that is worth having on the bench. A picture is much easier to check than a paragraph of pin numbers.</p>
     <ol>
       <li>Click in the message box and paste this whole sentence:
         <div class="paste">
           <div class="label">Copy and paste this</div>
-          <div class="say">Add my class skills to opencode: <span class="url">https://tuftsmaker.github.io/skills/</span></div>
+          <div class="say">Add my class skills to opencode: <span class="url">https://tuftsmaker.github.io/skills</span></div>
+          <button class="copy" type="button" data-copy="Add my class skills to opencode: https://tuftsmaker.github.io/skills">Copy</button>
         </div>
       </li>
-      <li>Press <span class="keycap">Enter</span> and let it work. It downloads the class tools and notes where they came from, so it can update them later.</li>
-      <li>If it asks for permission — something like <i>"Can I change your settings file?"</i> — click <span class="ui">Allow</span> or <span class="ui">Yes</span>. It's only changing OpenCode's own settings, not anything else on your computer.</li>
-      <li>Quit OpenCode and open it again: on a Mac, press <span class="keycap">⌘</span>+<span class="keycap">Q</span>; on Windows, close the window. The new tools only load at startup.</li>
+      <li>Press <span class="keycap">Enter</span> and let it work. It downloads the class tools and remembers where they came from, so it can update them later.</li>
+      <li>If it asks permission, something like <i>"Can I change your settings file?"</i>, click <span class="ui">Allow</span> or <span class="ui">Yes</span>. It's changing OpenCode's own settings and nothing else on your computer.</li>
+      <li>Quit OpenCode and open it again (on a Mac, <span class="keycap">⌘</span>+<span class="keycap">Q</span>; on Windows, close the window). The new tools load at startup.</li>
       <li>Test them. Type this into the message box and press <span class="keycap">Enter</span>:
         <div class="paste">
           <div class="label">Try asking</div>
           <div class="say">I am a maker. How can you help me?</div>
+          <button class="copy" type="button" data-copy="I am a maker. How can you help me?">Copy</button>
         </div>
       </li>
     </ol>
-    <p>If the answer mentions the class tools and the wiring diagrams, you're set. You can ask for a diagram any time — for example <i>"Draw me a wiring diagram for connecting an LED to my ESP32"</i> — and each one is saved in your project folder as a picture you can zoom and trace.</p>
-    <div class="callout tip"><b>One-time step.</b> The class tools update themselves when your instructor improves them — you never repeat this.</div>
+    <p>If the answer mentions the class tools and the wiring diagrams, you're set. Ask for a diagram whenever you need one, for example <i>"Draw me a wiring diagram for connecting an LED to my ESP32"</i>. Each one is saved in your project folder as a picture you can zoom and trace.</p>
+    <div class="callout tip"><b>One-time step.</b> The class tools update themselves when your instructor improves them. You never repeat this.</div>
   </div>
 
   <div class="divider"></div>
@@ -217,18 +226,18 @@
       <thead><tr><th>What you see</th><th>What to do</th></tr></thead>
       <tbody>
         <tr><td>Your computer won't open the app</td><td>Mac: in Applications, right-click (Control-click) OpenCode and choose <b>Open</b>, or use System Settings → Privacy &amp; Security → <b>Open Anyway</b>. Windows: in the installer warning, click <b>More info</b> → <b>Run anyway</b>.</td></tr>
-        <tr><td>No invitation email</td><td>Check your Tufts inbox's spam folder, and confirm your instructor has your correct <span class="mono">tufts.edu</span> address. Invitations can be sent again.</td></tr>
+        <tr><td>No invitation email</td><td>Check your Tufts inbox's spam folder, and confirm your instructor has your correct <span class="mono">tufts.edu</span> address. Your instructor can send it again.</td></tr>
         <tr><td>The invitation page says it belongs to a different account</td><td>Your browser is signed in as someone else. Click <b>Sign out and continue</b> on that page, then sign in with the Tufts address the invitation was sent to.</td></tr>
-        <tr><td>Can't find the provider panel</td><td>Type <b>/connect</b> in the message box — the provider list opens right there. (The same list is under <b>Settings → Providers</b>; if Settings shows a <b>Servers</b> list, open your server first — usually <b>Local Server</b> — and Providers is inside it.)</td></tr>
+        <tr><td>Can't find the provider panel</td><td>Type <b>/connect</b> in the message box. The provider list opens there. The same list is under <b>Settings → Providers</b>. If Settings shows a <b>Servers</b> list, open your server first (usually <b>Local Server</b>).</td></tr>
         <tr><td>OpenCode Console isn't in the list</td><td>It's in <b>Popular providers</b> near the top, marked <b>Recommended</b>. If you still don't see it, click <b>Show more providers</b>.</td></tr>
         <tr><td>The browser doesn't open for sign-in</td><td>Click <span class="ui">Copy sign-in link</span> in the app, then paste it into your browser's address bar.</td></tr>
-        <tr><td>"This sign-in request has expired"</td><td>That's just the device code timing out. Click <b>Try again</b> to get a fresh one, and finish the sign-in a little faster.</td></tr>
+        <tr><td>"This sign-in request has expired"</td><td>The device code timed out. Click <b>Try again</b> to get a fresh one, and finish the sign-in a little faster.</td></tr>
         <tr><td>Signed in but DeepSeek isn't in the model list</td><td>You may have authorized a different workspace. Go back to <b>Settings → Providers</b>, <b>Disconnect</b> OpenCode Console, connect again, and this time switch the workspace to <b>ENT-164 Intro to Making</b> on the authorization page. If it still doesn't appear, use <b>Manage models</b> in the model panel, search <b>v4.1</b>, and switch it on.</td></tr>
-        <tr><td>An error about credits or balance</td><td>Don't add credit yourself. Check that you signed in to the <b>ENT-164 Intro to Making</b> workspace, then tell your instructor — the shared class budget may be out of funds.</td></tr>
+        <tr><td>An error about credits or balance</td><td>Don't add credit yourself. Check that you signed in to the <b>ENT-164 Intro to Making</b> workspace, then tell your instructor. The shared budget may be out of funds.</td></tr>
         <tr><td>It asks for an API key</td><td>You don't need one. Close that dialog and use the account sign-in instead; the API key option is only for shared service accounts.</td></tr>
-        <tr><td>OpenCode says it can't reach the website (Step 7)</td><td>Check you're connected to wifi — the class tools download from the class website the first time.</td></tr>
+        <tr><td>OpenCode says it can't reach the website (Step 7)</td><td>Check your wifi. The class tools download from the class website the first time.</td></tr>
         <tr><td>The class tools don't seem to be on</td><td>Ask OpenCode <i>"I am a maker. How can you help me?"</i> If it doesn't know the class tools, paste the sentence from Step 7 again, then quit and reopen OpenCode.</td></tr>
-        <tr><td>No answer, or it seems stuck</td><td>Wait ten seconds — the first reply can be slow. Check your internet, then ask again. Quitting and reopening the app also helps.</td></tr>
+        <tr><td>No answer, or it seems stuck</td><td>Wait ten seconds. The first reply can be slow. Check your internet, then ask again. Quitting and reopening the app also helps.</td></tr>
       </tbody>
     </table>
   </div>
@@ -241,10 +250,10 @@
         <tr><td>OpenCode</td><td>The app on your computer where you chat with the AI.</td></tr>
         <tr><td>OpenCode Console</td><td>The service that connects the app to a tested set of AI models. You reach it by signing in with your class account.</td></tr>
         <tr><td>Device code</td><td>The short code the app shows during sign-in. Your browser shows the same code, and you approve it there.</td></tr>
-        <tr><td>Workspace</td><td>The shared class area in OpenCode Console — here, <b>ENT-164 Intro to Making</b>. Choose it when the sign-in page asks.</td></tr>
-        <tr><td>Class tools (skills)</td><td>Extra abilities the class website teaches OpenCode — including the wiring-diagram maker. OpenCode downloads its own copy and keeps it up to date.</td></tr>
-        <tr><td>Provider</td><td>The company or service that runs the AI connection — here, OpenCode Console.</td></tr>
-        <tr><td>Model</td><td>The specific AI "brain" you talk to — here, DeepSeek V4.1 Flash.</td></tr>
+        <tr><td>Workspace</td><td>The shared class area in OpenCode Console. Here, <b>ENT-164 Intro to Making</b>. Choose it when the sign-in page asks.</td></tr>
+        <tr><td>Class tools (skills)</td><td>Extra abilities the class website teaches OpenCode, including the wiring-diagram maker. OpenCode downloads its own copy and keeps it up to date.</td></tr>
+        <tr><td>Provider</td><td>The service that runs the AI connection. Here, OpenCode Console.</td></tr>
+        <tr><td>Model</td><td>The AI model you're talking to. Here, DeepSeek V4.1 Flash.</td></tr>
         <tr><td>Session / tab</td><td>One conversation. Each tab at the top of the app is a separate chat.</td></tr>
       </tbody>
     </table>
@@ -255,13 +264,13 @@
       <thead><tr><th>What you want</th><th>Where to click</th></tr></thead>
       <tbody>
         <tr><td>Accept the class invitation</td><td>The link in the email your instructor sent to your Tufts address</td></tr>
-        <tr><td>Sign in or manage your account</td><td>opencode.ai/console — sign in with your Tufts email</td></tr>
-        <tr><td>Connect or fix your provider</td><td>Type <b>/connect</b> in the message box → <b>OpenCode Console</b> (or <b>Settings → Providers</b>; if Settings shows a <b>Servers</b> list, open your server first — usually <b>Local Server</b>)</td></tr>
+        <tr><td>Sign in or manage your account</td><td>opencode.ai/console. Sign in with your Tufts email.</td></tr>
+        <tr><td>Connect or fix your provider</td><td>Type <b>/connect</b> in the message box → <b>OpenCode Console</b> (or <b>Settings → Providers</b>; if Settings shows a <b>Servers</b> list, open your server first (usually <b>Local Server</b>))</td></tr>
         <tr><td>Switch to the class workspace</td><td>On the authorization page during sign-in, choose <b>ENT-164 Intro to Making</b></td></tr>
         <tr><td>Start a new chat</td><td>The <b>+</b> next to the tabs at the very top</td></tr>
         <tr><td>Change the model</td><td>The model button under the message box (shows "DeepSeek V4.1 Flash")</td></tr>
         <tr><td>Show all models</td><td>Model button → <span class="ui">Manage models</span></td></tr>
-        <tr><td>Your class tools and wiring diagrams</td><td>The class tools live at <span class="mono">tuftsmaker.github.io/skills/</span>; every diagram you make is saved in your project folder as a picture</td></tr>
+        <tr><td>Your class tools and wiring diagrams</td><td>The class tools live at <span class="mono">tuftsmaker.github.io/skills</span>; every diagram you make is saved in your project folder as a picture</td></tr>
         <tr><td>Quit the app</td><td>Mac: <span class="keycap">⌘</span>+<span class="keycap">Q</span> · Windows: close the window or <span class="keycap">Alt</span>+<span class="keycap">F4</span></td></tr>
       </tbody>
     </table>
@@ -272,17 +281,38 @@
     <table class="examples">
       <thead><tr><th>You can ask</th><th>What you get</th></tr></thead>
       <tbody>
-        <tr><td><i>"I'm new to coding. What can you help me with?"</i></td><td>A plain-language list of what the AI can do, and where to start.</td></tr>
+        <tr><td><i>"I'm new to coding. What can you help me with?"</i></td><td>A plain-language list of what it can do, and where to start.</td></tr>
         <tr><td><i>"Explain this like I've never seen it before"</i></td><td>Any file or concept broken down step by step, in beginner terms.</td></tr>
-        <tr><td><i>"Draw me a wiring diagram for connecting an LED to my ESP32"</i></td><td>A labelled breadboard picture — once the class tools are on (Step 7).</td></tr>
+        <tr><td><i>"Draw me a wiring diagram for connecting an LED to my ESP32"</i></td><td>A labelled breadboard picture, once the class tools are on (Step 7).</td></tr>
         <tr><td><i>"Help me prepare my Onshape sketch for the laser cutter"</i></td><td>Checks and fixes so your DXF is ready for Nolop.</td></tr>
       </tbody>
     </table>
     <p class="muted">Once you're comfortable, the official docs at <b>opencode.ai/docs</b> show what else OpenCode can do.</p>
   </div>
 
-  <div class="doc-footer"><img class="foot-mark" src="shots/class-hammer-blue.svg" alt="">ENT-164 · Intro to Making — OpenCode + DeepSeek V4.1 Flash beginner's setup guide for macOS &amp; Windows · Screenshots from a live install · September 27, 2026</div>
+  <div class="doc-footer"><img class="foot-mark" src="shots/class-hammer-blue.svg" alt="">ENT-164 · Intro to Making · AI Coding Agent Setup Guide for macOS &amp; Windows · Screenshots from a live install · September 27, 2026</div>
 </div>
+
+<script>
+  for (const button of document.querySelectorAll('button.copy')) {
+    button.addEventListener('click', async () => {
+      const text = button.dataset.copy || '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const area = document.createElement('textarea');
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      const was = button.textContent;
+      button.textContent = 'Copied ✓';
+      setTimeout(() => { button.textContent = was; }, 1600);
+    });
+  }
+</script>
 
 </body>
 </html>

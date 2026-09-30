@@ -1,8 +1,8 @@
-# class-04 assignments — imported from Canvas by tools/canvas-course/pull-assignments.py.
+# class-04 assignments. Imported from Canvas by tools/canvas-course/pull-assignments.py.
 # The repo is the master copy of the content; edit here and push.
 - slug: individual-assignment-3d-printed-object
-  name: 'Individual Assignment: 3D Printed Object'
-  summary: 3D print project — present a functional 3D-printed part
+  name: '👤 Individual Assignment: 3D Printed Object'
+  summary: 3D print project. Present a functional 3D-printed part
   group: Individual Assignments (35 points)
   points: 5.0
   due: '2026-10-08T16:00:00Z'
@@ -13,8 +13,8 @@
     section: Assignments
   description: assignments/individual-assignment-3d-printed-object.html
 - slug: robo-challenge-mid-point-assembly-checkpoint
-  name: Robo Challenge Mid-Point Assembly Checkpoint
-  summary: Assembly checkpoint — check in with your team on the robot
+  name: 👥 Robo Challenge Mid-Point Assembly Checkpoint
+  summary: Assembly checkpoint. Check in with your team on the robot
   group: Team Assignments (35 points)
   points: 0.0
   due: '2026-10-22T16:00:00Z'
@@ -27,8 +27,8 @@
     section: Assignments
   description: assignments/robo-challenge-mid-point-assembly-checkpoint.html
 - slug: milestone-reflection-after-3d-printing
-  name: Milestone Reflection — after 3D Printing
-  summary: Milestone reflection — after 3D printing
+  name: 👤 Milestone Reflection. After 3D Printing
+  summary: Milestone reflection. After 3D printing
   group: Reflections and Participation (10 points)
   points: 2.0
   due: '2026-10-02T03:59:00Z'

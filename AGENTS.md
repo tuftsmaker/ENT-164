@@ -315,15 +315,27 @@ the manual; this is the contract.
   not include them.
 - `.github/workflows/slides-sync.yml` runs `scripts/build-class.sh --check --all`
   on pushes and PRs touching `classes/`, `assets/` or `scripts/`, and fails when
-  a committed PDF drifts from its sources. It does not block Pages deploys, so a
-  red run means: rebuild the PDF, commit, push again.
+  a committed PDF drifts from its sources. It also runs
+  `render-assignments.py --check`, which fails when a class name drifts across
+  the syllabus week headings, the hub and workshop cards, the Canvas home page
+  and the class pages. It does not block Pages deploys, so a red run means:
+  rebuild or re-render, commit, push again.
+- **One name per class, rendered from the class page.** The class page's own
+  name (`classes/class-NN/index.html`'s `<title>`) is the source; the syllabus
+  week heading, the hub and workshops deck cards, the Canvas home page's week
+  list, the Canvas page title (`Class N: <name>`) and the Canvas module name
+  are all generated from it (`render-assignments.py`, `pages.py`,
+  `populate.py`). Renaming a class means editing its `<title>` and re-running
+  those tools — `pages.py` renames the Canvas page in place (Canvas re-slugs
+  it) rather than creating a twin, and `--check` on both tools reports any
+  surface still carrying the old name.
 
 ## Class skills for opencode (now in the `tuftsmaker/skills` repo)
 
 - The three skills — `breadboard-wiring` (diagrams), `laser-ready` (DXF to
   laser SVG, finger joints) and `box-maker` (finger-jointed boxes; the birdhouse
   is its worked example) — live in their own repo, served at
-  `https://tuftsmaker.github.io/skills/` and consumed by opencode via
+  `https://tuftsmaker.github.io/skills` and consumed by opencode via
   `skills.urls`. That repo is the **source of truth**, including the pinned
   Python sandbox each skill carries, the publisher and the CI; its `README.md`
   and `AGENTS.md` hold the conventions. `skills/` and `tools/skill-publish/`
@@ -365,7 +377,7 @@ the manual; this is the contract.
   Class 3's deck and page draw their Inkscape/UCP screenshots from here, so
   editing a shot means copying it into `classes/class-03/shots/` too.
 - **`opencode-deepseek-guide/` is one guide for both operating systems**, with
-  `shots/` and `opencode-deepseek-v4.1-flash-setup.pdf`. It replaced the former
+  `shots/` and `ai-coding-agent-setup-guide.pdf`. It replaced the former
   `opencode-deepseek-guide-mac/` and `-win/` pair: the only real differences
   were the download link and the install steps, so those are the only places
   the page branches (it names both OSes, macOS first). Its provider is
@@ -384,7 +396,7 @@ the manual; this is the contract.
   them), or the app connects to the wrong workspace with no class
   models/budget. **Step 7 absorbed the retired `add-class-tools/guide.html`:**
   paste "Add my class skills to opencode:
-  https://tuftsmaker.github.io/ENT-164/skills/", allow the settings change,
+  https://tuftsmaker.github.io/skills", allow the settings change,
   restart, and test with **"I am a maker. How can you help me?"**. Note the
   app's settings sidebar changes shape when **more than one server** is
   configured: Projects/Providers/Models/Extensions then live inside each

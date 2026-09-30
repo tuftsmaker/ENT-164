@@ -43,6 +43,7 @@ import yaml  # noqa: E402
 from canvas_client import (  # noqa: E402
     OVERRIDE_ENV,
     PROTOTYPE_COURSE,
+    CanvasError,
     Client,
     load_config,
 )
@@ -170,15 +171,17 @@ def due_block(slug: str, ctx: dict) -> str:
             .astimezone(render_assignments.ET).date()
 
     entries = [entry for group in render_assignments.entries_by_class().values() for entry in group]
-    hits_today = sorted((e for e in entries if due_date(e) == today), key=lambda e: e["name"])
+    hits_today = sorted((e for e in entries if due_date(e) == today),
+                        key=lambda e: render_assignments.plain_name(e["name"]))
     hits_next = sorted((e for e in entries
                         if later and due_date(e) is not None and today < due_date(e) <= later),
-                       key=lambda e: (due_date(e), e["name"]))
+                       key=lambda e: (due_date(e), render_assignments.plain_name(e["name"])))
 
     def item(entry, dated):
-        title = (entry.get("summary") or entry["name"]).split(" — ")[0].strip()
+        title = re.split(r" — |\. ", (entry.get("summary") or render_assignments.plain_name(entry["name"])))[0].strip()
         aid = ctx["assignment_by_slug"].get(entry["slug"])
         text = f'<a href="{ctx["course_path"]}/assignments/{aid}">{escape(title)}</a>' if aid else escape(title)
+        text = f'{render_assignments.audience_icon(entry)} {text}'
         if dated:
             text += f' <span style="{DUE_DATE}">{due_date(entry).strftime("%a, %b %-d")}</span>'
         return f'<p style="{DUE_ITEM}">{text}</p>'
@@ -468,10 +471,28 @@ def main() -> int:
     syllabus_path = next((t.get("full_url") for t in tabs if t.get("id") == "syllabus"), None) \
         or f"{course_path}/assignments/syllabus"
 
+    ids = yaml.safe_load((HERE / "canvas-ids.yml").read_text(encoding="utf-8")) \
+        if (HERE / "canvas-ids.yml").exists() else {}
+    recorded = (ids.get(str(client.course_id)) or {}).get("pages") or {}
     existing = {p["title"]: p for p in client.get(f"/courses/{client.course_id}/pages")}
     urls = {}
+    renamed = []
     for slug, title in sorted(titles.items()):
         page = existing.get(title)
+        if not page and recorded.get(slug) and not args.dry_run:
+            # The recorded URL still answers, so the master renamed the page:
+            # rename it in place. Canvas re-slugs a page when its title changes,
+            # and creating a twin would orphan the old one.
+            try:
+                page = client._request("GET", f"/courses/{client.course_id}/pages/{recorded[slug]}")
+            except CanvasError:
+                page = None
+            if page:
+                before = page["url"]
+                page = client.put(f"/courses/{client.course_id}/pages/{before}",
+                                  wiki_page={"title": title, "body": page.get("body") or "",
+                                             "published": True}) or page
+                renamed.append((slug, before, page.get("url") or before))
         if not page:
             if args.check:
                 urls[slug] = None
@@ -483,11 +504,27 @@ def main() -> int:
                 existing[title] = page
         urls[slug] = page["url"]
 
+    for slug, before, after in renamed:
+        print(f"  {slug}: renamed the page — /{before} -> /{after}")
+
     available = {slug: url for slug, url in urls.items() if url}
     ctx = link_context(client.course_id, client.base, available, syllabus_path)
 
     if args.check:
-        stale = [f"  missing: {slug}" for slug, url in urls.items() if not url]
+        stale = []
+        for slug, url in urls.items():
+            if url:
+                continue
+            if recorded.get(slug):
+                try:
+                    page = client._request("GET", f"/courses/{client.course_id}/pages/{recorded[slug]}")
+                except CanvasError:
+                    page = None
+                if page:
+                    stale.append(f"  stale title: {slug} — Canvas has {page.get('title')!r}, "
+                                 f"the master is {titles[slug]!r}")
+                    continue
+            stale.append(f"  missing: {slug}")
         final = bodies(ctx)
         for slug, url in available.items():
             # The pages index omits bodies; read the page itself.
@@ -495,6 +532,15 @@ def main() -> int:
             stored = page.get("body") or ""
             if normalized(stored) != normalized(final[slug]["body"]) or hrefs(stored) != hrefs(final[slug]["body"]):
                 stale.append(f"  stale: {slug}")
+        # Canvas ties a Page module item to its page, so the module's name is
+        # the page's title — and it has to carry the same one.
+        module_ids = (ids.get(str(client.course_id)) or {}).get("modules") or {}
+        module_names = {module["id"]: module["name"] for module in client.modules()}
+        for slug in sorted(slug for slug in titles if slug.startswith("class-")):
+            current = module_names.get(module_ids.get(slug))
+            if current and current != titles[slug]:
+                stale.append(f"  stale module name: {slug} — Canvas has {current!r}, "
+                             f"the master is {titles[slug]!r}")
         for line in stale:
             print(line)
         print(f"\n{'pages differ from the masters' if stale else 'Canvas pages match the masters'}")
@@ -515,15 +561,19 @@ def main() -> int:
     record_pages(client.course_id, urls)
 
     # A Page item near the top of each class module, carrying the page's own
-    # title (Canvas ties the two together).
-    ids = yaml.safe_load((HERE / "canvas-ids.yml").read_text(encoding="utf-8"))
+    # title (Canvas ties the two together) — so the module's name must match it.
     modules = (ids.get(str(client.course_id)) or {}).get("modules") or {}
     class_slugs = {slug for slug in final if slug.startswith("class-")}
+    by_id = {module["id"]: module for module in client.modules()}
     for slug in sorted(class_slugs):
         module_id = modules.get(slug)
         if not module_id:
             continue
         wanted = TITLES[slug]
+        module = by_id.get(module_id)
+        if module and module["name"] != wanted:
+            client.update_module(module_id, name=wanted)
+            print(f"  {slug}: renamed the module to {wanted!r}")
         items = client.module_items(module_id)
         if any(item.get("page_url") == urls[slug] for item in items):
             print(f"  {slug}: module already carries the page")

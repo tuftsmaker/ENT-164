@@ -246,6 +246,9 @@ class Client:
             body["module"]["position"] = position
         return self.post(f"/courses/{self.course_id}/modules", **body)
 
+    def update_module(self, module_id, **fields):
+        return self.put(f"/courses/{self.course_id}/modules/{module_id}", module=fields)
+
     def module_items(self, module_id):
         return self.get(f"/courses/{self.course_id}/modules/{module_id}/items")
 

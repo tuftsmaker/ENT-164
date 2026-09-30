@@ -1,8 +1,8 @@
-# class-06 assignments — imported from Canvas by tools/canvas-course/pull-assignments.py.
+# class-06 assignments. Imported from Canvas by tools/canvas-course/pull-assignments.py.
 # The repo is the master copy of the content; edit here and push.
 - slug: individual-assignment-ai-assisted-electronics-project
-  name: 'Individual Assignment: AI-Assisted Electronics Project'
-  summary: Electronics project — present a working circuit
+  name: '👤 Individual Assignment: AI-Assisted Electronics Project'
+  summary: Electronics project. Present a working circuit
   group: Individual Assignments (35 points)
   points: 10.0
   due: '2026-10-15T16:00:00Z'
@@ -15,11 +15,11 @@
     section: Assignments
   description: assignments/individual-assignment-ai-assisted-electronics-project.html
   to_fix:
-  - module item also in class-05 — remove the extra
-  - description links a Canvas file copy — move it into the repo (media pass)
+  - module item also in class-05. Remove the extra
+  - description links a Canvas file copy. Move it into the repo (media pass)
 - slug: milestone-reflection-after-connectivity
-  name: Milestone Reflection — after Connectivity
-  summary: Milestone reflection — after connectivity
+  name: 👤 Milestone Reflection. After Connectivity
+  summary: Milestone reflection. After connectivity
   group: Reflections and Participation (10 points)
   points: 2.0
   due: '2026-10-16T03:59:00Z'

@@ -118,7 +118,7 @@ def plan():
         items = []
         items.append(('Class page', f'{SITE}/classes/{c["slug"]}/'))
         items += extra.get(c['week'], [])
-        mods.append((f'Class {c["week"]} · {c["title"]}', items))
+        mods.append((f'Class {c["week"]}: {c["title"]}', items))
     return mods
 
 

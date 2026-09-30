@@ -1,8 +1,8 @@
-# class-01 assignments — imported from Canvas by tools/canvas-course/pull-assignments.py.
+# class-01 assignments. Imported from Canvas by tools/canvas-course/pull-assignments.py.
 # The repo is the master copy of the content; edit here and push.
 - slug: ent-164-onboarding-survey
-  name: ENT-164 Onboarding Survey
-  summary: Onboarding survey — share your background and goals
+  name: 👤 ENT-164 Onboarding Survey
+  summary: Onboarding survey. Share your background and goals
   group: Individual Assignments (35 points)
   points: 5.0
   due: '2026-09-17T16:00:00Z'

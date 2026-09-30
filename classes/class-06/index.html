@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ENT-164 · Class 6 — Connectivity with AI</title>
+<title>ENT-164 · Class 6 — Coding with an AI Agent</title>
 <meta name="description" content="Class 6 of ENT-164 Intro to Making: connect an ESP32 to WiFi, register it with Tufts IT, and build a smart light controlled from a phone browser — no app development required.">
 <meta name="theme-color" content="#f7f9fc">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ENT-164 · Class 6 — Connectivity with AI">
+<meta property="og:title" content="ENT-164 · Class 6 — Coding with an AI Agent">
 <meta property="og:description" content="Get your microcontroller online: WiFi, Tufts device registration, and a smart light you control from the browser.">
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
@@ -34,7 +34,7 @@
         <a href="../../workshops/">Workshops</a>
         <a href="../../syllabus/">Syllabus</a>
         <a href="../../about/">About</a>
-        <a class="nav-cta" href="ENT-164-Class-6-Connectivity-with-AI.pdf">Download slides</a>
+        <a class="nav-cta" href="ENT-164-Class-6-Coding-with-an-AI-Agent.pdf">Download slides</a>
     </div>
   </div>
 </nav>
@@ -42,8 +42,8 @@
 <header class="hero">
   <div class="wrap">
     <p class="kicker reveal">Class 6 · Week 6 · Fall 2026</p>
-    <h1 class="reveal" style="--d:.06s">Connectivity <span class="accent">with AI</span></h1>
-    <p class="lead reveal" style="--d:.12s">Your ESP32 can serve a web page your phone opens — no app required. Today we get it on WiFi, register it with Tufts, and build a smart light you control from the browser.</p>
+    <h1 class="reveal" style="--d:.06s">Coding <span class="accent">with an AI Agent</span></h1>
+    <p class="lead reveal" style="--d:.12s">Your ESP32 can serve a web page your phone opens. No app required. Today we get it on WiFi, register it with Tufts, and build a smart light you control from the browser.</p>
     <div class="pills reveal" style="--d:.18s">
       <span class="pill">Thu, Oct 15</span>
       <span class="pill">JCC 301 / Nolop</span>
@@ -51,7 +51,7 @@
       <span class="pill">Individual assignment due</span>
     </div>
     <div class="cta-row reveal" style="--d:.24s">
-      <a class="btn btn-primary" href="ENT-164-Class-6-Connectivity-with-AI.pdf">Download the slides (PDF)</a>
+      <a class="btn btn-primary" href="ENT-164-Class-6-Coding-with-an-AI-Agent.pdf">Download the slides (PDF)</a>
       <a class="btn btn-ghost" href="#learn">What you'll learn &darr;</a>
     </div>
     <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
@@ -78,34 +78,34 @@
 
     <section class="section-block" id="recap">
       <h2>Recap</h2>
-      <p class="lede">Before we go wireless — the three things you should have from last class.</p>
+      <p class="lede">Before we go wireless. The three things you should have from last class.</p>
       <div class="cards">
         <div class="card">
           <span class="num">01</span>
           <h3>Electronics kit</h3>
-          <p>You've received your electronics kit — the parts you'll wire up in class today.</p>
+          <p>You've received your electronics kit. The parts you'll wire up in class today.</p>
         </div>
         <div class="card">
           <span class="num">02</span>
           <h3>opencode + MicroPython</h3>
-          <p>opencode is set up on your laptop and MicroPython is deployed to your ESP32 — it runs your code on the board for you.</p>
+          <p>opencode is set up on your laptop and MicroPython is deployed to your ESP32. It runs your code on the board for you.</p>
         </div>
         <div class="card">
           <span class="num">03</span>
           <h3>AI-assisted electronics</h3>
-          <p>You can already build basic electronics projects with the help of AI — that's the skill we build on today.</p>
+          <p>You can already build basic electronics projects with the help of AI. That's the skill we build on today.</p>
         </div>
       </div>
     </section>
 
     <section class="section-block" id="learn">
       <h2>What you'll learn today</h2>
-      <p class="lede">Connect, reach out, and build — the three things we do in class today.</p>
+      <p class="lede">Connect, reach out, and build. The three things we do in class today.</p>
       <div class="cards">
         <div class="card">
           <span class="num">01</span>
           <h3>Connect to your microcontroller</h3>
-          <p>Reach your device from a phone and from a web browser — no native app needed.</p>
+          <p>Reach your device from a phone and from a web browser. No native app needed.</p>
         </div>
         <div class="card">
           <span class="num">02</span>
@@ -122,16 +122,16 @@
 
     <section class="section-block" id="connect">
       <h2>Connectivity options</h2>
-      <p class="lede">Bluetooth or WiFi — both work, but only one skips app development entirely.</p>
+      <p class="lede">Bluetooth or WiFi. Both work, but only one skips app development entirely.</p>
       <div class="cards">
         <div class="card">
           <h3>Bluetooth</h3>
-          <p>Low-power, short-range, device-to-device communication — like connecting to a phone app. It requires a native mobile app for user interaction.</p>
+          <p>Low-power, short-range, device-to-device communication. Like connecting to a phone app. It requires a native mobile app for user interaction.</p>
           <div class="callout warm" style="margin-top:16px;"><b>This is hard.</b> You'd have to build and ship an app.</div>
         </div>
         <div class="card accent">
           <h3>WiFi</h3>
-          <p>Internet access, higher data rates, and integration with cloud services. Users interact through a simple web browser interface — no app development needed.</p>
+          <p>Internet access, higher data rates, and integration with cloud services. Users interact through a simple web browser interface. No app development needed.</p>
           <div class="callout" style="margin-top:16px;"><b>Today's approach.</b> The browser is your user interface.</div>
         </div>
       </div>
@@ -140,7 +140,7 @@
       <div class="gallery">
         <figure class="shot">
           <img src="shots/esp32-wrover-board.jpg" alt="An ESP32 WROVER microcontroller board" style="aspect-ratio: 4 / 5; object-fit: contain; background: #fff;">
-          <figcaption><b>The device</b>An ESP32 WROVER running MicroPython — the thing that gets online.</figcaption>
+          <figcaption><b>The device</b>An ESP32 WROVER running MicroPython. The thing that gets online.</figcaption>
         </figure>
         <figure class="shot">
           <img src="shots/cloud-api.jpg" alt="A cloud icon labelled API with connected nodes" style="aspect-ratio: 4 / 5; object-fit: contain; background: #fff;">
@@ -148,15 +148,15 @@
         </figure>
         <figure class="shot tall">
           <img src="shots/phone-rgb-control.jpg" alt="Phone browser showing an RGB LED control page with a color picker and sliders" style="aspect-ratio: 4 / 5; object-fit: contain; background: #0f1218;">
-          <figcaption><b>The browser UI</b>No app to install — the device serves a page your phone opens.</figcaption>
+          <figcaption><b>The browser UI</b>No app to install. The device serves a page your phone opens.</figcaption>
         </figure>
       </div>
-      <div class="callout" style="margin-top:16px;"><b>Client</b> — your device reaches out to a service. <b>Server</b> — your device serves a page. <b>Hybrid</b> — the Smart Light is both.</div>
+      <div class="callout" style="margin-top:16px;"><b>Client</b>, your device reaches out to a service. <b>Server</b>, your device serves a page. <b>Hybrid</b>, the Smart Light is both.</div>
     </section>
 
     <section class="section-block" id="build">
       <h2>Build a smart light</h2>
-      <p class="lede">One RGB LED — three colors in a single package, sharing a common anode (+).</p>
+      <p class="lede">One RGB LED. Three colors in a single package, sharing a common anode (+).</p>
       <div class="gallery">
         <figure class="shot">
           <img src="shots/rgb-led-common-anode.jpg" alt="Diagram of an RGB LED with red, green, and blue channels sharing a common anode" style="object-fit: contain; background: #fff;">
@@ -164,7 +164,7 @@
         </figure>
         <figure class="shot">
           <img src="shots/esp32-wired-breadboard.jpg" alt="An ESP32 wired to an RGB LED on a breadboard, lit purple" style="object-position: center 62%;">
-          <figcaption><b>On the breadboard</b>Each channel gets its own pin — the web page mixes them into any color.</figcaption>
+          <figcaption><b>On the breadboard</b>Each channel gets its own pin. The web page mixes them into any color.</figcaption>
         </figure>
       </div>
 
@@ -188,7 +188,7 @@
           <p>The Tufts_Wireless open WiFi hotspot.</p>
         </div>
       </div>
-      <div class="callout" style="margin-top:16px;">The MAC line is extra: it prints the address you'll register with Tufts IT — see the next section.</div>
+      <div class="callout" style="margin-top:16px;">The MAC line is extra: it prints the address you'll register with Tufts IT. See the next section.</div>
     </section>
 
     <section class="section-block" id="register">
@@ -198,12 +198,12 @@
         <div class="card">
           <span class="num">01</span>
           <h3>Get your MAC address</h3>
-          <p>Run the code with opencode and copy your device's MAC address from what it prints — it looks like <span class="mono">6c:c8:40:77:e0:9c</span>, but with your own numbers and letters.</p>
+          <p>Run the code with opencode and copy your device's MAC address from what it prints. It looks like <span class="mono">6c:c8:40:77:e0:9c</span>, but with your own numbers and letters.</p>
         </div>
         <div class="card">
           <span class="num">02</span>
           <h3>Expect an error</h3>
-          <p>The rest of the code will fail at this point — you can't reach WiFi yet. That's expected.</p>
+          <p>The rest of the code will fail at this point. You can't reach WiFi yet. That's expected.</p>
         </div>
         <div class="card">
           <span class="num">03</span>
@@ -226,14 +226,14 @@
           <figcaption><b>2 · Your device's MAC</b>Description: ESP32 Device · Type: Other Mobile Devices · SUBMIT.</figcaption>
         </figure>
       </div>
-      <div class="callout" style="margin-top:16px;"><b>Use the IP address, not the MAC.</b> Once registered, type the IP address opencode prints into your phone's browser (e.g. <span class="mono">http://192.168.6.134</span>). The MAC address (<span class="mono">6c:c8:40:77:e0:9c</span>) will not open a web page — it was only needed for registration. It may take a few minutes before your registration is active.</div>
+      <div class="callout" style="margin-top:16px;"><b>Use the IP address, not the MAC.</b> Once registered, type the IP address opencode prints into your phone's browser (e.g. <span class="mono">http://192.168.6.134</span>). The MAC address (<span class="mono">6c:c8:40:77:e0:9c</span>) will not open a web page. It was only needed for registration. It may take a few minutes before your registration is active.</div>
     </section>
 
     <section class="section-block" id="how">
       <h2>How it works</h2>
       <p class="lede">Every tap on your phone becomes a request the ESP32 answers.</p>
       <div class="cycle">
-        <div class="cyc"><span class="cn">1</span><h3>A web server starts</h3><p>Your ESP32 runs a web server that renders a web page — no separate computer needed.</p></div>
+        <div class="cyc"><span class="cn">1</span><h3>A web server starts</h3><p>Your ESP32 runs a web server that renders a web page. No separate computer needed.</p></div>
         <div class="cyc"><span class="cn">2</span><h3>The page gets an address</h3><p>The page is accessible at the device's IP address, assigned automatically when it joins Tufts_Wireless.</p></div>
         <div class="cyc"><span class="cn">3</span><h3>Your phone renders it</h3><p>Your phone's browser renders the HTML that the ESP32's web server generates.</p></div>
         <div class="cyc"><span class="cn">4</span><h3>Requests round-trip</h3><p>Interacting with the page sends a request to the ESP32 (e.g. <span class="mono">http://10.243.94.14/</span>). It reads the request, calls the sensor, and passes the data back.</p></div>
@@ -269,7 +269,7 @@
 
     <section class="section-block" id="fromclass">
       <h2>Student build: browser controls</h2>
-      <p class="lede">A photo from a class session — the kind of control page you can build for your own device.</p>
+      <p class="lede">A photo from a class session. The kind of control page you can build for your own device.</p>
       <div class="gallery">
         <figure class="shot span-2">
           <img src="../../assets/photos/class/browser-controls.jpg" alt="A tablet showing colour bars and sliders for controlling a connected light">
@@ -280,7 +280,7 @@
 
     <section class="section-block" id="reflection">
       <h2>Before you go</h2>
-      <p class="lede">Close out the connectivity milestone — then bring what you learned to the Robo Challenge.</p>
+      <p class="lede">Close out the connectivity milestone, then bring what you learned to the Robo Challenge.</p>
       <div class="cards">
         <div class="card accent">
           <span class="num">Individual · milestone 2 of 5</span>
@@ -290,7 +290,7 @@
         <div class="card">
           <span class="num">Individual</span>
           <h3>Electronics project</h3>
-          <p>Present a working circuit — your AI conversation, a video demo, and a written reflection on the process.</p>
+          <p>Present a working circuit. Your AI conversation, a video demo, and a written reflection on the process.</p>
         </div>
       </div>
     </section>
@@ -300,14 +300,14 @@
       <h2>What's due</h2>
       <div class="cards">
         <div class="card">
-          <span class="num">Individual · 10 pt · due Thu, Oct 15</span>
-          <h3>Electronics project</h3>
-          <p>Using the ESP32-WROVER microcontroller and provided components, you will design and build a fun electronics project by partnering with AI to generate your code. Create something that interests you, makes you smile, or just seems cool to build! This assignment teaches you how to effectively communicate your ideas to AI tools and iterate on solutions; a critical skill for modern makers and creators.</p>
+          <span class="num">10 pt · due Thu, Oct 15</span>
+          <h3><span title="Individual">👤</span> Electronics project</h3>
+          <p>Using the ESP32-WROVER microcontroller and provided components, you will design and build a fun electronics project by partnering with AI to generate your code. Create something that interests you, makes you smile, or seems cool to build. This assignment teaches you how to effectively communicate your ideas to AI tools and iterate on solutions; a critical skill for modern makers and creators.</p>
           <p class="note"><a href="https://canvas.tufts.edu/courses/76330/assignments/646285">Hand in on Canvas &rarr;</a></p>
         </div>
         <div class="card">
-          <span class="num">Individual · 2 pt · due Thu, Oct 15</span>
-          <h3>Milestone reflection</h3>
+          <span class="num">2 pt · due Thu, Oct 15</span>
+          <h3><span title="Individual">👤</span> Milestone reflection</h3>
           <p>Purpose. Reflection is the engine of learning in project-based work: a structured pause to examine what you did, what it taught you, and what you will do next.</p>
         </div>
       </div>
@@ -315,7 +315,7 @@
     <!-- assignments:end -->
 
     <section class="section-block" id="next" style="padding-bottom: 0;">
-      <div class="callout warm"><b>Next week:</b> Robo Challenge making time — integrate everything you've learned into a working robot. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
+      <div class="callout warm"><b>Next week:</b> Robo Challenge making time. Integrate everything you've learned into a working robot. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
     </section>
 
   </main>
@@ -331,14 +331,14 @@
           <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
         </svg>
       </span>
-      <span>ENT-164 · Intro to Making — Class 6, Fall 2026</span>
+      <span>ENT-164 · Intro to Making. Class 6, Fall 2026</span>
     </div>
     <div class="foot-links">
       <a href="../../">All class materials</a>
       <a href="../../syllabus/">Syllabus</a>
       <a href="../../about/">About the instructor</a>
       <a href="slides.html">Slide deck (web)</a>
-      <a href="ENT-164-Class-6-Connectivity-with-AI.pdf">Download the slides</a>
+      <a href="ENT-164-Class-6-Coding-with-an-AI-Agent.pdf">Download the slides</a>
     </div>
   </div>
 </footer>

@@ -1,8 +1,8 @@
-# class-09 assignments — imported from Canvas by tools/canvas-course/pull-assignments.py.
+# class-09 assignments. Imported from Canvas by tools/canvas-course/pull-assignments.py.
 # The repo is the master copy of the content; edit here and push.
 - slug: final-team-project-part-1-product-concept-presentation
-  name: 'Final Team Project Part 1: Product Concept Presentation'
-  summary: Product concept — pitch your team's idea to the class
+  name: '👥 Final Team Project Part 1: Product Concept Presentation'
+  summary: Product concept. Pitch your team's idea to the class
   group: Team Assignments (35 points)
   points: 5.0
   due: '2026-11-05T17:00:00Z'
@@ -15,8 +15,8 @@
     section: Assignments
   description: assignments/final-team-project-part-1-product-concept-presentation.html
 - slug: peer-review-ideas
-  name: Peer review — feedback on classmates' ideas
-  summary: Peer review — feedback on classmates' ideas
+  name: 👤 Peer review. Feedback on classmates' ideas
+  summary: Peer review. Feedback on classmates' ideas
   source: schedule
   audience: Individual
   week: 9

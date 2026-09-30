@@ -1,8 +1,8 @@
-# class-11 assignments — imported from Canvas by tools/canvas-course/pull-assignments.py.
+# class-11 assignments. Imported from Canvas by tools/canvas-course/pull-assignments.py.
 # The repo is the master copy of the content; edit here and push.
 - slug: final-project-checkpoint-2-integrated-features-and-user-experience
-  name: 'Final Project Checkpoint 2: Integrated Features and User Experience'
-  summary: Project checkpoint 2 — integrated features and user experience
+  name: '👥 Final Project Checkpoint 2: Integrated Features and User Experience'
+  summary: Project checkpoint 2. Integrated features and user experience
   group: Team Assignments (35 points)
   points: 0.0
   due: '2026-11-19T17:00:00Z'
@@ -16,8 +16,8 @@
   description: assignments/final-project-checkpoint-2-integrated-features-and-user-experience.html
   source: repo
 - slug: milestone-reflection-final-project-mid-point
-  name: Milestone Reflection — final project mid-point
-  summary: Milestone reflection — final project mid-point
+  name: 👤 Milestone Reflection. Final project mid-point
+  summary: Milestone reflection. Final project mid-point
   group: Reflections and Participation (10 points)
   points: 2.0
   due: '2026-11-20T04:59:00Z'

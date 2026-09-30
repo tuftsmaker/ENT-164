@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ENT-164 · Class 11 — Intelligent Devices with AI</title>
+<title>ENT-164 · Class 11 — Final Project Design Review</title>
 <meta name="description" content="Class 11 of ENT-164 Intro to Making: connecting an ESP32 to cloud APIs, the poetic light case study, and best practices for human–AI collaboration.">
 <meta name="theme-color" content="#f7f9fc">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ENT-164 · Class 11 — Intelligent Devices with AI">
+<meta property="og:title" content="ENT-164 · Class 11 — Final Project Design Review">
 <meta property="og:description" content="A voice-driven poetic light built with an ESP32, cloud APIs, and Claude — plus where humans and AI each excel.">
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
@@ -34,7 +34,7 @@
         <a href="../../workshops/">Workshops</a>
         <a href="../../syllabus/">Syllabus</a>
         <a href="../../about/">About</a>
-        <a class="nav-cta" href="ENT-164-Class-11-Intelligent-Devices-with-AI.pdf">Download slides</a>
+        <a class="nav-cta" href="ENT-164-Class-11-Final-Project-Design-Review.pdf">Download slides</a>
     </div>
   </div>
 </nav>
@@ -42,15 +42,15 @@
 <header class="hero">
   <div class="wrap">
     <p class="kicker reveal">Class 11 · Week 11 · Fall 2026</p>
-    <h1 class="reveal" style="--d:.06s">Intelligent Devices <span class="accent">with AI</span></h1>
-    <p class="lead reveal" style="--d:.12s">How a voice-driven “poetic light” came together with an ESP32, cloud APIs, and Claude — and what that build teaches about working with AI.</p>
+    <h1 class="reveal" style="--d:.06s">Final Project <span class="accent">Design Review</span></h1>
+    <p class="lead reveal" style="--d:.12s">How a voice-driven “poetic light” came together with an ESP32, cloud APIs, and Claude, and what that build teaches about working with AI.</p>
     <div class="pills reveal" style="--d:.18s">
       <span class="pill">Case study: the poetic light</span>
       <span class="pill">Human vs AI roles</span>
       <span class="pill">No programming required</span>
     </div>
     <div class="cta-row reveal" style="--d:.24s">
-      <a class="btn btn-primary" href="ENT-164-Class-11-Intelligent-Devices-with-AI.pdf">Download the slides (PDF)</a>
+      <a class="btn btn-primary" href="ENT-164-Class-11-Final-Project-Design-Review.pdf">Download the slides (PDF)</a>
       <a class="btn btn-ghost" href="#apis">Explore the class &darr;</a>
     </div>
     <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
@@ -74,11 +74,11 @@
 
     <section class="section-block" id="apis">
       <h2>Connect a device to cloud APIs</h2>
-      <p class="lede">Adding AI to a device to do smart things — no programming required. Your board asks a service for data or an action, and gets an answer back.</p>
+      <p class="lede">Adding AI to a device to do smart things. No programming required. Your board asks a service for data or an action, and gets an answer back.</p>
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:20px; align-items:start;">
         <figure class="shot">
           <img src="shots/esp32-wrover-board.jpg" alt="An ESP32 WROVER development board with pin headers and a camera connector" style="aspect-ratio: 4 / 5; object-fit: contain; background: var(--paper);">
-          <figcaption><b>The board</b>An ESP32 WROVER with Wi-Fi — the brain of the poetic light.</figcaption>
+          <figcaption><b>The board</b>An ESP32 WROVER with Wi-Fi. The brain of the poetic light.</figcaption>
         </figure>
         <div class="cards" style="grid-template-columns: 1fr; align-content:start;">
           <div class="card">
@@ -120,7 +120,7 @@
         <div class="card"><span class="num">03</span><h3>SD card struggles</h3><p>Getting the SD card to work takes many attempts.</p></div>
         <div class="card"><span class="num">04</span><h3>Firmware switch</h3><p>New ESP32 firmware unlocks the full amount of RAM available.</p></div>
         <div class="card"><span class="num">05</span><h3>Pulse red like HAL</h3><p>Test and enhance: pulse red like HAL 9000.</p></div>
-        <div class="card"><span class="num">06</span><h3>Color switching works</h3><p>The first feature lands — the light responds to a word.</p></div>
+        <div class="card"><span class="num">06</span><h3>Color switching works</h3><p>The first feature lands. The light responds to a word.</p></div>
         <div class="card"><span class="num">07</span><h3>Add a spoken poem</h3><p>Feature enhancement: recite the poem out loud.</p></div>
         <div class="card"><span class="num">08</span><h3>Fix the audio</h3><p>The small speaker sounds poor, so a DFPlayer Mini MP3 module joins the build.</p></div>
         <div class="card"><span class="num">09</span><h3>Ran out of context</h3><p>The chat runs out of context before the build is finished.</p></div>
@@ -220,7 +220,7 @@
         <div class="card">
           <h3>Performance &amp; tradeoff optimization</h3>
           <ul>
-            <li>Quantified “too slow” as “7 seconds” — a measurable metric</li>
+            <li>Quantified “too slow” as “7 seconds”. A measurable metric</li>
             <li>Applied multi-criteria decision matrices (cost, latency, quality)</li>
           </ul>
         </div>
@@ -265,7 +265,7 @@
         </div>
         <div class="card accent">
           <h3>Acceleration factor</h3>
-          <p>Compressed a 24–35 hour traditional build into 4.5 hours total — roughly a 5–8× faster development cycle.</p>
+          <p>Compressed a 24–35 hour traditional build into 4.5 hours total. Roughly a 5–8× faster development cycle.</p>
         </div>
       </div>
     </section>
@@ -281,13 +281,13 @@
         <div class="card"><span class="num">05</span><h3>Keep context updated</h3><p>Remind AI of constraints after each major change.</p></div>
         <div class="card"><span class="num">06</span><h3>Use diagnostics early</h3><p>Build quick test scripts to confirm hardware and firmware state.</p></div>
         <div class="card"><span class="num">07</span><h3>Simplify continuously</h3><p>Remove unnecessary layers once constraints are resolved.</p></div>
-        <div class="card"><span class="num">08</span><h3>Reflect &amp; document</h3><p>Capture what worked and why — AI learns context, you keep the insight.</p></div>
+        <div class="card"><span class="num">08</span><h3>Reflect &amp; document</h3><p>Capture what worked and why. AI learns context, you keep the insight.</p></div>
       </div>
     </section>
 
     <section class="section-block" id="fromclass">
       <h2>Student builds: connected devices</h2>
-      <p class="lede">Photos from a class session — the on-screen side of student-built connected devices.</p>
+      <p class="lede">Photos from a class session. The on-screen side of student-built connected devices.</p>
       <div class="gallery">
         <figure class="shot">
           <img src="../../assets/photos/class/device-list-ui.jpg" alt="A tablet showing a student-built smart list interface">
@@ -309,13 +309,13 @@
       <h2>What's due</h2>
       <div class="cards">
         <div class="card">
-          <span class="num">Team · check-in · due Thu, Nov 19</span>
-          <h3>Project checkpoint 2</h3>
+          <span class="num">check-in · due Thu, Nov 19</span>
+          <h3><span title="Team">👥</span> Project checkpoint 2</h3>
           <p>What this is. A mid-project checkpoint with your team: a short, low-stakes review of where the final project stands, so you leave with clear next steps.</p>
         </div>
         <div class="card">
-          <span class="num">Individual · 2 pt · due Thu, Nov 19</span>
-          <h3>Milestone reflection</h3>
+          <span class="num">2 pt · due Thu, Nov 19</span>
+          <h3><span title="Individual">👤</span> Milestone reflection</h3>
           <p>Purpose. Reflection is the engine of learning in project-based work: a structured pause to examine what you did, what it taught you, and what you will do next.</p>
         </div>
       </div>
@@ -339,7 +339,7 @@
           <p style="margin-top:8px;">tuftsmaker.github.io/ENT-164</p>
         </div>
       </div>
-      <div class="callout warm" style="margin-top:20px;"><b>Final project:</b> bring what the poetic light taught you — a clear idea, short iterations, and evidence at every step — to your own build. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
+      <div class="callout warm" style="margin-top:20px;"><b>Final project:</b> bring what the poetic light taught you. A clear idea, short iterations, and evidence at every step. To your own build. See the full schedule in the <a href="../../syllabus/#schedule">syllabus</a>.</div>
     </section>
 
   </main>
@@ -355,14 +355,14 @@
           <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
         </svg>
       </span>
-      <span>ENT-164 · Intro to Making — Class 11, Fall 2026</span>
+      <span>ENT-164 · Intro to Making. Class 11, Fall 2026</span>
     </div>
     <div class="foot-links">
       <a href="../../">All class materials</a>
       <a href="../../syllabus/">Syllabus</a>
       <a href="../../about/">About the instructor</a>
       <a href="slides.html">Slide deck (web)</a>
-      <a href="ENT-164-Class-11-Intelligent-Devices-with-AI.pdf">Download the slides</a>
+      <a href="ENT-164-Class-11-Final-Project-Design-Review.pdf">Download the slides</a>
     </div>
   </div>
 </footer>

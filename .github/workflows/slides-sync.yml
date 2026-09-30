@@ -6,15 +6,21 @@ on:
     paths:
       - "classes/**"
       - "syllabus/**"
+      - "workshops/**"
+      - "index.html"
       - "assets/**"
       - "scripts/**"
+      - "tools/canvas-course/**"
       - ".github/workflows/slides-sync.yml"
   pull_request:
     paths:
       - "classes/**"
       - "syllabus/**"
+      - "workshops/**"
+      - "index.html"
       - "assets/**"
       - "scripts/**"
+      - "tools/canvas-course/**"
   workflow_dispatch:
 
 permissions:
@@ -29,3 +35,5 @@ jobs:
         run: ./scripts/build-class.sh --check --all
       - name: Verify the syllabus PDF matches syllabus/index.html
         run: ./scripts/build-syllabus.sh --check
+      - name: Verify one class name across the schedule, hub, workshop cards and class pages
+        run: python3 tools/canvas-course/render-assignments.py --check

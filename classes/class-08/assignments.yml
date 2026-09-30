@@ -1,8 +1,8 @@
-# class-08 assignments — imported from Canvas by tools/canvas-course/pull-assignments.py.
+# class-08 assignments. Imported from Canvas by tools/canvas-course/pull-assignments.py.
 # The repo is the master copy of the content; edit here and push.
 - slug: robo-challenge
-  name: Robo Challenge
-  summary: Robot race — compete and demonstrate your team's robot
+  name: 👥 Robo Challenge
+  summary: Robot race. Compete and demonstrate your team's robot
   group: Team Assignments (35 points)
   points: 10.0
   due: '2026-10-29T16:00:00Z'
@@ -15,8 +15,8 @@
     section: Class Material
   description: assignments/robo-challenge.html
 - slug: midterm-peer-evaluations
-  name: Midterm Peer Evaluations
-  summary: Peer evaluations — rate your teammates' contributions
+  name: 👤 Midterm Peer Evaluations
+  summary: Peer evaluations. Rate your teammates' contributions
   group: Peer- and Self-Evaluations (20 points)
   points: 5.0
   due: '2026-11-05T17:00:00Z'
@@ -27,8 +27,8 @@
     section: Assignments
   description: assignments/midterm-peer-evaluations.html
 - slug: midterm-self-evaluation
-  name: Midterm Self Evaluation
-  summary: Self review — reflect on your Robo Challenge contributions
+  name: 👤 Midterm Self Evaluation
+  summary: Self review. Reflect on your Robo Challenge contributions
   group: Peer- and Self-Evaluations (20 points)
   points: 5.0
   due: '2026-11-05T17:00:00Z'
@@ -39,8 +39,8 @@
     section: Assignments
   description: assignments/midterm-self-evaluation.html
 - slug: milestone-reflection-after-the-robo-challenge
-  name: Milestone Reflection — after the Robo Challenge
-  summary: Milestone reflection — after the Robo Challenge
+  name: 👤 Milestone Reflection. After the Robo Challenge
+  summary: Milestone reflection. After the Robo Challenge
   group: Reflections and Participation (10 points)
   points: 2.0
   due: '2026-10-30T03:59:00Z'

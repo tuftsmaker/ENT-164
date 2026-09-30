@@ -71,15 +71,15 @@
     class-03: class-3-laser-cutting-4
     class-04: class-4-3d-printing-4
     class-05: class-5-electronics-4
-    class-06: class-6-connectivity-with-ai-4
-    class-08: class-8-robo-challenge-4
-    class-09: class-9-final-project-kickoff-4
-    class-10: class-10-sensing-and-visualization-4
-    class-11: class-11-intelligent-devices-with-ai-4
+    class-06: class-6-coding-with-an-ai-agent
+    class-08: class-8-robo-challenge-and-team-retrospective
+    class-09: class-9-the-final-project-sprint
+    class-10: class-10-from-device-to-cloud
+    class-11: class-11-final-project-design-review
     class-12: class-12-final-project-making-time-4
     class-13: class-13-final-project-showcase-4
     laser-cutting: laser-cutting-at-nolop-with-inkscape
     laser-cutting-guide: laser-cutting-at-nolop-with-inkscape-beginners-guide
     onshape-tips: onshape-tips
-    opencode-deepseek-guide: opencode-+-deepseek-v4-dot-1-flash-beginners-setup-guide
+    opencode-deepseek-guide: ai-coding-agent-setup-guide
     workshops: workshops

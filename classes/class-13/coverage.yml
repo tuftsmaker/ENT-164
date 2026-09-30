@@ -1,4 +1,4 @@
-# What this class covers — the Canvas class page's "What we'll cover"
+# What this class covers. The Canvas class page's "What we'll cover"
 # cards: a reading of the deck, one brief line per topic. The page is
 # generated from these, so edit here rather than in Canvas.
 hero: "../../assets/photos/class/class-09-demo-3.jpg"
@@ -10,4 +10,4 @@ topics:
   - title: "What to bring to keep your build running"
     learn: "Everything your project needs on the day: power, parts, and backups."
   - title: "The final reflection: the course, end to end"
-    learn: "The last milestone — what you learned across the whole semester."
+    learn: "The last milestone. What you learned across the whole semester."

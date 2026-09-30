@@ -1,4 +1,4 @@
-# What this class covers — the Canvas class page's "What we'll cover"
+# What this class covers. The Canvas class page's "What we'll cover"
 # cards: a reading of the deck, one brief line per topic. The page is
 # generated from these, so edit here rather than in Canvas.
 hero: "shots/robo-challenge-scores.jpg"
@@ -13,5 +13,5 @@ topics:
     learn: "The brief pitch each team gives next class to open the final project."
   - title: "Note-and-Vote: choosing your team's idea"
     learn: "A silent brainstorm-and-vote method for picking an idea quickly."
-  - title: "From sticky notes to a build plan"
-    learn: "Turning a wall of ideas into one team concept you can start building."
+  - title: "The sprint: from idea to a prototype plan"
+    learn: "Three hours to brainstorm, choose a concept, and leave with a plan you can build."

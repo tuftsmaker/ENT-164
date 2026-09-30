@@ -22,7 +22,7 @@ from html.parser import HTMLParser
 
 SITE = "https://tuftsmaker.github.io/ENT-164/"
 
-DROP = {"svg", "script", "style", "nav", "aside", "footer", "input", "label"}
+DROP = {"svg", "script", "style", "nav", "aside", "footer", "input", "label", "button"}
 VOID = {"img", "br", "hr", "input", "meta", "link"}
 SKIP = {"grade-bar", "step-num"}
 
@@ -81,6 +81,12 @@ KEYCAP = ("display: inline-block; border: 1px solid #d5dce7; border-radius: 6px;
 UI = ("display: inline-block; border: 1px solid #d5dce7; border-radius: 6px; "
       "padding: 1px 7px; background: #ffffff; font-size: 13.5px;")
 ACCENT = "color: #2f7cc9;"
+PASTE = ("background: #f2f7fd; border: 2px solid #3E8EDE; border-radius: 10px; "
+         "padding: 14px 16px; margin: 12px 0;")
+PASTE_LABEL = "margin: 0 0 6px; color: #1F6FD0; font-size: 12px;"
+PASTE_SAY = ("margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; "
+             "font-size: 16.5px; line-height: 1.5; color: #0d1526;")
+URL_MARK = "background: #fff3cd; border-bottom: 2px solid #e0a800;"
 
 # image caps — full-width images dwarf a Canvas page
 IMG_MAX = 620      # a screenshot or hero image
@@ -343,6 +349,12 @@ def render(node: dict, map_href) -> str:
                 f"{' — ' + text_of(body).strip() if body is not None else ''}</p>\n")
     if tag == "div" and "divider" in cls:
         return f'<hr style="{HR}">\n'
+    if tag == "div" and "paste" in cls:
+        return f'<div style="{PASTE}">{inner}</div>\n'
+    if tag == "div" and "label" in cls:
+        return f'<p style="{PASTE_LABEL}"><b>{text_of(node).strip().upper()}</b></p>\n'
+    if tag == "div" and "say" in cls:
+        return f'<p style="{PASTE_SAY}">{inner}</p>\n'
     if tag == "div" and "footer" in cls:
         return f'<p style="{NOTE}"><i>{_join(node, map_href)}</i></p>\n'
 
@@ -400,6 +412,8 @@ def render(node: dict, map_href) -> str:
             return ""  # decorative numbering, not content
     if tag == "span" and "sec-num" in cls:
         return f'<span style="{SEC_NUM}">{inner}</span>'
+    if tag == "span" and "url" in cls:
+        return f'<span style="{URL_MARK}"><b>{inner}</b></span>'
     if tag == "span" and "accent" in cls:
         return f'<span style="{ACCENT}">{inner}</span>'
     if tag == "span" and "keycap" in cls:

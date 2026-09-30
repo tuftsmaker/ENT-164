@@ -1,8 +1,8 @@
-# class-13 assignments — imported from Canvas by tools/canvas-course/pull-assignments.py.
+# class-13 assignments. Imported from Canvas by tools/canvas-course/pull-assignments.py.
 # The repo is the master copy of the content; edit here and push.
 - slug: final-peer-reviews
-  name: Final Peer Reviews
-  summary: Peer evaluation — assess teammates' contributions
+  name: 👤 Final Peer Reviews
+  summary: Peer evaluation. Assess teammates' contributions
   group: Peer- and Self-Evaluations (20 points)
   points: 5.0
   due: '2026-12-10T17:00:00Z'
@@ -14,10 +14,10 @@
     section: null
   description: assignments/final-peer-reviews.html
   to_fix:
-  - no module item in Canvas — add one in class-13
+  - no module item in Canvas. Add one in class-13
 - slug: final-product-presentation
-  name: Final Product Presentation
-  summary: Final product demo — present a working prototype
+  name: 👥 Final Product Presentation
+  summary: Final product demo. Present a working prototype
   group: Team Assignments (35 points)
   points: 15.0
   due: '2026-12-10T17:00:00Z'
@@ -30,10 +30,10 @@
     section: null
   description: assignments/final-product-presentation.html
   to_fix:
-  - no module item in Canvas — add one in class-13
+  - no module item in Canvas. Add one in class-13
 - slug: final-self-review
-  name: Final Self Review
-  summary: Self review — reflect on your growth
+  name: 👤 Final Self Review
+  summary: Self review. Reflect on your growth
   group: Peer- and Self-Evaluations (20 points)
   points: 5.0
   due: '2026-12-10T17:00:00Z'
@@ -45,10 +45,10 @@
     section: null
   description: assignments/final-self-review.html
   to_fix:
-  - no module item in Canvas — add one in class-13
+  - no module item in Canvas. Add one in class-13
 - slug: milestone-reflection-the-course-end-to-end
-  name: Milestone Reflection — the course, end to end
-  summary: Milestone reflection — the course, end to end
+  name: 👤 Milestone Reflection. The course, end to end
+  summary: Milestone reflection. The course, end to end
   group: Reflections and Participation (10 points)
   points: 2.0
   due: '2026-12-11T04:59:00Z'

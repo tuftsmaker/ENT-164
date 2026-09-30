@@ -19,6 +19,7 @@ environment *and* --i-know, and is refused otherwise.
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import os
 import sys
 from pathlib import Path
@@ -26,6 +27,13 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 sys.path.insert(0, str(HERE))
+
+# render-assignments owns the assignment data — `plain_name` is the key names
+# match on. Loaded by path because the file name carries a dash.
+_RA_SPEC = importlib.util.spec_from_file_location("render_assignments", HERE / "render-assignments.py")
+render_assignments = importlib.util.module_from_spec(_RA_SPEC)
+_RA_SPEC.loader.exec_module(render_assignments)
+plain_name = render_assignments.plain_name
 
 import yaml  # noqa: E402
 from canvas_client import (  # noqa: E402
@@ -106,6 +114,7 @@ def main() -> int:
     groups = {g["name"]: g for g in client.get(f"/courses/{target}/assignment_groups")}
     assignments = {a["id"]: a for a in client.get(f"/courses/{target}/assignments")}
     by_name = {a["name"]: a for a in assignments.values()}
+    by_key = {plain_name(a["name"]): a for a in assignments.values()}
 
     plan = {"groups": [], "create": [], "update": [], "add_items": [], "drop_items": []}
 
@@ -116,7 +125,7 @@ def main() -> int:
     resolved = []
     for cls, entry in entries:
         aid = id_by_slug.get(entry["slug"])
-        found = assignments.get(aid) if aid else by_name.get(entry["name"])
+        found = assignments.get(aid) if aid else (by_name.get(entry["name"]) or by_key.get(plain_name(entry["name"])))
         if found and id_by_slug.get(entry["slug"]) != found["id"]:
             id_by_slug[entry["slug"]] = found["id"]  # adopted by name; record it
         resolved.append((cls, entry, found))

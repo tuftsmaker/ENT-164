@@ -1,4 +1,4 @@
-# What this class covers — the Canvas class page's "What we'll cover"
+# What this class covers. The Canvas class page's "What we'll cover"
 # cards: a reading of the deck, one brief line per topic. The page is
 # generated from these, so edit here rather than in Canvas.
 hero: "shots/product-evolution.jpg"
@@ -7,7 +7,7 @@ hero_alt: "A student presenting the evolution of a team project"
 topics:
   - title: "How the course works: rhythm, attendance, and getting help"
     learn: "What a typical session looks like, how attendance and participation count, and where to find support."
-  - title: "What you'll make — from first sketch to working prototype"
+  - title: "What you'll make. From first sketch to working prototype"
     learn: "The arc of the semester: hand-made mockups, CAD, electronics, and a final product."
   - title: "Grading, milestone reflections, and the course outline"
     learn: "How your grade adds up, what the five reflections ask for, and the week-by-week plan."

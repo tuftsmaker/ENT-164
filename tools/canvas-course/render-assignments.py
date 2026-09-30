@@ -7,6 +7,10 @@ entries the repo authors). This writes two surfaces, both between
 pattern `tools/site-nav/apply.py` uses for the navs:
 
 * the **syllabus week chips**, one chip per assignment in the week it is due;
+* the **class names** everywhere they are repeated — the syllabus week
+  headings and the deck cards on the hub and the workshops page all take the
+  class page's own name, so the schedule, the site and the Canvas modules
+  cannot drift apart;
 * each class page's **"What's due" block**, the assignments homed in that class
   (name, meta, the description's first paragraph, and a Canvas link when the
   assignment exists in Canvas).
@@ -19,7 +23,8 @@ the block before the page's closing section.
 
 An entry lands in the syllabus week whose class day is the last on or before
 its due date (read in Eastern time), unless it carries a `week:` override. The
-chip shows "<b>Team|Individual</b> · <summary>"; an entry without a summary
+chip shows "👤|👥 · <summary>" — the audience as an icon, with the word in the
+`title` — and an entry without a summary
 falls back to its Canvas name.
 """
 from __future__ import annotations
@@ -33,6 +38,8 @@ from zoneinfo import ZoneInfo
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 SYLLABUS = ROOT / "syllabus" / "index.html"
+HOME = ROOT / "index.html"
+WORKSHOPS = ROOT / "workshops" / "index.html"
 CLASSES = ROOT / "classes"
 COURSE_YML = HERE / "course.yml"
 IDS_YML = HERE / "canvas-ids.yml"
@@ -45,8 +52,16 @@ import yaml  # noqa: E402
 ARTICLE = re.compile(r'<article class="week[^"]*">.*?</article>', re.S)
 WEEK_NUM = re.compile(r'<span class="week-num">Week (\d+)</span>')
 WEEK_DATE = re.compile(r'<span class="week-date">([^<]+)</span>')
+CLASS_TITLE = re.compile(r"<title>ENT-164 · Class \d+ — ([^<]+)</title>")
+HEADING = re.compile(r"(<h3[^>]*>).*?(</h3>)", re.S)
+DECK_CARD = re.compile(r'(<h3><a href="(?:\.\./)*classes/class-(\d+)/"[^>]*>)(.*?)(</a></h3>)', re.S)
+WEEK_LINE = re.compile(r'(<a href="\{\{page:class-(\d+)\}\}"><b>[^<]*</b></a> — )([^<]*)')
+WORKSHOP_CHIP = re.compile(r'(<a class="chip"[^>]*>)(.*?)(</a>)', re.S)
 CHIPS_DIV = re.compile(r'<div class="chips">(.*?)</div>', re.S)
-WORKSHOP_CHIP = re.compile(r'<a class="chip"[^>]*>.*?</a>', re.S)
+OG_TITLE = re.compile(r'(<meta property="og:title" content="ENT-164 · Class \d+ — )(.*?)(">)')
+DECK_TITLE = re.compile(r'(<title>ENT-164 Class \d+ · )(.*?)( — Slides</title>)')
+DECK_FOOTER = re.compile(r'(<span>Class \d+ · )(.*?)(</span>)')
+WEEK_LABEL = re.compile(r'(<b>Week \d+ · )(.*?)(</b>)')
 MARKERS = re.compile(r'[ \t]*<!-- assignments:begin -->.*?<!-- assignments:end -->', re.S)
 CLOSE = re.compile(r'([ \t]*)(</div>\s*</article>\s*)$', re.S)
 CLASS_SECTION = re.compile(r'[ \t]*<section class="section-block"')
@@ -72,6 +87,16 @@ def week_dates(html):
     return sorted(weeks)
 
 
+def plain_name(name: str) -> str:
+    """A name without its leading audience icon.
+
+    The repo's assignment names carry 👤/👥 (they are pushed to Canvas, so the
+    module list and gradebook show them); this reads the name back for display
+    under one icon, and is the key the tools match a live assignment on.
+    """
+    return re.sub(r"^[^\w]+ ?", "", name or "")
+
+
 def audience(entry):
     if entry.get("audience"):
         return entry["audience"]
@@ -84,9 +109,19 @@ def audience(entry):
     raise SystemExit(f"{entry['slug']}: no audience and no group to read one from")
 
 
+ICONS = {"Individual": "👤", "Team": "👥"}
+
+
+def audience_icon(entry):
+    """The audience as an icon; the word stays in `title` for hover and readers."""
+    label = audience(entry)
+    icon = ICONS.get(label, "")
+    return f'<span title="{label}">{icon}</span>' if icon else label
+
+
 def chip(entry):
-    text = entry.get("summary") or re.sub(r"^Individual Assignment:\s*", "", entry["name"])
-    return f'<b>{audience(entry)}</b> · {text}'
+    text = entry.get("summary") or re.sub(r"^Individual Assignment:\s*", "", plain_name(entry["name"]))
+    return f'{audience_icon(entry)} · {text}'
 
 
 def entry_week(entry, weeks):
@@ -121,7 +156,7 @@ def first_paragraph(html):
 
 def card(entry, live_ids, web, live_id):
     points = entry.get("points")
-    parts = [audience(entry)]
+    parts = []
     if points is not None:
         parts.append(f"{float(points):g} pt" if float(points) > 0 else "check-in")
     if entry.get("due"):
@@ -130,15 +165,16 @@ def card(entry, live_ids, web, live_id):
     else:
         parts.append("in class")
     when = " · ".join(parts)
-    summary = entry.get("summary") or entry["name"]
-    title = summary.split(" — ")[0].strip()
+    summary = entry.get("summary") or plain_name(entry["name"])
+    title = re.split(r" — |\. ", summary)[0].strip()
     body = first_paragraph(entry.get("_html") or _description(entry))
     if not body:
-        body = summary.split(" — ", 1)[1] if " — " in summary else entry["name"]
+        parts = re.split(r" — |\. ", summary, maxsplit=1)
+        body = parts[1] if len(parts) > 1 else plain_name(entry["name"])
     lines = [
         '<div class="card">',
         f'  <span class="num">{when}</span>',
-        f"  <h3>{title}</h3>",
+        f"  <h3>{audience_icon(entry)} {title}</h3>",
         f"  <p>{body}</p>",
     ]
     aid = live_ids.get(entry["slug"])
@@ -160,7 +196,7 @@ def _description(entry):
 
 
 def section(entries, live_ids, web, live_id):
-    entries = sorted(entries, key=lambda e: (e.get("due") or "", e["name"]))
+    entries = sorted(entries, key=lambda e: (e.get("due") or "", plain_name(e["name"])))
     lines = [
         "<!-- assignments:begin -->",
         '<section class="section-block" id="assignments">',
@@ -185,18 +221,83 @@ def rewrite_class_page(html, entries, live_ids, web, live_id):
     return html[:at] + block + "\n\n" + html[at:]
 
 
+def class_names():
+    """Week number -> the class page's name — the one source for the week's
+    heading, the Canvas page title and the module name."""
+    names = {}
+    for path in sorted(CLASSES.glob("class-*/index.html")):
+        week = int(path.parent.name.split("-")[1])
+        found = CLASS_TITLE.search(path.read_text(encoding="utf-8"))
+        if found:
+            names[week] = found.group(1).strip()
+    return names
+
+
+def sync_heading(article: str, week, names: dict) -> str:
+    """Give the week the class page's name, so the two cannot drift."""
+    name = names.get(week) if week else None
+    if not name:
+        return article
+    return HEADING.sub(lambda m: m.group(1) + name + m.group(2), article, count=1)
+
+
+def sync_og_title(html: str, name: str) -> str:
+    """The page's social title carries the class name too."""
+    return OG_TITLE.sub(lambda m: m.group(1) + name + m.group(3), html, count=1)
+
+
+def sync_deck(html: str, names: dict) -> str:
+    """A deck's title and footers name its own class; its roadmap labels name
+    the other weeks — all from the class pages, so a rename reaches them."""
+    html = DECK_TITLE.sub(
+        lambda m: m.group(1) + names.get(int(m.group(1).split()[2]), m.group(2)) + m.group(3), html)
+    html = DECK_FOOTER.sub(
+        lambda m: m.group(1) + names.get(int(m.group(1).split()[1]), m.group(2)) + m.group(3), html)
+    return WEEK_LABEL.sub(
+        lambda m: m.group(1) + names.get(int(m.group(1).split()[1]), m.group(2)) + m.group(3), html)
+
+
+def sync_workshop(article: str, week, names: dict) -> str:
+    """The workshop chip ("Workshop 5 · Electronics — slides & notes") too."""
+    name = names.get(week) if week else None
+    if not name:
+        return article
+
+    def fix(match):
+        rest = re.search(r"—\s*(.*)$", match.group(2), re.S)
+        suffix = f". {rest.group(1).strip()}" if rest else ""
+        return f"{match.group(1)}<b>Workshop {week}</b> · {name}{suffix}{match.group(3)}"
+
+    return WORKSHOP_CHIP.sub(fix, article, count=1)
+
+
+def sync_cards(html: str, names: dict) -> str:
+    """The deck cards on the hub and the workshops page carry the class name."""
+    return DECK_CARD.sub(
+        lambda m: m.group(1) + names.get(int(m.group(2)), m.group(3)) + m.group(4), html)
+
+
+def sync_home_weeks(html: str, names: dict) -> str:
+    """The Canvas home page's week list carries the class name after the week."""
+    return WEEK_LINE.sub(
+        lambda m: m.group(1) + names.get(int(m.group(2)), m.group(3)), html)
+
+
 def rewrite_syllabus(html, weeks, entries):
+    names = class_names()
     by_week = {}
     for entry in entries:
         by_week.setdefault(entry_week(entry, weeks), []).append(entry)
     for week in by_week:
-        by_week[week].sort(key=lambda e: (e.get("due") or "", e["name"]))
+        by_week[week].sort(key=lambda e: (e.get("due") or "", plain_name(e["name"])))
     parts = []
     for article in ARTICLE.finditer(html):
         text = article.group(0)
         number = WEEK_NUM.search(text)
         week = int(number.group(1)) if number else None
         chips = [chip(e) for e in by_week.get(week, [])] if week else []
+        text = sync_heading(text, week, names)
+        text = sync_workshop(text, week, names)
         parts.append((article.start(), article.end(), rewrite_article(text, chips)))
     result = html
     for start, end, new in reversed(parts):
@@ -257,6 +358,19 @@ def main() -> int:
         pages[page] = rewrite_class_page(page.read_text(encoding="utf-8"), entries,
                                          live_ids, web, live_id)
 
+    names = class_names()
+    for path in (HOME, WORKSHOPS):
+        pages[path] = sync_cards(path.read_text(encoding="utf-8"), names)
+    pages[HERE / "home-page.html"] = sync_home_weeks(
+        (HERE / "home-page.html").read_text(encoding="utf-8"), names)
+    for path in sorted(CLASSES.glob("class-*/index.html")):
+        week = int(path.parent.name.split("-")[1])
+        name = names.get(week)
+        if name:
+            pages[path] = sync_og_title(pages.get(path) or path.read_text(encoding="utf-8"), name)
+    for path in sorted(CLASSES.glob("class-*/slides.html")):
+        pages[path] = sync_deck(path.read_text(encoding="utf-8"), names)
+
     if args.check:
         stale = []
         if updated != syllabus:
@@ -266,7 +380,7 @@ def main() -> int:
             print(f"  stale: {path.relative_to(ROOT)}")
         total = sum(len(v) for v in per_class.values())
         print(f"\n{'stale pages found' if stale else 'pages match the assignment data'}"
-              f" — {total} entry(ies), {len(pages)} class page(s)")
+              f" — {total} entry(ies), {len(pages)} page(s)")
         return 1 if stale else 0
 
     written = 0

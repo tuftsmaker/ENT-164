@@ -25,6 +25,7 @@ both between syncs.
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import re
 import sys
 import urllib.parse
@@ -36,6 +37,13 @@ sys.path.insert(0, str(HERE))
 
 import yaml  # noqa: E402
 from canvas_client import Client, load_config  # noqa: E402
+
+# render-assignments owns the assignment data — `plain_name` is the key names
+# match on. Loaded by path because the file name carries a dash.
+_RA_SPEC = importlib.util.spec_from_file_location("render_assignments", HERE / "render-assignments.py")
+render_assignments = importlib.util.module_from_spec(_RA_SPEC)
+_RA_SPEC.loader.exec_module(render_assignments)
+plain_name = render_assignments.plain_name
 
 COURSE_YML = HERE / "course.yml"
 IDS_YML = HERE / "canvas-ids.yml"
@@ -127,7 +135,10 @@ def build_entries(course: dict, overrides: dict) -> list:
     """Repo entries for a course's assignments, in the repo's shape."""
     entries = []
     for assignment in course["assignments"]:
-        name = assignment["name"]
+        name = plain_name(assignment["name"])
+        group = course["groups"].get(assignment["assignment_group_id"]) or ""
+        icon = render_assignments.ICONS[
+            render_assignments.audience({"slug": slugify(name), "name": name, "group": group})]
         spots = course["places"].get(assignment["id"], [])
         home = overrides.get(name)
         if home is None and len(spots) == 1:
@@ -142,7 +153,7 @@ def build_entries(course: dict, overrides: dict) -> list:
         html = scrub(assignment.get("description") or "", where=name)
         entry = {
             "slug": slugify(name),
-            "name": name,
+            "name": f"{icon} {name}",
             "group": course["groups"].get(assignment["assignment_group_id"]),
             "points": assignment.get("points_possible"),
             "due": assignment.get("due_at"),
@@ -319,10 +330,10 @@ def check(course_id: str, course: dict, entries: list, repo: dict) -> tuple:
 
 
 def record_ids(course_id: str, course: dict, repo: dict) -> int:
-    by_name = {e["name"]: e for e in repo.values()}
+    by_name = {plain_name(e["name"]): e for e in repo.values()}
     assignments, unmatched = {}, []
     for a in course["assignments"]:
-        entry = by_name.get(a["name"])
+        entry = by_name.get(plain_name(a["name"]))
         if entry:
             assignments[entry["slug"]] = a["id"]
         else:
