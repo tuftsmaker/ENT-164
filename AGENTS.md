@@ -3,6 +3,8 @@
 Static course site for ENT-164 Intro to Making (Tufts), published from this repo
 via GitHub Pages: https://tuftsmaker.github.io/ENT-164/
 
+Load the student-writing-style skill before writing or editing any student-facing page.
+
 ## Deck sync: one source, generated PDFs
 
 - `classes/class-NN/slides.html` (+ its `shots/`, plus shared `assets/`) is the
