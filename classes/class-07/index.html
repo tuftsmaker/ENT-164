@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 · Class 7 — Final Robot Assembly and Testing</title>
+<meta name="description" content="Class 7 of ENT-164 Intro to Making: a full working session at Nolop to assemble the team robot, test it, and fix what fails. The mid-point assembly checkpoint is due.">
+<meta name="theme-color" content="#f7f9fc">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ENT-164 · Class 7 — Final Robot Assembly and Testing">
+<meta property="og:description" content="A full build session: integrate everything into one working robot, then test, debug, and iterate with your team.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="page-class">
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../">
+      <span class="mark-sm" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 <small>&middot; Intro to Making</small></span>
+    </a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label">
+      <span class="nav-toggle-text">Menu</span>
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </label>
+    <div class="nav-links">
+        <a href="../../workshops/">Workshops</a>
+        <a href="../../syllabus/">Syllabus</a>
+        <a href="../../about/">About</a>
+        <a class="nav-cta" href="../../syllabus/#schedule">Class 7 in the syllabus</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker reveal">Class 7 · Week 7 · Fall 2026</p>
+    <h1 class="reveal" style="--d:.06s">Final Robot Assembly <span class="accent">and Testing</span></h1>
+    <p class="lead reveal" style="--d:.12s">A full working session at Nolop. Bring the parts you have made, put the robot together, and spend the class testing it and fixing what fails.</p>
+    <div class="pills reveal" style="--d:.18s">
+      <span class="pill">Thu, Oct 22</span>
+      <span class="pill">JCC 301 / Nolop</span>
+      <span class="pill">Full build session</span>
+      <span class="pill">Assembly checkpoint due</span>
+    </div>
+    <div class="cta-row reveal" style="--d:.24s">
+      <a class="btn btn-primary" href="../../syllabus/#schedule">See the syllabus week &rarr;</a>
+      <a class="btn btn-ghost" href="#bring">What to bring &darr;</a>
+    </div>
+    <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
+  </div>
+</header>
+
+<div class="wrap class-layout">
+
+  <aside class="toc reveal" style="--d:.36s">
+    <h2>On this page</h2>
+    <a href="#day">The session</a>
+    <a href="#bring">What to bring</a>
+    <a href="#checkpoint">The checkpoint</a>
+    <a href="#next">Next week</a>
+  </aside>
+
+  <main class="content">
+
+    <section class="section-block" id="day">
+      <h2>A full working session</h2>
+      <p class="lede">There is no new tool this week. The class is the build: assemble, test, fix, and repeat.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Assemble</h3>
+          <p>Mount the motors, the boards, the battery, and the tracks. A part that can shift under load is not mounted yet.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Test</h3>
+          <p>Drive it, load it, and run it until something fails. A robot that works on the bench has not been tested yet.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">03</span>
+          <h3>Fix and re-test</h3>
+          <p>Change one thing at a time, then run it again. Write down what you changed, so the next fault is easier to find.</p>
+        </div>
+      </div>
+      <div class="callout"><b>Split the work.</b> One person drives, one watches the wiring and the joints, one keeps the notes. Swap roles halfway through so everyone knows the whole robot.</div>
+    </section>
+
+    <section class="section-block" id="bring">
+      <h2>What to bring</h2>
+      <p class="lede">Come with everything you have made so far. Class time is for assembly and testing.</p>
+      <ul class="checklist">
+        <li>The robot so far: frame, tracks, and any parts already mounted</li>
+        <li>Your 3D-printed parts and laser-cut panels</li>
+        <li>The electronics kit: board, motor driver, motors, and battery</li>
+        <li>Your sketches, measurements, and any notes from the build</li>
+        <li>Any part you are unsure about, so the team can check it together</li>
+      </ul>
+      <div class="callout warm"><b>Charge the battery before class.</b> Testing time disappears fast when the robot stops halfway through a run. Bring the charger too.</div>
+      <div class="callout" style="margin-top:16px;"><b>A part that does not fit is normal at this stage.</b> Bring it anyway. Sometimes it needs a small change, and sometimes it becomes the reason the design gets better.</div>
+    </section>
+
+    <section class="section-block" id="checkpoint">
+      <h2>The assembly checkpoint</h2>
+      <p class="lede">The mid-point review confirms the robot is built well enough for software to work when you add it.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">01</span>
+          <h3>Structure</h3>
+          <p>The frame is rigid and square, and the joints are secure. No wobble that motion would make worse.</p>
+        </div>
+        <div class="card">
+          <span class="num">02</span>
+          <h3>Drivetrain</h3>
+          <p>Motors are mounted with no slop, and the wheels or tracks meet the surface evenly.</p>
+        </div>
+        <div class="card">
+          <span class="num">03</span>
+          <h3>Electronics and wiring</h3>
+          <p>The board, the driver, and the sensors are fastened to the chassis, not dangling. Wires sit clear of anything that moves, and you have a plan for routing them.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">04</span>
+          <h3>Power and serviceability</h3>
+          <p>The battery is mounted so it cannot shift, and you can swap it without taking the robot apart.</p>
+        </div>
+      </div>
+      <div class="callout warm"><b>Due Thu, Oct 22, on Canvas.</b> Submit at least three photos of the assembled robot from different angles, plus your team's one-page self-assessment. Hand in from the assignment linked in the syllabus and in the class 4 module.</div>
+      <div class="callout" style="margin-top:16px;"><b>The robot does not need to move yet.</b> This check is about the build: mechanically sound, electronics mounted, wires planned. Software comes next.</div>
+    </section>
+
+    <section class="section-block" id="next">
+      <h2>What comes after</h2>
+      <p class="lede">Next week the robot has to work, in public.</p>
+      <div class="callout warm"><b>Next class · Thu, Oct 29:</b> the Robo Challenge. Teams race on the course, scores go on the board, and the awards close out the first module. <a href="../class-08/">See the Class 8 page &rarr;</a></div>
+      <div class="callout" style="margin-top:16px;"><b>No slides this week.</b> This session is a build, so there is no deck. Follow the checklist on this page and the assignment on Canvas.</div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark-xs" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+          <path d="m18 15 4-4" />
+          <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+        </svg>
+      </span>
+      <span>ENT-164 · Intro to Making. Class 7, Fall 2026</span>
+    </div>
+    <div class="foot-links">
+      <a href="../../">All class materials</a>
+      <a href="../../syllabus/">Syllabus</a>
+      <a href="../../opencode-deepseek-guide/guide.html">OpenCode setup guide</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -605,9 +605,12 @@ The ID is never resolved at run time.
 - **Every class in the course has a page; not every class has a deck yet.**
   Classes 8, 10, 12 and 13 are placeholders: a real page with the syllabus week
   title, what the class covers, and the milestone reflection where one is due
-  (weeks 8 and 13), plus the note that the deck is being converted. No class
-  page links Google Slides or Figma — those are retired, and students reach the
-  old material through Canvas.
+  (weeks 8 and 13), plus the note that the deck is being converted. Class 7
+  (Final Robot Assembly and Testing) is a full working session: a page with the
+  build checklist and the assembly checkpoint, no deck, and no Canvas module of
+  its own — its page is reached from the home page's week list and the syllabus
+  chip. No class page links Google Slides or Figma — those are retired, and
+  students reach the old material through Canvas.
   - `populate.py` derives a class's title from `<title>` and its week from the
     hero kicker, so a placeholder's Canvas module name changes with its page.
     A placeholder has no `ENT-164-Class-N-*.pdf`, so the plan gives it no

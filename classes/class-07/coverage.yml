@@ -1,0 +1,17 @@
+# What this class covers. The Canvas class page's "What we'll cover"
+# cards: a reading of the session, one brief line per topic. The page is
+# generated from these, so edit here rather than in Canvas.
+hero: "../../assets/photos/class/robot-internals.jpg"
+hero_alt: "The inside of a team robot showing a servo, a battery pack, and wiring"
+
+topics:
+  - title: "A full build session: assemble, test, fix"
+    learn: "How class time runs when the work is integration, and how to split it across the team."
+  - title: "The assembly checkpoint"
+    learn: "What the mid-point review looks at, and what your team submits on Canvas."
+  - title: "Testing that finds real problems"
+    learn: "Running the robot until something fails, and changing one thing at a time."
+  - title: "What comes next: the Robo Challenge"
+    learn: "Race day in Week 8, and what the robot has to do there."
+
+links: []

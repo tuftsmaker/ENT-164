@@ -135,6 +135,7 @@ PAGES = {
     "classes/class-04/index.html": ("ENT-164-Class-4-3D-Printing.pdf", "Download slides", None),
     "classes/class-05/index.html": ("ENT-164-Class-5-Electronics.pdf", "Download slides", None),
     "classes/class-06/index.html": ("ENT-164-Class-6-Coding-with-an-AI-Agent.pdf", "Download slides", None),
+    "classes/class-07/index.html": ("../../syllabus/#schedule", "Class 7 in the syllabus", None),
     "classes/class-08/index.html": ("../../syllabus/#schedule", "Class 8 in the syllabus", None),
     "classes/class-09/index.html": ("ENT-164-Class-9-The-Final-Project-Sprint.pdf", "Download slides", None),
     "classes/class-10/index.html": ("../../syllabus/#schedule", "Class 10 in the syllabus", None),
