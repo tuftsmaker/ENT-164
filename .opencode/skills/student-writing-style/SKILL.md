@@ -21,6 +21,7 @@ Assume the reader is smart but has never used this tool. Define vocabulary. Do n
 - Say what the student should see after a step, so they know it worked.
 - Say what commonly goes wrong and how to fix it.
 - Friendly and calm. It is fine to admit something is tricky. Do not cheerlead.
+- Do not sell. Say what the reader gets, not why it is exciting.
 - Paragraphs of three sentences or fewer.
 - No em dashes. Use periods or commas.
 
@@ -71,6 +72,7 @@ Keep content pages under about 600 words. Split longer ones.
 - Passive voice in steps. Two actions in one step.
 - Vague settings: "a bit", "fairly slow", "the right size".
 - Long intros, recaps, "key takeaways".
+- Marketing speak ("the full semester on one page", "everything you need", "keep the course running"). Say what the page holds.
 - Guessed machine settings, dimensions, or policies.
 
 ## Example
@@ -101,5 +103,6 @@ Good content page opening:
 - [ ] Every visual step says what the student should see.
 - [ ] Safety callouts sit right before their step.
 - [ ] No "simply", "just", "easy", exclamation points, or em dashes.
+- [ ] No marketing speak ("on one page", "everything you need", "seamlessly").
 - [ ] Every unknown setting or policy is marked [INSTRUCTOR: confirm].
 - [ ] A student new to the tool could finish without help.

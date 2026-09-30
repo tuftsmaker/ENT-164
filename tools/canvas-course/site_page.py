@@ -91,6 +91,7 @@ URL_MARK = "background: #fff3cd; border-bottom: 2px solid #e0a800;"
 # image caps — full-width images dwarf a Canvas page
 IMG_MAX = 620      # a screenshot or hero image
 SHOT_MAX = 340     # a gallery shot, tiled on the site
+PHOTO_MAX = 220    # one photo in a strip of four
 AVATAR_MAX = 160   # a portrait
 AVATAR_SMALL_MAX = 96
 
@@ -317,6 +318,18 @@ def render(node: dict, map_href) -> str:
         return f'<div style="{PHASE}">{inner}</div>\n'
     if tag == "div" and "gallery" in cls:
         return f'<div style="display:flex;flex-wrap:wrap;gap:18px;margin:16px 0;align-items:flex-start;">{inner}</div>\n'
+    if tag == "div" and "photo-strip" in cls:
+        # Tiled photos: a row of equal-width figures, not one giant image each.
+        kids = []
+        for kid in node["kids"]:
+            if kid.get("tag") == "figure":
+                parts = [img_html(k, map_href, cap=PHOTO_MAX) if k.get("tag") == "img"
+                         else render(k, map_href) for k in kid["kids"]]
+                kids.append('<div style="flex:1 1 200px;margin:0;">' + "".join(parts) + "</div>")
+            else:
+                kids.append(render(kid, map_href))
+        return ('<div style="display:flex;flex-wrap:wrap;gap:16px;margin:22px 0 0;'
+                'align-items:flex-start;">' + "".join(kids) + "</div>\n")
     if tag == "div" and "cta-row" in cls:
         return f'<p style="margin:0 0 6px;">{_join(node, map_href)}</p>\n'
     if tag == "div" and "step" in cls:
@@ -398,6 +411,8 @@ def render(node: dict, map_href) -> str:
         return f"<{tag}>{inner}</{tag}>"
     if tag == "blockquote":
         return f'<div style="{CALLOUT}">{inner}</div>\n'
+    if tag == "cite":
+        return f'<span style="display:block;margin-top:6px;color:#5f6b7a;">{inner}</span>'
     if tag == "div":
         if "callout" in cls:
             inner = re.sub(r"</b>(?=\S)", "</b> ", inner)
@@ -453,6 +468,14 @@ def hero_block(hero: dict, map_href) -> str:
     note = find_class(hero, "note")
     cta = find_class(hero, "cta-row")
     lines = []
+    portrait = next((k for k in _walk(hero)
+                     if k.get("tag") == "img" and "portrait" in class_of(k).split()), None)
+    if portrait is not None:
+        src = map_href(portrait.get("attrs", {}).get("src", ""))
+        alt = portrait.get("attrs", {}).get("alt", "")
+        lines.append(f'<p style="margin:0 0 16px;"><img src="{src}" alt="{alt}" '
+                     'style="display:block;height:auto;max-width:180px;'
+                     'border-radius:50%;border:1px solid #e6eaf1;"></p>')
     if kicker is not None:
         lines.append(f'<p style="{KICKER}"><b>{text_of(kicker).strip().upper()}</b></p>')
         lines.append(f'<div style="{RULE}"></div>')

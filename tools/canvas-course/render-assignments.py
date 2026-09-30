@@ -55,7 +55,7 @@ WEEK_DATE = re.compile(r'<span class="week-date">([^<]+)</span>')
 CLASS_TITLE = re.compile(r"<title>ENT-164 · Class \d+ — ([^<]+)</title>")
 HEADING = re.compile(r"(<h3[^>]*>).*?(</h3>)", re.S)
 DECK_CARD = re.compile(r'(<h3><a href="(?:\.\./)*classes/class-(\d+)/"[^>]*>)(.*?)(</a></h3>)', re.S)
-WEEK_LINE = re.compile(r'(<a href="\{\{page:class-(\d+)\}\}"><b>[^<]*</b></a> — )([^<]*)')
+WEEK_LINE = re.compile(r'(<a href="\{\{(?:page:class-(\d+)|syllabus_url)\}\}"><b>)([^<]*)(</b></a>)([^<]*)')
 WORKSHOP_CHIP = re.compile(r'(<a class="chip"[^>]*>)(.*?)(</a>)', re.S)
 CHIPS_DIV = re.compile(r'<div class="chips">(.*?)</div>', re.S)
 OG_TITLE = re.compile(r'(<meta property="og:title" content="ENT-164 · Class \d+ — )(.*?)(">)')
@@ -85,6 +85,20 @@ def week_dates(html):
         day = text.group(1).split(", ")[-1]  # "Thu, Oct 1" -> "Oct 1"
         weeks.append((int(number.group(1)), datetime.strptime(f"{day} {year}", "%b %d %Y").date()))
     return sorted(weeks)
+
+
+def week_headings(html):
+    """Week number -> the syllabus week's own heading, for weeks with no class
+    page (week 7 is a working session, so it has no class page to name it)."""
+    out = {}
+    for article in ARTICLE.finditer(html):
+        text = article.group(0)
+        number = WEEK_NUM.search(text)
+        heading = HEADING.search(text)
+        if number and heading:
+            out[int(number.group(1))] = re.sub(
+                r"\s+", " ", re.sub(r"<[^>]+>", "", heading.group(0))).strip()
+    return out
 
 
 def plain_name(name: str) -> str:
@@ -277,10 +291,20 @@ def sync_cards(html: str, names: dict) -> str:
         lambda m: m.group(1) + names.get(int(m.group(2)), m.group(3)) + m.group(4), html)
 
 
-def sync_home_weeks(html: str, names: dict) -> str:
-    """The Canvas home page's week list carries the class name after the week."""
-    return WEEK_LINE.sub(
-        lambda m: m.group(1) + names.get(int(m.group(2)), m.group(3)), html)
+def sync_home_weeks(html: str, names: dict, dates: dict, headings: dict) -> str:
+    """The Canvas home page's week list is generated from the syllabus: the week
+    number and date, and the week's name. The link itself stays as it is (week 7
+    points at the syllabus, because it has no class page)."""
+    def fix(match):
+        prefix, number, label, close, tail = match.groups()
+        week = int(number) if number else int(re.search(r"Week (\d+)", label).group(1))
+        date = dates.get(week)
+        name = names.get(week) or headings.get(week)
+        if not date or not name:
+            return match.group(0)
+        return f"{prefix}Week {week} · {date.strftime('%b %-d')}{close}: {name}"
+
+    return WEEK_LINE.sub(fix, html)
 
 
 def rewrite_syllabus(html, weeks, entries):
@@ -362,7 +386,8 @@ def main() -> int:
     for path in (HOME, WORKSHOPS):
         pages[path] = sync_cards(path.read_text(encoding="utf-8"), names)
     pages[HERE / "home-page.html"] = sync_home_weeks(
-        (HERE / "home-page.html").read_text(encoding="utf-8"), names)
+        (HERE / "home-page.html").read_text(encoding="utf-8"), names,
+        dict(week_dates(syllabus)), week_headings(syllabus))
     for path in sorted(CLASSES.glob("class-*/index.html")):
         week = int(path.parent.name.split("-")[1])
         name = names.get(week)

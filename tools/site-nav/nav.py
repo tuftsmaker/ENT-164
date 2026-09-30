@@ -162,10 +162,9 @@ SUBNav_PAGES = {
         ("instructor", "Instructor"),
     ],
     "about/index.html": [
-        ("story", "About"),
-        ("highlights", "Highlights"),
-        ("timeline", "The path here"),
-        ("background", "Background"),
+        ("facts", "Fun facts"),
+        ("classroom", "In the classroom"),
+        ("contact", "Get in touch"),
     ],
     "onshape-tips/index.html": [
         ("videos", "The tips"),
