@@ -67,7 +67,7 @@ CANVAS_ASSIGNMENT = re.compile(r"^https?://[^/]+/courses/(\d+)/assignments/(\d+)
 H2_TEXT = re.compile(r"<h2[^>]*>(.*?)</h2>", re.S)
 # The practical blocks: the generated "What's due" cards and the authored
 # assignment and reflection sections. They belong on the page whole.
-KEEP_HEADING = re.compile(r"(assignment|reflection|deliverable|checkpoint)", re.I)
+KEEP_HEADING = re.compile(r"(due|assignment|reflection|deliverable|checkpoint)", re.I)
 
 
 def _plain(fragment: str) -> str:
@@ -89,11 +89,6 @@ COVERAGE_TEXT = "margin: 8px 0 0; color: #0d1526; font-size: 16px; line-height: 
 COVERAGE_DESC = "margin: 6px 0 0; color: #3f4a5a; font-size: 14.5px; line-height: 1.5;"
 
 
-DUE_CARD = ("background: #fff8ec; border-left: 4px solid #e0a03a; "
-            "border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 16px 0;")
-DUE_LABEL = "margin: 0 0 6px; color: #8a5a00; font-size: 12px;"
-DUE_ITEM = "margin: 0 0 6px; color: #0d1526;"
-DUE_DATE = "color: #8a5a00; font-size: 13.5px;"
 
 
 HERO_IMAGE = "display:block;width:100%;height:auto;border-radius:14px;border:1px solid #e6eaf1;"
@@ -148,58 +143,6 @@ def hero_of(page_path: Path):
     where = posixpath.normpath(posixpath.join(page_path.parent.relative_to(ROOT).as_posix(), src))
     cap = str(data.get("hero_max") or "").strip()
     return SITE + where, str(data.get("hero_alt") or "").strip(), (int(cap) if cap.isdigit() else None)
-
-
-def due_block(slug: str, ctx: dict) -> str:
-    """What's due today and next week, when either applies.
-
-    Read from the assignment data: an assignment falls on the day its Eastern
-    due date names, "next week" is everything due by the following class, and
-    each line links the assignment in Canvas when this course has it. Returns
-    "" when a class has neither.
-    """
-    if not (slug.startswith("class-") and slug[6:].isdigit()) or not ctx:
-        return ""
-    week = int(slug[6:])
-    weeks = dict(render_assignments.week_dates(
-        (ROOT / "syllabus" / "index.html").read_text(encoding="utf-8")))
-    today, later = weeks.get(week), weeks.get(week + 1)
-    if today is None:
-        return ""
-
-    def due_date(entry):
-        if not entry.get("due"):
-            return None
-        return datetime.fromisoformat(str(entry["due"]).replace("Z", "+00:00")) \
-            .astimezone(render_assignments.ET).date()
-
-    entries = [entry for group in render_assignments.entries_by_class().values() for entry in group]
-    hits_today = sorted((e for e in entries if due_date(e) == today),
-                        key=lambda e: render_assignments.plain_name(e["name"]))
-    # "Next week" is preparation: an in-class item (done during its own class)
-    # is listed only on the day it happens, never as homework on a page before.
-    hits_next = sorted((e for e in entries
-                        if later and not e.get("in_class")
-                        and due_date(e) is not None and today < due_date(e) <= later),
-                       key=lambda e: (due_date(e), render_assignments.plain_name(e["name"])))
-
-    def item(entry, dated):
-        title = re.split(r" — |\. ", (entry.get("summary") or render_assignments.plain_name(entry["name"])))[0].strip()
-        aid = ctx["assignment_by_slug"].get(entry["slug"])
-        text = f'<a href="{ctx["course_path"]}/assignments/{aid}">{escape(title)}</a>' if aid else escape(title)
-        text = f'{render_assignments.audience_icon(entry)} {text}'
-        if dated:
-            text += f' <span style="{DUE_DATE}">{due_date(entry).strftime("%a, %b %-d")}</span>'
-        return f'<p style="{DUE_ITEM}">{text}</p>'
-
-    blocks = []
-    for label, hits, dated in (("Due today", hits_today, False), ("Due next week", hits_next, True)):
-        if hits:
-            blocks.append(f'<p style="{DUE_LABEL}"><b>{label.upper()}</b></p>'
-                          + "".join(item(entry, dated) for entry in hits))
-    if not blocks:
-        return ""
-    return f'<div style="{DUE_CARD}">\n' + "\n".join(blocks) + "\n</div>\n"
 
 
 def coverage_of(page_path: Path) -> list:
@@ -331,9 +274,6 @@ def build(path: Path, page_dir: str, map_href, summary: bool = False,
                 "border-radius:14px;border:1px solid #e6eaf1;")
             parts.append(f'<div style="margin: 0 0 4px;">'
                          f'<img src="{src}" alt="{escape(alt)}" style="{style}"></div>')
-        due = due_block(path.parent.name, ctx) if ctx else ""
-        if due:
-            parts.append(due)
         headings, kept = summary_sections(main.group(1))
         topics = coverage_of(path) or [(heading, "") for heading in headings]
         if topics:
