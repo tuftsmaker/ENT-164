@@ -1,4 +1,32 @@
 {
+  "basic-rectangle": {
+    "id": "wLzJH4YIjOA",
+    "title": "A Basic Rectangle as My First Sketch"
+  },
+  "circle-in-the-center": {
+    "id": "xE-mFQjQk1o",
+    "title": "Placing a Circle in the Center of a Rectangle"
+  },
+  "circle-on-a-corner": {
+    "id": "fity2hLvL28",
+    "title": "Adding a Circle at the Corner of a Square"
+  },
+  "circle-to-cut-a-hole": {
+    "id": "hX1AgjHiy18",
+    "title": "Adding a Circle to a Rectangle to Cut a Hole"
+  },
+  "mirroring-entities": {
+    "id": "nXJHBgMvJNc",
+    "title": "Mirroring Entities to Avoid Repetitive Drawing"
+  },
+  "trim-tool": {
+    "id": "Bcrhuz5KZks",
+    "title": "Combining Shapes with the Trim Tool"
+  },
+  "updating-dimensions": {
+    "id": "O6mvUl5oa34",
+    "title": "Updating Dimensions"
+  },
   "workspace-overview": {
     "id": "jICMmatIIBo",
     "title": "Workspace Overview"
