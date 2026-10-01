@@ -18,11 +18,12 @@
   - module item also in class-05. Remove the extra
   - description links a Canvas file copy. Move it into the repo (media pass)
 - slug: milestone-reflection-after-connectivity
-  name: '👤 Milestone Reflection: Digital Making'
-  summary: Milestone reflection. Digital Making
+  name: '👤 In-Class Reflection: Digital Making'
+  summary: 'In-class reflection: Digital Making'
   group: Reflections and Participation (10 points)
   points: 2.0
-  due: '2026-10-16T03:59:00Z'
+  due: '2026-10-16T03:59:00Z'   # end of the Class 6 day (Thu, Oct 15)
+  in_class: true                # written in class: due today there, never "due next week" elsewhere
   submission_types:
   - none
   module_item:
