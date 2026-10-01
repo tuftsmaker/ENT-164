@@ -16,8 +16,8 @@
   name: 👥 Robo Challenge Mid-Point Assembly Checkpoint
   summary: Assembly checkpoint. Check in with your team on the robot
   group: Team Assignments (35 points)
-  points: 0.0
-  due: '2026-10-22T16:00:00Z'
+  points: 5.0
+  due: '2026-10-08T16:00:00Z'
   submission_types:
   - online_text_entry
   - online_url

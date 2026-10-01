@@ -209,25 +209,57 @@ def _description(entry):
     return path.read_text(encoding="utf-8") if path.exists() else ""
 
 
-def section(entries, live_ids, web, live_id):
-    entries = sorted(entries, key=lambda e: (e.get("due") or "", plain_name(e["name"])))
-    lines = [
-        "<!-- assignments:begin -->",
-        '<section class="section-block" id="assignments">',
-        "  <h2>What's due</h2>",
-        '  <div class="cards">',
+def due_sections(week, entries, live_ids, web, live_id, weeks):
+    """The class page's due blocks: what is due on this class's day, and what
+    falls due by the next one. An in-class item is only ever "due today" — it
+    is done during its own class, not prepared for in advance."""
+    today, later = weeks.get(week), weeks.get(week + 1)
+    if today is None:
+        return ""
+
+    def due_date(entry):
+        if not entry.get("due"):
+            return None
+        return datetime.fromisoformat(str(entry["due"]).replace("Z", "+00:00")) \
+            .astimezone(ET).date()
+
+    groups = [
+        ("What's due today",
+         sorted((e for e in entries if due_date(e) == today),
+                key=lambda e: (due_date(e), plain_name(e["name"])))),
+        ("What's due next week",
+         sorted((e for e in entries
+                 if later and not e.get("in_class")
+                 and due_date(e) is not None and today < due_date(e) <= later),
+                key=lambda e: (due_date(e), plain_name(e["name"])))),
     ]
-    for entry in entries:
-        for line in card(entry, live_ids, web, live_id):
-            lines.append("    " + line)
-    lines += ["  </div>", "</section>", "<!-- assignments:end -->"]
-    return "\n".join(PAGE_INDENT + line for line in lines)
+    blocks = []
+    for heading, hits in groups:
+        if not hits:
+            continue
+        # the first block carries the page's "What's due" anchor, so a sidebar
+        # link lands on whichever list the week actually has
+        anchor = "due" if not blocks else "due-next"
+        lines = [f'<section class="section-block" id="{anchor}">',
+                 f"  <h2>{heading}</h2>",
+                 '  <div class="cards">']
+        for entry in hits:
+            for line in card(entry, live_ids, web, live_id):
+                lines.append("    " + line)
+        lines += ["  </div>", "</section>"]
+        blocks.append("\n".join(lines))
+    if not blocks:
+        return ""
+    return ("<!-- assignments:begin -->\n" + "\n\n".join(blocks)
+            + "\n<!-- assignments:end -->")
 
 
-def rewrite_class_page(html, entries, live_ids, web, live_id):
-    block = section(entries, live_ids, web, live_id)
+def rewrite_class_page(html, week, entries, live_ids, web, live_id, weeks):
+    block = due_sections(week, entries, live_ids, web, live_id, weeks)
     if MARKERS.search(html):
         return MARKERS.sub(block, html)
+    if not block:
+        return html
     sections = list(CLASS_SECTION.finditer(html))
     if not sections:
         raise SystemExit("class page has no section to insert before")
@@ -372,15 +404,19 @@ def main() -> int:
             entry["_class"] = CLASSES / cls
 
     syllabus = SYLLABUS.read_text(encoding="utf-8")
-    updated = rewrite_syllabus(syllabus, week_dates(syllabus), [e for es in per_class.values() for e in es])
+    week_list = week_dates(syllabus)          # (week, date) pairs for the chips
+    weeks = dict(week_list)                   # the same, for the due sections
+    all_entries = [e for es in per_class.values() for e in es]
+    updated = rewrite_syllabus(syllabus, week_list, all_entries)
 
     pages = {}
-    for cls, entries in per_class.items():
-        if not entries:
-            continue
+    for cls in sorted(per_class):
         page = CLASSES / cls / "index.html"
-        pages[page] = rewrite_class_page(page.read_text(encoding="utf-8"), entries,
-                                         live_ids, web, live_id)
+        if not page.exists():
+            continue
+        week = int(cls.split("-")[1])
+        pages[page] = rewrite_class_page(page.read_text(encoding="utf-8"), week,
+                                         all_entries, live_ids, web, live_id, weeks)
 
     names = class_names()
     for path in (HOME, WORKSHOPS):

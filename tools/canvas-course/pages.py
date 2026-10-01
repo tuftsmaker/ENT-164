@@ -67,7 +67,7 @@ CANVAS_ASSIGNMENT = re.compile(r"^https?://[^/]+/courses/(\d+)/assignments/(\d+)
 H2_TEXT = re.compile(r"<h2[^>]*>(.*?)</h2>", re.S)
 # The practical blocks: the generated "What's due" cards and the authored
 # assignment and reflection sections. They belong on the page whole.
-KEEP_HEADING = re.compile(r"(due|assignment|reflection|deliverable|checkpoint)", re.I)
+KEEP_HEADING = re.compile(r"(assignment|reflection|deliverable|checkpoint)", re.I)
 
 
 def _plain(fragment: str) -> str:
