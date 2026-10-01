@@ -3,6 +3,8 @@
 # generated from these, so edit here rather than in Canvas.
 hero: "shots/kit-contents.jpg"
 hero_alt: "The Freenove ESP32 starter kit laid out: board, breadboard, wires, and parts"
+# A square photo: cap it, or it runs the full column on the Canvas page.
+hero_max: 380
 
 topics:
   - title: "The ESP32-WROVER and breadboard basics"
