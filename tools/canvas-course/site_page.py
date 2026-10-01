@@ -19,8 +19,35 @@ from __future__ import annotations
 import re
 from html import unescape
 from html.parser import HTMLParser
+from pathlib import Path
+
+import yaml
 
 SITE = "https://tuftsmaker.github.io/ENT-164/"
+
+COURSE_YML = Path(__file__).resolve().parent / "course.yml"
+
+
+def unpublished_class_from() -> int:
+    """The class number from which class pages stay unpublished (course.yml).
+
+    One rule, read by the converters and the pushes, so no Canvas surface links
+    a page students cannot open.
+    """
+    try:
+        spec = yaml.safe_load(COURSE_YML.read_text(encoding="utf-8")) or {}
+    except FileNotFoundError:
+        return 99
+    return int(spec.get("class_pages_unpublished_from") or 99)
+
+
+CLASS_PAGE_HREF = re.compile(r"^(?:\.\./)*classes/class-(\d+)/?(?:[#?].*)?$")
+
+
+def upcoming_class_page(href: str) -> bool:
+    """True when the link points at a class page that is kept unpublished."""
+    found = CLASS_PAGE_HREF.match(href or "")
+    return bool(found) and int(found.group(1)) >= unpublished_class_from()
 
 DROP = {"svg", "script", "style", "nav", "aside", "footer", "input", "label", "button"}
 VOID = {"img", "br", "hr", "input", "meta", "link"}
@@ -228,6 +255,11 @@ def _anchor(node: dict, map_href, inner: str) -> str:
     cls = class_of(node).split()
     href = node.get("attrs", {}).get("href", "")
     mapped = map_href(href) if href else ""
+    upcoming = upcoming_class_page(href)
+    if upcoming:
+        # The page is kept unpublished until its week comes: no link, and the
+        # text says so.
+        mapped = ""
     if "btn-ghost" in cls:
         style = BTN_GHOST
     elif "btn" in cls:
@@ -237,6 +269,8 @@ def _anchor(node: dict, map_href, inner: str) -> str:
     else:
         style = None
     text = inner if style is None else f"<b>{inner}</b>"
+    if upcoming:
+        text += " [upcoming]"
     if not mapped:
         # A jump link to a section on the site has no target in Canvas; keep
         # its look, drop the link.

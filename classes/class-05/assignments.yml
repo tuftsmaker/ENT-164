@@ -5,7 +5,8 @@
   summary: 'In-class reflection: Physical Making'
   group: Reflections and Participation (10 points)
   points: 2.0
-  due: '2026-10-02T03:59:00Z'
+  due: '2026-10-09T03:59:00Z'   # end of the Class 5 day (Thu, Oct 8)
+  in_class: true                # written in class: due today there, never "due next week" elsewhere
   submission_types:
   - none
   module_item:

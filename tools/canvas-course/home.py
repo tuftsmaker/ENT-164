@@ -33,11 +33,14 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT / "tools" / "canvas-course"))
 from canvas_client import DEV_COURSE, CanvasError, Client, load_config  # noqa: E402
-from site_page import annotate_internal_links  # noqa: E402
+from site_page import annotate_internal_links, unpublished_class_from  # noqa: E402
 
 SOURCE = Path(__file__).resolve().parent / "home-page.html"
 PAGE_TITLE = "Home"
 PAGE_URL = "home"
+
+# The home page's week list: `<a href="{{page:class-07}}"><b>Week 7 · Oct 22</b></a>: Name`
+WEEK_LINK = re.compile(r'<a href="\{\{page:(class-\d+)\}\}"><b>([^<]*)</b></a>([^<]*)')
 
 # Canvas's sanitizer keeps these; if they stop appearing in what it stored, the
 # page will look wrong in ways worth knowing about.
@@ -102,6 +105,15 @@ def main() -> int:
         unknown.append(slug)
         return f"https://tuftsmaker.github.io/ENT-164/classes/{slug}/"
 
+    # A week whose class page is kept unpublished gets no link, and the entry
+    # says so; the remaining {{page:…}} tokens resolve below.
+    def week_entry(match):
+        slug, label, tail = match.groups()
+        if int(slug.split("-")[1]) < unpublished_class_from():
+            return match.group(0)
+        return f"<b>{label}</b>{tail.rstrip()} [upcoming]"
+
+    body = WEEK_LINK.sub(week_entry, body)
     body = re.sub(r"\{\{page:([a-z0-9-]+)\}\}", page_link, body)
     body = annotate_internal_links(body)
 

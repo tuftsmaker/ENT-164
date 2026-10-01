@@ -47,7 +47,7 @@ from canvas_client import (  # noqa: E402
     Client,
     load_config,
 )
-from site_page import H2, RULE, WRAP, SITE, annotate_internal_links, normalized, parse, render  # noqa: E402
+from site_page import H2, RULE, WRAP, SITE, annotate_internal_links, normalized, parse, render, unpublished_class_from  # noqa: E402
 
 # render-assignments.py owns the assignment data — the syllabus week dates, the
 # per-class files, the Eastern-time due dates. Loaded by path because the file
@@ -176,8 +176,11 @@ def due_block(slug: str, ctx: dict) -> str:
     entries = [entry for group in render_assignments.entries_by_class().values() for entry in group]
     hits_today = sorted((e for e in entries if due_date(e) == today),
                         key=lambda e: render_assignments.plain_name(e["name"]))
+    # "Next week" is preparation: an in-class item (done during its own class)
+    # is listed only on the day it happens, never as homework on a page before.
     hits_next = sorted((e for e in entries
-                        if later and due_date(e) is not None and today < due_date(e) <= later),
+                        if later and not e.get("in_class")
+                        and due_date(e) is not None and today < due_date(e) <= later),
                        key=lambda e: (due_date(e), render_assignments.plain_name(e["name"])))
 
     def item(entry, dated):
@@ -394,6 +397,16 @@ PATH_BY_SLUG = {slug: rel for rel, (slug, _) in PAGES.items()}
 SLUG_BY_PATH = {rel: slug for rel, (slug, _) in PAGES.items()}
 
 
+def forced_unpublished(slug: str) -> bool:
+    """Class pages from `class_pages_unpublished_from` on stay unpublished, so
+    students cannot open future weeks. Lower weeks are not managed here: a page
+    the instructor published or unpublished by hand keeps that state, and a
+    body push must not change it."""
+    if not (slug.startswith("class-") and slug[6:].isdigit()):
+        return False
+    return int(slug[6:]) >= unpublished_class_from()
+
+
 def record_pages(course_id: str, urls: dict) -> None:
     ids = yaml.safe_load((HERE / "canvas-ids.yml").read_text(encoding="utf-8")) \
         if (HERE / "canvas-ids.yml").exists() else {}
@@ -496,15 +509,15 @@ def main() -> int:
             if page:
                 before = page["url"]
                 page = client.put(f"/courses/{client.course_id}/pages/{before}",
-                                  wiki_page={"title": title, "body": page.get("body") or "",
-                                             "published": True}) or page
+                                  wiki_page={"title": title, "body": page.get("body") or ""}) or page
                 renamed.append((slug, before, page.get("url") or before))
         if not page:
             if args.check:
                 urls[slug] = None
                 continue
             page = client.post(f"/courses/{client.course_id}/pages",
-                               wiki_page={"title": title, "body": "", "published": True}) \
+                               wiki_page={"title": title, "body": "",
+                                          "published": not forced_unpublished(slug)}) \
                 if not args.dry_run else {"url": f"(new) {slug}"}
             if not args.dry_run:
                 existing[title] = page
@@ -538,6 +551,9 @@ def main() -> int:
             stored = page.get("body") or ""
             if normalized(stored) != normalized(final[slug]["body"]) or hrefs(stored) != hrefs(final[slug]["body"]):
                 stale.append(f"  stale: {slug}")
+            if forced_unpublished(slug) and page.get("published"):
+                stale.append(f"  stale publish state: {slug} — Canvas has it published, "
+                             f"class_pages_unpublished_from says keep it hidden")
         # Canvas ties a Page module item to its page, so the module's name is
         # the page's title — and it has to carry the same one.
         module_ids = (ids.get(str(client.course_id)) or {}).get("modules") or {}
@@ -560,9 +576,10 @@ def main() -> int:
 
     final = bodies(ctx)
     for slug in sorted(final):
-        client.put(f"/courses/{client.course_id}/pages/{urls[slug]}",
-                   wiki_page={"title": final[slug]["title"], "body": final[slug]["body"],
-                              "published": True})
+        wiki_page = {"title": final[slug]["title"], "body": final[slug]["body"]}
+        if forced_unpublished(slug):
+            wiki_page["published"] = False
+        client.put(f"/courses/{client.course_id}/pages/{urls[slug]}", wiki_page=wiki_page)
     print(f"  pushed {len(final)} page(s)")
     record_pages(client.course_id, urls)
 

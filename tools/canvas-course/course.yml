@@ -16,6 +16,12 @@ canvas_web: "https://canvas.tufts.edu"
 # never adopted.
 module_pattern: '^Class\s+(\d+)\b'
 
+# Class pages from this week on are kept unpublished by pages.py, so students
+# cannot wander into future weeks; lower weeks keep whatever state they have
+# (the instructor publishes them by hand, and a body push must not undo that).
+# Bump this as the course runs.
+class_pages_unpublished_from: 6
+
 # Canvas assignment groups, by name (the totals are part of the name). The
 # Reflections group does not exist in Canvas yet — the push creates it; its
 # five 2-point reflections are authored in the repo (source: repo).

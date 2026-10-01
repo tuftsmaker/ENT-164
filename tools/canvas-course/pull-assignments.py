@@ -195,7 +195,7 @@ def repo_entries() -> dict:
     return out
 
 
-AUTHORED_KEYS = ("summary", "week", "audience")
+AUTHORED_KEYS = ("summary", "week", "audience", "in_class")
 
 
 def with_authored(entry: dict, before: dict) -> dict:
