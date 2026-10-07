@@ -1,5 +1,4 @@
-# Exercise 1: the LED straight across the pack, with no resistor at all.
-# Deliberately the wrong circuit: it is bright, and it is being overdriven.
+# Exercise 1: the LED straight across the rails, with no resistor at all.
 board: freenove-esp32-wrover-ext
 layout:
   board:
@@ -8,23 +7,24 @@ layout:
     hidden: false
     cols: 20
     w: 1500
+    left_band: 430        # room for the battery pack beside the board
 
 title: Exercise 1. An LED with no resistor
 subtitle: On for a second, to see how bright it gets
 
 components:
-  - {type: module, id: pack, at: [17, a], pins: ["+", "-"], label_text: "2 x AA (3 V)", fill: "#2b2b30", height: 96}
-  - {type: led, color: red, at: [6, d]}
+  - {type: battery_pack, side: left, label_text: "2 x AA pack (3 V)"}
+  - {type: led, color: red, at: [6, c]}
 
 wires:
-  - {from: bb.17.a, to: bb.6.a, color: red, label: pack + to the LED}
-  - {from: bb.7.e, to: bb.18.a, color: black, label: LED straight back to the pack}
+  - {from: bb.rail.top.plus.6, to: bb.6.c, color: red, label: + rail to the LED}
+  - {from: bb.7.c, to: bb.rail.top.minus.7, color: black, label: LED to the - rail}
 
 steps:
-  - {text: "Pack off. LED: long leg in column 6, short leg in column 7."}
-  - {text: "Red jumper: the pack's + to column 6."}
-  - {text: "Black jumper: column 7 to the pack's -. No resistor in the path."}
-  - {text: "Switch the pack on for a second, look, and switch it off."}
+  - {text: "Pack at the left, its two leads onto the + and - rails along the top."}
+  - {text: "LED: long leg in column 6 row c, short leg in column 7 row c."}
+  - {text: "Red jumper: the + rail to column 6. Black jumper: column 7 to the - rail."}
+  - {text: "Red lead on the + rail, black lead on the - rail. Only for a second, then pull the red lead back out."}
   - {text: "Take it apart and build exercise 2. That is the safe version."}
 
 notes:

@@ -2,32 +2,33 @@
 board: freenove-esp32-wrover-ext
 layout:
   board:
-    hidden: true
+    hidden: true          # no ESP32 in these exercises
   breadboard:
     hidden: false
     cols: 20
     w: 1500
+    left_band: 430        # room for the battery pack beside the board
 
 title: Exercise 5. Swap in a photoresistor
 subtitle: Light sets the resistance, and the LED follows the light
 
 components:
-  - {type: module, id: pack, at: [17, a], pins: ["+", "-"], label_text: "2 x AA (3 V)", fill: "#2b2b30", height: 96}
-  - {type: resistor, value: "220", from: [2, b], span: 4}
-  - {type: led, color: red, at: [6, d]}
+  - {type: battery_pack, side: left, label_text: "2 x AA pack (3 V)"}
+  - {type: resistor, value: "220", from: [2, c], span: 4}
+  - {type: led, color: red, at: [6, c]}
   - {type: photoresistor, at: [10, c]}
 
 wires:
-  - {from: bb.17.a, to: bb.2.a, color: red, label: pack + to the resistor}
-  - {from: bb.7.e, to: bb.10.c, color: purple, label: to the photoresistor}
-  - {from: bb.11.c, to: bb.18.a, color: black, label: photoresistor to the pack -}
+  - {from: bb.rail.top.plus.2, to: bb.2.c, color: red, label: + rail to the resistor}
+  - {from: bb.7.c, to: bb.10.c, color: purple, label: to the photoresistor}
+  - {from: bb.11.c, to: bb.rail.top.minus.11, color: black, label: photoresistor to the - rail}
 
 steps:
   - {text: "Take the knob out. The pack, the resistor and the LED stay."}
   - {text: "Photoresistor: its two legs in columns 10 and 11, row c."}
   - {text: "Purple jumper: column 7 (the LED) to column 10."}
-  - {text: "Black jumper: column 11 to the pack's -."}
-  - {text: "Switch on. Cover the sensor: the LED fades. Shine a light on it: it comes back."}
+  - {text: "Black jumper: column 11 to the - rail."}
+  - {text: "Cover the sensor: the LED fades. Shine a light on it: it comes back."}
 
 notes:
   - {text: "Light is the knob: more light, less resistance, more current, brighter LED.", warn: true}

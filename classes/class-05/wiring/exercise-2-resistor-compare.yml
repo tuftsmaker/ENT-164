@@ -1,41 +1,40 @@
-# Exercise 2: one LED per resistor, side by side, so the brightness difference
-# is visible in one look.
+# Exercise 2: one LED per resistor, side by side, all fed from the rails.
 board: freenove-esp32-wrover-ext
 layout:
   board:
-    hidden: true
+    hidden: true          # no ESP32 in these exercises
   breadboard:
     hidden: false
     cols: 26
     w: 1900
+    left_band: 430        # room for the battery pack beside the board
 
 title: Exercise 2. Three resistors, one at a time
-subtitle: '220 ohm, 1 kohm, 10 kohm: the same LED, three currents'
+subtitle: '220 Ω, 1 kohm, 10 kohm: the same LED, three currents'
 
 components:
-  - {type: module, id: pack, at: [23, a], pins: ["+", "-"], label_text: "2 x AA (3 V)", fill: "#2b2b30", height: 96}
-  - {type: resistor, value: "220", from: [4, b], span: 4}
-  - {type: led, color: red, at: [8, d]}
-  - {type: resistor, value: "1000", from: [10, b], span: 4}
-  - {type: led, color: red, at: [14, d]}
-  - {type: resistor, value: "10000", from: [16, b], span: 4}
-  - {type: led, color: red, at: [20, d]}
+  - {type: battery_pack, side: left, label_text: "2 x AA pack (3 V)"}
+  - {type: resistor, value: "220", from: [4, c], span: 4}
+  - {type: led, color: red, at: [8, c]}
+  - {type: resistor, value: "1000", from: [10, c], span: 4}
+  - {type: led, color: red, at: [14, c]}
+  - {type: resistor, value: "10000", from: [16, c], span: 4}
+  - {type: led, color: red, at: [20, c]}
 
 wires:
-  - {from: bb.23.a, to: bb.2.a, color: red, label: pack + to the bus}
-  - {from: bb.2.a, to: bb.4.b, color: red, label: 220 ohm branch}
-  - {from: bb.2.d, to: bb.10.b, color: red, label: 1 kohm branch}
-  - {from: bb.2.e, to: bb.16.b, color: red, label: 10 kohm branch}
-  - {from: bb.9.e, to: bb.24.a, color: black, label: 220 ohm returns}
-  - {from: bb.15.e, to: bb.24.a, color: black, label: 1 kohm returns}
-  - {from: bb.21.e, to: bb.24.a, color: black, label: 10 kohm returns}
+  - {from: bb.rail.top.plus.4, to: bb.4.c, color: red, label: + rail to each resistor}
+  - {from: bb.rail.top.plus.10, to: bb.10.c, color: red}
+  - {from: bb.rail.top.plus.16, to: bb.16.c, color: red}
+  - {from: bb.9.c, to: bb.rail.top.minus.9, color: black, label: each LED back to the - rail}
+  - {from: bb.15.c, to: bb.rail.top.minus.15, color: black}
+  - {from: bb.21.c, to: bb.rail.top.minus.21, color: black}
 
 steps:
-  - {text: "Pack off. Three branches, left to right: 220 ohm, 1 kohm, 10 kohm. A resistor from column 4 to 8, then 10 to 14, then 16 to 20, each in row b."}
-  - {text: "LEDs in columns 8 and 9, 14 and 15, 20 and 21: long leg on the resistor side, short leg toward the return."}
-  - {text: "Red jumpers: the pack's + to column 2, then column 2 to each resistor's left leg."}
-  - {text: "Black jumpers: each LED's short leg to the pack's -."}
-  - {text: "Switch on. Bright, dimmer, barely on: same LED, three currents."}
+  - {text: "Pack at the left. Three branches in row c, left to right: 220 Ω, 1K Ω, 10K Ω."}
+  - {text: "A resistor from column 4 to 8, then 10 to 14, then 16 to 20."}
+  - {text: "LEDs in columns 8 and 9, 14 and 15, 20 and 21: long leg toward the resistor."}
+  - {text: "Red jumpers: the + rail to each resistor's left leg. Black jumpers: each LED back to the - rail."}
+  - {text: "Red lead on the + rail, black lead on the - rail. Bright, dimmer, barely on: same LED, three currents."}
 
 notes:
   - {text: "Each branch has its own resistor and LED, so you can compare them without rebuilding.", warn: true}

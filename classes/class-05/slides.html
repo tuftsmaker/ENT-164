@@ -531,22 +531,22 @@
   <header class="s-head">
     <p class="s-kicker">Exercise 1 · on purpose, once</p>
     <h2>An LED <span class="accent">with no resistor</span></h2>
-    <p class="s-sub">The LED straight across the pack. It lights, it is very bright, and it is being overdriven.</p>
+    <p class="s-sub">The LED straight across the rails. It lights, it is very bright, and it is being overdriven.</p>
   </header>
   <div class="s-body">
     <div class="gallery g2" style="grid-template-columns: 1.32fr 0.68fr;">
       <figure class="tile">
-        <img src="shots/wiring-exercise-1-led-no-resistor-slide.png" alt="Wiring diagram on the breadboard: one LED in columns 6 and 7, wired straight to a 2 x AA battery pack with no resistor" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
+        <img src="shots/wiring-exercise-1-led-no-resistor-slide.png" alt="Wiring diagram on the breadboard: the pack at the left, one LED in columns 6 and 7 wired straight across the + and - rails, with no resistor" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
         <figcaption><b>Follow the steps</b>The diagram lists them, and the class page has the same one at full size.</figcaption>
       </figure>
       <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
         <article class="card tight accent">
           <h3>Wire it</h3>
-          <ul style="margin: 0; padding-left: 4mm;"><li>LED: long leg in column 6, short leg in column 7</li><li>Red jumper: the pack's + to column 6</li><li>Black jumper: column 7 to the pack's -</li></ul>
+          <ul style="margin: 0; padding-left: 4mm;"><li>Pack at the left: red lead to the + rail, black to the -</li><li>LED: long leg in column 6, short leg in column 7, row c</li><li>Red jumper: the + rail to column 6. Black jumper: column 7 to the - rail</li></ul>
         </article>
         <article class="card tight">
           <h3>On for a second</h3>
-          <p>Switch it on, look, and switch it off. Then take it apart and build exercise 2.</p>
+          <p>Connect it, look, then pull the red lead back out. Then take it apart and build exercise 2.</p>
         </article>
       </div>
     </div>
@@ -565,13 +565,13 @@
   <div class="s-body">
     <div class="gallery g2" style="grid-template-columns: 1.32fr 0.68fr;">
       <figure class="tile">
-        <img src="shots/wiring-exercise-2-resistor-compare-slide.png" alt="Wiring diagram on the breadboard: three branches, each a resistor and an LED, at 220 ohm, 1 kohm and 10 kohm, all fed by a 2 x AA battery pack" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
+        <img src="shots/wiring-exercise-2-resistor-compare-slide.png" alt="Wiring diagram on the breadboard: three branches in row c, each a blue 5-band resistor and an LED, at 220 Ω, 1K Ω and 10K Ω, fed from the rails of a 2 x AA battery pack" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
         <figcaption><b>Follow the steps</b>Three branches in one build, so you can compare them side by side.</figcaption>
       </figure>
       <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
         <article class="card tight accent">
           <h3>Wire it</h3>
-          <ul style="margin: 0; padding-left: 4mm;"><li>Resistor and LED per branch: 220, then 1 k, then 10 k</li><li>Red jumpers from the pack's + to each resistor</li><li>Black jumpers from each LED back to the pack's -</li></ul>
+          <ul style="margin: 0; padding-left: 4mm;"><li>A resistor and LED per branch: 220 Ω, then 1K Ω, then 10K Ω, row c</li><li>Red jumpers: the + rail to each resistor's left leg</li><li>Black jumpers: each LED back to the - rail</li></ul>
         </article>
         <article class="card tight">
           <h3>More resistance, less current</h3>
@@ -589,18 +589,18 @@
   <header class="s-head">
     <p class="s-kicker">Exercise 3 · digital</p>
     <h2>Add a <span class="accent">push button</span></h2>
-    <p class="s-sub">The 220 ohm circuit with a switch in the path. Press to light the LED, let go and it goes dark.</p>
+    <p class="s-sub">The 220 Ω circuit with a switch in the path. Press to light the LED, let go and it goes dark.</p>
   </header>
   <div class="s-body">
     <div class="gallery g2" style="grid-template-columns: 1.32fr 0.68fr;">
       <figure class="tile">
-        <img src="shots/wiring-exercise-3-button-slide.png" alt="Wiring diagram on the breadboard: the 220 ohm resistor and LED, with a push button in columns 10 to 13, all fed by a 2 x AA battery pack" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
+        <img src="shots/wiring-exercise-3-button-slide.png" alt="Wiring diagram on the breadboard: the 220 Ω resistor and LED, with a push button in columns 10 and 12, rows b and e, fed from the rails" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
         <figcaption><b>Follow the steps</b>The button goes in the path, not beside it.</figcaption>
       </figure>
       <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
         <article class="card tight accent">
           <h3>Wire it</h3>
-          <ul style="margin: 0; padding-left: 4mm;"><li>Resistor: columns 2 to 6, LED in columns 6 and 7</li><li>Button: columns 10 to 13, rows b and c</li><li>Purple jumper: column 7 to column 10</li><li>Black jumper: column 13 to the pack's -</li></ul>
+          <ul style="margin: 0; padding-left: 4mm;"><li>Resistor: the + rail to column 2, body to column 6</li><li>LED: columns 6 and 7, row c</li><li>Button: columns 10 and 12, rows b and e</li><li>Purple jumper: column 7 to column 10. Black: column 12 to the - rail</li></ul>
         </article>
         <article class="card tight">
           <h3>Two states, nothing between</h3>
@@ -623,13 +623,13 @@
   <div class="s-body">
     <div class="gallery g2" style="grid-template-columns: 1.32fr 0.68fr;">
       <figure class="tile">
-        <img src="shots/wiring-exercise-4-potentiometer-slide.png" alt="Wiring diagram on the breadboard: the 220 ohm resistor and LED, with a potentiometer in columns 10 to 12 and its wiper wired back to a 2 x AA battery pack" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
+        <img src="shots/wiring-exercise-4-potentiometer-slide.png" alt="Wiring diagram on the breadboard: the 220 Ω resistor and LED, with a potentiometer at columns 10, 12 and 14, its wiper taking the purple jumper and its track returning to the - rail" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
         <figcaption><b>Follow the steps</b>One end of the track takes the current, the wiper passes it on.</figcaption>
       </figure>
       <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
         <article class="card tight accent">
           <h3>Swap it</h3>
-          <ul style="margin: 0; padding-left: 4mm;"><li>Take the button out</li><li>Pot: columns 10 to 12, row c</li><li>Purple jumper: column 7 to column 10</li><li>Black jumper: the middle leg to the pack's -</li></ul>
+          <ul style="margin: 0; padding-left: 4mm;"><li>Take the button out</li><li>Pot: legs in columns 10, 12 and 14, row c</li><li>Purple jumper: column 7 (the LED) to column 12, the middle leg</li><li>Black jumper: column 10, the end of the track, to the - rail</li></ul>
         </article>
         <article class="card tight">
           <h3>A range, not two states</h3>
@@ -652,13 +652,13 @@
   <div class="s-body">
     <div class="gallery g2" style="grid-template-columns: 1.32fr 0.68fr;">
       <figure class="tile">
-        <img src="shots/wiring-exercise-5-photoresistor-slide.png" alt="Wiring diagram on the breadboard: the 220 ohm resistor and LED, with a photoresistor in columns 10 and 11 wired back to a 2 x AA battery pack" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
+        <img src="shots/wiring-exercise-5-photoresistor-slide.png" alt="Wiring diagram on the breadboard: the 220 Ω resistor and LED, with a photoresistor in columns 10 and 11 returning to the - rail" style="display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: var(--paper);">
         <figcaption><b>Follow the steps</b>The sensor takes the knob's place in the same path.</figcaption>
       </figure>
       <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
         <article class="card tight accent">
           <h3>Swap it</h3>
-          <ul style="margin: 0; padding-left: 4mm;"><li>Take the pot out</li><li>Photoresistor: its two legs in columns 10 and 11</li><li>Purple jumper: column 7 to column 10</li><li>Black jumper: column 11 to the pack's -</li></ul>
+          <ul style="margin: 0; padding-left: 4mm;"><li>Take the pot out</li><li>Photoresistor: its two legs in columns 10 and 11, row c</li><li>Purple jumper: column 7 to column 10</li><li>Black jumper: column 11 to the - rail</li></ul>
         </article>
         <article class="card tight">
           <h3>Light is the knob</h3>

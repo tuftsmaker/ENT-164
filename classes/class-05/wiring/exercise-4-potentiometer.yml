@@ -1,4 +1,4 @@
-# Exercise 3: swap the button for a potentiometer. Turn it to dim the LED.
+# Exercise 4: swap the button for a potentiometer. Turn it to dim the LED.
 board: freenove-esp32-wrover-ext
 layout:
   board:
@@ -7,27 +7,28 @@ layout:
     hidden: false
     cols: 20
     w: 1500
+    left_band: 430        # room for the battery pack beside the board
 
 title: Exercise 4. Swap in a potentiometer
 subtitle: A knob instead of a switch, and the light has a range
 
 components:
-  - {type: module, id: pack, at: [17, a], pins: ["+", "-"], label_text: "2 x AA (3 V)", fill: "#2b2b30", height: 96}
-  - {type: resistor, value: "220", from: [2, b], span: 4}
-  - {type: led, color: red, at: [6, d]}
+  - {type: battery_pack, side: left, label_text: "2 x AA pack (3 V)"}
+  - {type: resistor, value: "220", from: [2, c], span: 4}
+  - {type: led, color: red, at: [6, c]}
   - {type: potentiometer, at: [10, c], pins: [left, wiper, right]}
 
 wires:
-  - {from: bb.17.a, to: bb.2.a, color: red, label: pack + to the resistor}
-  - {from: bb.7.e, to: bb.10.c, color: purple, label: to the end of the track}
-  - {from: bb.11.c, to: bb.18.a, color: black, label: wiper to the pack -}
+  - {from: bb.rail.top.plus.2, to: bb.2.c, color: red, label: + rail to the resistor}
+  - {from: bb.7.c, to: bb.12.c, color: purple, label: to the wiper, the middle leg}
+  - {from: bb.10.c, to: bb.rail.top.minus.9, color: black, label: the track's end to the - rail}
 
 steps:
   - {text: "Take the button out. The pack, the resistor and the LED stay."}
-  - {text: "Potentiometer: three legs in columns 10, 11 and 12, row c."}
-  - {text: "Purple jumper: column 7 (the LED) to column 10, the end of the track."}
-  - {text: "Black jumper: column 11, the middle leg, to the pack's -."}
-  - {text: "Switch the pack on and turn the knob. The LED brightens and dims."}
+  - {text: "Potentiometer: its three legs in columns 10, 12 and 14, row c."}
+  - {text: "Purple jumper: column 7 (the LED) to column 12, the middle leg, the wiper."}
+  - {text: "Black jumper: column 10, the end of the track, to the - rail."}
+  - {text: "Turn the knob. The LED brightens and dims."}
 
 notes:
   - {text: "The middle leg taps the track wherever you turn it, so the resistance is a range, not two states. That is an analogue signal.", warn: true}
