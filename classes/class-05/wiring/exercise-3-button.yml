@@ -8,7 +8,7 @@ layout:
     cols: 20
     w: 1500
 
-title: Exercise 2. Add a push button
+title: Exercise 3. Add a push button
 subtitle: The same circuit, with a switch in the path
 
 components:
@@ -23,7 +23,7 @@ wires:
   - {from: bb.13.b, to: bb.18.a, color: black, label: pack - from the button}
 
 steps:
-  - {text: "The pack, the resistor and the LED stay where they are."}
+  - {text: "Start from one branch: resistor 220 ohm from column 2 to column 6, LED in columns 6 and 7."}
   - {text: "Button: its four legs sit in columns 10 and 13, rows b and c."}
   - {text: "Purple jumper: column 7 (the LED) to column 10 (one side of the button)."}
   - {text: "Black jumper: column 13 (the other side) to the pack's -."}

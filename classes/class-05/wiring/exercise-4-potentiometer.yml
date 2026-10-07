@@ -8,7 +8,7 @@ layout:
     cols: 20
     w: 1500
 
-title: Exercise 3. Swap in a potentiometer
+title: Exercise 4. Swap in a potentiometer
 subtitle: A knob instead of a switch, and the light has a range
 
 components:

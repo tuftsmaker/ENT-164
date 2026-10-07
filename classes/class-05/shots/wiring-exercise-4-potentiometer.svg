@@ -11,7 +11,7 @@
   </linearGradient>
 </defs>
 <rect width="1620" height="1377" fill="#fdfaf3"/>
-<text x="810.0" y="58" font-size="30" font-weight="700" fill="#26262b" text-anchor="middle">Exercise 3. Swap in a potentiometer</text>
+<text x="810.0" y="58" font-size="30" font-weight="700" fill="#26262b" text-anchor="middle">Exercise 4. Swap in a potentiometer</text>
 <text x="810.0" y="92" font-size="19" fill="#6b6b70" text-anchor="middle">A knob instead of a switch, and the light has a range</text>
 <rect x="60" y="340" width="1500" height="570" rx="14" fill="#f4f1ea" stroke="#cfc9bb" stroke-width="3" filter="url(#sh)"/>
 <text x="82" y="366" font-size="13" font-weight="700" fill="#a49c8a">BREADBOARD</text>

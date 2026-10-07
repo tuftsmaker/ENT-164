@@ -1,0 +1,32 @@
+# Exercise 1: the LED straight across the pack, with no resistor at all.
+# Deliberately the wrong circuit: it is bright, and it is being overdriven.
+board: freenove-esp32-wrover-ext
+layout:
+  board:
+    hidden: true          # no ESP32 in these exercises
+  breadboard:
+    hidden: false
+    cols: 20
+    w: 1500
+
+title: Exercise 1. An LED with no resistor
+subtitle: On for a second, to see how bright it gets
+
+components:
+  - {type: module, id: pack, at: [17, a], pins: ["+", "-"], label_text: "2 x AA (3 V)", fill: "#2b2b30", height: 96}
+  - {type: led, color: red, at: [6, d]}
+
+wires:
+  - {from: bb.17.a, to: bb.6.a, color: red, label: pack + to the LED}
+  - {from: bb.7.e, to: bb.18.a, color: black, label: LED straight back to the pack}
+
+steps:
+  - {text: "Pack off. LED: long leg in column 6, short leg in column 7."}
+  - {text: "Red jumper: the pack's + to column 6."}
+  - {text: "Black jumper: column 7 to the pack's -. No resistor in the path."}
+  - {text: "Switch the pack on for a second, look, and switch it off."}
+  - {text: "Take it apart and build exercise 2. That is the safe version."}
+
+notes:
+  - {text: "No resistor means nothing sets the current. The LED is overdriven and can burn out. Do not leave it connected.", warn: true}
+  - "This is what the resistor is for. It turns the same circuit into one that lasts."

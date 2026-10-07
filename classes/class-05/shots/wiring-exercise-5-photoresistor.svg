@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1620" height="1410" viewBox="0 0 1620 1410" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1620" height="1377" viewBox="0 0 1620 1377" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
 <defs>
   <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
     <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.16"/>
@@ -10,9 +10,9 @@
     <stop offset="0" stop-color="#26262a"/><stop offset="1" stop-color="#131316"/>
   </linearGradient>
 </defs>
-<rect width="1620" height="1410" fill="#fdfaf3"/>
-<text x="810.0" y="58" font-size="30" font-weight="700" fill="#26262b" text-anchor="middle">Exercise 1. An LED and a resistor</text>
-<text x="810.0" y="92" font-size="19" fill="#6b6b70" text-anchor="middle">A 2 x AA battery pack (3 V), the breadboard, and two parts</text>
+<rect width="1620" height="1377" fill="#fdfaf3"/>
+<text x="810.0" y="58" font-size="30" font-weight="700" fill="#26262b" text-anchor="middle">Exercise 5. Swap in a photoresistor</text>
+<text x="810.0" y="92" font-size="19" fill="#6b6b70" text-anchor="middle">Light sets the resistance, and the LED follows the light</text>
 <rect x="60" y="340" width="1500" height="570" rx="14" fill="#f4f1ea" stroke="#cfc9bb" stroke-width="3" filter="url(#sh)"/>
 <text x="82" y="366" font-size="13" font-weight="700" fill="#a49c8a">BREADBOARD</text>
 <line x1="78" y1="646" x2="1542" y2="646" stroke="#e2dccd" stroke-width="10"/>
@@ -325,6 +325,20 @@
 <circle cx="596" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="596" cy="598" r="3.4" fill="#b9b3a6"/>
 <line x1="596" y1="470" x2="596" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
+<rect x="784" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
+<circle cx="800" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="800" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="800" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="800" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="800" cy="598" r="3.4" fill="#b9b3a6"/>
+<line x1="800" y1="470" x2="800" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
+<rect x="852" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
+<circle cx="868" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="868" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="868" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="868" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="868" cy="598" r="3.4" fill="#b9b3a6"/>
+<line x1="868" y1="470" x2="868" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
 <rect x="1260" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
 <circle cx="1276" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="1276" cy="502" r="3.4" fill="#b9b3a6"/>
@@ -342,8 +356,11 @@
 <polyline class="wire" data-wire="0" data-colour="red" data-label="pack + to the resistor" points="1276,470 1276,646 256,646 256,470" fill="none" stroke="#e02020" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
 <circle cx="1276" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
 <circle cx="256" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
-<polyline class="wire" data-wire="1" data-colour="black" data-label="pack - from the LED" points="596,598 596,646 1344,646 1344,470" fill="none" stroke="#2b2b2b" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
+<polyline class="wire" data-wire="1" data-colour="purple" data-label="to the photoresistor" points="596,598 596,646 800,646 800,534" fill="none" stroke="#7a4fbf" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
 <circle cx="596" cy="598" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
+<circle cx="800" cy="534" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
+<polyline class="wire" data-wire="2" data-colour="black" data-label="photoresistor to the pack -" points="868,534 868,646 1344,646 1344,470" fill="none" stroke="#2b2b2b" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
+<circle cx="868" cy="534" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
 <circle cx="1344" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
 <line x1="1276" y1="470" x2="1276" y2="452" stroke="#9a9a9a" stroke-width="3.5"/>
 <line x1="1344" y1="470" x2="1344" y2="452" stroke="#9a9a9a" stroke-width="3.5"/>
@@ -367,19 +384,25 @@
 <text x="562.0" y="487.7142857142857" font-size="15" font-weight="700" fill="#9c1616" text-anchor="middle">LED</text>
 <text x="626" y="604" font-size="15" fill="#8a8a8a">flat side = cathode (−)</text>
 <text x="514" y="604" font-size="15" font-weight="700" fill="#9c1616" text-anchor="end">anode (+)</text>
+<line x1="800" y1="534" x2="825.0" y2="506" stroke="#9a9a9a" stroke-width="3.5"/>
+<line x1="868" y1="534" x2="843.0" y2="506" stroke="#9a9a9a" stroke-width="3.5"/>
+<circle cx="834.0" cy="488" r="24" fill="#efe9d8" stroke="#b09a6a" stroke-width="2.5"/>
+<path d="M820.8 488 q6.720000000000001 -10.08 13.200000000000001 0 q6.720000000000001 10.08 13.200000000000001 0" fill="none" stroke="#5a4a2a" stroke-width="2.5"/>
+<text x="834.0" y="452" font-size="15" font-weight="700" fill="#5a4a2a" text-anchor="middle">photoresistor</text>
 <rect class="legend" data-colour="red" x="90" y="1023" width="26" height="16" rx="4" fill="#e02020"/>
 <text x="124" y="1038" font-size="18" fill="#444">pack + to the resistor</text>
-<rect class="legend" data-colour="black" x="399.2" y="1023" width="26" height="16" rx="4" fill="#2b2b2b"/>
-<text x="433.2" y="1038" font-size="18" fill="#444">pack - from the LED</text>
-<rect x="679.5999999999999" y="1020" width="26" height="20" rx="9" fill="#ffe9a8"/>
-<text x="715.5999999999999" y="1038" font-size="18" fill="#444">one connected net (5 holes)</text>
+<rect class="legend" data-colour="purple" x="399.2" y="1023" width="26" height="16" rx="4" fill="#7a4fbf"/>
+<text x="433.2" y="1038" font-size="18" fill="#444">to the photoresistor</text>
+<rect class="legend" data-colour="black" x="689.2" y="1023" width="26" height="16" rx="4" fill="#2b2b2b"/>
+<text x="723.2" y="1038" font-size="18" fill="#444">photoresistor to the pack -</text>
+<rect x="1046.4" y="1020" width="26" height="20" rx="9" fill="#ffe9a8"/>
+<text x="1082.4" y="1038" font-size="18" fill="#444">one connected net (5 holes)</text>
 <text x="90" y="1084" font-size="18" font-weight="700" fill="#26262b">Steps</text>
-<text x="90" y="1117" font-size="18" fill="#444">1.  Battery pack: clip the two AA cells in and leave its switch off for now.</text>
-<text x="90" y="1150" font-size="18" fill="#444">2.  Resistor 220 ohm: one leg in column 2, the other in column 6.</text>
-<text x="90" y="1183" font-size="18" fill="#444">3.  LED: long leg in column 6, short leg in column 7.</text>
-<text x="90" y="1216" font-size="18" fill="#444">4.  Red jumper: the pack's + to column 2. Black jumper: column 7 to the pack's -.</text>
-<text x="90" y="1249" font-size="18" fill="#444">5.  Switch the pack on. The LED lights.</text>
-<text x="90" y="1300" font-size="18" fill="#8a5a00">Never wire an LED without the resistor. It sets the current the LED cannot take.</text>
-<text x="90" y="1333" font-size="18" fill="#666">Three volts suits a red, yellow or green LED. A blue or white one needs more voltage than this pack has.</text>
-<text x="90" y="1366" font-size="18" fill="#666">The five holes of one column are already connected. That is what a breadboard does.</text>
+<text x="90" y="1117" font-size="18" fill="#444">1.  Take the knob out. The pack, the resistor and the LED stay.</text>
+<text x="90" y="1150" font-size="18" fill="#444">2.  Photoresistor: its two legs in columns 10 and 11, row c.</text>
+<text x="90" y="1183" font-size="18" fill="#444">3.  Purple jumper: column 7 (the LED) to column 10.</text>
+<text x="90" y="1216" font-size="18" fill="#444">4.  Black jumper: column 11 to the pack's -.</text>
+<text x="90" y="1249" font-size="18" fill="#444">5.  Switch on. Cover the sensor: the LED fades. Shine a light on it: it comes back.</text>
+<text x="90" y="1300" font-size="18" fill="#8a5a00">Light is the knob: more light, less resistance, more current, brighter LED.</text>
+<text x="90" y="1333" font-size="18" fill="#666">This is the sensor your robot uses to notice the world without you turning anything.</text>
 </svg>

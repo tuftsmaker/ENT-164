@@ -11,8 +11,8 @@
   </linearGradient>
 </defs>
 <rect width="1620" height="1377" fill="#fdfaf3"/>
-<text x="810.0" y="58" font-size="30" font-weight="700" fill="#26262b" text-anchor="middle">Exercise 2. Add a push button</text>
-<text x="810.0" y="92" font-size="19" fill="#6b6b70" text-anchor="middle">The same circuit, with a switch in the path</text>
+<text x="810.0" y="58" font-size="30" font-weight="700" fill="#26262b" text-anchor="middle">Exercise 1. An LED with no resistor</text>
+<text x="810.0" y="92" font-size="19" fill="#6b6b70" text-anchor="middle">On for a second, to see how bright it gets</text>
 <rect x="60" y="340" width="1500" height="570" rx="14" fill="#f4f1ea" stroke="#cfc9bb" stroke-width="3" filter="url(#sh)"/>
 <text x="82" y="366" font-size="13" font-weight="700" fill="#a49c8a">BREADBOARD</text>
 <line x1="78" y1="646" x2="1542" y2="646" stroke="#e2dccd" stroke-width="10"/>
@@ -304,13 +304,6 @@
 <circle cx="1276" cy="822" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="822" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="822" r="3.4" fill="#b9b3a6"/>
-<rect x="240" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
-<circle cx="256" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="256" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="256" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="256" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="256" cy="598" r="3.4" fill="#b9b3a6"/>
-<line x1="256" y1="470" x2="256" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
 <rect x="512" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
 <circle cx="528" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="528" cy="502" r="3.4" fill="#b9b3a6"/>
@@ -325,20 +318,6 @@
 <circle cx="596" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="596" cy="598" r="3.4" fill="#b9b3a6"/>
 <line x1="596" y1="470" x2="596" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
-<rect x="784" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
-<circle cx="800" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="800" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="800" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="800" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="800" cy="598" r="3.4" fill="#b9b3a6"/>
-<line x1="800" y1="470" x2="800" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
-<rect x="988" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
-<circle cx="1004" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="1004" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="1004" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="1004" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="1004" cy="598" r="3.4" fill="#b9b3a6"/>
-<line x1="1004" y1="470" x2="1004" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
 <rect x="1260" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
 <circle cx="1276" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="1276" cy="502" r="3.4" fill="#b9b3a6"/>
@@ -353,14 +332,11 @@
 <circle cx="1344" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="598" r="3.4" fill="#b9b3a6"/>
 <line x1="1344" y1="470" x2="1344" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
-<polyline class="wire" data-wire="0" data-colour="red" data-label="pack + to the resistor" points="1276,470 1276,646 256,646 256,470" fill="none" stroke="#e02020" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
+<polyline class="wire" data-wire="0" data-colour="red" data-label="pack + to the LED" points="1276,470 1276,646 528,646 528,470" fill="none" stroke="#e02020" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
 <circle cx="1276" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
-<circle cx="256" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
-<polyline class="wire" data-wire="1" data-colour="purple" data-label="to the button" points="596,598 596,646 800,646 800,502" fill="none" stroke="#7a4fbf" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
+<circle cx="528" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
+<polyline class="wire" data-wire="1" data-colour="black" data-label="LED straight back to the pack" points="596,598 596,646 1344,646 1344,470" fill="none" stroke="#2b2b2b" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
 <circle cx="596" cy="598" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
-<circle cx="800" cy="502" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
-<polyline class="wire" data-wire="2" data-colour="black" data-label="pack - from the button" points="1004,502 1004,646 1344,646 1344,470" fill="none" stroke="#2b2b2b" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
-<circle cx="1004" cy="502" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
 <circle cx="1344" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
 <line x1="1276" y1="470" x2="1276" y2="452" stroke="#9a9a9a" stroke-width="3.5"/>
 <line x1="1344" y1="470" x2="1344" y2="452" stroke="#9a9a9a" stroke-width="3.5"/>
@@ -368,14 +344,6 @@
 <text x="1310.0" y="390" font-size="16" font-weight="700" fill="#fff" text-anchor="middle">2 x AA (3 V)</text>
 <text x="1250" y="487" font-size="16" fill="#444" text-anchor="middle">+</text>
 <text x="1318" y="487" font-size="16" fill="#444" text-anchor="middle">-</text>
-<line x1="256" y1="502" x2="290" y2="502" stroke="#9a9a9a" stroke-width="3.5"/>
-<line x1="494" y1="502" x2="528" y2="502" stroke="#9a9a9a" stroke-width="3.5"/>
-<rect x="290" y="486" width="204" height="32" rx="12" fill="#ecdcae" stroke="#b09a6a" stroke-width="2"/>
-<rect x="302" y="486" width="13" height="32" fill="#d02a2a"/>
-<rect x="320" y="486" width="13" height="32" fill="#d02a2a"/>
-<rect x="338" y="486" width="13" height="32" fill="#7a4a1e"/>
-<rect x="356" y="486" width="13" height="32" fill="#d4af37"/>
-<text x="392.0" y="474" font-size="16" font-weight="700" fill="#6b4423" text-anchor="middle">220 Ω</text>
 <line x1="528" y1="566" x2="528" y2="526" stroke="#9a9a9a" stroke-width="3.5"/>
 <line x1="596" y1="566" x2="596" y2="526" stroke="#9a9a9a" stroke-width="3.5"/>
 <circle cx="562.0" cy="526" r="24.28571428571429" fill="#e03030" stroke="#9c1616" stroke-width="2.5"/>
@@ -384,28 +352,18 @@
 <text x="562.0" y="487.7142857142857" font-size="15" font-weight="700" fill="#9c1616" text-anchor="middle">LED</text>
 <text x="626" y="604" font-size="15" fill="#8a8a8a">flat side = cathode (−)</text>
 <text x="514" y="604" font-size="15" font-weight="700" fill="#9c1616" text-anchor="end">anode (+)</text>
-<circle cx="800" cy="502" r="6" fill="#b9b3a6"/>
-<circle cx="800" cy="534" r="6" fill="#b9b3a6"/>
-<circle cx="1004" cy="502" r="6" fill="#b9b3a6"/>
-<circle cx="1004" cy="534" r="6" fill="#b9b3a6"/>
-<rect x="810" y="488" width="184" height="60" rx="8" fill="#2b2b30" stroke="#15151a" stroke-width="2"/>
-<circle cx="902.0" cy="518.0" r="14" fill="#3a3a3f" stroke="#15151a" stroke-width="2"/>
-<ellipse cx="898.0" cy="513.0" rx="5" ry="3" fill="#6d6d76" opacity="0.6"/>
-<text x="902.0" y="476" font-size="15" font-weight="700" fill="#3a3a3f" text-anchor="middle">button</text>
 <rect class="legend" data-colour="red" x="90" y="1023" width="26" height="16" rx="4" fill="#e02020"/>
-<text x="124" y="1038" font-size="18" fill="#444">pack + to the resistor</text>
-<rect class="legend" data-colour="purple" x="399.2" y="1023" width="26" height="16" rx="4" fill="#7a4fbf"/>
-<text x="433.2" y="1038" font-size="18" fill="#444">to the button</text>
-<rect class="legend" data-colour="black" x="622.0" y="1023" width="26" height="16" rx="4" fill="#2b2b2b"/>
-<text x="656.0" y="1038" font-size="18" fill="#444">pack - from the button</text>
-<rect x="931.2" y="1020" width="26" height="20" rx="9" fill="#ffe9a8"/>
-<text x="967.2" y="1038" font-size="18" fill="#444">one connected net (5 holes)</text>
+<text x="124" y="1038" font-size="18" fill="#444">pack + to the LED</text>
+<rect class="legend" data-colour="black" x="351.2" y="1023" width="26" height="16" rx="4" fill="#2b2b2b"/>
+<text x="385.2" y="1038" font-size="18" fill="#444">LED straight back to the pack</text>
+<rect x="727.5999999999999" y="1020" width="26" height="20" rx="9" fill="#ffe9a8"/>
+<text x="763.5999999999999" y="1038" font-size="18" fill="#444">one connected net (5 holes)</text>
 <text x="90" y="1084" font-size="18" font-weight="700" fill="#26262b">Steps</text>
-<text x="90" y="1117" font-size="18" fill="#444">1.  The pack, the resistor and the LED stay where they are.</text>
-<text x="90" y="1150" font-size="18" fill="#444">2.  Button: its four legs sit in columns 10 and 13, rows b and c.</text>
-<text x="90" y="1183" font-size="18" fill="#444">3.  Purple jumper: column 7 (the LED) to column 10 (one side of the button).</text>
-<text x="90" y="1216" font-size="18" fill="#444">4.  Black jumper: column 13 (the other side) to the pack's -.</text>
-<text x="90" y="1249" font-size="18" fill="#444">5.  Switch the pack on. Press the button: the LED lights. Let go: it goes dark.</text>
-<text x="90" y="1300" font-size="18" fill="#8a5a00">A button has two states, open or closed. On or off. That is a digital signal.</text>
-<text x="90" y="1333" font-size="18" fill="#666">This is exactly what a pin on the board does: it reads a switch, or writes a 3.3 V output.</text>
+<text x="90" y="1117" font-size="18" fill="#444">1.  Pack off. LED: long leg in column 6, short leg in column 7.</text>
+<text x="90" y="1150" font-size="18" fill="#444">2.  Red jumper: the pack's + to column 6.</text>
+<text x="90" y="1183" font-size="18" fill="#444">3.  Black jumper: column 7 to the pack's -. No resistor in the path.</text>
+<text x="90" y="1216" font-size="18" fill="#444">4.  Switch the pack on for a second, look, and switch it off.</text>
+<text x="90" y="1249" font-size="18" fill="#444">5.  Take it apart and build exercise 2. That is the safe version.</text>
+<text x="90" y="1300" font-size="18" fill="#8a5a00">No resistor means nothing sets the current. The LED is overdriven and can burn out. Do not leave it connected.</text>
+<text x="90" y="1333" font-size="18" fill="#666">This is what the resistor is for. It turns the same circuit into one that lasts.</text>
 </svg>

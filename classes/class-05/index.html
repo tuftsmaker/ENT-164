@@ -200,22 +200,30 @@
     </section>
 
     <section class="section-block" id="exercises">
-      <h2>Exercises: three circuits before any code</h2>
-      <p class="lede">No ESP32 yet. A 2 x AA battery pack powers these, and each circuit shows what a signal is: the breadboard, a resistor, an LED, a button, and a pot.</p>
+      <h2>Exercises: five circuits before any code</h2>
+      <p class="lede">No ESP32 yet. A 2 x AA battery pack powers all five, and each one adds a single idea: what a resistor does, what a switch is, what analogue means, and what a sensor reads.</p>
       <figure class="shot">
-        <img src="shots/wiring-exercise-1-led.png" alt="Wiring diagram on the breadboard: a 220 ohm resistor in columns 2 to 6, an LED in columns 6 and 7, and a 2 x AA battery pack wired in on the right" style="width: 100%; height: auto;">
-        <figcaption><b>1. An LED and a resistor</b>The resistor sets the current the LED needs. It lights as the last wire lands.</figcaption>
+        <img src="shots/wiring-exercise-1-led-no-resistor.png" alt="Wiring diagram on the breadboard: one LED wired straight to a 2 x AA battery pack with no resistor" style="display: block; width: 100%; height: auto;">
+        <figcaption><b>1. No resistor</b>The LED straight across the pack. Bright, and overdriven: this is the case the resistor exists for. On for a second only.</figcaption>
       </figure>
       <figure class="shot" style="margin-top: 16px;">
-        <img src="shots/wiring-exercise-2-button.png" alt="Wiring diagram on the breadboard: the same LED and resistor, with a push button in columns 10 to 13 and a 2 x AA battery pack wired in on the right" style="width: 100%; height: auto;">
-        <figcaption><b>2. Add a push button</b>The button goes in the path, not beside it. Pressed or not: two states, which is a digital signal.</figcaption>
+        <img src="shots/wiring-exercise-2-resistor-compare.png" alt="Wiring diagram on the breadboard: three branches, each a resistor and an LED, at 220 ohm, 1 kohm and 10 kohm" style="display: block; width: 100%; height: auto;">
+        <figcaption><b>2. Three resistors</b>220 ohm, 1 kohm, 10 kohm. Same LED, three currents: bright, dimmer, barely on.</figcaption>
       </figure>
       <figure class="shot" style="margin-top: 16px;">
-        <img src="shots/wiring-exercise-3-potentiometer.png" alt="Wiring diagram on the breadboard: the same LED and resistor, with a potentiometer in columns 10 to 12 and a 2 x AA battery pack wired in on the right" style="width: 100%; height: auto;">
-        <figcaption><b>3. Swap in a potentiometer</b>The wiper taps the track wherever you turn it, so the resistance changes smoothly. That is an analogue signal.</figcaption>
+        <img src="shots/wiring-exercise-3-button.png" alt="Wiring diagram on the breadboard: the 220 ohm resistor and LED, with a push button in columns 10 to 13" style="display: block; width: 100%; height: auto;">
+        <figcaption><b>3. Add a push button</b>The button goes in the path, not beside it. Pressed or not: two states, which is a digital signal.</figcaption>
+      </figure>
+      <figure class="shot" style="margin-top: 16px;">
+        <img src="shots/wiring-exercise-4-potentiometer.png" alt="Wiring diagram on the breadboard: the 220 ohm resistor and LED, with a potentiometer in columns 10 to 12" style="display: block; width: 100%; height: auto;">
+        <figcaption><b>4. Swap in a potentiometer</b>The wiper taps the track wherever you turn it, so the resistance changes smoothly. A range instead of two states: analogue.</figcaption>
+      </figure>
+      <figure class="shot" style="margin-top: 16px;">
+        <img src="shots/wiring-exercise-5-photoresistor.png" alt="Wiring diagram on the breadboard: the 220 ohm resistor and LED, with a photoresistor in columns 10 and 11" style="display: block; width: 100%; height: auto;">
+        <figcaption><b>5. Swap in a photoresistor</b>Light sets the resistance. Cover the sensor and the LED fades; shine a light on it and it comes back.</figcaption>
       </figure>
       <div class="callout"><b>Signals travel on the wire.</b> A pin reads or writes two states, 3.3 V or 0 V. An ADC pin reads a voltage anywhere in between. Switch a pin fast and the average is what matters: that is how brightness and servo angles are sent, and how modules pass numbers along a wire both ends agree on.</div>
-      <div class="callout warm"><b>Next: the ESP32 does the same in code.</b> The LED, the button, and the knob, with a pin doing the reading and the writing.</div>
+      <div class="callout warm"><b>Next: the ESP32 does the same in code.</b> The LED, the button, the knob and the light sensor, with a pin doing the reading and the writing.</div>
     </section>
 
     <section class="section-block" id="micropython">

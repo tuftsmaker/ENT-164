@@ -9,8 +9,8 @@ hero_max: 380
 topics:
   - title: "The ESP32-WROVER and breadboard basics"
     learn: "What the microcontroller does, and how the breadboard's rows and rails connect."
-  - title: "Three exercises before any code: an LED, a button, a knob"
-    learn: "Resistance, a digital on/off, and an analogue range, wired on the breadboard."
+  - title: "Five exercises before any code: LEDs, resistors, a button, a knob, a light sensor"
+    learn: "Resistance, a digital on/off, an analogue range and a sensor, wired on the breadboard."
   - title: "MicroPython on the board, and your first blink"
     learn: "Installing the board's software and getting an LED to blink from your own code."
   - title: "Inputs: knobs, joysticks, and sensors"
