@@ -525,7 +525,140 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">07</span></footer>
 </section>
 
-<!-- ============ 08 · INSTALL MICROPYTHON ============ -->
+<!-- ============ 08 · EXERCISE 1 · BEFORE ANY CODE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Exercise 1 · before any code</p>
+    <h2>An LED <span class="accent">and a resistor</span></h2>
+    <p class="s-sub">Power from 3V3, through the resistor, through the LED, back to GND. It lights as the last wire lands.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g2" style="grid-template-columns: 1.32fr 0.68fr;">
+      <figure class="tile">
+        <img src="shots/wiring-exercise-1-led.png" alt="Wiring diagram: the ESP32 on its extension board, a 220 ohm resistor in columns 2 to 6, an LED in columns 6 and 7, a red jumper from 3V3 and a black jumper to GND" style="height: 88mm; width: 100%; object-fit: contain; background: var(--paper);">
+        <figcaption><b>Follow the steps</b>The diagram lists them, and the class page has the same one at full size.</figcaption>
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Wire it</h3>
+          <ul style="margin: 0; padding-left: 4mm;">
+            <li>Resistor: columns 2 to 6</li>
+            <li>LED: long leg in column 6, short leg in column 7</li>
+            <li>Red jumper: 3V3 to column 2</li>
+            <li>Black jumper: column 7 to GND</li>
+          </ul>
+        </article>
+        <article class="card tight">
+          <h3>Watch the legs</h3>
+          <p>The long leg is the anode and faces the resistor. The flat side is the cathode, toward GND.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ============ 09 · EXERCISE 2 · DIGITAL ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Exercise 2 · digital</p>
+    <h2>Add a <span class="accent">push button</span></h2>
+    <p class="s-sub">The same path with a switch in it. Press to light the LED, let go and it goes dark.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g2" style="grid-template-columns: 1.32fr 0.68fr;">
+      <figure class="tile">
+        <img src="shots/wiring-exercise-2-button.png" alt="Wiring diagram: the same LED and resistor, with a push button in columns 10 to 13 wired in series before GND" style="height: 88mm; width: 100%; object-fit: contain; background: var(--paper);">
+        <figcaption><b>Follow the steps</b>The button goes in the path, not beside it.</figcaption>
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Add it</h3>
+          <ul style="margin: 0; padding-left: 4mm;">
+            <li>Keep exercise 1 wired</li>
+            <li>Button: columns 10 to 13, rows b and c</li>
+            <li>Purple jumper: column 7 to column 10</li>
+            <li>Black jumper: column 13 to GND</li>
+          </ul>
+        </article>
+        <article class="card tight">
+          <h3>A pin does the same</h3>
+          <p>A GPIO pin reads high or low, and drives high or low. Your button is a pin you can see.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">09</span></footer>
+</section>
+
+<!-- ============ 10 · EXERCISE 3 · ANALOGUE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Exercise 3 · analogue</p>
+    <h2>Swap in a <span class="accent">potentiometer</span></h2>
+    <p class="s-sub">Take the button out and put the knob in its place. Turning it makes the LED brighter and dimmer.</p>
+  </header>
+  <div class="s-body">
+    <div class="gallery g2" style="grid-template-columns: 1.32fr 0.68fr;">
+      <figure class="tile">
+        <img src="shots/wiring-exercise-3-potentiometer.png" alt="Wiring diagram: the same LED and resistor, with a potentiometer in columns 10 to 12, its wiper wired to GND" style="height: 88mm; width: 100%; object-fit: contain; background: var(--paper);">
+        <figcaption><b>Follow the steps</b>One end of the track takes the current, the wiper passes it on.</figcaption>
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center; min-height: 0;">
+        <article class="card tight accent">
+          <h3>Swap it</h3>
+          <ul style="margin: 0; padding-left: 4mm;">
+            <li>Take the button out</li>
+            <li>Pot: columns 10 to 12, row c</li>
+            <li>Purple jumper: column 7 to column 10</li>
+            <li>Black jumper: the middle leg to GND</li>
+          </ul>
+        </article>
+        <article class="card tight">
+          <h3>That is analogue</h3>
+          <p>An ADC pin reads a voltage like this and turns it into a number your code can use.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">10</span></footer>
+</section>
+
+<!-- ============ 11 · FROM PARTS TO INFORMATION ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">From parts to information</p>
+    <h2>Signals <span class="accent">travel on the wire</span></h2>
+    <p class="s-sub">A voltage, held or changed, read at the other end. That is the whole conversation between a microcontroller and a peripheral.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="card tight accent">
+        <span class="num">01</span>
+        <h3>Digital</h3>
+        <p>Two states: 3.3 V or 0 V. Your button. A pin reads it, and writes it.</p>
+      </article>
+      <article class="card tight">
+        <span class="num">02</span>
+        <h3>Analogue</h3>
+        <p>A voltage anywhere in the range. Your knob. An ADC pin turns it into a number.</p>
+      </article>
+      <article class="card tight">
+        <span class="num">03</span>
+        <h3>Patterns</h3>
+        <p>Switch a pin fast, and the average is what matters: that is how brightness and servo angles are sent. Modules that pass numbers do the same, in a pattern both ends agree on.</p>
+      </article>
+    </div>
+    <div class="callout" style="margin-top: 5mm;"><b>Next: the ESP32 does this in code.</b> The same LED, the same button, the same knob, with a pin doing the reading and the writing.</div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">11</span></footer>
+</section>
+
+<!-- ============ 12 · INSTALL MICROPYTHON ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -553,10 +686,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">08</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ============ 09 · BLINK ============ -->
+<!-- ============ 13 · BLINK ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -592,10 +725,10 @@ while True:
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">09</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ============ 10 · AI CODE ============ -->
+<!-- ============ 14 · AI CODE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -620,10 +753,10 @@ while True:
     </div>
   </div>
     <p class="footnote" style="text-align: center;">Setup guide. <span class="mono">tuftsmaker.github.io/ENT-164/opencode-deepseek-guide/</span></p>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">14</span></footer>
 </section>
 
-<!-- ============ 11 · INPUTS ============ -->
+<!-- ============ 15 · INPUTS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -665,10 +798,10 @@ while True:
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">11</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">15</span></footer>
 </section>
 
-<!-- ============ 12 · SERVOS ============ -->
+<!-- ============ 16 · SERVOS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -697,10 +830,10 @@ while True:
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">12</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">16</span></footer>
 </section>
 
-<!-- ============ 13 · MOTORS + DRIVER ============ -->
+<!-- ============ 17 · MOTORS + DRIVER ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -734,10 +867,10 @@ while True:
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">13</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">17</span></footer>
 </section>
 
-<!-- ============ 14 · WIRING MAP ============ -->
+<!-- ============ 18 · WIRING MAP ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -763,10 +896,10 @@ while True:
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">14</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">18</span></footer>
 </section>
 
-<!-- ============ 15 · AT NOLOP ============ -->
+<!-- ============ 19 · AT NOLOP ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -806,10 +939,10 @@ while True:
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">15</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">19</span></footer>
 </section>
 
-<!-- ============ 16 · ASSIGNMENT: BUILD IT ============ -->
+<!-- ============ 20 · ASSIGNMENT: BUILD IT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -844,10 +977,10 @@ while True:
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">16</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">20</span></footer>
 </section>
 
-<!-- ============ 17 · ASSIGNMENT: DELIVERABLES ============ -->
+<!-- ============ 21 · ASSIGNMENT: DELIVERABLES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -881,10 +1014,10 @@ while True:
       <p>You're graded on <b>collaboration and learning</b>, not coding skills. Keep one chat, iterate often, and ask lots of questions.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">17</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">21</span></footer>
 </section>
 
-<!-- ============ 18 · BUILD GALLERY ============ -->
+<!-- ============ 22 · BUILD GALLERY ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -912,10 +1045,10 @@ while True:
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">18</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">22</span></footer>
 </section>
 
-<!-- ============ 19 · CLOSING ============ -->
+<!-- ============ 23 · CLOSING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -933,7 +1066,7 @@ while True:
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">19</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">23</span></footer>
 </section>
 
 </body>

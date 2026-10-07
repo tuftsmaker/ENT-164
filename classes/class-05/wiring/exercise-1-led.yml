@@ -1,0 +1,27 @@
+# Exercise 1: an LED and its resistor, powered from the board's 3V3 pin.
+# Render: see AGENTS.md ("breadboard-wiring" skill), output beside the deck's shots.
+board: freenove-esp32-wrover-ext
+layout:
+  breadboard:
+    hidden: false
+
+title: Exercise 1. An LED and a resistor
+subtitle: Two jumper wires, and it lights
+
+components:
+  - {type: resistor, value: "220", from: [2, b], span: 4}
+  - {type: led, color: red, at: [6, d]}
+
+wires:
+  - {from: board.L17, to: bb.2.a, color: red, label: 3V3, power in}
+  - {from: bb.7.e, to: board.L14, color: black, label: GND}
+
+steps:
+  - {text: "Resistor 220 ohm: one leg in column 2, the other in column 6."}
+  - {text: "LED: long leg in column 6, short leg in column 7."}
+  - {text: "Red jumper: 3V3 on the board to column 2."}
+  - {text: "Black jumper: column 7 to GND. The LED lights."}
+
+notes:
+  - {text: "Never wire an LED without the resistor. The resistor takes the current the LED cannot.", warn: true}
+  - "The five holes of one column are already connected. That is what a breadboard does."
