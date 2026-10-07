@@ -1,27 +1,34 @@
-# Exercise 1: an LED and its resistor, powered from the board's 3V3 pin.
-# Render: see AGENTS.md ("breadboard-wiring" skill), output beside the deck's shots.
+# Exercise 1: an LED and its resistor on a 2 x AA battery pack (3 V).
+# No ESP32: the pack powers the circuit, and the board stays in the box.
 board: freenove-esp32-wrover-ext
 layout:
+  board:
+    hidden: true          # no ESP32 in these exercises
   breadboard:
     hidden: false
+    cols: 20
+    w: 1500
 
 title: Exercise 1. An LED and a resistor
-subtitle: Two jumper wires, and it lights
+subtitle: A 2 x AA battery pack (3 V), the breadboard, and two parts
 
 components:
+  - {type: module, id: pack, at: [17, a], pins: ["+", "-"], label_text: "2 x AA (3 V)", fill: "#2b2b30", height: 96}
   - {type: resistor, value: "220", from: [2, b], span: 4}
   - {type: led, color: red, at: [6, d]}
 
 wires:
-  - {from: board.L17, to: bb.2.a, color: red, label: 3V3, power in}
-  - {from: bb.7.e, to: board.L14, color: black, label: GND}
+  - {from: bb.17.a, to: bb.2.a, color: red, label: pack + to the resistor}
+  - {from: bb.7.e, to: bb.18.a, color: black, label: pack - from the LED}
 
 steps:
+  - {text: "Battery pack: clip the two AA cells in and leave its switch off for now."}
   - {text: "Resistor 220 ohm: one leg in column 2, the other in column 6."}
   - {text: "LED: long leg in column 6, short leg in column 7."}
-  - {text: "Red jumper: 3V3 on the board to column 2."}
-  - {text: "Black jumper: column 7 to GND. The LED lights."}
+  - {text: "Red jumper: the pack's + to column 2. Black jumper: column 7 to the pack's -."}
+  - {text: "Switch the pack on. The LED lights."}
 
 notes:
-  - {text: "Never wire an LED without the resistor. The resistor takes the current the LED cannot.", warn: true}
+  - {text: "Never wire an LED without the resistor. It sets the current the LED cannot take.", warn: true}
+  - "Three volts suits a red, yellow or green LED. A blue or white one needs more voltage than this pack has."
   - "The five holes of one column are already connected. That is what a breadboard does."

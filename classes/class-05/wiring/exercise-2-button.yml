@@ -1,29 +1,34 @@
 # Exercise 2: a push button in the same path. Press to light, release to dark.
 board: freenove-esp32-wrover-ext
 layout:
+  board:
+    hidden: true          # no ESP32 in these exercises
   breadboard:
     hidden: false
+    cols: 20
+    w: 1500
 
 title: Exercise 2. Add a push button
 subtitle: The same circuit, with a switch in the path
 
 components:
+  - {type: module, id: pack, at: [17, a], pins: ["+", "-"], label_text: "2 x AA (3 V)", fill: "#2b2b30", height: 96}
   - {type: resistor, value: "220", from: [2, b], span: 4}
   - {type: led, color: red, at: [6, d]}
   - {type: button, at: [10, b], label_text: button}
 
 wires:
-  - {from: board.L17, to: bb.2.a, color: red, label: 3V3, power in}
+  - {from: bb.17.a, to: bb.2.a, color: red, label: pack + to the resistor}
   - {from: bb.7.e, to: bb.10.b, color: purple, label: to the button}
-  - {from: bb.13.b, to: board.L14, color: black, label: GND}
+  - {from: bb.13.b, to: bb.18.a, color: black, label: pack - from the button}
 
 steps:
-  - {text: "The resistor and the LED stay where they are."}
+  - {text: "The pack, the resistor and the LED stay where they are."}
   - {text: "Button: its four legs sit in columns 10 and 13, rows b and c."}
   - {text: "Purple jumper: column 7 (the LED) to column 10 (one side of the button)."}
-  - {text: "Black jumper: column 13 (the other side) to GND."}
-  - {text: "Press it: the LED lights. Let go: it goes dark."}
+  - {text: "Black jumper: column 13 (the other side) to the pack's -."}
+  - {text: "Switch the pack on. Press the button: the LED lights. Let go: it goes dark."}
 
 notes:
   - {text: "A button has two states, open or closed. On or off. That is a digital signal.", warn: true}
-  - "This is exactly what a pin on the board does when it reads a switch, or writes a 3.3 V output."
+  - "This is exactly what a pin on the board does: it reads a switch, or writes a 3.3 V output."

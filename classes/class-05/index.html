@@ -201,17 +201,17 @@
 
     <section class="section-block" id="exercises">
       <h2>Exercises: three circuits before any code</h2>
-      <p class="lede">No ESP32 pins, no MicroPython yet. Power from the board, the breadboard, and three parts. Each circuit shows what a signal is.</p>
+      <p class="lede">No ESP32 yet. A 2 x AA battery pack powers these, and each circuit shows what a signal is: the breadboard, a resistor, an LED, a button, and a pot.</p>
       <figure class="shot">
-        <img src="shots/wiring-exercise-1-led.png" alt="Wiring diagram: the ESP32 on its extension board, a 220 ohm resistor in columns 2 to 6, an LED in columns 6 and 7, a red jumper from 3V3 and a black jumper from column 7 to GND" style="width: 100%; height: auto;">
+        <img src="shots/wiring-exercise-1-led.png" alt="Wiring diagram on the breadboard: a 220 ohm resistor in columns 2 to 6, an LED in columns 6 and 7, and a 2 x AA battery pack wired in on the right" style="width: 100%; height: auto;">
         <figcaption><b>1. An LED and a resistor</b>The resistor sets the current the LED needs. It lights as the last wire lands.</figcaption>
       </figure>
       <figure class="shot" style="margin-top: 16px;">
-        <img src="shots/wiring-exercise-2-button.png" alt="Wiring diagram: the same LED and resistor, with a push button in columns 10 to 13 wired in series before GND" style="width: 100%; height: auto;">
+        <img src="shots/wiring-exercise-2-button.png" alt="Wiring diagram on the breadboard: the same LED and resistor, with a push button in columns 10 to 13 and a 2 x AA battery pack wired in on the right" style="width: 100%; height: auto;">
         <figcaption><b>2. Add a push button</b>The button goes in the path, not beside it. Pressed or not: two states, which is a digital signal.</figcaption>
       </figure>
       <figure class="shot" style="margin-top: 16px;">
-        <img src="shots/wiring-exercise-3-potentiometer.png" alt="Wiring diagram: the same LED and resistor, with a potentiometer in columns 10 to 12 and its wiper wired to GND" style="width: 100%; height: auto;">
+        <img src="shots/wiring-exercise-3-potentiometer.png" alt="Wiring diagram on the breadboard: the same LED and resistor, with a potentiometer in columns 10 to 12 and a 2 x AA battery pack wired in on the right" style="width: 100%; height: auto;">
         <figcaption><b>3. Swap in a potentiometer</b>The wiper taps the track wherever you turn it, so the resistance changes smoothly. That is an analogue signal.</figcaption>
       </figure>
       <div class="callout"><b>Signals travel on the wire.</b> A pin reads or writes two states, 3.3 V or 0 V. An ADC pin reads a voltage anywhere in between. Switch a pin fast and the average is what matters: that is how brightness and servo angles are sent, and how modules pass numbers along a wire both ends agree on.</div>

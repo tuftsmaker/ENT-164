@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1940" height="1344" viewBox="0 0 1940 1344" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1620" height="1410" viewBox="0 0 1620 1410" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
 <defs>
   <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
     <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.16"/>
@@ -10,148 +10,24 @@
     <stop offset="0" stop-color="#26262a"/><stop offset="1" stop-color="#131316"/>
   </linearGradient>
 </defs>
-<rect width="1940" height="1344" fill="#fdfaf3"/>
-<text x="970.0" y="58" font-size="30" font-weight="700" fill="#26262b" text-anchor="middle">Exercise 1. An LED and a resistor</text>
-<text x="970.0" y="92" font-size="19" fill="#6b6b70" text-anchor="middle">Two jumper wires, and it lights</text>
-<rect x="240" y="120" width="470" height="800" rx="16" fill="url(#pcbg)" stroke="#000" stroke-width="3" filter="url(#sh)"/>
-<text x="475.0" y="150" font-size="15" font-weight="700" fill="#e8e8ee" text-anchor="middle">Freenove ESP32 GPIO Extension Board</text>
-<rect x="410" y="180" width="130" height="290" rx="10" fill="#3a3a3f" stroke="#55555c"/>
-<rect x="422" y="192" width="106" height="120" rx="5" fill="#2c2c31" stroke="#4a4a52"/>
-<path d="M434 202 v100" stroke="#4f4f58" stroke-width="6"/>
-<path d="M450 202 v100" stroke="#4f4f58" stroke-width="6"/>
-<path d="M467 202 v100" stroke="#4f4f58" stroke-width="6"/>
-<path d="M483 202 v100" stroke="#4f4f58" stroke-width="6"/>
-<path d="M500 202 v100" stroke="#4f4f58" stroke-width="6"/>
-<path d="M516 202 v100" stroke="#4f4f58" stroke-width="6"/>
-<text x="475.0" y="350" font-size="14" font-weight="700" fill="#c9c9d1" text-anchor="middle">ESP32-WROVER</text>
-<text x="475.0" y="372" font-size="11" fill="#8d8d97" text-anchor="middle">mounted on top</text>
-<rect x="435.0" y="410" width="80" height="30" rx="5" fill="#6d6d76" stroke="#8a8a94"/>
-<text x="475.0" y="430" font-size="10" fill="#1b1b1d" text-anchor="middle">USB</text>
-<circle cx="280" cy="180" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="180" r="2.6" fill="#141418"/>
-<text x="298" y="186" font-size="17" fill="#b9b9c2" text-anchor="start">3V3</text>
-<circle cx="280" cy="218" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="218" r="2.6" fill="#141418"/>
-<text x="298" y="224" font-size="17" fill="#b9b9c2" text-anchor="start">RST</text>
-<circle cx="280" cy="256" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="256" r="2.6" fill="#141418"/>
-<text x="298" y="262" font-size="17" fill="#f2f2f2" text-anchor="start">36</text>
-<circle cx="280" cy="294" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="294" r="2.6" fill="#141418"/>
-<text x="298" y="300" font-size="17" fill="#f2f2f2" text-anchor="start">39</text>
-<circle cx="280" cy="332" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="332" r="2.6" fill="#141418"/>
-<text x="298" y="338" font-size="17" fill="#f2f2f2" text-anchor="start">34</text>
-<circle cx="280" cy="370" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="370" r="2.6" fill="#141418"/>
-<text x="298" y="376" font-size="17" fill="#f2f2f2" text-anchor="start">35</text>
-<circle cx="280" cy="408" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="408" r="2.6" fill="#141418"/>
-<text x="298" y="414" font-size="17" fill="#f2f2f2" text-anchor="start">32</text>
-<circle cx="280" cy="446" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="446" r="2.6" fill="#141418"/>
-<text x="298" y="452" font-size="17" fill="#f2f2f2" text-anchor="start">33</text>
-<circle cx="280" cy="484" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="484" r="2.6" fill="#141418"/>
-<text x="298" y="490" font-size="17" fill="#f2f2f2" text-anchor="start">25</text>
-<circle cx="280" cy="522" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="522" r="2.6" fill="#141418"/>
-<text x="298" y="528" font-size="17" fill="#f2f2f2" text-anchor="start">26</text>
-<circle cx="280" cy="560" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="560" r="2.6" fill="#141418"/>
-<text x="298" y="566" font-size="17" fill="#f2f2f2" text-anchor="start">27</text>
-<circle cx="280" cy="598" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="598" r="2.6" fill="#141418"/>
-<text x="298" y="604" font-size="17" fill="#f2f2f2" text-anchor="start">14</text>
-<circle cx="280" cy="636" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="636" r="2.6" fill="#141418"/>
-<text x="298" y="642" font-size="17" fill="#f2f2f2" text-anchor="start">12</text>
-<circle cx="280" cy="674" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="280" cy="674" r="2.6" fill="#141418"/>
-<text x="298" y="680" font-size="17" fill="#b9b9c2" text-anchor="start">GND</text>
-<circle cx="280" cy="712" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="712" r="2.6" fill="#141418"/>
-<text x="298" y="718" font-size="17" fill="#f2f2f2" text-anchor="start">13</text>
-<circle cx="280" cy="750" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="750" r="2.6" fill="#141418"/>
-<text x="298" y="756" font-size="17" fill="#b9b9c2" text-anchor="start">3V3</text>
-<circle cx="280" cy="788" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="788" r="2.6" fill="#141418"/>
-<text x="298" y="794" font-size="17" fill="#b9b9c2" text-anchor="start">3V3</text>
-<circle cx="280" cy="826" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="826" r="2.6" fill="#141418"/>
-<text x="298" y="832" font-size="17" fill="#b9b9c2" text-anchor="start">3V3</text>
-<circle cx="280" cy="864" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="864" r="2.6" fill="#141418"/>
-<text x="298" y="870" font-size="17" fill="#b9b9c2" text-anchor="start">5V</text>
-<circle cx="280" cy="902" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="280" cy="902" r="2.6" fill="#141418"/>
-<text x="298" y="908" font-size="17" fill="#b9b9c2" text-anchor="start">5V</text>
-<circle cx="670" cy="180" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="180" r="2.6" fill="#141418"/>
-<text x="652" y="186" font-size="17" fill="#b9b9c2" text-anchor="end">GND</text>
-<circle cx="670" cy="218" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="218" r="2.6" fill="#141418"/>
-<text x="652" y="224" font-size="17" fill="#f2f2f2" text-anchor="end">23</text>
-<circle cx="670" cy="256" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="256" r="2.6" fill="#141418"/>
-<text x="652" y="262" font-size="17" fill="#f2f2f2" text-anchor="end">22</text>
-<circle cx="670" cy="294" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="294" r="2.6" fill="#141418"/>
-<text x="652" y="300" font-size="17" fill="#f2f2f2" text-anchor="end">1</text>
-<circle cx="670" cy="332" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="332" r="2.6" fill="#141418"/>
-<text x="652" y="338" font-size="17" fill="#f2f2f2" text-anchor="end">3</text>
-<circle cx="670" cy="370" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="370" r="2.6" fill="#141418"/>
-<text x="652" y="376" font-size="17" fill="#f2f2f2" text-anchor="end">21</text>
-<circle cx="670" cy="408" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="408" r="2.6" fill="#141418"/>
-<text x="652" y="414" font-size="17" fill="#b9b9c2" text-anchor="end">GND</text>
-<circle cx="670" cy="446" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="446" r="2.6" fill="#141418"/>
-<text x="652" y="452" font-size="17" fill="#f2f2f2" text-anchor="end">19</text>
-<circle cx="670" cy="484" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="484" r="2.6" fill="#141418"/>
-<text x="652" y="490" font-size="17" fill="#f2f2f2" text-anchor="end">18</text>
-<circle cx="670" cy="522" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="522" r="2.6" fill="#141418"/>
-<text x="652" y="528" font-size="17" fill="#f2f2f2" text-anchor="end">5</text>
-<circle cx="670" cy="560" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="560" r="2.6" fill="#141418"/>
-<text x="652" y="566" font-size="17" fill="#b9b9c2" text-anchor="end">GND</text>
-<circle cx="670" cy="598" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="598" r="2.6" fill="#141418"/>
-<text x="652" y="604" font-size="17" fill="#b9b9c2" text-anchor="end">GND</text>
-<circle cx="670" cy="636" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="636" r="2.6" fill="#141418"/>
-<text x="652" y="642" font-size="17" fill="#f2f2f2" text-anchor="end">4</text>
-<circle cx="670" cy="674" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="674" r="2.6" fill="#141418"/>
-<text x="652" y="680" font-size="17" fill="#f2f2f2" text-anchor="end">0</text>
-<circle cx="670" cy="712" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="712" r="2.6" fill="#141418"/>
-<text x="652" y="718" font-size="17" fill="#f2f2f2" text-anchor="end">2</text>
-<circle cx="670" cy="750" r="6.5" fill="#d9d4c8" stroke="#8a8a94" stroke-width="1.5"/>
-<circle cx="670" cy="750" r="2.6" fill="#141418"/>
-<text x="652" y="756" font-size="17" fill="#f2f2f2" text-anchor="end">15</text>
-<circle cx="670" cy="788" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="788" r="2.6" fill="#141418"/>
-<text x="652" y="794" font-size="17" fill="#b9b9c2" text-anchor="end">GND</text>
-<circle cx="670" cy="826" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="826" r="2.6" fill="#141418"/>
-<text x="652" y="832" font-size="17" fill="#b9b9c2" text-anchor="end">GND</text>
-<circle cx="670" cy="864" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="864" r="2.6" fill="#141418"/>
-<text x="652" y="870" font-size="17" fill="#b9b9c2" text-anchor="end">GND</text>
-<circle cx="670" cy="902" r="6.5" fill="#d9a441" stroke="#8a8a94" stroke-width="1.5" filter="url(#glow)"/>
-<circle cx="670" cy="902" r="2.6" fill="#141418"/>
-<text x="652" y="908" font-size="17" fill="#b9b9c2" text-anchor="end">GND</text>
-<rect x="740" y="340" width="1020" height="570" rx="14" fill="#f4f1ea" stroke="#cfc9bb" stroke-width="3" filter="url(#sh)"/>
-<text x="762" y="366" font-size="13" font-weight="700" fill="#a49c8a">BREADBOARD</text>
-<line x1="758" y1="646" x2="1742" y2="646" stroke="#e2dccd" stroke-width="10"/>
-<line x1="780" y1="400" x2="1704" y2="400" stroke="#d94a4a" stroke-width="2.5" opacity="0.5"/>
-<text x="766" y="405" font-size="14" font-weight="700" fill="#d94a4a" text-anchor="end">+</text>
+<rect width="1620" height="1410" fill="#fdfaf3"/>
+<text x="810.0" y="58" font-size="30" font-weight="700" fill="#26262b" text-anchor="middle">Exercise 1. An LED and a resistor</text>
+<text x="810.0" y="92" font-size="19" fill="#6b6b70" text-anchor="middle">A 2 x AA battery pack (3 V), the breadboard, and two parts</text>
+<rect x="60" y="340" width="1500" height="570" rx="14" fill="#f4f1ea" stroke="#cfc9bb" stroke-width="3" filter="url(#sh)"/>
+<text x="82" y="366" font-size="13" font-weight="700" fill="#a49c8a">BREADBOARD</text>
+<line x1="78" y1="646" x2="1542" y2="646" stroke="#e2dccd" stroke-width="10"/>
+<line x1="100" y1="400" x2="1432" y2="400" stroke="#d94a4a" stroke-width="2.5" opacity="0.5"/>
+<text x="86" y="405" font-size="14" font-weight="700" fill="#d94a4a" text-anchor="end">+</text>
+<circle cx="120" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="400" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="400" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="400" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="400" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="400" r="3.4" fill="#b9b3a6"/>
@@ -162,12 +38,18 @@
 <circle cx="1276" cy="400" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="400" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="400" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="400" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="400" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="400" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="400" r="3.4" fill="#b9b3a6"/>
-<line x1="780" y1="422" x2="1704" y2="422" stroke="#4a7fd9" stroke-width="2.5" opacity="0.5"/>
-<text x="766" y="427" font-size="14" font-weight="700" fill="#4a7fd9" text-anchor="end">−</text>
+<line x1="100" y1="422" x2="1432" y2="422" stroke="#4a7fd9" stroke-width="2.5" opacity="0.5"/>
+<text x="86" y="427" font-size="14" font-weight="700" fill="#4a7fd9" text-anchor="end">−</text>
+<circle cx="120" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="422" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="422" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="422" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="422" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="422" r="3.4" fill="#b9b3a6"/>
@@ -178,12 +60,18 @@
 <circle cx="1276" cy="422" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="422" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="422" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="422" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="422" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="422" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="422" r="3.4" fill="#b9b3a6"/>
-<line x1="780" y1="850" x2="1704" y2="850" stroke="#d94a4a" stroke-width="2.5" opacity="0.5"/>
-<text x="766" y="855" font-size="14" font-weight="700" fill="#d94a4a" text-anchor="end">+</text>
+<line x1="100" y1="850" x2="1432" y2="850" stroke="#d94a4a" stroke-width="2.5" opacity="0.5"/>
+<text x="86" y="855" font-size="14" font-weight="700" fill="#d94a4a" text-anchor="end">+</text>
+<circle cx="120" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="850" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="850" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="850" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="850" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="850" r="3.4" fill="#b9b3a6"/>
@@ -194,12 +82,18 @@
 <circle cx="1276" cy="850" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="850" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="850" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="850" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="850" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="850" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="850" r="3.4" fill="#b9b3a6"/>
-<line x1="780" y1="872" x2="1704" y2="872" stroke="#4a7fd9" stroke-width="2.5" opacity="0.5"/>
-<text x="766" y="877" font-size="14" font-weight="700" fill="#4a7fd9" text-anchor="end">−</text>
+<line x1="100" y1="872" x2="1432" y2="872" stroke="#4a7fd9" stroke-width="2.5" opacity="0.5"/>
+<text x="86" y="877" font-size="14" font-weight="700" fill="#4a7fd9" text-anchor="end">−</text>
+<circle cx="120" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="872" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="872" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="872" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="872" r="3.4" fill="#b9b3a6"/>
@@ -210,10 +104,16 @@
 <circle cx="1276" cy="872" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="872" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="872" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="872" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="872" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="872" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="872" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="470" r="3.4" fill="#b9b3a6"/>
@@ -224,10 +124,16 @@
 <circle cx="1276" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="502" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="502" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="502" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="502" r="3.4" fill="#b9b3a6"/>
@@ -238,10 +144,16 @@
 <circle cx="1276" cy="502" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="502" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="534" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="534" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="534" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="534" r="3.4" fill="#b9b3a6"/>
@@ -252,10 +164,16 @@
 <circle cx="1276" cy="534" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="534" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="566" r="3.4" fill="#b9b3a6"/>
@@ -266,10 +184,16 @@
 <circle cx="1276" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="598" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="598" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="598" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="598" r="3.4" fill="#b9b3a6"/>
@@ -280,10 +204,16 @@
 <circle cx="1276" cy="598" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="598" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="598" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="598" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="598" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="598" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="598" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="694" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="694" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="694" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="694" r="3.4" fill="#b9b3a6"/>
@@ -294,10 +224,16 @@
 <circle cx="1276" cy="694" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="694" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="694" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="694" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="694" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="694" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="694" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="726" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="726" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="726" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="726" r="3.4" fill="#b9b3a6"/>
@@ -308,10 +244,16 @@
 <circle cx="1276" cy="726" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="726" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="726" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="726" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="726" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="726" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="726" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="758" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="758" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="758" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="758" r="3.4" fill="#b9b3a6"/>
@@ -322,10 +264,16 @@
 <circle cx="1276" cy="758" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="758" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="758" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="758" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="758" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="758" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="758" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="790" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="790" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="790" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="790" r="3.4" fill="#b9b3a6"/>
@@ -336,10 +284,16 @@
 <circle cx="1276" cy="790" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="790" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="790" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="790" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="790" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="790" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="790" r="3.4" fill="#b9b3a6"/>
+<circle cx="120" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="188" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="324" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="392" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="460" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="664" cy="822" r="3.4" fill="#b9b3a6"/>
+<circle cx="732" cy="822" r="3.4" fill="#b9b3a6"/>
 <circle cx="800" cy="822" r="3.4" fill="#b9b3a6"/>
 <circle cx="868" cy="822" r="3.4" fill="#b9b3a6"/>
 <circle cx="936" cy="822" r="3.4" fill="#b9b3a6"/>
@@ -350,24 +304,27 @@
 <circle cx="1276" cy="822" r="3.4" fill="#b9b3a6"/>
 <circle cx="1344" cy="822" r="3.4" fill="#b9b3a6"/>
 <circle cx="1412" cy="822" r="3.4" fill="#b9b3a6"/>
-<circle cx="1480" cy="822" r="3.4" fill="#b9b3a6"/>
-<circle cx="1548" cy="822" r="3.4" fill="#b9b3a6"/>
-<circle cx="1616" cy="822" r="3.4" fill="#b9b3a6"/>
-<circle cx="1684" cy="822" r="3.4" fill="#b9b3a6"/>
-<rect x="920" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
-<circle cx="936" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="936" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="936" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="936" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="936" cy="598" r="3.4" fill="#b9b3a6"/>
-<line x1="936" y1="470" x2="936" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
-<rect x="1192" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
-<circle cx="1208" cy="470" r="3.4" fill="#b9b3a6"/>
-<circle cx="1208" cy="502" r="3.4" fill="#b9b3a6"/>
-<circle cx="1208" cy="534" r="3.4" fill="#b9b3a6"/>
-<circle cx="1208" cy="566" r="3.4" fill="#b9b3a6"/>
-<circle cx="1208" cy="598" r="3.4" fill="#b9b3a6"/>
-<line x1="1208" y1="470" x2="1208" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
+<rect x="240" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
+<circle cx="256" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="256" cy="598" r="3.4" fill="#b9b3a6"/>
+<line x1="256" y1="470" x2="256" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
+<rect x="512" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
+<circle cx="528" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="528" cy="598" r="3.4" fill="#b9b3a6"/>
+<line x1="528" y1="470" x2="528" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
+<rect x="580" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
+<circle cx="596" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="596" cy="598" r="3.4" fill="#b9b3a6"/>
+<line x1="596" y1="470" x2="596" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
 <rect x="1260" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
 <circle cx="1276" cy="470" r="3.4" fill="#b9b3a6"/>
 <circle cx="1276" cy="502" r="3.4" fill="#b9b3a6"/>
@@ -375,39 +332,54 @@
 <circle cx="1276" cy="566" r="3.4" fill="#b9b3a6"/>
 <circle cx="1276" cy="598" r="3.4" fill="#b9b3a6"/>
 <line x1="1276" y1="470" x2="1276" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
-<polyline class="wire" data-wire="0" data-colour="red" data-label="3V3" points="280,788 210,788 210,936 730,936 730,646 936,646 936,470" fill="none" stroke="#e02020" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
-<circle cx="936" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
-<polyline class="wire" data-wire="1" data-colour="black" data-label="GND" points="1276,598 1276,634 756,634 756,962 184,962 184,674 280,674" fill="none" stroke="#2b2b2b" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
-<circle cx="1276" cy="598" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
-<line x1="936" y1="502" x2="970" y2="502" stroke="#9a9a9a" stroke-width="3.5"/>
-<line x1="1174" y1="502" x2="1208" y2="502" stroke="#9a9a9a" stroke-width="3.5"/>
-<rect x="970" y="486" width="204" height="32" rx="12" fill="#ecdcae" stroke="#b09a6a" stroke-width="2"/>
-<rect x="982" y="486" width="13" height="32" fill="#d02a2a"/>
-<rect x="1000" y="486" width="13" height="32" fill="#d02a2a"/>
-<rect x="1018" y="486" width="13" height="32" fill="#7a4a1e"/>
-<rect x="1036" y="486" width="13" height="32" fill="#d4af37"/>
-<text x="1072.0" y="474" font-size="16" font-weight="700" fill="#6b4423" text-anchor="middle">220 Ω</text>
-<line x1="1208" y1="566" x2="1208" y2="526" stroke="#9a9a9a" stroke-width="3.5"/>
-<line x1="1276" y1="566" x2="1276" y2="526" stroke="#9a9a9a" stroke-width="3.5"/>
-<circle cx="1242.0" cy="526" r="24.28571428571429" fill="#e03030" stroke="#9c1616" stroke-width="2.5"/>
-<circle cx="1234.7142857142858" cy="518.7142857142857" r="9.22857142857143" fill="#f47c7c" opacity="0.6"/>
-<path d="M1225.0 543.0 l34.0 0" stroke="#9c1616" stroke-width="3.5" stroke-linecap="round"/>
-<text x="1242.0" y="487.7142857142857" font-size="15" font-weight="700" fill="#9c1616" text-anchor="middle">LED</text>
-<text x="1306" y="604" font-size="15" fill="#8a8a8a">flat side = cathode (−)</text>
-<text x="1194" y="604" font-size="15" font-weight="700" fill="#9c1616" text-anchor="end">anode (+)</text>
+<rect x="1328" y="454" width="32" height="160" rx="16" fill="#ffe9a8" opacity="0.75"/>
+<circle cx="1344" cy="470" r="3.4" fill="#b9b3a6"/>
+<circle cx="1344" cy="502" r="3.4" fill="#b9b3a6"/>
+<circle cx="1344" cy="534" r="3.4" fill="#b9b3a6"/>
+<circle cx="1344" cy="566" r="3.4" fill="#b9b3a6"/>
+<circle cx="1344" cy="598" r="3.4" fill="#b9b3a6"/>
+<line x1="1344" y1="470" x2="1344" y2="598" stroke="#e0b64a" stroke-width="2" opacity="0.85"/>
+<polyline class="wire" data-wire="0" data-colour="red" data-label="pack + to the resistor" points="1276,470 1276,646 256,646 256,470" fill="none" stroke="#e02020" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
+<circle cx="1276" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
+<circle cx="256" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
+<polyline class="wire" data-wire="1" data-colour="black" data-label="pack - from the LED" points="596,598 596,646 1344,646 1344,470" fill="none" stroke="#2b2b2b" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
+<circle cx="596" cy="598" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
+<circle cx="1344" cy="470" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
+<line x1="1276" y1="470" x2="1276" y2="452" stroke="#9a9a9a" stroke-width="3.5"/>
+<line x1="1344" y1="470" x2="1344" y2="452" stroke="#9a9a9a" stroke-width="3.5"/>
+<rect x="1248.8" y="356" width="122.40000000000009" height="96" rx="8" fill="#2b2b30" stroke="#1d4732" stroke-width="2.5"/>
+<text x="1310.0" y="390" font-size="16" font-weight="700" fill="#fff" text-anchor="middle">2 x AA (3 V)</text>
+<text x="1250" y="487" font-size="16" fill="#444" text-anchor="middle">+</text>
+<text x="1318" y="487" font-size="16" fill="#444" text-anchor="middle">-</text>
+<line x1="256" y1="502" x2="290" y2="502" stroke="#9a9a9a" stroke-width="3.5"/>
+<line x1="494" y1="502" x2="528" y2="502" stroke="#9a9a9a" stroke-width="3.5"/>
+<rect x="290" y="486" width="204" height="32" rx="12" fill="#ecdcae" stroke="#b09a6a" stroke-width="2"/>
+<rect x="302" y="486" width="13" height="32" fill="#d02a2a"/>
+<rect x="320" y="486" width="13" height="32" fill="#d02a2a"/>
+<rect x="338" y="486" width="13" height="32" fill="#7a4a1e"/>
+<rect x="356" y="486" width="13" height="32" fill="#d4af37"/>
+<text x="392.0" y="474" font-size="16" font-weight="700" fill="#6b4423" text-anchor="middle">220 Ω</text>
+<line x1="528" y1="566" x2="528" y2="526" stroke="#9a9a9a" stroke-width="3.5"/>
+<line x1="596" y1="566" x2="596" y2="526" stroke="#9a9a9a" stroke-width="3.5"/>
+<circle cx="562.0" cy="526" r="24.28571428571429" fill="#e03030" stroke="#9c1616" stroke-width="2.5"/>
+<circle cx="554.7142857142857" cy="518.7142857142857" r="9.22857142857143" fill="#f47c7c" opacity="0.6"/>
+<path d="M545.0 543.0 l34.0 0" stroke="#9c1616" stroke-width="3.5" stroke-linecap="round"/>
+<text x="562.0" y="487.7142857142857" font-size="15" font-weight="700" fill="#9c1616" text-anchor="middle">LED</text>
+<text x="626" y="604" font-size="15" fill="#8a8a8a">flat side = cathode (−)</text>
+<text x="514" y="604" font-size="15" font-weight="700" fill="#9c1616" text-anchor="end">anode (+)</text>
 <rect class="legend" data-colour="red" x="90" y="1023" width="26" height="16" rx="4" fill="#e02020"/>
-<text x="124" y="1038" font-size="18" fill="#444">3V3</text>
-<rect class="legend" data-colour="black" x="216.8" y="1023" width="26" height="16" rx="4" fill="#2b2b2b"/>
-<text x="250.8" y="1038" font-size="18" fill="#444">GND</text>
-<circle cx="356.6" cy="1031" r="9" fill="#d9a441"/>
-<text x="373.6" y="1038" font-size="18" fill="#444">board pin</text>
-<rect x="558.6" y="1020" width="26" height="20" rx="9" fill="#ffe9a8"/>
-<text x="594.6" y="1038" font-size="18" fill="#444">one connected net (5 holes)</text>
+<text x="124" y="1038" font-size="18" fill="#444">pack + to the resistor</text>
+<rect class="legend" data-colour="black" x="399.2" y="1023" width="26" height="16" rx="4" fill="#2b2b2b"/>
+<text x="433.2" y="1038" font-size="18" fill="#444">pack - from the LED</text>
+<rect x="679.5999999999999" y="1020" width="26" height="20" rx="9" fill="#ffe9a8"/>
+<text x="715.5999999999999" y="1038" font-size="18" fill="#444">one connected net (5 holes)</text>
 <text x="90" y="1084" font-size="18" font-weight="700" fill="#26262b">Steps</text>
-<text x="90" y="1117" font-size="18" fill="#444">1.  Resistor 220 ohm: one leg in column 2, the other in column 6.</text>
-<text x="90" y="1150" font-size="18" fill="#444">2.  LED: long leg in column 6, short leg in column 7.</text>
-<text x="90" y="1183" font-size="18" fill="#444">3.  Red jumper: 3V3 on the board to column 2.</text>
-<text x="90" y="1216" font-size="18" fill="#444">4.  Black jumper: column 7 to GND. The LED lights.</text>
-<text x="90" y="1267" font-size="18" fill="#8a5a00">Never wire an LED without the resistor. The resistor takes the current the LED cannot.</text>
-<text x="90" y="1300" font-size="18" fill="#666">The five holes of one column are already connected. That is what a breadboard does.</text>
+<text x="90" y="1117" font-size="18" fill="#444">1.  Battery pack: clip the two AA cells in and leave its switch off for now.</text>
+<text x="90" y="1150" font-size="18" fill="#444">2.  Resistor 220 ohm: one leg in column 2, the other in column 6.</text>
+<text x="90" y="1183" font-size="18" fill="#444">3.  LED: long leg in column 6, short leg in column 7.</text>
+<text x="90" y="1216" font-size="18" fill="#444">4.  Red jumper: the pack's + to column 2. Black jumper: column 7 to the pack's -.</text>
+<text x="90" y="1249" font-size="18" fill="#444">5.  Switch the pack on. The LED lights.</text>
+<text x="90" y="1300" font-size="18" fill="#8a5a00">Never wire an LED without the resistor. It sets the current the LED cannot take.</text>
+<text x="90" y="1333" font-size="18" fill="#666">Three volts suits a red, yellow or green LED. A blue or white one needs more voltage than this pack has.</text>
+<text x="90" y="1366" font-size="18" fill="#666">The five holes of one column are already connected. That is what a breadboard does.</text>
 </svg>
