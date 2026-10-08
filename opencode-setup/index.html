@@ -46,23 +46,13 @@
 <!-- ================= CONTENT ================= -->
 <div class="page">
 
-  <p class="lead"><b>OpenCode</b> is an AI helper that runs as an app on your laptop. You ask questions in plain English, and it answers them, explains code, and walks you through technical work. That includes the wiring diagrams, the Onshape questions, and the error messages you can't read.</p>
-  <p><b>Figure 1</b> shows where each part runs. On your laptop: <b>OpenCode</b>, the class Python sandbox that runs the class skills and uploads code to your board, and the ESP32 itself, plugged in over USB. In the cloud: <b>OpenCode Console</b>, the service that connects the app to the model with your class account, and <b>DeepSeek V4.1 Flash</b>, the model that writes the answers.</p>
+  <p class="lead"><b>OpenCode Desktop</b> is an AI helper that runs as an app on your laptop. You ask questions in plain English, and it answers them, explains code, and walks you through technical work. That includes the wiring diagrams, the code, and the error messages you can't read.</p>
+  <p><b>Figure 1</b> shows where each part runs. On your laptop: <b>OpenCode Desktop</b>, the class Python sandbox that runs the class skills and uploads code to your board, and the ESP32 itself, plugged in over USB. In the cloud: <b>OpenCode Console</b>, the service that connects the app to the model with your class account, and <b>DeepSeek V4.1 Flash</b>, the model that writes the answers.</p>
   <figure>
-    <img src="shots/system-diagram.svg" alt="A two-zone diagram. On your laptop: OpenCode, the app you type in; the class Python sandbox, which runs the class skills and uploads code to the board; and your ESP32 board, plugged in over USB. In the cloud: OpenCode Console, the service that holds your class account, which calls DeepSeek V4.1 Flash, the model that writes the answers.">
-    <figcaption><b>Figure 1.</b> The parts of the system, and where they run. On your laptop: OpenCode, the Python sandbox that runs the class skills and uploads code to the board, and your ESP32 over USB. In the cloud: OpenCode Console and DeepSeek V4.1 Flash, the model that writes the answers.</figcaption>
+    <img src="shots/system-diagram.svg" alt="A two-zone diagram. On your laptop: OpenCode Desktop, the app you type in; the class Python sandbox, which runs the class skills and uploads code to the board; and your ESP32 board, plugged in over USB. In the cloud: OpenCode Console, the service that holds your class account, which calls DeepSeek V4.1 Flash, the model that writes the answers.">
+    <figcaption><b>Figure 1.</b> The parts of the system, and where they run. On your laptop: OpenCode Desktop, the Python sandbox that runs the class skills and uploads code to the board, and your ESP32 over USB. In the cloud: OpenCode Console and DeepSeek V4.1 Flash, the model that writes the answers.</figcaption>
   </figure>
-  <p>One way to keep them straight: OpenCode is your phone, OpenCode Console is the phone company, and DeepSeek V4.1 Flash is the person you're calling. This guide gets all three working. You won't touch a terminal or write any code.</p>
 
-  <div class="callout">
-    <b>Why DeepSeek V4.1 Flash for this class?</b>
-    <ul>
-      <li><b>Built for this work.</b> It's tuned for reasoning and for using tools, which is most of what your projects ask of it.</li>
-      <li><b>Open weights.</b> ChatGPT, Claude and Gemini are closed: you can use them, but you cannot look inside. DeepSeek publishes this model under an open licence, so anyone can inspect it and run it themselves. That fits a class where you take things apart to learn how they work.</li>
-      <li><b>Long sessions.</b> Coding needs a lot of working memory. Free ChatGPT and Claude sessions are limited, and they often run out in the middle of a job. This model holds a million tokens at once, about the length of a long novel, so the code, the errors and the conversation stay with it until the work is done.</li>
-      <li><b>One account.</b> Console gives us access to it, so you sign in once. You can try other models later without starting over.</li>
-    </ul>
-  </div>
 
   <h3>What you'll need</h3>
   <ul class="checklist">
@@ -71,12 +61,6 @@
     <li>Your Tufts email. The class invitation goes there, and you sign in with it in Step 1</li>
     <li>Nothing to pay. The class budget covers AI use for your coursework</li>
   </ul>
-
-  <div class="callout"><b>One name you'll see twice.</b> <b>OpenCode Console</b> is the OpenCode team's service: one account, and a set of AI models they have tested and picked. In the app it sometimes appears as <b>OpenCode Zen</b>, as in the screenshot above. Same service, two names, and this guide uses OpenCode Console, like the sign-in page does.</div>
-
-  <div class="callout"><b>The maker skills.</b> The class website publishes a set of maker skills for OpenCode. A skill is a set of instructions for one job. OpenCode knows the name and description of every skill you have, and when your request matches one, it loads that skill's full instructions and follows them. The class skills cover the work this course does: drawing wiring diagrams for your ESP32 kit, preparing a file for the laser cutter, and building finger-jointed boxes. OpenCode installs them in Step 7, and your instructor keeps them up to date.</div>
-
-  <div class="callout"><b>About Python.</b> The maker skills are programs, so they need Python. You do not install anything by hand: the first time a skill runs, OpenCode sets up a private Python environment for the class in <code>~/.venvs/ent164-maker</code> and installs what the skills need there. It never touches the Python you already have.<br><br>The one catch is the base Python 3 that environment needs. Macs and Windows machines usually do not come with it. If yours is missing, OpenCode offers to install it: on a Mac that opens the Command Line Tools dialog, and on Windows it runs <code>winget install Python.Python.3.12</code>.</div>
 
   <!-- STEP 1 -->
   <div class="step">
@@ -96,7 +80,7 @@
 
   <!-- STEP 2 -->
   <div class="step">
-    <div class="step-header"><div class="step-num">2</div><h2>Download the OpenCode app</h2></div>
+    <div class="step-header"><div class="step-num">2</div><h2>Download OpenCode Desktop</h2></div>
     <ol>
       <li>Open your browser and go to <b>opencode.ai/download</b>.</li>
       <li>Under <b>OpenCode Desktop</b>, click the download for your computer: <b>macOS</b> (Apple Silicon or Intel) or <b>Windows (x64)</b>.</li>
@@ -110,7 +94,7 @@
 
   <!-- STEP 3 -->
   <div class="step">
-    <div class="step-header"><div class="step-num">3</div><h2>Install the app</h2></div>
+    <div class="step-header"><div class="step-num">3</div><h2>Install OpenCode Desktop</h2></div>
     <p><b>On a Mac:</b></p>
     <ol>
       <li>Open the downloaded file. Click it in your <b>Downloads</b> folder, or in the notification your browser shows.</li>
@@ -132,7 +116,7 @@
     <div class="step-header"><div class="step-num">4</div><h2>Sign in to OpenCode Console</h2></div>
     <p>This step connects the app to your class account. You sign in, and that is the whole step: no API key, no password to copy. If a dialog offers you a key, it is offering the wrong thing.</p>
     <ol>
-      <li>Open OpenCode. The message box sits at the bottom, the same box you type questions in.</li>
+      <li>Open OpenCode Desktop. The message box sits at the bottom, the same box you type questions in.</li>
       <li>Type <b>/connect</b> and press <span class="keycap">Enter</span>. A <b>Connect provider</b> list opens.</li>
       <li>Click <b>OpenCode Console</b>. It's in the <b>Popular</b> section, marked <b>Recommended</b>.</li>
     </ol>
@@ -289,7 +273,7 @@
         <tr><td><i>"I'm new to coding. What can you help me with?"</i></td><td>A plain-language list of what it can do, and where to start.</td></tr>
         <tr><td><i>"Explain this like I've never seen it before"</i></td><td>Any file or concept broken down step by step, in beginner terms.</td></tr>
         <tr><td><i>"Draw me a wiring diagram for connecting an LED to my ESP32"</i></td><td>A labelled breadboard picture, once the class tools are on (Step 7).</td></tr>
-        <tr><td><i>"Help me prepare my Onshape sketch for the laser cutter"</i></td><td>Checks and fixes so your DXF is ready for Nolop.</td></tr>
+        <tr><td><i>"Write the code for a button that lights an LED"</i></td><td>The MicroPython code, with the wiring it needs.</td></tr>
       </tbody>
     </table>
     <p class="muted">Once you're comfortable, the official docs at <b>opencode.ai/docs</b> show what else OpenCode can do.</p>
