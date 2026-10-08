@@ -49,8 +49,8 @@
   <p class="lead"><b>OpenCode</b> is an AI helper that runs as an app on your computer. You ask questions in plain English, and it answers them, explains code, and walks you through technical work. That includes the wiring diagrams, the Onshape questions, and the error messages you can't read.</p>
   <p><b>DeepSeek V4.1 Flash</b> is the model that writes the answers. <b>OpenCode Console</b> is the service that connects the app to it with your class account.</p>
   <figure>
-    <img src="shots/system-diagram.svg" alt="A diagram of four parts, left to right: you at your computer, OpenCode the app, OpenCode Console the service, and DeepSeek V4.1 Flash the model.">
-    <figcaption><b>Figure 1.</b> The parts of the system. You type in OpenCode. The app connects to OpenCode Console, which calls DeepSeek V4.1 Flash.</figcaption>
+    <img src="shots/system-diagram.svg" alt="A two-zone diagram. On your laptop: OpenCode, the app you type in; the class Python sandbox it runs the class skills in; and your ESP32 board, plugged in over USB. In the cloud: OpenCode Console, the service that holds your class account, which calls DeepSeek V4.1 Flash, the model that writes the answers.">
+    <figcaption><b>Figure 1.</b> The parts of the system, and where they run. On your laptop: OpenCode, the Python sandbox that runs the class skills, and your ESP32 over USB. In the cloud: OpenCode Console and DeepSeek V4.1 Flash, the model that writes the answers.</figcaption>
   </figure>
   <p>One way to keep them straight: OpenCode is your phone, OpenCode Console is the phone company, and DeepSeek V4.1 Flash is the person you're calling. This guide gets all three working. You won't touch a terminal or write any code.</p>
 

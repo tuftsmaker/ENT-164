@@ -1,42 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="232" viewBox="0 0 1000 232" role="img">
-  <title>You use OpenCode. OpenCode connects to OpenCode Console. Console calls DeepSeek V4.1 Flash.</title>
-  <rect width="1000" height="232" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620" role="img"
+     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Inside your laptop: OpenCode, the class Python sandbox and your ESP32 board over USB. In the cloud: OpenCode Console, which calls DeepSeek V4.1 Flash.</title>
+  <rect width="1000" height="620" fill="#ffffff"/>
 
-  <!-- the three hops -->
-  <g stroke="#3E8EDE" stroke-width="3" fill="#3E8EDE">
-    <line x1="245" y1="110" x2="272" y2="110"/>
-    <path d="M271 102 L283 110 L271 118 Z"/>
-    <line x1="481" y1="110" x2="508" y2="110"/>
-    <path d="M507 102 L519 110 L507 118 Z"/>
-    <line x1="717" y1="110" x2="744" y2="110"/>
-    <path d="M743 102 L755 110 L743 118 Z"/>
+  <!-- ======================= on your laptop ======================= -->
+  <rect x="24" y="56" width="576" height="528" rx="24" fill="#f7f9fc" stroke="#d5dce7" stroke-width="2"/>
+  <g fill="none" stroke="#0d1526" stroke-width="2.4" stroke-linecap="round">
+    <rect x="52" y="82" width="38" height="22" rx="3"/>
+    <line x1="46" y1="106" x2="96" y2="106"/>
   </g>
+  <text x="110" y="103" font-size="22" font-weight="700" fill="#0d1526">On your laptop</text>
 
-  <!-- the four parts -->
-  <g fill="#f7f9fc" stroke="#e6eaf1" stroke-width="2">
-    <rect x="51" y="62" width="190" height="96" rx="14"/>
-    <rect x="287" y="62" width="190" height="96" rx="14"/>
-    <rect x="523" y="62" width="190" height="96" rx="14"/>
-    <rect x="759" y="62" width="190" height="96" rx="14"/>
+  <!-- the client: OpenCode -->
+  <rect x="56" y="128" width="512" height="116" rx="14" fill="#ffffff" stroke="#bcd8f7" stroke-width="2"/>
+  <g>
+    <rect x="80" y="148" width="96" height="18" rx="4" fill="#3E8EDE"/>
+    <circle cx="90" cy="157" r="2.6" fill="#ffffff"/>
+    <circle cx="99" cy="157" r="2.6" fill="#ffffff"/>
+    <circle cx="108" cy="157" r="2.6" fill="#ffffff"/>
+    <rect x="80" y="166" width="96" height="58" rx="4" fill="#ffffff" stroke="#bcd8f7" stroke-width="2"/>
+    <polyline points="92,196 100,204 92,212" fill="none" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="108" y1="212" x2="126" y2="212" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round"/>
   </g>
+  <text x="196" y="174" font-size="19" font-weight="700" fill="#0d1526">OpenCode</text>
+  <text x="196" y="198" font-size="13.5" fill="#5f6b7a">the app you type in, and where the answers appear</text>
 
-  <g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" text-anchor="middle">
-    <text x="146" y="103" font-size="19" font-weight="700" fill="#0d1526">You</text>
-    <text x="146" y="127" font-size="13.5" fill="#5f6b7a">at your computer</text>
+  <!-- the local Python sandbox -->
+  <rect x="56" y="276" width="246" height="288" rx="14" fill="#fbf7f2" stroke="#e0d3c5" stroke-width="2"/>
+  <g>
+    <rect x="80" y="300" width="88" height="24" rx="5" fill="#63493A"/>
+    <rect x="80" y="324" width="88" height="64" fill="#ffffff" stroke="#63493A" stroke-width="2"/>
+    <line x1="80" y1="324" x2="168" y2="388" stroke="#e0d3c5" stroke-width="2"/>
+    <line x1="168" y1="324" x2="80" y2="388" stroke="#e0d3c5" stroke-width="2"/>
+  </g>
+  <text x="80" y="428" font-size="17" font-weight="700" fill="#3D2E25">The class Python</text>
+  <text x="80" y="450" font-size="17" font-weight="700" fill="#3D2E25">sandbox</text>
+  <text x="80" y="482" font-size="13" fill="#5f6b7a">OpenCode runs the class</text>
+  <text x="80" y="500" font-size="13" fill="#5f6b7a">skills here, in their own</text>
+  <text x="80" y="518" font-size="13" fill="#5f6b7a">environment.</text>
+  <text x="80" y="546" font-size="12.5" fill="#63493A"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace">~/.venvs/ent164-maker</text>
 
-    <text x="382" y="103" font-size="19" font-weight="700" fill="#0d1526">OpenCode</text>
-    <text x="382" y="127" font-size="13.5" fill="#5f6b7a">the app</text>
-
-    <text x="618" y="103" font-size="19" font-weight="700" fill="#0d1526">OpenCode Console</text>
-    <text x="618" y="127" font-size="13.5" fill="#5f6b7a">the service</text>
-
-    <text x="854" y="103" font-size="15.5" font-weight="700" fill="#0d1526">DeepSeek V4.1 Flash</text>
-    <text x="854" y="127" font-size="13.5" fill="#5f6b7a">the model</text>
-
-    <g font-size="11" fill="#5f6b7a">
-      <text x="264" y="93">type</text>
-      <text x="500" y="93">connect</text>
-      <text x="736" y="93">ask</text>
+  <!-- the device: your ESP32, over USB -->
+  <rect x="326" y="276" width="242" height="288" rx="14" fill="#ffffff" stroke="#d5dce7" stroke-width="2"/>
+  <g>
+    <rect x="350" y="300" width="88" height="88" rx="8" fill="#1e1e22"/>
+    <rect x="362" y="312" width="64" height="38" rx="4" fill="#3a3a3f"/>
+    <rect x="366" y="320" width="30" height="22" rx="2" fill="#55555c"/>
+    <g stroke="#8a8a94" stroke-width="2" stroke-linecap="round">
+      <line x1="404" y1="316" x2="404" y2="326"/>
+      <line x1="410" y1="316" x2="410" y2="326"/>
+      <line x1="416" y1="316" x2="416" y2="326"/>
+    </g>
+    <circle cx="358" cy="376" r="3.5" fill="#e03030"/>
+    <g stroke="#8a8a94" stroke-width="2.4" stroke-linecap="round">
+      <line x1="358" y1="388" x2="358" y2="398"/>
+      <line x1="370" y1="388" x2="370" y2="398"/>
+      <line x1="382" y1="388" x2="382" y2="398"/>
+      <line x1="394" y1="388" x2="394" y2="398"/>
+      <line x1="406" y1="388" x2="406" y2="398"/>
+      <line x1="418" y1="388" x2="418" y2="398"/>
+      <line x1="438" y1="330" x2="448" y2="330"/>
+      <line x1="438" y1="350" x2="448" y2="350"/>
+      <line x1="438" y1="370" x2="448" y2="370"/>
     </g>
   </g>
+  <text x="350" y="428" font-size="17" font-weight="700" fill="#0d1526">Your ESP32 board</text>
+  <text x="350" y="452" font-size="13" fill="#5f6b7a">plugged in over USB.</text>
+  <text x="350" y="484" font-size="13" fill="#5f6b7a">The class skills put</text>
+  <text x="350" y="502" font-size="13" fill="#5f6b7a">MicroPython on it, then</text>
+  <text x="350" y="520" font-size="13" fill="#5f6b7a">talk to it.</text>
+
+  <!-- the two links out of the app -->
+  <g stroke="#3E8EDE" stroke-width="3" fill="#3E8EDE">
+    <line x1="179" y1="244" x2="179" y2="270"/>
+    <path d="M173 268 L179 278 L185 268 Z"/>
+    <line x1="447" y1="244" x2="447" y2="270"/>
+    <path d="M441 268 L447 278 L453 268 Z"/>
+  </g>
+  <rect x="428" y="250" width="38" height="18" rx="9" fill="#ffffff" stroke="#bcd8f7" stroke-width="1.5"/>
+  <text x="447" y="263" font-size="11" fill="#1F6FD0" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace">USB</text>
+
+  <!-- ======================= in the cloud ======================= -->
+  <rect x="660" y="56" width="316" height="528" rx="24" fill="#f7f9fc" stroke="#3E8EDE" stroke-width="2" stroke-dasharray="10 7"/>
+  <g fill="#ffffff" stroke="#3E8EDE" stroke-width="2">
+    <circle cx="694" cy="97" r="11"/>
+    <circle cx="716" cy="88" r="15"/>
+    <circle cx="740" cy="97" r="11"/>
+  </g>
+  <rect x="683" y="93" width="68" height="15" rx="7" fill="#ffffff" stroke="#3E8EDE" stroke-width="2"/>
+  <text x="764" y="103" font-size="22" font-weight="700" fill="#0d1526">In the cloud</text>
+
+  <!-- the service -->
+  <rect x="684" y="140" width="268" height="150" rx="14" fill="#ffffff" stroke="#bcd8f7" stroke-width="2"/>
+  <g>
+    <polygon points="738,168 762,182 762,210 738,224 714,210 714,182"
+             fill="#eaf3fd" stroke="#1F6FD0" stroke-width="2"/>
+    <g stroke="#1F6FD0" stroke-width="2" stroke-linecap="round">
+      <line x1="724" y1="184" x2="736" y2="194"/>
+      <line x1="740" y1="198" x2="752" y2="208"/>
+    </g>
+    <circle cx="738" cy="196" r="4.5" fill="#1F6FD0"/>
+    <circle cx="723" cy="183" r="3.5" fill="#1F6FD0"/>
+    <circle cx="753" cy="209" r="3.5" fill="#1F6FD0"/>
+  </g>
+  <text x="788" y="188" font-size="17" font-weight="700" fill="#0d1526">OpenCode Console</text>
+  <text x="788" y="212" font-size="13" fill="#5f6b7a">the service that holds</text>
+  <text x="788" y="230" font-size="13" fill="#5f6b7a">your class account</text>
+
+  <g stroke="#1F6FD0" stroke-width="3" fill="#1F6FD0">
+    <line x1="818" y1="290" x2="818" y2="332"/>
+    <path d="M812 330 L818 340 L824 330 Z"/>
+  </g>
+  <text x="832" y="320" font-size="12.5" fill="#5f6b7a">calls</text>
+
+  <!-- the model -->
+  <rect x="684" y="340" width="268" height="150" rx="14" fill="#ffffff" stroke="#c3ccdd" stroke-width="2"/>
+  <g>
+    <rect x="708" y="366" width="60" height="60" rx="8" fill="#eef2f8" stroke="#002E6D" stroke-width="2"/>
+    <g stroke="#002E6D" stroke-width="2" stroke-linecap="round">
+      <line x1="700" y1="380" x2="708" y2="380"/>
+      <line x1="700" y1="394" x2="708" y2="394"/>
+      <line x1="700" y1="408" x2="708" y2="408"/>
+      <line x1="768" y1="380" x2="776" y2="380"/>
+      <line x1="768" y1="394" x2="776" y2="394"/>
+      <line x1="768" y1="408" x2="776" y2="408"/>
+      <line x1="722" y1="358" x2="722" y2="366"/>
+      <line x1="738" y1="358" x2="738" y2="366"/>
+      <line x1="754" y1="358" x2="754" y2="366"/>
+      <line x1="722" y1="426" x2="722" y2="434"/>
+      <line x1="738" y1="426" x2="738" y2="434"/>
+      <line x1="754" y1="426" x2="754" y2="434"/>
+    </g>
+    <path d="M738,376 L743,391 L758,396 L743,401 L738,416 L733,401 L718,396 L733,391 Z" fill="#002E6D"/>
+  </g>
+  <text x="788" y="388" font-size="17" font-weight="700" fill="#0d1526">DeepSeek V4.1 Flash</text>
+  <text x="788" y="412" font-size="13" fill="#5f6b7a">the model that writes</text>
+  <text x="788" y="430" font-size="13" fill="#5f6b7a">the answers</text>
+
+  <!-- ======================= the link between them ======================= -->
+  <g stroke="#3E8EDE" stroke-width="3" fill="#3E8EDE">
+    <line x1="608" y1="330" x2="652" y2="330"/>
+    <path d="M608 324 L598 330 L608 336 Z"/>
+    <path d="M652 324 L662 330 L652 336 Z"/>
+  </g>
+  <text x="630" y="306" font-size="11.5" fill="#1F6FD0" text-anchor="middle">your class</text>
+  <text x="630" y="320" font-size="11.5" fill="#1F6FD0" text-anchor="middle">account</text>
 </svg>
