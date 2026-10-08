@@ -13,3 +13,18 @@
     section: null
   description: assignments/physical-making-reflection.html
   source: repo
+- slug: individual-assignment-ai-assisted-electronics-project
+  name: '👤 Electronics Individual Project'
+  summary: Electronics project. Present a working circuit
+  group: Individual Assignments (35 points)
+  points: 10.0
+  due: '2026-10-15T16:00:00Z'
+  submission_types:
+  - online_text_entry
+  - online_upload
+  module_item:
+    position: null
+    section: null
+  description: assignments/individual-assignment-ai-assisted-electronics-project.html
+  to_fix:
+  - description links a Canvas file copy. Move it into the repo (media pass)
