@@ -385,7 +385,7 @@ the manual; this is the contract.
   models/budget. **Step 7 absorbed the retired `add-class-tools/guide.html`:**
   paste "Add my class skills to opencode:
   https://tuftsmaker.github.io/skills", allow the settings change,
-  restart, and test with **"I am a maker. How can you help me?"**. Note the
+  restart, and test with **"Show me how to blink an external LED."**. Note the
   app's settings sidebar changes shape when **more than one server** is
   configured: Projects/Providers/Models/Extensions then live inside each
   server entry under a **Servers** group instead of at the top level; the
