@@ -329,7 +329,7 @@ the manual; this is the contract.
   and `AGENTS.md` hold the conventions. `skills/` and `tools/skill-publish/`
   moved out of this repo in September 2026.
 - This repo references that URL in two student-facing documents:
-  `opencode-setup/guide.html` (Step 7 and the "where everything
+  `opencode-setup/` (Step 7 and the "where everything
   lives" table) and `handouts/add-class-tools.html`. When a skills change
   alters what those pages say, update them here and rebuild their PDFs (below).
 - Make a change to the skills in the skills repo, never by copying files back

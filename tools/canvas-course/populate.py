@@ -107,7 +107,7 @@ def plan():
     cutting guide - goes with Class 3.
     """
     setups = [('Set up OpenCode + DeepSeek',
-               f'{SITE}/opencode-setup/guide.html')]
+               f'{SITE}/opencode-setup/')]
     laser = [('Laser cutting at Nolop with Inkscape', f'{SITE}/laser-cutting/guide.html')]
     laser += [(title, f'{SITE}/onshape-tips/videos/{slug}.mp4') for title, slug in tips()]
     laser.append(('All nine tips, on the course site', f'{SITE}/onshape-tips/'))

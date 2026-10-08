@@ -198,7 +198,7 @@ def pages() -> dict:
     out = {}
     paths = sorted((ROOT / "classes").glob("class-*/index.html"))
     paths += [ROOT / "workshops" / "index.html",
-              ROOT / "opencode-setup" / "guide.html",
+              ROOT / "opencode-setup" / "index.html",
               ROOT / "laser-cutting" / "index.html",
               ROOT / "laser-cutting" / "guide.html",
               ROOT / "onshape-tips" / "index.html",
