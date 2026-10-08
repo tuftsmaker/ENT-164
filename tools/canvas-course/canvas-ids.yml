@@ -54,7 +54,7 @@
     laser-cutting: laser-cutting-at-nolop-with-inkscape
     laser-cutting-guide: laser-cutting-at-nolop-with-inkscape-beginners-guide
     onshape-tips: onshape-tips
-    opencode-deepseek-guide: ai-coding-agent-setup-guide
+    opencode-setup: ai-coding-agent-setup-guide
     workshops: workshops
 '81044':
   modules:
@@ -109,5 +109,5 @@
     laser-cutting: laser-cutting-at-nolop-with-inkscape
     laser-cutting-guide: laser-cutting-at-nolop-with-inkscape-beginners-guide
     onshape-tips: onshape-tips
-    opencode-deepseek-guide: ai-coding-agent-setup-guide
+    opencode-setup: ai-coding-agent-setup-guide
     workshops: workshops

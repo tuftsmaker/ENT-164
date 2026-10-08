@@ -329,7 +329,7 @@ the manual; this is the contract.
   and `AGENTS.md` hold the conventions. `skills/` and `tools/skill-publish/`
   moved out of this repo in September 2026.
 - This repo references that URL in two student-facing documents:
-  `opencode-deepseek-guide/guide.html` (Step 7 and the "where everything
+  `opencode-setup/guide.html` (Step 7 and the "where everything
   lives" table) and `handouts/add-class-tools.html`. When a skills change
   alters what those pages say, update them here and rebuild their PDFs (below).
 - Make a change to the skills in the skills repo, never by copying files back
@@ -342,7 +342,7 @@ the manual; this is the contract.
   page — check with `pdftotext -f 2 -l 2 ...` (anything printed = it spilled).
 - The fuller web version of that one-pager, `add-class-tools/guide.html` (with
   its own `add-class-tools-to-opencode.pdf`), was **retired** when its steps
-  moved into `opencode-deepseek-guide/` as Step 7. `handouts/add-class-tools.*`
+  moved into `opencode-setup/` as Step 7. `handouts/add-class-tools.*`
   is now the only class-tools handout; edit it when that sentence changes.
 - **Guide pages are US Letter, not A4.** The class is at a US university and
   students print these. `assets/guide.css` sets `@page { size: Letter }` and
@@ -353,7 +353,7 @@ the manual; this is the contract.
   the first and last page of the run, so continuation pages print to the sheet
   edge. The cover opts out as a named page (`page: cover` + `@page cover {
   margin: 0 }`) so it stays full-bleed. If you change the page size, change all
-  three together and rebuild **every** guide PDF — `opencode-deepseek-guide`
+  three together and rebuild **every** guide PDF — `opencode-setup`
   and `laser-cutting` are both built from that one stylesheet. Verify with
   `pdfinfo <pdf> | grep 'Page size'` (expect
   `612 x 792 pts (letter)`) and spot-check that content pages share the same
@@ -364,7 +364,7 @@ the manual; this is the contract.
   in the page footer — retain the attribution if you move or reuse them.
   Class 3's deck and page draw their Inkscape/UCP screenshots from here, so
   editing a shot means copying it into `classes/class-03/shots/` too.
-- **`opencode-deepseek-guide/` is one guide for both operating systems**, with
+- **`opencode-setup/` is one guide for both operating systems**, with
   `shots/` and `ai-coding-agent-setup-guide.pdf`. It replaced the former
   `opencode-deepseek-guide-mac/` and `-win/` pair: the only real differences
   were the download link and the install steps, so those are the only places
