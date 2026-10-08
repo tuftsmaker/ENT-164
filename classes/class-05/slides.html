@@ -814,13 +814,17 @@ while True:
   <div class="s-body">
     <div class="grid g2" style="grid-template-columns: 0.9fr 1.1fr;">
       <div style="display: flex; flex-direction: column; gap: 3mm; min-height: 0;">
-        <figure class="tile" style="flex: 1;">
-          <img src="shots/potentiometer.jpg" alt="A rotary potentiometer with three pins" style="object-fit: contain; background: var(--paper);">
-          <figcaption>Potentiometer. A knob the ESP32 can read</figcaption>
+        <figure class="tile" style="flex: 1; display: flex; flex-direction: column;">
+          <div style="flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center;">
+            <img src="shots/potentiometer.jpg" alt="A rotary potentiometer with three pins" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
+          </div>
+          <figcaption style="position: static; background: none; border-top: 1px solid var(--line);">Potentiometer. A knob the ESP32 can read</figcaption>
         </figure>
-        <figure class="tile" style="flex: 1;">
-          <img src="shots/joystick.jpg" alt="A KY-023 joystick module with X and Y axes and a push button" style="object-fit: contain; background: var(--paper);">
-          <figcaption>KY-023 joystick. Two axes plus a button</figcaption>
+        <figure class="tile" style="flex: 1; display: flex; flex-direction: column;">
+          <div style="flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center;">
+            <img src="shots/joystick.jpg" alt="A KY-023 joystick module with X and Y axes and a push button" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
+          </div>
+          <figcaption style="position: static; background: none; border-top: 1px solid var(--line);">KY-023 joystick. Two axes plus a button</figcaption>
         </figure>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
@@ -858,8 +862,8 @@ while True:
   </header>
   <div class="s-body">
     <div class="grid g2" style="grid-template-columns: 0.92fr 1.08fr;">
-      <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); display: flex; min-height: 0;">
-        <img src="shots/servo-sg90.jpg" alt="An SG90 micro servo with its arm and the three-wire connector" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10); display: flex; align-items: center; justify-content: center; min-height: 0; background: var(--paper);">
+        <img src="shots/servo-sg90.jpg" alt="An SG90 micro servo with its arm and the three-wire connector, beside a 180 degree rotation diagram" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
       </figure>
       <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
         <article class="card" style="flex: 1;">
