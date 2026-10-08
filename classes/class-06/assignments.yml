@@ -8,7 +8,6 @@
   due: '2026-10-15T16:00:00Z'
   submission_types:
   - online_text_entry
-  - online_url
   - online_upload
   module_item:
     position: 6

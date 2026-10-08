@@ -1,158 +1,100 @@
-<p>Using the ESP32-WROVER microcontroller and provided components, you will design and build a fun electronics project by <strong>partnering with AI</strong> to generate your code. Create something that interests you, makes you smile, or seems cool to build. This assignment teaches you how to effectively communicate your ideas to AI tools and iterate on solutions; a critical skill for modern makers and creators.</p>
-<h2>Learning Objectives</h2>
+<p><strong>Purpose.</strong> Partner with opencode to design, wire, and build a working electronics project on your ESP32 kit. You bring the ideas; opencode writes the code, draws the wiring, and runs it on the board.</p>
+<h2>Before You Begin</h2>
 <ul>
-<li class="whitespace-normal break-words">Describe electronics projects clearly to AI assistants</li>
-<li class="whitespace-normal break-words">Follow AI-generated wiring instructions to connect components</li>
-<li class="whitespace-normal break-words">Evaluate and test AI-generated MicroPython code</li>
-<li class="whitespace-normal break-words">Troubleshoot issues through iterative AI conversations</li>
-<li class="whitespace-normal break-words">Build confidence creating with technology, regardless of coding background</li>
+<li><strong>Your electronics kit.</strong> Use the Freenove ESP32 starter kit handed out in class. Reach out to the instruction team if anything is missing.</li>
+<li><strong>opencode, set up and signed in.</strong> The app connected to the class workspace, with the class skills added. The <a href="https://tuftsmaker.github.io/ENT-164/opencode-setup/">setup guide</a> walks through it once.</li>
+<li><strong>MicroPython on your board.</strong> Ask opencode, for example: "Install MicroPython on my ESP32 and make the internal LED blink." It puts MicroPython on the board over USB, then writes and runs your code on it. No separate IDE, no manual uploads.</li>
 </ul>
-<h2 class="text-xl font-bold text-text-100 mt-1 -mb-0.5">Before You Begin</h2>
-<p class="whitespace-normal break-words">Before starting this assignment, make sure you have:</p>
-<ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">
-<strong>Complete Electronics Kit</strong>: You should have received your electronics starter kit. Reach out to the instruction team if anything is missing.</li>
-<li class="whitespace-normal break-words">
-<strong>Thonny IDE installed and MicroPython deployed to ESP32 Device</strong>: Thonny must be installed on your laptop and MicroPython must be deployed to your ESP32 device. Follow <a class="underline" href="https://docs.google.com/document/d/1IJRE0fLZAbfSHHDIRs-25EiSWZB6o72twmykDtBwYgI/edit?usp=drive_link">these instructions</a> if you need to complete this setup.</li>
-</ul>
-<h2 class="text-xl font-bold text-text-100 mt-1 -mb-0.5">Project Requirements</h2>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">Technical Requirements</h3>
-<p class="whitespace-normal break-words">Your project MUST include:</p>
-<ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">
-<strong>At least ONE input device</strong> (sensor, button, potentiometer, etc.)</li>
-<li class="whitespace-normal break-words">
-<strong>The ESP32-WROVER microcontroller</strong> for processing</li>
-<li class="whitespace-normal break-words">
-<strong>At least ONE output device</strong> (LEDs, display, motor, buzzer, etc.)</li>
-<li class="whitespace-normal break-words">
-<strong>AI-generated MicroPython code</strong> that you've tested and refined</li>
+<h2>Project Requirements</h2>
+<h3>Technical</h3>
+<ol>
+<li><strong>At least one input device</strong> (sensor, button, potentiometer, etc.)</li>
+<li><strong>The ESP32-WROVER microcontroller</strong> for processing</li>
+<li><strong>At least one output device</strong> (LED, display, motor, buzzer, etc.)</li>
+<li><strong>MicroPython code</strong>, generated with opencode and tested until it works</li>
 </ol>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">Process Requirements</h3>
-<ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">Document your AI conversations (share chat links)</li>
-<li class="whitespace-normal break-words">Test and iterate on AI-generated code at least twice</li>
-<li class="whitespace-normal break-words">Explain in your own words what the code does</li>
+<h3>Process</h3>
+<ul>
+<li>Keep <strong>one continuous conversation</strong> with opencode, start to finish</li>
+<li>Ask for a <strong>wiring diagram</strong> and wire from it — the class skill draws it with every wire clickable</li>
+<li>Iterate at least twice: describe what happened, share the error text, refine</li>
 </ul>
-<h2 class="text-xl font-bold text-text-100 mt-1 -mb-0.5">The AI-Assisted Making Process</h2>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">Step 1: Brainstorm Your Project with AI</h3>
-<p class="whitespace-normal break-words">Not sure what to build? <strong>Ask AI to help you brainstorm.</strong></p>
-<p class="whitespace-normal break-words"><strong>Download <a title="Link" href="https://canvas.tufts.edu/courses/76330/files/11116325/preview" target="_blank">Part list.jpg</a> and attach it to your initial prompt, then use this brainstorming prompt:</strong></p>
-<pre>I'm a student working on an electronics project using MicroPython on an ESP32-WROVER microcontroller.<br><br>Based on the components available in the attached parts list, can you suggest 5-10 fun, <br>creative, or interesting project ideas that I could build in one week?&nbsp;<br><br>I'm looking for projects that:<br>- Use at least one input (sensor, button, etc.)<br>- Use at least one output (LED, display, motor, etc.)<br>- Are beginner-friendly<br>- Could be fun, silly, useful, or cool to build<br><br>For each idea, briefly explain what it would do and which components I'd need.</pre>
-<p class="whitespace-normal break-words"><strong>Pro tip:</strong> Look through the suggestions and pick something that excites you. You can also tell the AI about your interests (music, games, art, etc.) and ask for ideas related to those.</p>
-<h3>Step 2: Continue the Same Chat to Get Wiring &amp; Code&nbsp;</h3>
-<p><span style="background-color: #fbeeb8;"><strong>IMPORTANT</strong></span>: <strong>Keep using the same conversation.</strong> The AI will remember the parts list and your chosen project.</p>
-<p><strong>In the same chat, continue with</strong>:</p>
-<pre>I want to build <span style="background-color: #fbeeb8;">[the project idea you chose]</span>. Can you tell me:<br>1. How to wire these components to the ESP32 (which pins to use)<br>2. MicroPython code to make it work<br>3. Include comments explaining what the code does</pre>
-<p><strong>Pro tip:</strong> Since you're continuing the same conversation, the AI already knows what components you have and can give you better, more specific help.</p>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">Step 3: Wire It Up</h3>
-<p class="whitespace-normal break-words">Follow the AI's wiring instructions:</p>
-<ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">Connect components to the GPIO pins the AI recommends (Remember GPIO pin numbers are written on the board)</li>
-<li class="whitespace-normal break-words">Double-check your connections before powering on</li>
-<li class="whitespace-normal break-words">Take a photo of your wiring for your documentation</li>
+<h2>The AI-Assisted Making Process</h2>
+<h3>Step 1: Brainstorm with opencode</h3>
+<p>Not sure what to build? <strong>Ask opencode to help you brainstorm.</strong></p>
+<p><strong>Download the parts list image from the Canvas module, attach it to your first message, and use this prompt:</strong></p>
+<pre>I'm a student working on an electronics project using MicroPython on an ESP32-WROVER microcontroller.
+
+Based on the components available in the attached parts list, can you suggest 5-10 fun, creative, or interesting project ideas that I could build in one week?
+
+I'm looking for projects that:
+- Use at least one input (sensor, button, etc.)
+- Use at least one output (LED, display, motor, etc.)
+- Are beginner-friendly
+- Could be fun, silly, useful, or cool to build
+
+For each idea, briefly explain what it would do and which components I'd need.</pre>
+<p><strong>Pro tip:</strong> Look through the suggestions and pick something that excites you. You can also tell opencode about your interests (music, games, art, etc.) and ask for ideas related to those.</p>
+<h3>Step 2: Continue the same chat for wiring and code</h3>
+<p><strong>IMPORTANT</strong>: <strong>Keep using the same conversation.</strong> opencode remembers the parts list and your chosen project.</p>
+<p><strong>In the same chat, continue with:</strong></p>
+<pre>I want to build [the project idea you chose]. Can you tell me:
+1. How to wire these components to the ESP32 (which pins to use)
+2. MicroPython code to make it work
+3. Include comments explaining what the code does</pre>
+<p><strong>Pro tip:</strong> Because you're continuing the same conversation, opencode already knows what components you have and can give you better, more specific help. Ask for the wiring as a diagram — the class skill draws every wire so you can follow it on the bench.</p>
+<h3>Step 3: Wire it up</h3>
+<ul>
+<li>Follow the diagram and connect components to the GPIO pins opencode recommends (the pin numbers are written on the board)</li>
+<li>Double-check your connections before powering on</li>
+<li>Take a photo of your wiring for your documentation</li>
 </ul>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">Step 4: Test and Iterate in the Same Chat</h3>
-<p class="whitespace-normal break-words"><strong>Keep the conversation going.</strong> When something doesn't work:</p>
-<ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">In the same chat, describe the problem: "The LED doesn't turn on" or "I get an error message that says..."</li>
-<li class="whitespace-normal break-words">Share any error messages exactly as they appear</li>
-<li class="whitespace-normal break-words">The AI will remember your project and help you fix it</li>
-<li class="whitespace-normal break-words">Test the new version</li>
+<h3>Step 4: Test and iterate in the same chat</h3>
+<p><strong>Keep the conversation going.</strong> When something doesn't work:</p>
+<ol>
+<li>In the same chat, describe the problem: "The LED doesn't turn on" or "I get an error message that says..."</li>
+<li>Share the error text exactly as it appears</li>
+<li>opencode remembers your project and helps you fix it</li>
+<li>Test the new version</li>
 </ol>
-<p class="whitespace-normal break-words"><strong>Pro tip:</strong> The AI remembers everything from your conversation, so it can give you better help as you go.</p>
-<h2 class="text-xl font-bold text-text-100 mt-1 -mb-0.5">Deliverables</h2>
-<p class="whitespace-normal break-words">Submit all of the following:</p>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">1. AI Collaboration Log</h3>
-<ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">
-<strong>Link</strong> to your complete AI conversation (all in one chat.). Use the share button in the top-right corner to get a shareable link.</li>
+<p><strong>Pro tip:</strong> The more you tell opencode about what you see on the bench, the better its next suggestion gets.</p>
+<h2>Deliverables</h2>
+<p>Submit all of the following on this assignment in Canvas:</p>
+<h3>1. A copy of your AI conversation</h3>
+<p>opencode conversations can't be shared by link, so upload a copy: export or copy the whole thread into a document (PDF or DOCX), or gather screenshots of the full conversation. One continuous conversation, start to finish.</p>
+<h3>2. Video of the working prototype</h3>
+<ul>
+<li>Functional project demonstrating input to processing to output</li>
+<li>Wired following opencode's instructions</li>
+<li>Upload a <strong>video with voice-over commentary</strong> of your working project. Clearly explain what your project is doing and how it works.</li>
 </ul>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">2. Video of Working Prototype</h3>
-<ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">Functional project demonstrating input → processing → output</li>
-<li class="whitespace-normal break-words">Wired on project board following AI's instructions</li>
-<li class="whitespace-normal break-words">Upload a v<strong>ideo with voice-over commentary</strong> of your working project. Clearly explain what your project is doing and how it works.</li>
+<p><strong>Note:</strong> You are NOT graded on your coding skills. You're graded on your ability to collaborate with opencode, iterate, and learn from the process.</p>
+<h2>Prompting Tips for Success</h2>
+<h3>DO:</h3>
+<ul>
+<li><strong>Keep everything in one chat</strong>: opencode remembers your parts, your project, and your previous questions</li>
+<li><strong>Attach the parts list image at the start</strong>: let opencode see what you have available</li>
+<li><strong>Describe what you want clearly</strong>: "I want the LED to change colors based on distance"</li>
+<li><strong>Share error messages completely</strong>: copy the entire error text into the chat</li>
+<li><strong>Ask for explanations</strong>: "Can you explain what this line does in simple terms?"</li>
+<li><strong>Request step-by-step help</strong>: "Break this down into smaller steps"</li>
 </ul>
-<h2>Grading Rubric</h2>
-<table style="border-collapse: collapse; width: 100%; height: 251px;" border="1">
-<tbody>
-<tr style="height: 29px;">
-<td style="width: 33.3011%; height: 29px;"><strong>Criterion</strong></td>
-<td style="width: 33.3011%; height: 29px;"><strong>Percentage</strong></td>
-<td style="width: 33.3027%; height: 29px;"><strong>What this means</strong></td>
-</tr>
-<tr style="height: 53px;">
-<td style="width: 33.3011%; height: 53px;">
-<strong>Functionality</strong> - Project works as designed</td>
-<td style="width: 33.3011%; height: 53px;">25</td>
-<td style="width: 33.3027%; height: 53px;">Device successfully takes input and produces output</td>
-</tr>
-<tr style="height: 53px;">
-<td style="width: 33.3011%; height: 53px;">
-<strong>AI Collaboration</strong> - Effective use of AI assistance</td>
-<td style="width: 33.3011%; height: 53px;">25</td>
-<td style="width: 33.3027%; height: 53px;">Clear prompts, good iteration, learning from AI responses</td>
-</tr>
-<tr style="height: 29px;">
-<td style="width: 33.3011%; height: 29px;">
-<strong>Documentation</strong> - Complete submission of all materials&nbsp;</td>
-<td style="width: 33.3011%; height: 29px;">20</td>
-<td style="width: 33.3027%; height: 29px;">All deliverables submitted: video with commentary and chat link.</td>
-</tr>
-<tr style="height: 29px;">
-<td style="width: 33.3011%; height: 29px;">
-<strong>Understanding</strong> - Can explain what project does</td>
-<td style="width: 33.3011%; height: 29px;">15</td>
-<td style="width: 33.3027%; height: 29px;">Your own comments show you understand the big picture</td>
-</tr>
-<tr style="height: 29px;">
-<td style="width: 33.3011%; height: 29px;">
-<strong>Creativity</strong> - Interesting or fun project concept</td>
-<td style="width: 33.3011%; height: 29px;">10</td>
-<td style="width: 33.3027%; height: 29px;">You built something that interested you</td>
-</tr>
-<tr style="height: 29px;">
-<td style="width: 33.3011%; height: 29px;">
-<strong>Presentation</strong> - Clear demo and discussion</td>
-<td style="width: 33.3011%; height: 29px;">5</td>
-<td style="width: 33.3027%; height: 29px;">Can demonstrate and discuss your project</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Note:</strong> You are NOT graded on your coding skills. You're graded on your ability to collaborate with AI and learn from the process.</p>
-<h2 class="text-xl font-bold text-text-100 mt-1 -mb-0.5">AI Prompting Tips for Success</h2>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">DO:</h3>
-<ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">
-<strong>Keep everything in one chat</strong>: The AI will remember your parts, your project, and your previous questions</li>
-<li class="whitespace-normal break-words">
-<strong>Attach the parts list image at the start</strong>: Let AI see what you have available</li>
-<li class="whitespace-normal break-words">
-<strong>Describe what you want clearly</strong>: "I want the LED to change colors based on distance"</li>
-<li class="whitespace-normal break-words">
-<strong>Share error messages completely</strong>: Copy the entire error text from Thonny</li>
-<li class="whitespace-normal break-words">
-<strong>Ask for explanations</strong>: "Can you explain what this line does in simple terms?"</li>
-<li class="whitespace-normal break-words">
-<strong>Request step-by-step help</strong>: "Break this down into smaller steps"</li>
+<h3>DON'T:</h3>
+<ul>
+<li>Start a new chat for each question (you'll lose all the context)</li>
+<li>Type out all the component names by hand (attach the image)</li>
+<li>Say "make it work" without explaining what's wrong</li>
+<li>Skip testing between iterations</li>
+<li>Be afraid to ask "dumb" questions. opencode doesn't judge.</li>
+<li>Give up after the first try. Iteration is the key.</li>
 </ul>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">DON'T:</h3>
-<ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7">
-<li class="whitespace-normal break-words">Start a new chat for each question (you'll lose all the context.)</li>
-<li class="whitespace-normal break-words">Manually type out all the component names (attach the image.)</li>
-<li class="whitespace-normal break-words">Say "make it work" without explaining what's wrong</li>
-<li class="whitespace-normal break-words">Skip testing between iterations</li>
-<li class="whitespace-normal break-words">Be afraid to ask "dumb" questions. AI doesn't judge.</li>
-<li class="whitespace-normal break-words">Give up after the first try. Iteration is the key.</li>
-</ul>
-<h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5">Example Complete Conversation Flow</h3>
-<p class="whitespace-normal break-words"><strong>You:</strong> [Attaches parts list image from Canvas] "I'm a student working on an electronics project. Based on these components, can you suggest some fun project ideas? I'm interested in music and interactive things."</p>
-<p class="whitespace-normal break-words"><strong>AI:</strong> [Provides 5-10 project suggestions]</p>
-<p class="whitespace-normal break-words"><strong>You:</strong> "I love the idea about the distance-based color changer. Can you tell me how to wire the ultrasonic sensor and RGB LED to the ESP32, and give me the MicroPython code?"</p>
-<p class="whitespace-normal break-words"><strong>AI:</strong> [Provides wiring instructions and code]</p>
-<p class="whitespace-normal break-words"><strong>You:</strong> "I wired it up like you said and uploaded the code, but the LED stays off. I checked my wiring twice. What could be wrong?"</p>
-<p class="whitespace-normal break-words"><strong>AI:</strong> [Provides debugging suggestions - remembers your project and wiring]</p>
-<p class="whitespace-normal break-words"><strong>You:</strong> "That worked. Now can you modify the code so the red LED blinks when something is super close instead of staying solid?"</p>
-<p class="whitespace-normal break-words"><strong>AI:</strong> [Provides updated code - remembers everything from earlier]</p>
-<p class="whitespace-normal break-words"><strong>Note:</strong> All of this happens in ONE continuous conversation.</p>
+<h3>Example complete conversation flow</h3>
+<p><strong>You:</strong> [Attaches the parts list image] "I'm a student working on an electronics project. Based on these components, can you suggest some fun project ideas? I'm interested in music and interactive things."</p>
+<p><strong>opencode:</strong> [Provides 5-10 project suggestions]</p>
+<p><strong>You:</strong> "I love the idea about the distance-based color changer. Can you tell me how to wire the ultrasonic sensor and RGB LED to the ESP32, and give me the MicroPython code?"</p>
+<p><strong>opencode:</strong> [Draws the wiring diagram and writes the code]</p>
+<p><strong>You:</strong> "I wired it up like you said and ran the code, but the LED stays off. I checked my wiring twice. What could be wrong?"</p>
+<p><strong>opencode:</strong> [Provides debugging suggestions — remembers your project and wiring]</p>
+<p><strong>You:</strong> "That worked. Now can you modify the code so the red LED blinks when something is super close instead of staying solid?"</p>
+<p><strong>opencode:</strong> [Provides updated code — remembers everything from earlier]</p>
+<p><strong>Note:</strong> All of this happens in ONE continuous conversation.</p>
