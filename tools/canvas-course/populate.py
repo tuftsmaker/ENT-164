@@ -103,8 +103,8 @@ def plan():
 
     Modules are classes and only classes. Site content is filed under the class
     it belongs to rather than in a module of its own: the setup guide goes with
-    Class 1, and everything about getting a file to the laser - the tips, the
-    cutting guide - goes with Class 3.
+    Class 1 and Class 5, and everything about getting a file to the laser - the
+    tips, the cutting guide - goes with Class 3.
     """
     setups = [('Set up OpenCode + DeepSeek',
                f'{SITE}/opencode-setup/')]
@@ -112,7 +112,7 @@ def plan():
     laser += [(title, f'{SITE}/onshape-tips/videos/{slug}.mp4') for title, slug in tips()]
     laser.append(('All nine tips, on the course site', f'{SITE}/onshape-tips/'))
 
-    extra = {1: setups, 3: laser}
+    extra = {1: setups, 3: laser, 5: setups}
     mods = []
     for c in classes():
         items = []
