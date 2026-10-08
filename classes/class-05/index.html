@@ -203,19 +203,19 @@
       <h2>Exercises: five circuits before any code</h2>
       <p class="lede">No ESP32 yet. A 2 x AA battery pack powers all five, and each one adds a single idea: what a resistor does, what a switch is, what analogue means, and what a sensor reads.</p>
       <figure class="shot">
-        <img src="shots/wiring-exercise-1-led-no-resistor.png" alt="Wiring diagram on the breadboard: one LED wired straight to a 2 x AA battery pack with no resistor" style="display: block; width: 100%; height: auto;">
-        <figcaption><b>1. No resistor</b>The LED straight across the pack. Bright, and overdriven: this is the case the resistor exists for. On for a second only.</figcaption>
+        <img src="shots/wiring-exercise-1-led-no-resistor.png" alt="Wiring diagram on the breadboard: one LED wired straight across the + and - rails of a 2 x AA battery pack, with no resistor" style="display: block; width: 100%; height: auto;">
+        <figcaption><b>1. No resistor</b>The LED straight across the rails. Bright, and overdriven: this is the case the resistor exists for. On for a second only.</figcaption>
       </figure>
       <figure class="shot" style="margin-top: 16px;">
-        <img src="shots/wiring-exercise-2-resistor-compare.png" alt="Wiring diagram on the breadboard: three branches, each a resistor and an LED, at 220 ohm, 1 kohm and 10 kohm" style="display: block; width: 100%; height: auto;">
-        <figcaption><b>2. Three resistors</b>220 ohm, 1 kohm, 10 kohm. Same LED, three currents: bright, dimmer, barely on.</figcaption>
+        <img src="shots/wiring-exercise-2-resistor-compare.png" alt="Wiring diagram on the breadboard: three branches, each a resistor and an LED, at 220 Ω, 1K Ω and 10K Ω" style="display: block; width: 100%; height: auto;">
+        <figcaption><b>2. Three resistors</b>220 Ω, 1K Ω, 10K Ω. Same LED, three currents: bright, dimmer, barely on.</figcaption>
       </figure>
       <figure class="shot" style="margin-top: 16px;">
-        <img src="shots/wiring-exercise-3-button.png" alt="Wiring diagram on the breadboard: the 220 ohm resistor and LED, with a push button in columns 10 to 13" style="display: block; width: 100%; height: auto;">
+        <img src="shots/wiring-exercise-3-button.png" alt="Wiring diagram on the breadboard: the 220 Ω resistor and LED, with a push button in columns 10 and 12, rows b and e" style="display: block; width: 100%; height: auto;">
         <figcaption><b>3. Add a push button</b>The button goes in the path, not beside it. Pressed or not: two states, which is a digital signal.</figcaption>
       </figure>
       <figure class="shot" style="margin-top: 16px;">
-        <img src="shots/wiring-exercise-4-potentiometer.png" alt="Wiring diagram on the breadboard: the 220 ohm resistor and LED, with a potentiometer in columns 10 to 12" style="display: block; width: 100%; height: auto;">
+        <img src="shots/wiring-exercise-4-potentiometer.png" alt="Wiring diagram on the breadboard: the 220 Ω resistor and LED, with a potentiometer in columns 10, 12 and 14" style="display: block; width: 100%; height: auto;">
         <figcaption><b>4. Swap in a potentiometer</b>The wiper taps the track wherever you turn it, so the resistance changes smoothly. A range instead of two states: analogue.</figcaption>
       </figure>
       <figure class="shot" style="margin-top: 16px;">
@@ -229,7 +229,7 @@
     <section class="section-block" id="micropython">
       <h2>MicroPython &amp; AI</h2>
       <p class="lede">Your ESP32 runs MicroPython. A tiny version of Python. Install it once, then let AI help you write the code.</p>
-      <div class="callout"><b>One-time setup:</b> ask opencode to put the snake on the plane. It flashes MicroPython onto your ESP32, and from then on it runs your code on the board.</div>
+      <div class="callout"><b>One-time setup:</b> ask opencode to put the snake on the plane. It flashes MicroPython onto your ESP32, and from then on it runs your code on the board. The <a href="../../opencode-setup/">setup guide</a> walks through it once, macOS and Windows.</div>
       <div class="outline-grid">
         <div class="panel">
           <h3>Your first program. Blink.py</h3>
@@ -246,11 +246,15 @@ while True:
           <p style="margin:16px 0 0; color:var(--muted); font-size:14.5px;">Challenge: can you make it blink faster or slower?</p>
         </div>
         <div class="panel">
-          <h3>Ask AI for the next step</h3>
-          <p style="margin:0 0 12px; color:var(--muted); font-size:14.5px;">Open opencode and enter this prompt. First time? The <a href="../../opencode-setup/">setup guide</a> connects it to the class workspace:</p>
-          <p class="mono" style="margin:0; color:var(--muted-2); font-size:13.5px; line-height:1.7;">I have an ESP32 WROVER with MicroPython and an SG90 servo.<br><br>I want to move the servo arm from 0 to 180 degrees and back.<br><br>Generate the code and provide beginner-friendly wiring instructions.</p>
+          <h3>Look inside the code</h3>
+          <p style="margin:0 0 12px; color:var(--muted); font-size:14.5px;">Ask opencode to walk through what it wrote, then keep pulling the thread:</p>
+          <p class="mono" style="margin:0; color:var(--muted-2); font-size:13.5px; line-height:1.7;">Show me the code you just wrote and explain it line by line.<br><br>What is a Pin? What does sleep() do?</p>
         </div>
       </div>
+      <figure class="shot" style="margin-top: 16px;">
+        <img src="shots/wiring-blink-external-led.png" alt="A wiring diagram generated for an external LED: the ESP32 beside a breadboard, a 220 Ω resistor and an LED in the middle rows, a red jumper from GPIO 2 and a black jumper back to ground, with the numbered build order, steps and notes beside it" style="display: block; width: 100%; height: auto;">
+        <figcaption><b>The external LED, wired by AI</b>Ask opencode: “Show me how to blink an external LED.” Every wire in the diagram is clickable. Click one to trace it, then ask for a wiring table that summarizes the connections.</figcaption>
+      </figure>
       <div class="gallery">
         <figure class="shot">
           <img src="shots/opencode-chat.jpg" alt="The opencode chat window, with a beginner's question and opencode's answer">
@@ -293,7 +297,7 @@ while True:
     </section>
 
     <section class="section-block" id="components">
-      <h2>Components &amp; the wiring map</h2>
+      <h2>Components &amp; wiring examples</h2>
       <p class="lede">Every part has a job: inputs read the world, outputs move it.</p>
       <div class="gallery">
         <figure class="shot">
@@ -317,8 +321,12 @@ while True:
           <figcaption><b>L298N driver</b>12V &rarr; battery pack · 5V &rarr; logic · GND &rarr; common · IN1–IN4 &rarr; ESP32 · OUT1/OUT2 and OUT3/OUT4 &rarr; left and right motors.</figcaption>
         </figure>
         <figure class="shot" style="grid-column: 1 / -1;">
-          <img src="shots/wiring-map.jpg" alt="A complete Fritzing wiring diagram of the robot: ESP32, L298N driver, two DC motors, two servos, two joysticks, and a large joystick">
-          <figcaption><b>The full wiring map</b>Two servos, two DC motors, two joysticks, one driver, one brain. Wire from a diagram, never from memory, and ask AI to explain any wire you don't recognize.</figcaption>
+          <img src="shots/robot-wiring-example.png" alt="A wiring diagram generated for the class robot: the ESP32 on its GPIO extension board, the L298N driver, two DC motors, one servo and the steering joystick, with the pin list, steps and notes beside it">
+          <figcaption><b>Robot wiring example</b>Stick, one servo, two drive motors, one driver, one brain. Wire from a diagram, never from memory, and ask AI to explain any wire you don't recognize.</figcaption>
+        </figure>
+        <figure class="shot" style="grid-column: 1 / -1;">
+          <img src="shots/dispenser-wiring-example.png" alt="A wiring diagram for a potentiometer controlling a servo: the ESP32 beside a breadboard holding the pot, the wiper to GPIO 34, and the servo's three wires to ground, 5V and GPIO 15, with the steps and notes beside it">
+          <figcaption><b>Dispenser wiring example</b>A pot and a servo, the smallest complete circuit: turn the knob, the arm follows.</figcaption>
         </figure>
       </div>
       <h3 style="font-size:1.05rem;margin:30px 0 10px;">Robots under construction</h3>
@@ -366,12 +374,6 @@ while True:
       <h3><span title="Individual">👤</span> 3D print project</h3>
       <p>Design and fabricate an interesting object using 3D printing. This assignment is about learning the digital-to-physical workflow and experimenting with form, function, and creativity.</p>
       <p class="note"><a href="https://canvas.tufts.edu/courses/76330/assignments/646284">Hand in on Canvas &rarr;</a></p>
-    </div>
-    <div class="card">
-      <span class="num">2 pt · due Thu, Oct 8</span>
-      <h3><span title="Individual">👤</span> In-class reflection: Physical Making</h3>
-      <p>Purpose. Reflection is the engine of learning in project-based work: a structured pause to examine what you did, what it taught you, and what you will do next.</p>
-      <p class="note"><a href="https://canvas.tufts.edu/courses/76330/assignments/652129">Hand in on Canvas &rarr;</a></p>
     </div>
     <div class="card">
       <span class="num">2 pt · due Thu, Oct 8</span>
