@@ -14,3 +14,16 @@
     section: null
   description: assignments/milestone-reflection-after-3d-printing.html
   source: repo
+- slug: physical-making-reflection
+  name: '👤 Physical Making Reflection'
+  summary: 'Physical making reflection'
+  group: Reflections and Participation (10 points)
+  points: 2.0
+  due: '2026-10-09T03:59:00Z'   # end of the Class 5 day (Thu, Oct 8)
+  submission_types:
+  - none
+  module_item:
+    position: null
+    section: null
+  description: assignments/physical-making-reflection.html
+  source: repo
