@@ -736,13 +736,13 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">14</span></footer>
 </section>
 
-<!-- ============ 15 · BLINK ============ -->
+<!-- ============ 15 · HOW IT WORKS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">First program</p>
-    <h2>Make an LED <span class="accent">blink</span></h2>
-    <p class="s-sub">Ask opencode to write it, then run it on the board.</p>
+    <h2>How it <span class="accent">works</span></h2>
+    <p class="s-sub">You asked opencode to blink an LED. Here's what happened behind the scenes.</p>
   </header>
   <div class="s-body">
     <div class="grid g2" style="grid-template-columns: 1.06fr 0.94fr;">
@@ -760,10 +760,18 @@ while True:
     time.sleep(1)   # Wait 1 second</pre>
       </article>
       <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
-        <article class="card tight accent" style="flex: 1; justify-content: center;">
-          <p class="s-kicker" style="margin-bottom: 2.6mm;">Run it</p>
-          <p style="font-size: 11.5pt;">Ask opencode: <span class="mono" style="font-size: 10.5pt;">“Run this blink program on my ESP32.”</span></p>
-          <p style="font-size: 10.5pt; color: var(--muted); margin-bottom: 0;">It puts the code on the board and shows you what the program prints.</p>
+        <article class="card tight accent" style="flex: 1.2;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">What the agent did</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.6;">
+            <li>Wrote MicroPython for the onboard LED on GPIO 2</li>
+            <li>Put the MicroPython runtime on the board, then copied the program in over USB</li>
+            <li>Started it — the LED blinks the moment the program lands</li>
+          </ul>
+        </article>
+        <article class="card tight accent" style="flex: 1.05;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Look inside</p>
+          <p style="font-size: 11.5pt; margin-bottom: 2.4mm;">Ask opencode: <span class="mono" style="font-size: 10pt;">“Show me the code you just wrote and explain it line by line.”</span></p>
+          <p style="font-size: 10pt; color: var(--muted); margin-bottom: 0;">Then push further: what is a Pin? What does sleep() do? Change the timings.</p>
         </article>
         <article class="card tight" style="flex: 0 0 auto;">
           <p class="s-kicker" style="margin-bottom: 2mm;">Challenge</p>
@@ -775,31 +783,32 @@ while True:
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">15</span></footer>
 </section>
 
-<!-- ============ 16 · AI CODE ============ -->
+<!-- ============ 16 · LED WIRING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">AI as a coding partner</p>
-    <h2>Generate code and wiring <span class="accent">with AI</span></h2>
-    <p class="s-sub">Open opencode and enter this prompt. First time? The setup guide connects it to the class workspace.</p>
+    <p class="s-kicker">AI as a wiring partner</p>
+    <h2>Wire the <span class="accent">external LED</span></h2>
+    <p class="s-sub">Ask opencode to show how to blink an external LED — it draws the whole circuit, wires included.</p>
   </header>
   <div class="s-body">
-    <div class="grid g2" style="grid-template-columns: 1.06fr 0.94fr;">
-      <article class="card" style="justify-content: center;">
-        <p class="s-kicker" style="margin-bottom: 3.4mm;">The prompt</p>
-        <p class="mono" style="font-size: 10.5pt; line-height: 1.7; color: var(--muted-2); margin: 0;">I have an ESP32 WROVER with MicroPython and an SG90 servo.<br><br>I want to move the servo arm from 0 to 180 degrees and back.<br><br>Generate the code and provide beginner-friendly wiring instructions.</p>
-      </article>
-      <div style="display: flex; flex-direction: column; gap: 4mm; min-height: 0;">
-        <figure style="margin: 0; border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
-          <img src="shots/opencode-chat.jpg" alt="The opencode chat window, with a beginner's question typed in and opencode's answer below it" style="width: 100%; height: auto; display: block;">
-        </figure>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 7mm; flex: 1; min-height: 0;">
+      <div style="width: 62mm; flex: 0 0 auto;">
         <article class="card tight accent">
-          <p>Describe your parts, your goal, and ask for beginner-friendly wiring. One sentence per idea.</p>
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Click a wire</p>
+          <p style="font-size: 10.5pt; color: var(--muted); margin: 0;">Every wire is clickable: click one to see where it connects, end to end. The numbered build order and the notes come with the diagram.</p>
+        </article>
+        <article class="card tight" style="margin-top: 4mm;">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Then this</p>
+          <p style="font-size: 10.5pt; margin-bottom: 2.2mm;">Ask opencode: <span class="mono" style="font-size: 10pt;">“Generate a wiring table that summarizes the connections.”</span></p>
+          <p style="font-size: 10pt; color: var(--muted); margin-bottom: 0;">A wiring table makes it easy to check your board before you power it on.</p>
         </article>
       </div>
+      <figure style="margin: 0; flex: 1 1 auto; min-width: 0; min-height: 0; align-self: stretch; display: flex; align-items: center; justify-content: center;">
+        <img src="shots/wiring-blink-external-led.png" alt="A wiring diagram generated for an external LED: the ESP32 beside a breadboard, a 220 ohm resistor and an LED in the middle rows, a red jumper from GPIO 2 and a black jumper back to ground, with the numbered build order, steps and notes beside it" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
+      </figure>
     </div>
   </div>
-    <p class="footnote" style="text-align: center;">Setup guide. <span class="mono">tuftsmaker.github.io/ENT-164/opencode-setup/</span></p>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">16</span></footer>
 </section>
 
@@ -921,13 +930,13 @@ while True:
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">19</span></footer>
 </section>
 
-<!-- ============ 20 · WIRING MAP ============ -->
+<!-- ============ 20 · ROBOT WIRING EXAMPLE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">The full picture</p>
-    <h2>Your robot's <span class="accent">wiring map</span></h2>
-    <p class="s-sub">Two pots, two servos, one stick, two drive motors, one driver, one brain.</p>
+    <h2>Robot wiring <span class="accent">example</span></h2>
+    <p class="s-sub">Stick, one servo, two drive motors, one driver, one brain.</p>
   </header>
   <div class="s-body">
     <div style="display: flex; align-items: center; justify-content: center; gap: 7mm; flex: 1; min-height: 0;">
@@ -937,20 +946,49 @@ while True:
           <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.55;">
             <li>Power comes from the battery pack</li>
             <li>Motors run through the L298N driver</li>
-            <li>Servos and controls go to GPIO pins</li>
+            <li>Servo and controls go to GPIO pins</li>
           </ul>
         </article>
         <p style="margin: 4mm 0 0; color: var(--muted); font-size: 10pt;">Wire from a diagram, never from memory, and ask AI to explain any wire you don't recognize.</p>
       </div>
       <figure style="margin: 0; flex: 1 1 auto; min-width: 0; align-self: center;">
-        <img src="shots/robot-wiring-map.png" alt="A wiring diagram generated for the class robot: ESP32 on the GPIO extension board, the L298N driver, two DC motors, two servos and the two pots that drive them, the steering joystick and a status LED, with the pin list, steps and notes beside it" style="width: 100%; height: auto; display: block; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
+        <img src="shots/robot-wiring-example.png" alt="A wiring diagram generated for the class robot: the ESP32 on its GPIO extension board, the L298N driver, two DC motors, one servo, the steering joystick and a status LED, with the pin list, steps and notes beside it" style="width: 100%; height: auto; display: block; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
       </figure>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">20</span></footer>
 </section>
 
-<!-- ============ 21 · AT NOLOP ============ -->
+<!-- ============ 21 · DISPENSER WIRING EXAMPLE ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">One knob, one arm</p>
+    <h2>Dispenser wiring <span class="accent">example</span></h2>
+    <p class="s-sub">A pot and a servo — the smallest complete circuit: one input, one output.</p>
+  </header>
+  <div class="s-body">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 7mm; flex: 1; min-height: 0;">
+      <div style="width: 66mm; flex: 0 0 auto;">
+        <article class="card tight accent">
+          <p class="s-kicker" style="margin-bottom: 2.6mm;">Read it like a map</p>
+          <ul style="margin: 0; padding-left: 5mm; color: var(--muted); font-size: 10.5pt; line-height: 1.55;">
+            <li>The pot's wiper reads on GPIO 34 — an analogue input</li>
+            <li>The servo takes its signal on GPIO 15</li>
+            <li>Turn the knob and the arm follows</li>
+          </ul>
+        </article>
+        <p style="margin: 4mm 0 0; color: var(--muted); font-size: 10pt;">Build the dispenser's move on its own first, then mount it on the robot.</p>
+      </div>
+      <figure style="margin: 0; flex: 1 1 auto; min-width: 0; align-self: center;">
+        <img src="shots/dispenser-wiring-example.png" alt="A wiring diagram for a potentiometer controlling a servo: the ESP32 beside a breadboard holding the pot, with jumpers from the pot's left leg and right leg to ground and 3V3, the wiper to GPIO 34, and the servo's three wires to ground, 5V and GPIO 15, with the steps and notes beside it" style="width: 100%; height: auto; display: block; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">21</span></footer>
+</section>
+
+<!-- ============ 22 · AT NOLOP ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -990,10 +1028,10 @@ while True:
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">21</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">22</span></footer>
 </section>
 
-<!-- ============ 22 · ASSIGNMENT: BUILD IT ============ -->
+<!-- ============ 23 · ASSIGNMENT: BUILD IT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -1028,10 +1066,10 @@ while True:
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">22</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">23</span></footer>
 </section>
 
-<!-- ============ 23 · ASSIGNMENT: DELIVERABLES ============ -->
+<!-- ============ 24 · ASSIGNMENT: DELIVERABLES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -1065,10 +1103,45 @@ while True:
       <p>You're graded on <b>collaboration and learning</b>, not coding skills. Keep one chat, iterate often, and ask lots of questions.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">23</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">24</span></footer>
 </section>
 
-<!-- ============ 24 · BUILD GALLERY ============ -->
+<!-- ============ 25 · ASSIGNMENT: PHYSICAL MAKING REFLECTION ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Individual assignment</p>
+    <h2>Physical Making <span class="accent">reflection</span></h2>
+    <p class="s-sub">A short written reflection on today's build — what your hands knew that your plan didn't.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Catch the surprise</h3>
+        <p>Find the moment the build didn't go the way you pictured it. What did you notice, and what did you do next?</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Think on your feet</h3>
+        <p>Point to a decision you made mid-build without stopping to plan it. What were you reacting to?</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Look back</h3>
+        <p>Building it again tomorrow: what would you keep exactly as it is, and what would you change — and why?</p>
+      </article>
+    </div>
+    <div class="assign" style="margin-top: 5mm;">
+      <span class="alabel">How to write it</span>
+      <p>Ground every answer in a specific moment from the build. A few honest paragraphs beat a polished essay.</p>
+    </div>
+    <p class="footnote" style="text-align: right;">Prompts inspired by Donald Schön's reflective practitioner: reflection in action, and reflection on action.</p>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">25</span></footer>
+</section>
+
+<!-- ============ 26 · BUILD GALLERY ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -1096,10 +1169,10 @@ while True:
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">24</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">26</span></footer>
 </section>
 
-<!-- ============ 25 · CLOSING ============ -->
+<!-- ============ 27 · CLOSING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -1117,7 +1190,7 @@ while True:
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">25</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 5 · Electronics</span><span class="fnum">27</span></footer>
 </section>
 
 </body>

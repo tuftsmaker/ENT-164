@@ -1,0 +1,28 @@
+board: freenove-esp32-wrover
+layout:
+  notes_position: right
+  breadboard:
+    hidden: false
+    cols: 20
+    w: 1500
+title: Dispenser arm — a pot controls a servo (FNK0046)
+subtitle: Turn the knob, the arm follows — the dispenser's move
+components:
+  - {type: potentiometer, at: [6, c], pins: [left, wiper, right]}
+  - {type: servo, id: servo, at: [12, c], label_text: dispenser arm}
+wires:
+  - {from: bb.6.c, to: board.L14, color: black, label: pot left — GND}
+  - {from: bb.8.c, to: board.GPIO34, color: orange, label: wiper — GPIO 34}
+  - {from: bb.10.c, to: board.L17, color: red, label: pot right — 3V3}
+  - {from: servo.GND, to: board.L14, color: black, label: servo brown — GND}
+  - {from: servo.5V, to: board.L19, color: red, label: servo red — 5V}
+  - {from: servo.SIG, to: board.GPIO15, color: orange, label: servo orange — GPIO 15}
+steps:
+  - text: "Potentiometer in row c: left leg → GND, right leg → 3V3, middle leg (the wiper) → GPIO 34."
+  - text: "Servo: brown → GND, red → 5V, orange → GPIO 15."
+  - text: "Turn the knob and read the wiper on the ADC; map the number to an angle for the arm."
+notes:
+  - "Code: pot = ADC(Pin(34)); pot.atten(ADC.ATTN_11DB). servo = PWM(Pin(15), 50). duty = 26 + int(angle * 102 / 180)."
+  - "The wiper reads on ADC1, so the readings hold up with Wi-Fi on."
+  - text: "The servo takes its power from the board's 5V pin; use an external 5V supply if it jitters or the board resets."
+    warn: true
