@@ -387,21 +387,12 @@
     <p class="s-sub">Three pieces: your device, the services it reaches, and the browser you control it from.</p>
   </header>
   <div class="s-body">
-    <div class="gallery g3">
-      <figure class="tile">
-        <img src="shots/esp32-wrover-board.jpg" alt="An ESP32 WROVER microcontroller board" style="object-fit: contain; background: #fff;">
-        <figcaption><b>The device</b>An ESP32 WROVER running MicroPython. The thing that gets online.</figcaption>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5mm; flex: 1; min-height: 0;">
+      <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0; max-height: 100%;">
+        <img src="shots/architecture.svg" alt="An architecture diagram: your phone talks to your ESP32 robot over WiFi — the page and your taps — and the robot reaches out to external services in the cloud" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);">
       </figure>
-      <figure class="tile">
-        <img src="shots/cloud-api.jpg" alt="A cloud icon labelled API with connected nodes" style="object-fit: contain; background: #fff;">
-        <figcaption><b>External services</b>Over WiFi, your device can reach APIs and cloud services.</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="shots/phone-robot-control.png" alt="Phone browser showing the robot control page: a direction pad with a stop button" style="object-fit: contain; background: #0f1218;">
-        <figcaption><b>The browser UI</b>No app to install. Your robot serves this page; your phone opens it.</figcaption>
-      </figure>
+      <p class="footnote" style="margin: 0; text-align: center;"><b>Server</b> — the board serves the page &nbsp;·&nbsp; <b>Client</b> — the board reaches out to services &nbsp;·&nbsp; <b>Hybrid</b> — most projects end up both.</p>
     </div>
-    <p class="footnote"><b>Client</b>. Your device reaches out to a service &nbsp;·&nbsp; <b>Server</b>, your device serves a page &nbsp;·&nbsp; <b>Hybrid</b>, most projects end up both.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">05</span></footer>
 </section>
@@ -637,21 +628,8 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ===== 13 · REFLECTION ===== -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <div class="s-body">
-    <div class="bigline">
-      <p class="kicker-sm">Milestone reflection · 2 of 5</p>
-      <h2>After connectivity</h2>
-      <p>Complete your milestone reflection for this phase of the course before you leave today.</p>
-      <span class="url">go.tufts.edu/reflect</span>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">13</span></footer>
-</section>
 
-<!-- ===== 14 · CLOSING ===== -->
+<!-- ===== 13 · CLOSING ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -670,7 +648,7 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">14</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">13</span></footer>
 </section>
 
 </body>

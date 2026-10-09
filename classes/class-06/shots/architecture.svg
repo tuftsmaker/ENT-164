@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="540" viewBox="0 0 1000 540" role="img"
+     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Client, server, hybrid: your phone talks to your ESP32 over WiFi, and the ESP32 reaches out to external services in the cloud.</title>
+  <!-- Icons from Lucide (lucide.dev), ISC licence. -->
+  <rect width="1000" height="540" fill="#ffffff"/>
+
+  <!-- your phone -->
+  <rect x="42" y="170" width="230" height="200" rx="16" fill="#ffffff" stroke="#bcd8f7" stroke-width="2"/>
+  <g transform="translate(66,192) scale(2.4)" fill="none" stroke="#3E8EDE" stroke-width="0.92" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+    <path d="M12 18h.01"/>
+  </g>
+  <text x="66" y="290" font-size="19" font-weight="700" fill="#0d1526">Your phone</text>
+  <text x="66" y="314" font-size="13" fill="#5f6b7a">any browser, no app</text>
+
+  <!-- your ESP32 -->
+  <rect x="385" y="120" width="230" height="300" rx="16" fill="#f7f9fc" stroke="#3E8EDE" stroke-width="2"/>
+  <g transform="translate(409,146) scale(2.6)" fill="none" stroke="#1F6FD0" stroke-width="0.87" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="16" height="16" x="4" y="4" rx="2"/>
+    <rect width="6" height="6" x="9" y="9"/>
+    <path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/>
+    <path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>
+  </g>
+  <text x="409" y="312" font-size="19" font-weight="700" fill="#0d1526">Your ESP32 robot</text>
+  <text x="409" y="336" font-size="13" fill="#5f6b7a">MicroPython runs</text>
+  <text x="409" y="354" font-size="13" fill="#5f6b7a">the web server</text>
+
+  <!-- external services -->
+  <rect x="728" y="170" width="230" height="200" rx="16" fill="#ffffff" stroke="#bcd8f7" stroke-width="2"/>
+  <g transform="translate(752,192) scale(2.4)" fill="none" stroke="#3E8EDE" stroke-width="0.92" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+  </g>
+  <text x="752" y="290" font-size="19" font-weight="700" fill="#0d1526">External services</text>
+  <text x="752" y="314" font-size="13" fill="#5f6b7a">APIs and the cloud</text>
+
+  <!-- the links -->
+  <g stroke="#3E8EDE" stroke-width="3" fill="#3E8EDE">
+    <line x1="292" y1="270" x2="375" y2="270"/>
+    <path d="M372 264 L382 270 L372 276 Z"/>
+    <path d="M292 264 L282 270 L292 276 Z"/>
+    <line x1="625" y1="270" x2="716" y2="270"/>
+    <path d="M714 264 L724 270 L714 276 Z"/>
+  </g>
+  <rect x="306" y="260" width="52" height="20" rx="10" fill="#ffffff" stroke="#bcd8f7" stroke-width="1.5"/>
+  <text x="332" y="274" font-size="11.5" fill="#1F6FD0" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">WiFi</text>
+  <text x="332" y="240" font-size="12.5" fill="#5f6b7a" text-anchor="middle">the page</text>
+  <text x="332" y="300" font-size="12.5" fill="#5f6b7a" text-anchor="middle">your taps</text>
+  <text x="671" y="240" font-size="12.5" fill="#5f6b7a" text-anchor="middle">reaches out</text>
+</svg>
