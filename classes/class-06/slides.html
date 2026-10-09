@@ -273,7 +273,7 @@
     <div class="lede">
       <p class="s-kicker">Class 6 · Week 6 · Fall 2026</p>
       <h1>Coding<br><span class="accent">with an AI Agent</span></h1>
-      <p class="sub">Your ESP32 can serve a web page your phone opens. No app required. Today we get it on WiFi, register it with Tufts, and build a smart light you control from the browser.</p>
+      <p class="sub">Your ESP32 can serve a web page your phone opens. No app required. Today we get your robot on WiFi, register it with Tufts, and drive it from your phone’s browser.</p>
       <div class="pills">
         <span class="pill">Thu, Oct 15</span>
         <span class="pill">JCC 301 / Nolop</span>
@@ -282,7 +282,7 @@
       </div>
     </div>
     <figure class="shot">
-      <img src="shots/esp32-wired-breadboard.jpg" alt="An ESP32 on a breadboard wired to an RGB LED, lit purple">
+      <img src="shots/robot-wired.jpg" alt="A tracked robot built in class, wired and ready to drive" style="object-fit: cover; object-position: center 40%; aspect-ratio: 4 / 3;">
     </figure>
   </div>
   <div class="team">
@@ -343,8 +343,8 @@
       </article>
       <article class="card accent">
         <span class="num">03</span>
-        <h3>Build a Smart Light</h3>
-        <p>Put it all together: an RGB light you control from your phone's browser.</p>
+        <h3>Drive your robot</h3>
+        <p>Put it all together: a control page on your phone that drives the robot you built.</p>
       </article>
     </div>
   </div>
@@ -397,33 +397,37 @@
         <figcaption><b>External services</b>Over WiFi, your device can reach APIs and cloud services.</figcaption>
       </figure>
       <figure class="tile">
-        <img src="shots/phone-rgb-control.jpg" alt="Phone browser showing an RGB LED control page with a color picker and sliders" style="object-fit: contain; background: #0f1218;">
-        <figcaption><b>The browser UI</b>No app to install. The device serves a page your phone opens.</figcaption>
+        <img src="shots/phone-robot-control.png" alt="Phone browser showing the robot control page: a direction pad with a stop button" style="object-fit: contain; background: #0f1218;">
+        <figcaption><b>The browser UI</b>No app to install. Your robot serves this page; your phone opens it.</figcaption>
       </figure>
     </div>
-    <p class="footnote"><b>Client</b>. Your device reaches out to a service &nbsp;·&nbsp; <b>Server</b>, your device serves a page &nbsp;·&nbsp; <b>Hybrid</b>, the Smart Light is both.</p>
+    <p class="footnote"><b>Client</b>. Your device reaches out to a service &nbsp;·&nbsp; <b>Server</b>, your device serves a page &nbsp;·&nbsp; <b>Hybrid</b>, most projects end up both.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">05</span></footer>
 </section>
 
-<!-- ===== 06 · WIRING THE SMART LIGHT ===== -->
+<!-- ===== 06 · WIRING THE DRIVE TRAIN ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">The build</p>
-    <h2>Wiring the <span class="accent">Smart Light</span></h2>
-    <p class="s-sub">One RGB LED. Three colors in a single package, sharing a common anode (+).</p>
+    <h2>Wiring the <span class="accent">drive train</span></h2>
+    <p class="s-sub">The L298N sits between your ESP32 and the motors — the same wiring your robot already has.</p>
   </header>
   <div class="s-body">
-    <div class="gallery g2">
-      <figure class="tile">
-        <img src="shots/rgb-led-common-anode.jpg" alt="Diagram of an RGB LED with red, green, and blue channels sharing a common anode" style="object-fit: contain; background: #fff;">
-        <figcaption><b>RGB LED · common anode</b>Red, green, and blue channels share one common anode (+).</figcaption>
+    <div class="grid" style="grid-template-columns: 1.12fr 0.88fr; gap: 6mm; align-items: center;">
+      <figure class="tile" style="align-self: stretch; display: flex; align-items: center; justify-content: center;">
+        <img src="shots/robot-wiring-example.png" alt="A wiring diagram for the class robot: the ESP32 on its GPIO extension board, the L298N driver, two motors, one servo and the joystick, with the pin list and notes beside it" style="max-width: 100%; max-height: 100%; width: auto; height: auto;">
       </figure>
-      <figure class="tile">
-        <img src="shots/esp32-wired-breadboard.jpg" alt="An ESP32 wired to an RGB LED on a breadboard, lit purple" style="object-position: center 62%;">
-        <figcaption><b>On the breadboard</b>Each channel gets its own pin. The page mixes them into any color.</figcaption>
-      </figure>
+      <div style="display: flex; flex-direction: column; gap: 3.6mm; min-height: 0; justify-content: center;">
+        <article class="card tight" style="padding: 4mm 4.6mm;">
+          <p class="s-kicker" style="margin-bottom: 2.2mm;">The drive pins</p>
+          <p class="mono" style="margin: 0; font-size: 9.5pt; line-height: 1.85; color: var(--muted-2);">ENA → GPIO 13 &nbsp;·&nbsp; ENB → GPIO 5<br>IN1 → GPIO 12 &nbsp;·&nbsp; IN2 → GPIO 14<br>IN3 → GPIO 18 &nbsp;·&nbsp; IN4 → GPIO 19<br>OUT1/2 → left motor &nbsp;·&nbsp; OUT3/4 → right<br>12V ← battery pack &nbsp;·&nbsp; shared GND</p>
+        </article>
+        <article class="card tight accent">
+          <p style="margin: 0;">Wheels <b>off the ground</b> while you test. The motors spin the moment the code runs.</p>
+        </article>
+      </div>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">06</span></footer>
@@ -441,7 +445,7 @@
     <div class="outline" style="align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“I want to use an ESP32 WROVER with MicroPython to measure the distance with a HC-SR04 sensor and show it on my phone using the Tufts_Wireless open wifi hotspot. Print my ESP32 MAC address on startup.”</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“I want to use an ESP32 WROVER with MicroPython to drive my robot from a web page on my phone. The motors run through an L298N driver on GPIO 13, 12, 14, 18, 19 and 5. Build a page with forward, back, left, right and stop buttons that run the motors, over the Tufts_Wireless open wifi. Print my ESP32 MAC address on startup.”</p>
       </div>
       <div class="panel">
         <p class="plabel">What the AI needs from you</p>
@@ -452,11 +456,11 @@
           </div>
           <div>
             <p class="s-kicker" style="margin-bottom: 0.6mm; font-size: 8pt;">The component</p>
-            <p style="margin: 0; color: var(--muted-2); font-size: 10.5pt;">HC-SR04 distance sensor</p>
+            <p style="margin: 0; color: var(--muted-2); font-size: 10.5pt;">Two TT motors on an L298N driver</p>
           </div>
           <div>
             <p class="s-kicker" style="margin-bottom: 0.6mm; font-size: 8pt;">The goal</p>
-            <p style="margin: 0; color: var(--muted-2); font-size: 10.5pt;">Measure distance, show it on your phone</p>
+            <p style="margin: 0; color: var(--muted-2); font-size: 10.5pt;">Drive the robot from the browser</p>
           </div>
           <div>
             <p class="s-kicker" style="margin-bottom: 0.6mm; font-size: 8pt;">The connection</p>
@@ -470,7 +474,34 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">07</span></footer>
 </section>
 
-<!-- ===== 08 · REGISTERING WITH TUFTS IT ===== -->
+<!-- ===== 08 · THE CONTROL PAGE ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">On your phone</p>
+    <h2>Every tap is a <span class="accent">request</span></h2>
+    <p class="s-sub">The page is five buttons. Each one hits the ESP32 at a different path.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.6fr 1.4fr; gap: 6mm; align-items: center;">
+      <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0; align-self: stretch;">
+        <img src="shots/phone-robot-control.png" alt="The robot control page on a phone: forward, back, left, right and a stop button, with the board's address at the top" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.08);">
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 3.6mm; min-height: 0; justify-content: center;">
+        <article class="card tight" style="padding: 4mm 4.6mm;">
+          <p class="s-kicker" style="margin-bottom: 2.2mm;">Button → path → wheels</p>
+          <p class="mono" style="margin: 0; font-size: 10pt; line-height: 2.0; color: var(--muted-2);">▲ <b style="color: var(--ink);">Forward</b> → <span style="color: var(--blue-deep);">/forward</span> — both motors ahead<br>◀ <b style="color: var(--ink);">Left</b> → <span style="color: var(--blue-deep);">/left</span> — left motor back, right ahead<br>▶ <b style="color: var(--ink);">Right</b> → <span style="color: var(--blue-deep);">/right</span> — right motor back, left ahead<br>▼ <b style="color: var(--ink);">Back</b> → <span style="color: var(--blue-deep);">/back</span> — both motors reverse<br>◼ <b style="color: var(--ink);">STOP</b> → <span style="color: var(--blue-deep);">/stop</span> — everything off</p>
+        </article>
+        <article class="card tight accent">
+          <p style="margin: 0;">The board reads the path and sets the driver pins. That is the whole app — the design is the buttons.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ===== 09 · REGISTERING WITH TUFTS IT ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -504,10 +535,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">08</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ===== 09 · USE THE IP ADDRESS ===== -->
+<!-- ===== 10 · USE THE IP ADDRESS ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -533,10 +564,10 @@
       <p>It may take a few minutes before your device registration is active. If the page doesn't load, wait and refresh.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">09</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">10</span></footer>
 </section>
 
-<!-- ===== 10 · WHAT JUST HAPPENED ===== -->
+<!-- ===== 11 · WHAT JUST HAPPENED ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -564,14 +595,14 @@
       <div class="cyc">
         <span class="cn">4</span>
         <h3>Requests round-trip</h3>
-        <p>Interacting with the page sends a request to the ESP32 (e.g. <span class="mono" style="font-size: 8.5pt;">http://10.243.94.14/</span>). It reads the request, calls the sensor, and passes the data back.</p>
+        <p>Tapping a button sends a request to the ESP32 (e.g. <span class="mono" style="font-size: 8.5pt;">http://10.243.94.14/forward</span>). It reads the path, sets the motor pins, and answers with the next page state.</p>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">11</span></footer>
 </section>
 
-<!-- ===== 11 · OTHER THINGS TO TRY ===== -->
+<!-- ===== 12 · OTHER THINGS TO TRY ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -588,8 +619,8 @@
       </article>
       <article class="card">
         <span class="num">02</span>
-        <h3>Control devices from your phone</h3>
-        <p>A virtual joystick to control motors, or a virtual switch to turn something on or off.</p>
+        <h3>Joystick driving</h3>
+        <p>Swap the buttons for a virtual joystick: drag to steer, release to stop.</p>
       </article>
       <article class="card">
         <span class="num">03</span>
@@ -603,10 +634,10 @@
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">11</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ===== 12 · REFLECTION ===== -->
+<!-- ===== 13 · REFLECTION ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -617,10 +648,10 @@
       <span class="url">go.tufts.edu/reflect</span>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">12</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ===== 13 · CLOSING ===== -->
+<!-- ===== 14 · CLOSING ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -639,7 +670,7 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">13</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">14</span></footer>
 </section>
 
 </body>
