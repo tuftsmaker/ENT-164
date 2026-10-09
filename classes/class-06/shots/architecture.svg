@@ -1,49 +1,81 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="540" viewBox="0 0 1000 540" role="img"
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="380" viewBox="0 0 1000 380" role="img"
      font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-  <title>Client, server, hybrid: your phone talks to your ESP32 over WiFi, and the ESP32 reaches out to external services in the cloud.</title>
+  <title>Client, server, hybrid: your phone talks to your ESP32 robot over WiFi, and the robot reaches out to external services.</title>
   <!-- Icons from Lucide (lucide.dev), ISC licence. -->
-  <rect width="1000" height="540" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="-47" x2="0" y2="-46">
+      <stop offset="0" stop-color="#0c1526"/><stop offset="1" stop-color="#152340"/>
+    </linearGradient>
+    <linearGradient id="pPhone" x1="0" y1="-47" x2="0" y2="-46">
+      <stop offset="0" stop-color="#63ADF2"/><stop offset="1" stop-color="#2E7BD6"/>
+    </linearGradient>
+    <linearGradient id="pEsp" x1="0" y1="-47" x2="0" y2="-46">
+      <stop offset="0" stop-color="#3FC891"/><stop offset="1" stop-color="#1E8F62"/>
+    </linearGradient>
+    <linearGradient id="pCloud" x1="0" y1="-47" x2="0" y2="-46">
+      <stop offset="0" stop-color="#A188FF"/><stop offset="1" stop-color="#6E4BE8"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#3FC891" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#3FC891" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="-45" r="1.3" fill="#1e2e4d"/>
+    </pattern>
+    <filter id="lift" x="-40%" y="-40%" width="180%" height="200%">
+      <feDropShadow dx="0" dy="9" stdDeviation="10" flood-color="#050b16" flood-opacity="0.55"/>
+    </filter>
+    <filter id="tileGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#3FC891" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="380" fill="url(#bg)"/>
+  <rect width="1000" height="380" fill="url(#dots)"/>
+  <ellipse cx="500" cy="163" rx="240" ry="185" fill="url(#glow)"/>
 
   <!-- your phone -->
-  <rect x="42" y="170" width="230" height="200" rx="16" fill="#ffffff" stroke="#bcd8f7" stroke-width="2"/>
-  <g transform="translate(66,192) scale(2.4)" fill="none" stroke="#3E8EDE" stroke-width="0.92" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="115" y="116" width="84" height="84" rx="20" fill="url(#pPhone)" filter="url(#lift)"/>
+  <rect x="115" y="116" width="84" height="84" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="1.5"/>
+  <g transform="translate(139,140) scale(2.42)" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
     <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
     <path d="M12 18h.01"/>
   </g>
-  <text x="66" y="290" font-size="19" font-weight="700" fill="#0d1526">Your phone</text>
-  <text x="66" y="314" font-size="13" fill="#5f6b7a">any browser, no app</text>
+  <text x="157" y="245" font-size="19" font-weight="700" fill="#ffffff" text-anchor="middle">Your phone</text>
+  <text x="157" y="269" font-size="12.5" fill="#9fb0c9" text-anchor="middle">any browser, no app</text>
 
   <!-- your ESP32 -->
-  <rect x="385" y="120" width="230" height="300" rx="16" fill="#f7f9fc" stroke="#3E8EDE" stroke-width="2"/>
-  <g transform="translate(409,146) scale(2.6)" fill="none" stroke="#1F6FD0" stroke-width="0.87" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="454" y="112" width="92" height="92" rx="22" fill="url(#pEsp)" filter="url(#tileGlow)"/>
+  <rect x="454" y="112" width="92" height="92" rx="22" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
+  <g transform="translate(480,138) scale(2.62)" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
     <rect width="16" height="16" x="4" y="4" rx="2"/>
     <rect width="6" height="6" x="9" y="9"/>
     <path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/>
     <path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>
   </g>
-  <text x="409" y="312" font-size="19" font-weight="700" fill="#0d1526">Your ESP32 robot</text>
-  <text x="409" y="336" font-size="13" fill="#5f6b7a">MicroPython runs</text>
-  <text x="409" y="354" font-size="13" fill="#5f6b7a">the web server</text>
+  <text x="500" y="247" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">Your ESP32 robot</text>
+  <text x="500" y="271" font-size="12.5" fill="#9fb0c9" text-anchor="middle">MicroPython runs the web server</text>
 
   <!-- external services -->
-  <rect x="728" y="170" width="230" height="200" rx="16" fill="#ffffff" stroke="#bcd8f7" stroke-width="2"/>
-  <g transform="translate(752,192) scale(2.4)" fill="none" stroke="#3E8EDE" stroke-width="0.92" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="801" y="116" width="84" height="84" rx="20" fill="url(#pCloud)" filter="url(#lift)"/>
+  <rect x="801" y="116" width="84" height="84" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="1.5"/>
+  <g transform="translate(825,140) scale(2.42)" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
     <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
   </g>
-  <text x="752" y="290" font-size="19" font-weight="700" fill="#0d1526">External services</text>
-  <text x="752" y="314" font-size="13" fill="#5f6b7a">APIs and the cloud</text>
+  <text x="843" y="245" font-size="19" font-weight="700" fill="#ffffff" text-anchor="middle">External services</text>
+  <text x="843" y="269" font-size="12.5" fill="#9fb0c9" text-anchor="middle">APIs and the cloud</text>
 
   <!-- the links -->
-  <g stroke="#3E8EDE" stroke-width="3" fill="#3E8EDE">
-    <line x1="292" y1="270" x2="375" y2="270"/>
-    <path d="M372 264 L382 270 L372 276 Z"/>
-    <path d="M292 264 L282 270 L292 276 Z"/>
-    <line x1="625" y1="270" x2="716" y2="270"/>
-    <path d="M714 264 L724 270 L714 276 Z"/>
+  <g stroke-linecap="round">
+    <line x1="228" y1="205" x2="424" y2="205" stroke="#63ADF2" stroke-width="7"/>
+    <path d="M450 205 L426 193 L426 217 Z" fill="#63ADF2"/>
+    <path d="M202 205 L226 193 L226 217 Z" fill="#63ADF2"/>
+    <line x1="558" y1="205" x2="750" y2="205" stroke="#A188FF" stroke-width="7"/>
+    <path d="M776 205 L752 193 L752 217 Z" fill="#A188FF"/>
   </g>
-  <rect x="306" y="260" width="52" height="20" rx="10" fill="#ffffff" stroke="#bcd8f7" stroke-width="1.5"/>
-  <text x="332" y="274" font-size="11.5" fill="#1F6FD0" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">WiFi</text>
-  <text x="332" y="240" font-size="12.5" fill="#5f6b7a" text-anchor="middle">the page</text>
-  <text x="332" y="300" font-size="12.5" fill="#5f6b7a" text-anchor="middle">your taps</text>
-  <text x="671" y="240" font-size="12.5" fill="#5f6b7a" text-anchor="middle">reaches out</text>
+  <rect x="300" y="147" width="52" height="22" rx="11" fill="#12203a" stroke="#63ADF2" stroke-width="1.6"/>
+  <text x="326" y="162" font-size="11.5" fill="#8ec3f5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">WiFi</text>
+  <text x="326" y="131" font-size="12.5" fill="#9fb0c9" text-anchor="middle">the page</text>
+  <text x="326" y="194" font-size="12.5" fill="#9fb0c9" text-anchor="middle">your taps</text>
+  <text x="666" y="131" font-size="12.5" fill="#9fb0c9" text-anchor="middle">reaches out</text>
 </svg>
