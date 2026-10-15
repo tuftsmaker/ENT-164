@@ -3,6 +3,7 @@
 # generated from these, so edit here rather than in Canvas.
 hero: "shots/esp32-wired-breadboard.jpg"
 hero_alt: "An ESP32 wired to an RGB LED on a breadboard, lit purple"
+hero_max: 380
 
 topics:
   - title: "Two ways to connect: the board's hotspot, or shared WiFi"
