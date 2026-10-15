@@ -320,9 +320,10 @@ the manual; this is the contract.
 
 ## Class skills for opencode (now in the `tuftsmaker/skills` repo)
 
-- The three skills — `breadboard-wiring` (diagrams), `laser-ready` (DXF to
-  laser SVG, finger joints) and `box-maker` (finger-jointed boxes; the birdhouse
-  is its worked example) — live in their own repo, served at
+- The four skills — `breadboard-wiring` (diagrams), `laser-ready` (DXF to
+  laser SVG, finger joints), `box-maker` (finger-jointed boxes; the birdhouse
+  is its worked example) and `print-ready` (STL to G-code for the Nolop Prusa
+  printers) — live in their own repo, served at
   `https://tuftsmaker.github.io/skills` and consumed by opencode via
   `skills.urls`. That repo is the **source of truth**, including the pinned
   Python sandbox each skill carries, the publisher and the CI; its `README.md`
