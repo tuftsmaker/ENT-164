@@ -428,23 +428,17 @@
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">The build</p>
-    <h2>Wiring the <span class="accent">drive train</span></h2>
+    <h2>At Nolop: Wiring the <span class="accent">drive train</span></h2>
     <p class="s-sub">The L298N sits between your ESP32 and the motors — the same wiring your robot already has.</p>
   </header>
   <div class="s-body">
-    <div class="grid" style="grid-template-columns: 1.12fr 0.88fr; gap: 6mm; align-items: center;">
-      <figure class="tile" style="align-self: stretch; display: flex; align-items: center; justify-content: center;">
+    <div style="display: flex; flex-direction: column; gap: 4.5mm; flex: 1; min-height: 0;">
+      <figure class="tile" style="flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
         <img src="shots/robot-wiring-example.png" alt="A wiring diagram for the class robot: the ESP32 on its GPIO extension board, the L298N driver, two motors, one servo and the joystick, with the pin list and notes beside it" style="max-width: 100%; max-height: 100%; width: auto; height: auto;">
       </figure>
-      <div style="display: flex; flex-direction: column; gap: 3.6mm; min-height: 0; justify-content: center;">
-        <article class="card tight" style="padding: 4mm 4.6mm;">
-          <p class="s-kicker" style="margin-bottom: 2.2mm;">The drive pins</p>
-          <p class="mono" style="margin: 0; font-size: 9.5pt; line-height: 1.85; color: var(--muted-2);">ENA → GPIO 13 &nbsp;·&nbsp; ENB → GPIO 5<br>IN1 → GPIO 12 &nbsp;·&nbsp; IN2 → GPIO 14<br>IN3 → GPIO 18 &nbsp;·&nbsp; IN4 → GPIO 19<br>OUT1/2 → left motor &nbsp;·&nbsp; OUT3/4 → right<br>12V ← battery pack &nbsp;·&nbsp; shared GND</p>
-        </article>
-        <article class="card tight accent">
-          <p style="margin: 0;">Wheels <b>off the ground</b> while you test. The motors spin the moment the code runs.</p>
-        </article>
-      </div>
+      <article class="card tight accent" style="flex: 0 0 auto;">
+        <p style="margin: 0;">Wheels <b>off the ground</b> while you test. The motors spin the moment the code runs.</p>
+      </article>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">07</span></footer>
@@ -462,7 +456,7 @@
     <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“The servo and the joystick’s push button are wired to my ESP32: SW is GPIO 4 and the servo signal is GPIO 15. Make the button open and close the servo — one press opens it, the next press closes it. Write the MicroPython and tell me what I should see when I test it.”</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“I want to use my joystick’s push button to open and close the servo.”</p>
         <p class="footnote" style="padding-top: 4mm;">One small ask, one test. This is the loop for every step after it.</p>
       </div>
       <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
@@ -485,7 +479,7 @@
     <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Now drive the robot from the joystick: up and down go forward and back, left and right pivot it with differential steering — the two motors spin opposite ways. The motors run through the L298N on GPIO 13, 12, 14, 18, 19 and 5; the stick’s VRx is GPIO 36 and VRy is GPIO 39. Stop when the stick is centered.”</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Now drive the robot from the joystick: up and down go forward and back, left and right pivot it with differential steering. Stop when the stick is centered. I have a L298N driver to control the motors.”</p>
         <p class="footnote" style="padding-top: 4mm;">This is the drive half of the robot — everything from step 1 stays wired.</p>
       </div>
       <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
@@ -531,8 +525,8 @@
     <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Finally, make the robot its own network: create a WiFi hotspot on the device named after our team, and serve the joystick and button UI over it. When my phone joins the robot’s WiFi, the control page opens and drives the robot — no other network needed.”</p>
-        <p class="footnote" style="padding-top: 4mm;">Type your team’s actual name — it becomes the WiFi network everyone joins.</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Finally, make the robot its own network: create a WiFi hotspot on the device named "<span style="background: #fde68a; border-radius: 1mm; padding: 0.5mm 1.2mm; box-decoration-break: clone; -webkit-box-decoration-break: clone;">[fill in your team name]</span>", and serve the joystick and button UI over it. When my phone joins the robot’s WiFi, the control page opens and drives the robot — no other network needed.”</p>
+        <p class="footnote" style="padding-top: 4mm;">Replace the highlighted placeholder with your team’s name — it becomes the WiFi network everyone joins.</p>
       </div>
       <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
         <img src="shots/robot-hotspot.svg" alt="The phone joins the robot's own WiFi, named for the team, and the robot serves the joystick-and-button control page" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
