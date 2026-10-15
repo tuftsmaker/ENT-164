@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="1358" viewBox="0 0 780 1358" role="img"
+     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>The robot control page on a phone: a joystick, and a servo button that opens and closes the arm.</title>
+  <rect width="780" height="1358" fill="#0d1526"/>
+
+  <text x="390" y="140" font-size="46" font-weight="700" fill="#ffffff" text-anchor="middle">ENT-164 Robot</text>
+  <text x="390" y="196" font-size="26" fill="#9fb0c9" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">http://192.168.4.1</text>
+  <circle cx="218" cy="250" r="9" fill="#4ade80"/>
+  <text x="238" y="260" font-size="24" fill="#7ee2a8">connected — motors armed</text>
+
+  <circle cx="390" cy="620" r="155" fill="#101a2b" stroke="#33405a" stroke-width="3"/>
+  <line x1="390" y1="515" x2="390" y2="480" stroke="#33405a" stroke-width="3" stroke-linecap="round"/>
+  <line x1="390" y1="725" x2="390" y2="760" stroke="#33405a" stroke-width="3" stroke-linecap="round"/>
+  <line x1="285" y1="620" x2="250" y2="620" stroke="#33405a" stroke-width="3" stroke-linecap="round"/>
+  <line x1="495" y1="620" x2="530" y2="620" stroke="#33405a" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="390" cy="620" r="64" fill="#63ADF2"/>
+
+  <circle cx="390" cy="1030" r="100" fill="#16233c" stroke="#63ADF2" stroke-width="3"/>
+  <text x="390" y="1022" font-size="28" font-weight="700" fill="#cfe1f7" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">SERVO</text>
+  <text x="390" y="1058" font-size="18" fill="#8fa3c0" text-anchor="middle">open / close</text>
+
+  <text x="390" y="1300" font-size="23" fill="#5d7186" text-anchor="middle">Served by your ESP32 — no app to install.</text>
+</svg>

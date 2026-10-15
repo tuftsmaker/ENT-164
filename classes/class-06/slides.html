@@ -424,75 +424,126 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">06</span></footer>
 </section>
 
-<!-- ===== 07 · THE PROMPT ===== -->
+<!-- ===== 07 · STEP 1 — BUTTON AND SERVO ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Connectivity with AI</p>
-    <h2>Ask for it in <span class="accent">plain English</span></h2>
-    <p class="s-sub">No programming required. Describe the project and let AI write the MicroPython.</p>
+    <p class="s-kicker">Build it up · step 1 of 4</p>
+    <h2>Start with one button <span class="accent">and one servo</span></h2>
+    <p class="s-sub">The smallest piece of the robot: press, and the arm moves. Prove the loop before adding motors.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="align-items: stretch;">
+    <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“I want to use an ESP32 WROVER with MicroPython to drive my robot from a web page on my phone. The motors run through an L298N driver on GPIO 13, 12, 14, 18, 19 and 5. Build a page with forward, back, left, right and stop buttons that run the motors, over the Tufts_Wireless open wifi. Print my ESP32 MAC address on startup.”</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“The servo and the joystick’s push button are wired to my ESP32: SW is GPIO 4 and the servo signal is GPIO 15. Make the button open and close the servo — one press opens it, the next press closes it. Write the MicroPython and tell me what I should see when I test it.”</p>
+        <p class="footnote" style="padding-top: 4mm;">One small ask, one test. This is the loop for every step after it.</p>
       </div>
-      <div class="panel">
-        <p class="plabel">What the AI needs from you</p>
-        <div style="display: flex; flex-direction: column; gap: 3.6mm;">
-          <div>
-            <p class="s-kicker" style="margin-bottom: 0.6mm; font-size: 8pt;">The board &amp; language</p>
-            <p style="margin: 0; color: var(--muted-2); font-size: 10.5pt;">ESP32 WROVER, MicroPython</p>
-          </div>
-          <div>
-            <p class="s-kicker" style="margin-bottom: 0.6mm; font-size: 8pt;">The component</p>
-            <p style="margin: 0; color: var(--muted-2); font-size: 10.5pt;">Two TT motors on an L298N driver</p>
-          </div>
-          <div>
-            <p class="s-kicker" style="margin-bottom: 0.6mm; font-size: 8pt;">The goal</p>
-            <p style="margin: 0; color: var(--muted-2); font-size: 10.5pt;">Drive the robot from the browser</p>
-          </div>
-          <div>
-            <p class="s-kicker" style="margin-bottom: 0.6mm; font-size: 8pt;">The connection</p>
-            <p style="margin: 0; color: var(--muted-2); font-size: 10.5pt;">The Tufts_Wireless open WiFi hotspot</p>
-          </div>
-        </div>
-        <p class="footnote" style="margin-top: auto; padding-top: 4mm;">The MAC line is extra: it prints the address you'll register with Tufts IT. Next slide.</p>
-      </div>
+      <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
+        <img src="shots/robot-button-servo.png" alt="Step 1 wiring: the joystick's SW pin on GPIO 4 and the servo signal on GPIO 15, on the class robot's extension board" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
+      </figure>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">07</span></footer>
 </section>
 
-<!-- ===== 08 · THE CONTROL PAGE ===== -->
+<!-- ===== 08 · STEP 2 — THE STICK DRIVES ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">On your phone</p>
-    <h2>Every tap is a <span class="accent">request</span></h2>
-    <p class="s-sub">The page is five buttons. Each one hits the ESP32 at a different path.</p>
+    <p class="s-kicker">Build it up · step 2 of 4</p>
+    <h2>The stick <span class="accent">drives</span></h2>
+    <p class="s-sub">Now the drive train: forward and back, and pivoting turns with differential steering.</p>
   </header>
   <div class="s-body">
-    <div class="grid" style="grid-template-columns: 0.6fr 1.4fr; gap: 6mm; align-items: center;">
-      <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0; align-self: stretch;">
-        <img src="shots/phone-robot-control.png" alt="The robot control page on a phone: forward, back, left, right and a stop button, with the board's address at the top" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.08);">
-      </figure>
-      <div style="display: flex; flex-direction: column; gap: 3.6mm; min-height: 0; justify-content: center;">
-        <article class="card tight" style="padding: 4mm 4.6mm;">
-          <p class="s-kicker" style="margin-bottom: 2.2mm;">Button → path → wheels</p>
-          <p class="mono" style="margin: 0; font-size: 10pt; line-height: 2.0; color: var(--muted-2);">▲ <b style="color: var(--ink);">Forward</b> → <span style="color: var(--blue-deep);">/forward</span> — both motors ahead<br>◀ <b style="color: var(--ink);">Left</b> → <span style="color: var(--blue-deep);">/left</span> — left motor back, right ahead<br>▶ <b style="color: var(--ink);">Right</b> → <span style="color: var(--blue-deep);">/right</span> — right motor back, left ahead<br>▼ <b style="color: var(--ink);">Back</b> → <span style="color: var(--blue-deep);">/back</span> — both motors reverse<br>◼ <b style="color: var(--ink);">STOP</b> → <span style="color: var(--blue-deep);">/stop</span> — everything off</p>
-        </article>
-        <article class="card tight accent">
-          <p style="margin: 0;">The board reads the path and sets the driver pins. That is the whole app — the design is the buttons.</p>
-        </article>
+    <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Now drive the robot from the joystick: up and down go forward and back, left and right pivot it with differential steering — the two motors spin opposite ways. The motors run through the L298N on GPIO 13, 12, 14, 18, 19 and 5; the stick’s VRx is GPIO 36 and VRy is GPIO 39. Stop when the stick is centered.”</p>
+        <p class="footnote" style="padding-top: 4mm;">This is the drive half of the robot — everything from step 1 stays wired.</p>
       </div>
+      <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
+        <img src="shots/robot-drive.png" alt="Step 2 wiring: the joystick and the L298N driver with the two motors, on the class robot's extension board" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
+      </figure>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">08</span></footer>
 </section>
 
-<!-- ===== 09 · REGISTERING WITH TUFTS IT ===== -->
+<!-- ===== 09 · STEP 3 — VERIFY ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Build it up · step 3 of 4</p>
+    <h2>Check it <span class="accent">before you trust it</span></h2>
+    <p class="s-sub">Wheels off the ground first, then every direction on the floor.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Before we add WiFi, verify the robot moves correctly: add a self-test that drives forward, then backwards, then turns left and right — about a second each — and prints each step, so I can watch and check.”</p>
+        <p class="footnote" style="padding-top: 4mm;">Something off? Say exactly what you saw — “the left wheel spins backwards when I push up” — then re-test. One fix at a time.</p>
+      </div>
+      <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
+        <img src="shots/robot-check.svg" alt="What each movement should look like: forward and back drive both tracks; left and right spin them opposite ways and pivot the robot" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">09</span></footer>
+</section>
+
+<!-- ===== 10 · STEP 4 — THE ROBOT'S OWN WIFI ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Build it up · step 4 of 4</p>
+    <h2>Make the robot <span class="accent">the network</span></h2>
+    <p class="s-sub">The hotspot is your team’s name — your phone talks straight to the board.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Finally, make the robot its own network: create a WiFi hotspot on the device named after our team, and serve the joystick and button UI over it. When my phone joins the robot’s WiFi, the control page opens and drives the robot — no other network needed.”</p>
+        <p class="footnote" style="padding-top: 4mm;">Type your team’s actual name — it becomes the WiFi network everyone joins.</p>
+      </div>
+      <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
+        <img src="shots/robot-hotspot.svg" alt="The phone joins the robot's own WiFi, named for the team, and the robot serves the joystick-and-button control page" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">10</span></footer>
+</section>
+
+<!-- ===== 11 · THE CONTROL PAGE ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">On your phone</p>
+    <h2>Every move is a <span class="accent">request</span></h2>
+    <p class="s-sub">The page has two controls: the stick drives, the button works the servo.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.6fr 1.4fr; gap: 6mm; align-items: center;">
+      <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0; align-self: stretch;">
+        <img src="shots/phone-robot-control.svg" alt="The robot control page on a phone: a joystick and a servo button, with the board's address at the top" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.08);">
+      </figure>
+      <div style="display: flex; flex-direction: column; gap: 3.6mm; min-height: 0; justify-content: center;">
+        <article class="card tight" style="padding: 4mm 4.6mm;">
+          <p class="s-kicker" style="margin-bottom: 2.2mm;">What each control does</p>
+          <p class="mono" style="margin: 0; font-size: 10pt; line-height: 2.0; color: var(--muted-2);"><b style="color: var(--ink);">Drag the stick</b> → the motors follow your thumb<br><b style="color: var(--ink);">Let go</b> → everything stops<br><b style="color: var(--ink);">Press the button</b> → the servo opens or closes</p>
+        </article>
+        <article class="card tight accent">
+          <p style="margin: 0;">Every drag and press is a request the board answers itself. The whole app is one page — nothing to install.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">11</span></footer>
+</section>
+
+<!-- ===== 12 · REGISTERING WITH TUFTS IT ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -526,10 +577,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">09</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ===== 10 · USE THE IP ADDRESS ===== -->
+<!-- ===== 13 · USE THE IP ADDRESS ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -555,10 +606,10 @@
       <p>It may take a few minutes before your device registration is active. If the page doesn't load, wait and refresh.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ===== 11 · WHAT JUST HAPPENED ===== -->
+<!-- ===== 14 · WHAT JUST HAPPENED ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -590,10 +641,10 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">11</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">14</span></footer>
 </section>
 
-<!-- ===== 12 · OTHER THINGS TO TRY ===== -->
+<!-- ===== 15 · OTHER THINGS TO TRY ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -625,11 +676,11 @@
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">12</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">15</span></footer>
 </section>
 
 
-<!-- ===== 13 · CLOSING ===== -->
+<!-- ===== 16 · CLOSING ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -648,7 +699,7 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">13</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Coding with an AI Agent</span><span class="fnum">16</span></footer>
 </section>
 
 </body>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img"
+     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>What each stick direction should do: forward and back drive both tracks the same way; left and right spin the tracks opposite ways and pivot the robot.</title>
+  <desc>A top-down robot in four cells. Forward: both track arrows up. Back: both track arrows down. Left: left track arrow down, right track arrow up. Right: the mirror.</desc>
+  <rect width="1200" height="720" fill="#ffffff"/>
+
+  <g stroke="#e6eaf1" stroke-width="2">
+    <line x1="600" y1="30" x2="600" y2="690"/>
+    <line x1="30" y1="360" x2="1170" y2="360"/>
+  </g>
+
+  <defs>
+    <g id="robot">
+      <rect x="-118" y="-95" width="32" height="190" rx="16" fill="#262b35"/>
+      <rect x="86" y="-95" width="32" height="190" rx="16" fill="#262b35"/>
+      <rect x="-74" y="-80" width="148" height="160" rx="16" fill="#f2f7fd" stroke="#bcd8f7" stroke-width="2.5"/>
+      <rect x="-36" y="-80" width="72" height="9" rx="4.5" fill="#3E8EDE"/>
+      <rect x="-26" y="-28" width="52" height="38" rx="8" fill="#dbe7f6" stroke="#bcd8f7" stroke-width="2"/>
+    </g>
+    <g id="up">
+      <line x1="0" y1="52" x2="0" y2="-14" stroke="#3E8EDE" stroke-width="6" stroke-linecap="round"/>
+      <path d="M0 -52 L-14 -18 L14 -18 Z" fill="#3E8EDE"/>
+    </g>
+    <g id="down">
+      <line x1="0" y1="-52" x2="0" y2="14" stroke="#1F6FD0" stroke-width="6" stroke-linecap="round"/>
+      <path d="M0 52 L-14 18 L14 18 Z" fill="#1F6FD0"/>
+    </g>
+  </defs>
+
+  <!-- ============ forward ============ -->
+  <text x="300" y="92" font-size="23" font-weight="700" fill="#0d1526" text-anchor="middle">Forward</text>
+  <text x="300" y="118" font-size="14.5" fill="#5f6b7a" text-anchor="middle">both tracks drive ahead</text>
+  <g transform="translate(300,258) scale(0.78)">
+    <use href="#robot"/>
+    <g transform="translate(-152,0)"><use href="#up" stroke="#3E8EDE"/></g>
+    <g transform="translate(152,0)"><use href="#up"/></g>
+  </g>
+
+  <!-- ============ back ============ -->
+  <text x="900" y="92" font-size="23" font-weight="700" fill="#0d1526" text-anchor="middle">Back</text>
+  <text x="900" y="118" font-size="14.5" fill="#5f6b7a" text-anchor="middle">both tracks reverse</text>
+  <g transform="translate(900,258) scale(0.78)">
+    <use href="#robot"/>
+    <g transform="translate(-152,0)"><use href="#down"/></g>
+    <g transform="translate(152,0)"><use href="#down"/></g>
+  </g>
+
+  <!-- ============ left ============ -->
+  <text x="300" y="422" font-size="23" font-weight="700" fill="#0d1526" text-anchor="middle">Left</text>
+  <text x="300" y="448" font-size="14.5" fill="#5f6b7a" text-anchor="middle">left track back, right track ahead — it pivots left</text>
+  <g transform="translate(300,592) scale(0.78)">
+    <use href="#robot"/>
+    <g transform="translate(-152,0)"><use href="#down"/></g>
+    <g transform="translate(152,0)"><use href="#up"/></g>
+  </g>
+
+  <!-- ============ right ============ -->
+  <text x="900" y="422" font-size="23" font-weight="700" fill="#0d1526" text-anchor="middle">Right</text>
+  <text x="900" y="448" font-size="14.5" fill="#5f6b7a" text-anchor="middle">the mirror — it pivots right</text>
+  <g transform="translate(900,592) scale(0.78)">
+    <use href="#robot"/>
+    <g transform="translate(-152,0)"><use href="#up"/></g>
+    <g transform="translate(152,0)"><use href="#down"/></g>
+  </g>
+</svg>
