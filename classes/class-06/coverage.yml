@@ -5,8 +5,8 @@ hero: "shots/esp32-wired-breadboard.jpg"
 hero_alt: "An ESP32 wired to an RGB LED on a breadboard, lit purple"
 
 topics:
-  - title: "Bluetooth vs WiFi, and client/server designs"
-    learn: "The two ways an ESP32 connects, and when a client, server, or hybrid fits."
+  - title: "Two ways to connect: the board's hotspot, or shared WiFi"
+    learn: "Connecting straight to the board, or over a network you share — and who asks, who answers."
   - title: "RGB LED exercise: a color from your phone"
     learn: "The whole wireless loop on one LED — wire it, ask for a page, open it on your phone."
   - title: "Building the robot up, step by step"

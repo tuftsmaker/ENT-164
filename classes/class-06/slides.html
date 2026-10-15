@@ -326,23 +326,18 @@
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">What you'll learn today</p>
-    <h2>From your phone <span class="accent">to the internet</span></h2>
-    <p class="s-sub">Connect, reach out, and build. The three things we do in class today.</p>
+    <h2>From your phone <span class="accent">to the board</span></h2>
+    <p class="s-sub">Connect, then build. The two things we do in class today.</p>
   </header>
   <div class="s-body">
-    <div class="grid g3">
+    <div class="grid g2">
       <article class="card">
         <span class="num">01</span>
         <h3>Connect to your microcontroller</h3>
         <p>Reach your device from a phone and from a web browser. No native app needed.</p>
       </article>
-      <article class="card">
-        <span class="num">02</span>
-        <h3>Connect to external services</h3>
-        <p>Give your device internet access, higher data rates, and cloud services.</p>
-      </article>
       <article class="card accent">
-        <span class="num">03</span>
+        <span class="num">02</span>
         <h3>Drive your robot</h3>
         <p>Put it all together: a control page on your phone that drives the robot you built.</p>
       </article>
@@ -351,34 +346,67 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">03</span></footer>
 </section>
 
-<!-- ===== 04 · BLUETOOTH VS WIFI ===== -->
+<!-- ===== 04 · DIRECT — THE BOARD'S HOTSPOT ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Connecting to an ESP32</p>
-    <h2>Two ways to <span class="accent">connect</span></h2>
-    <p class="s-sub">Both work. Only one of them skips app development entirely.</p>
+    <p class="s-kicker">Two ways to connect · 1 of 2</p>
+    <h2>Direct — the board’s <span class="accent">own hotspot</span></h2>
+    <p class="s-sub">The board becomes the network: your phone joins it, and nothing else is needed.</p>
   </header>
   <div class="s-body">
-    <div class="grid g2">
+    <div class="grid g3">
       <article class="card">
-        <span class="num">Bluetooth</span>
-        <h3>Short-range, device to device</h3>
-        <p>Low-power, short-range communication. Like connecting to a phone app. Requires a native mobile app for user interaction.</p>
-        <p class="footnote" style="margin-top: auto; padding-top: 4mm; color: #b4541f;"><b>This is hard.</b> You'd have to build and ship an app.</p>
+        <span class="num">01</span>
+        <h3>The board is the network</h3>
+        <p>The ESP32 creates its own WiFi hotspot. Your phone joins it like any network — no router involved.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Join it, open the page</h3>
+        <p>The board serves the page at its own address — like <span class="mono" style="font-size: 9.5pt;">192.168.4.1</span>. Type it in and the controls are there.</p>
       </article>
       <article class="card accent">
-        <span class="num">WiFi</span>
-        <h3>Internet-connected, browser-first</h3>
-        <p>Internet access, higher data rates, and integration with cloud services. Users interact through a simple web browser interface. No app development needed.</p>
-        <p class="footnote" style="margin-top: auto; padding-top: 4mm; color: var(--blue-deep);"><b>Today's approach</b>. The browser is your user interface.</p>
+        <span class="num">03</span>
+        <h3>Simple, but offline</h3>
+        <p>While your phone is on the board’s network it is off the internet — normal, and fine for class.</p>
       </article>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">04</span></footer>
 </section>
 
-<!-- ===== 05 · CLIENT AND SERVER ===== -->
+<!-- ===== 05 · SHARED — THROUGH THE INTERNET ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Two ways to connect · 2 of 2</p>
+    <h2>Shared — <span class="accent">through the internet</span></h2>
+    <p class="s-sub">The board joins a network you already have, and you reach it over that network.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>One network, two devices</h3>
+        <p>The board joins a WiFi — home, or a shared one — and gets an address on it, like any computer.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Reach it from anywhere on the network</h3>
+        <p>Any device on that network can open the board’s page — and your phone keeps its internet while you control it.</p>
+      </article>
+      <article class="card accent">
+        <span class="num">03</span>
+        <h3>It also gets the internet</h3>
+        <p>On a shared network the board can reach online services — and it obeys the network’s rules, like its password.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ===== 06 · CLIENT AND SERVER ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -394,10 +422,10 @@
       <p class="footnote" style="margin: 0; text-align: center;"><b>Client</b> — your phone asks &nbsp;·&nbsp; <b>Server</b> — the board answers &nbsp;·&nbsp; <b>No cloud</b> — the board is the whole network.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">05</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">06</span></footer>
 </section>
 
-<!-- ===== 06 · IN-CLASS EXERCISE — RGB LED ===== -->
+<!-- ===== 07 · IN-CLASS EXERCISE — RGB LED ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -420,10 +448,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">06</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">07</span></footer>
 </section>
 
-<!-- ===== 07 · WIRING THE DRIVE TRAIN ===== -->
+<!-- ===== 08 · WIRING THE DRIVE TRAIN ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -441,10 +469,10 @@
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">07</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">08</span></footer>
 </section>
 
-<!-- ===== 08 · STEP 1 — BUTTON AND SERVO ===== -->
+<!-- ===== 09 · STEP 1 — BUTTON AND SERVO ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -464,10 +492,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">08</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ===== 09 · STEP 2 — THE STICK DRIVES ===== -->
+<!-- ===== 10 · STEP 2 — THE STICK DRIVES ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -487,10 +515,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">09</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">10</span></footer>
 </section>
 
-<!-- ===== 10 · STEP 3 — VERIFY ===== -->
+<!-- ===== 11 · STEP 3 — VERIFY ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -502,7 +530,7 @@
     <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Before we add WiFi, verify the robot moves correctly: add a self-test that drives forward, then backwards, then turns left and right — about a second each — and prints each step, so I can watch and check.”</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Add a self-test that drives forward, then backwards, then turns left and right — about a second each — and prints each step, so I can watch and check.”</p>
         <p class="footnote" style="padding-top: 4mm;">Something off? Say exactly what you saw — “the left wheel spins backwards when I push up” — then re-test. One fix at a time.</p>
       </div>
       <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
@@ -510,10 +538,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">11</span></footer>
 </section>
 
-<!-- ===== 11 · STEP 4 — THE ROBOT'S OWN WIFI ===== -->
+<!-- ===== 12 · STEP 4 — THE ROBOT'S OWN WIFI ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -525,7 +553,7 @@
     <div class="outline" style="grid-template-columns: 0.88fr 1.12fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Finally, make the robot its own network: create a WiFi hotspot on the device named "<span style="background: #fde68a; border-radius: 1mm; padding: 0.5mm 1.2mm; box-decoration-break: clone; -webkit-box-decoration-break: clone;">[fill in your team name]</span>", and serve the joystick and button UI over it. When my phone joins the robot’s WiFi, the control page opens and drives the robot — no other network needed.”</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“Finally, make the robot its own network: create a WiFi hotspot on the device named <span style="background: #fde68a;">[fill in your team name]</span>, and serve the joystick and button UI over it. When my phone joins the robot’s WiFi, the control page opens and drives the robot — no other network needed.”</p>
         <p class="footnote" style="padding-top: 4mm;">Replace the highlighted placeholder with your team’s name — it becomes the WiFi network everyone joins.</p>
       </div>
       <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
@@ -533,10 +561,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">11</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ===== 12 · THE CONTROL PAGE ===== -->
+<!-- ===== 13 · THE CONTROL PAGE ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -560,10 +588,10 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">12</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ===== 13 · WHAT JUST HAPPENED ===== -->
+<!-- ===== 14 · WHAT JUST HAPPENED ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -595,10 +623,10 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">13</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">14</span></footer>
 </section>
 
-<!-- ===== 14 · OTHER THINGS TO TRY ===== -->
+<!-- ===== 15 · OTHER THINGS TO TRY ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -630,11 +658,11 @@
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">14</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">15</span></footer>
 </section>
 
 
-<!-- ===== 15 · CLOSING ===== -->
+<!-- ===== 16 · CLOSING ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -653,7 +681,7 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">15</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">16</span></footer>
 </section>
 
 </body>

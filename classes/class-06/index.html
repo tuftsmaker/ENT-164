@@ -99,20 +99,15 @@
 
     <section class="section-block" id="learn">
       <h2>What you'll learn today</h2>
-      <p class="lede">Connect, reach out, and build. The three things we do in class today.</p>
+      <p class="lede">Connect, then build. The two things we do in class today.</p>
       <div class="cards">
         <div class="card">
           <span class="num">01</span>
           <h3>Connect to your microcontroller</h3>
           <p>Reach your device from a phone and from a web browser. No native app needed.</p>
         </div>
-        <div class="card">
-          <span class="num">02</span>
-          <h3>Connect to external services</h3>
-          <p>Give your device internet access, higher data rates, and cloud services.</p>
-        </div>
         <div class="card accent">
-          <span class="num">03</span>
+          <span class="num">02</span>
           <h3>Light it up, then drive</h3>
           <p>An in-class exercise, then the robot: a page your phone opens controls both.</p>
         </div>
@@ -121,17 +116,15 @@
 
     <section class="section-block" id="connect">
       <h2>Connectivity options</h2>
-      <p class="lede">Bluetooth or WiFi. Both work, but only one skips app development entirely.</p>
+      <p class="lede">Direct through the board's own hotspot, or shared over a network you both join.</p>
       <div class="cards">
         <div class="card">
-          <h3>Bluetooth</h3>
-          <p>Low-power, short-range, device-to-device communication. Like connecting to a phone app. It requires a native mobile app for user interaction.</p>
-          <div class="callout warm" style="margin-top:16px;"><b>This is hard.</b> You'd have to build and ship an app.</div>
+          <h3>Direct · the board's hotspot</h3>
+          <p>The ESP32 creates its own WiFi network. Your phone joins it and opens the page at the board's own address — no router, no setup. While connected, your phone is off the internet.</p>
         </div>
         <div class="card accent">
-          <h3>WiFi</h3>
-          <p>Internet access, higher data rates, and integration with cloud services. Users interact through a simple web browser interface. No app development needed.</p>
-          <div class="callout" style="margin-top:16px;"><b>Today's approach.</b> The browser is your user interface.</div>
+          <h3>Shared · through the internet</h3>
+          <p>The board joins a network you and your phone already share. It gets an address on it, any device there can open the page — and the board can reach online services too.</p>
         </div>
       </div>
       <h3 style="font-size:1.05rem;margin:30px 0 10px;">Client and server</h3>
