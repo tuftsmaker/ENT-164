@@ -134,23 +134,19 @@
           <div class="callout" style="margin-top:16px;"><b>Today's approach.</b> The browser is your user interface.</div>
         </div>
       </div>
-      <h3 style="font-size:1.05rem;margin:30px 0 10px;">Client, server, or hybrid</h3>
-      <p class="prose" style="color:var(--muted);margin:0 0 16px;max-width:74ch;">Three pieces make the system work: your device, the services it reaches over WiFi, and the browser you control it from.</p>
+      <h3 style="font-size:1.05rem;margin:30px 0 10px;">Client and server</h3>
+      <p class="prose" style="color:var(--muted);margin:0 0 16px;max-width:74ch;">Two pieces make the system work: the board that serves the page, and the browser you control it from — connected directly, over the board's own WiFi.</p>
       <div class="gallery">
         <figure class="shot">
           <img src="shots/esp32-wrover-board.jpg" alt="An ESP32 WROVER microcontroller board" style="aspect-ratio: 4 / 5; object-fit: contain; background: #fff;">
-          <figcaption><b>The device</b>An ESP32 WROVER running MicroPython. The thing that gets online.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="shots/cloud-api.jpg" alt="A cloud icon labelled API with connected nodes" style="aspect-ratio: 4 / 5; object-fit: contain; background: #fff;">
-          <figcaption><b>External services</b>Over WiFi, your device can reach APIs and cloud services.</figcaption>
+          <figcaption><b>The server</b>An ESP32 WROVER running MicroPython. The board serves the page.</figcaption>
         </figure>
         <figure class="shot tall">
           <img src="shots/phone-rgb-control.jpg" alt="Phone browser showing an RGB LED control page with a color picker and sliders" style="aspect-ratio: 4 / 5; object-fit: contain; background: #0f1218;">
-          <figcaption><b>The browser UI</b>No app to install. The device serves a page your phone opens.</figcaption>
+          <figcaption><b>The client</b>No app to install. Your phone asks; the board answers.</figcaption>
         </figure>
       </div>
-      <div class="callout" style="margin-top:16px;"><b>Client</b>, your device reaches out to a service. <b>Server</b>, your device serves a page. <b>Hybrid</b>, your robot is both.</div>
+      <div class="callout" style="margin-top:16px;"><b>Client</b>, your phone asks for the page. <b>Server</b>, the board answers. <b>No router, no cloud</b> — the board is the whole network.</div>
     </section>
 
     <section class="section-block" id="build">
