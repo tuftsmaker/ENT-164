@@ -273,7 +273,7 @@
     <div class="lede">
       <p class="s-kicker">Class 6 · Week 6 · Fall 2026</p>
       <h1>Going <span class="accent">Wireless</span></h1>
-      <p class="sub">Your ESP32 can serve a web page your phone opens. No app required. Today we get your robot on WiFi, register it with Tufts, and drive it from your phone’s browser.</p>
+      <p class="sub">Your ESP32 can serve a web page your phone opens. No app required. Today we get your robot on WiFi, build it up step by step, and drive it from your phone’s browser.</p>
       <div class="pills">
         <span class="pill">Thu, Oct 15</span>
         <span class="pill">JCC 301 / Nolop</span>
@@ -397,7 +397,33 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">05</span></footer>
 </section>
 
-<!-- ===== 06 · WIRING THE DRIVE TRAIN ===== -->
+<!-- ===== 06 · IN-CLASS EXERCISE — RGB LED ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">In-class exercise</p>
+    <h2>Change a color <span class="accent">from your phone</span></h2>
+    <p class="s-sub">Before the robot, prove the whole loop on one LED: wire it, ask for a page, open it on your phone.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: 0.88fr 1.22fr 0.5fr; gap: 4.5mm; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 10.5pt; line-height: 1.62; margin: 0; color: var(--muted-2);">“I want to change the color of an RGB LED from my phone. It sits on my breadboard: common anode to 3V3, R on GPIO 4, G on GPIO 2, B on GPIO 15. Create a WiFi hotspot on my ESP32 and serve a page with color buttons and sliders — I tap a color, the LED changes.”</p>
+        <p class="footnote" style="padding-top: 4mm;">Join the board’s WiFi, open the address it prints, and pick a color.</p>
+      </div>
+      <figure class="panel" style="margin: 0; padding: 3.5mm; align-items: center; justify-content: center;">
+        <img src="shots/wiring-rgb-led.png" alt="Breadboard wiring for the RGB LED: the common anode runs to 3V3 through a 220 ohm resistor, and R, G and B take GPIO 4, GPIO 2 and GPIO 15" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;">
+      </figure>
+      <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0;">
+        <img src="shots/phone-rgb-control.jpg" alt="The RGB LED control page on a phone: a color circle, red, green and blue sliders, and color buttons" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.08);">
+      </figure>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ===== 07 · WIRING THE DRIVE TRAIN ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -421,10 +447,10 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">06</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">07</span></footer>
 </section>
 
-<!-- ===== 07 · STEP 1 — BUTTON AND SERVO ===== -->
+<!-- ===== 08 · STEP 1 — BUTTON AND SERVO ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -444,10 +470,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">07</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">08</span></footer>
 </section>
 
-<!-- ===== 08 · STEP 2 — THE STICK DRIVES ===== -->
+<!-- ===== 09 · STEP 2 — THE STICK DRIVES ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -467,10 +493,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">08</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ===== 09 · STEP 3 — VERIFY ===== -->
+<!-- ===== 10 · STEP 3 — VERIFY ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -490,10 +516,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">09</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">10</span></footer>
 </section>
 
-<!-- ===== 10 · STEP 4 — THE ROBOT'S OWN WIFI ===== -->
+<!-- ===== 11 · STEP 4 — THE ROBOT'S OWN WIFI ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -513,10 +539,10 @@
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">11</span></footer>
 </section>
 
-<!-- ===== 11 · THE CONTROL PAGE ===== -->
+<!-- ===== 12 · THE CONTROL PAGE ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -540,76 +566,10 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">11</span></footer>
-</section>
-
-<!-- ===== 12 · REGISTERING WITH TUFTS IT ===== -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">One-time setup</p>
-    <h2>Register your ESP32 <span class="accent">with Tufts IT</span></h2>
-    <p class="s-sub">Tufts_Wireless needs your device's MAC address before it will let it join.</p>
-  </header>
-  <div class="s-body">
-    <div class="grid" style="grid-template-columns: 1.08fr 0.92fr; grid-template-rows: 1fr; gap: 6mm;">
-      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center;">
-        <article class="card tight" style="flex-direction: row; gap: 3.6mm; align-items: flex-start; padding: 3.6mm 4.6mm;">
-          <span class="num" style="margin-bottom: 0;">01</span>
-          <p>Run the code with opencode and copy your device's MAC address from what it prints. It looks like <span class="mono" style="font-size: 9pt; color: var(--blue-deep);">6c:c8:40:77:e0:9c</span>, but with your own numbers and letters.</p>
-        </article>
-        <article class="card tight" style="flex-direction: row; gap: 3.6mm; align-items: flex-start; padding: 3.6mm 4.6mm;">
-          <span class="num" style="margin-bottom: 0;">02</span>
-          <p>The rest of the code will fail at this point. You can't reach WiFi yet. That's expected.</p>
-        </article>
-        <article class="card tight" style="flex-direction: row; gap: 3.6mm; align-items: flex-start; padding: 3.6mm 4.6mm;">
-          <span class="num" style="margin-bottom: 0;">03</span>
-          <p>Go to <span class="mono" style="font-size: 9pt; color: var(--blue-deep);">https://device-registration.it.tufts.edu</span>.</p>
-        </article>
-        <article class="card tight" style="flex-direction: row; gap: 3.6mm; align-items: flex-start; padding: 3.6mm 4.6mm;">
-          <span class="num" style="margin-bottom: 0;">04</span>
-          <p>Clear the default MAC address, then copy your ESP32's MAC from opencode into the field.</p>
-        </article>
-      </div>
-      <figure class="tile" style="align-self: center;">
-        <img src="shots/tufts-device-registration.jpg" alt="Tufts device registration form with the MAC address filled in and Device Type set to Other Mobile Devices" style="height: auto; aspect-ratio: 1600 / 658; object-fit: cover;">
-        <figcaption style="position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line);"><b style="display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm;">Registered</b>Description: ESP32 Device · Type: Other Mobile Devices · SUBMIT.</figcaption>
-      </figure>
-    </div>
-  </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ===== 13 · USE THE IP ADDRESS ===== -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Now complete the wiring and restart</p>
-    <h2>Use the IP address, <span class="accent">not the MAC</span></h2>
-    <p class="s-sub">opencode prints two addresses. Only one of them belongs in your browser.</p>
-  </header>
-  <div class="s-body">
-    <div class="grid g2">
-      <article class="card accent">
-        <span class="num">Use this</span>
-        <h3 class="mono" style="font-size: 15pt;">192.168.6.134</h3>
-        <p>Type the IP address opencode prints into your phone's browser, e.g. <span class="mono" style="font-size: 9pt;">http://192.168.6.134</span>. That opens your device's page.</p>
-      </article>
-      <article class="card">
-        <span class="num">Not this</span>
-        <h3 class="mono" style="font-size: 15pt;">6c:c8:40:77:e0:9c</h3>
-        <p>The MAC address was only needed for Tufts IT registration. It will not open a web page.</p>
-      </article>
-    </div>
-    <div class="assign" style="border-color: #f0d9c8; background: #fdf7f2;">
-      <span class="alabel" style="color: #b4541f;">Attention</span>
-      <p>It may take a few minutes before your device registration is active. If the page doesn't load, wait and refresh.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">13</span></footer>
-</section>
-
-<!-- ===== 14 · WHAT JUST HAPPENED ===== -->
+<!-- ===== 13 · WHAT JUST HAPPENED ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -627,7 +587,7 @@
       <div class="cyc">
         <span class="cn">2</span>
         <h3>The page gets an address</h3>
-        <p>The page is accessible at the device's IP address, assigned automatically when it joins Tufts_Wireless.</p>
+        <p>The board serves the page from the network it creates — the address the code prints, like <span class="mono" style="font-size: 8.5pt;">http://192.168.4.1</span>.</p>
       </div>
       <div class="cyc">
         <span class="cn">3</span>
@@ -637,14 +597,14 @@
       <div class="cyc">
         <span class="cn">4</span>
         <h3>Requests round-trip</h3>
-        <p>Tapping a button sends a request to the ESP32 (e.g. <span class="mono" style="font-size: 8.5pt;">http://10.243.94.14/forward</span>). It reads the path, sets the motor pins, and answers with the next page state.</p>
+        <p>Interacting with the page sends a request to the ESP32 (its address is <span class="mono" style="font-size: 8.5pt;">http://192.168.4.1</span>). It reads the request, sets the pins, and answers with the next page state.</p>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">14</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ===== 15 · OTHER THINGS TO TRY ===== -->
+<!-- ===== 14 · OTHER THINGS TO TRY ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -676,11 +636,11 @@
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">15</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">14</span></footer>
 </section>
 
 
-<!-- ===== 16 · CLOSING ===== -->
+<!-- ===== 15 · CLOSING ===== -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -699,7 +659,7 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">16</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 6 · Going Wireless</span><span class="fnum">15</span></footer>
 </section>
 
 </body>

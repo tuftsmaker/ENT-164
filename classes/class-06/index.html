@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ENT-164 · Class 6 — Going Wireless</title>
-<meta name="description" content="Class 6 of ENT-164 Intro to Making: connect an ESP32 to WiFi, register it with Tufts IT, and build a smart light controlled from a phone browser — no app development required.">
+<meta name="description" content="Class 6 of ENT-164 Intro to Making: make an ESP32 its own WiFi hotspot, change an RGB LED's color from your phone, and drive the robot you built — no app development required.">
 <meta name="theme-color" content="#f7f9fc">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ENT-164 · Class 6 — Going Wireless">
-<meta property="og:description" content="Get your microcontroller online: WiFi, Tufts device registration, and a smart light you control from the browser.">
+<meta property="og:description" content="Get your microcontroller online: its own WiFi hotspot, an RGB LED you control from the browser, and a robot you drive from your phone.">
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
 <body class="page-class">
@@ -43,7 +43,7 @@
   <div class="wrap">
     <p class="kicker reveal">Class 6 · Week 6 · Fall 2026</p>
     <h1 class="reveal" style="--d:.06s">Going <span class="accent">Wireless</span></h1>
-    <p class="lead reveal" style="--d:.12s">Your ESP32 can serve a web page your phone opens. No app required. Today we get it on WiFi, register it with Tufts, and build a smart light you control from the browser.</p>
+    <p class="lead reveal" style="--d:.12s">Your ESP32 can serve a web page your phone opens. No app required. Today we get it on WiFi, change an LED's color from your phone, and drive the robot you built.</p>
     <div class="pills reveal" style="--d:.18s">
       <span class="pill">Thu, Oct 15</span>
       <span class="pill">JCC 301 / Nolop</span>
@@ -65,8 +65,7 @@
     <a href="#recap">Recap</a>
     <a href="#learn">What you'll learn</a>
     <a href="#connect">Connectivity options</a>
-    <a href="#build">Build a smart light</a>
-    <a href="#register">Register your device</a>
+    <a href="#build">RGB LED exercise</a>
     <a href="#how">How it works</a>
     <a href="#try">Other things to try</a>
     <a href="#fromclass">Student build</a>
@@ -114,8 +113,8 @@
         </div>
         <div class="card accent">
           <span class="num">03</span>
-          <h3>Build a Smart Light</h3>
-          <p>Put it all together: an RGB light you control from your phone's browser.</p>
+          <h3>Light it up, then drive</h3>
+          <p>An in-class exercise, then the robot: a page your phone opens controls both.</p>
         </div>
       </div>
     </section>
@@ -151,12 +150,12 @@
           <figcaption><b>The browser UI</b>No app to install. The device serves a page your phone opens.</figcaption>
         </figure>
       </div>
-      <div class="callout" style="margin-top:16px;"><b>Client</b>, your device reaches out to a service. <b>Server</b>, your device serves a page. <b>Hybrid</b>, the Smart Light is both.</div>
+      <div class="callout" style="margin-top:16px;"><b>Client</b>, your device reaches out to a service. <b>Server</b>, your device serves a page. <b>Hybrid</b>, your robot is both.</div>
     </section>
 
     <section class="section-block" id="build">
-      <h2>Build a smart light</h2>
-      <p class="lede">One RGB LED. Three colors in a single package, sharing a common anode (+).</p>
+      <h2>Change a color from your phone</h2>
+      <p class="lede">An in-class exercise before the robot: one RGB LED, served as a page your phone opens.</p>
       <div class="gallery">
         <figure class="shot">
           <img src="shots/rgb-led-common-anode.jpg" alt="Diagram of an RGB LED with red, green, and blue channels sharing a common anode" style="object-fit: contain; background: #fff;">
@@ -169,7 +168,7 @@
       </div>
 
       <h3 style="font-size:1.05rem;margin:30px 0 10px;">The prompt</h3>
-      <div class="callout"><b>No programming required.</b> Describe the project and let AI write the MicroPython: <span class="mono" style="font-size:13.5px;">“I want to use an ESP32 WROVER with MicroPython to measure the distance with a HC-SR04 sensor and show it on my phone using the Tufts_Wireless open wifi hotspot. Print my ESP32 MAC address on startup.”</span></div>
+      <div class="callout"><b>No programming required.</b> Describe the project and let AI write the MicroPython: <span class="mono" style="font-size:13.5px;">“I want to change the color of an RGB LED from my phone. It sits on my breadboard: common anode to 3V3, R on GPIO 4, G on GPIO 2, B on GPIO 15. Create a WiFi hotspot on my ESP32 and serve a page with color buttons and sliders — I tap a color, the LED changes.”</span></div>
       <div class="cards">
         <div class="card">
           <h3>The board &amp; language</h3>
@@ -177,56 +176,17 @@
         </div>
         <div class="card">
           <h3>The component</h3>
-          <p>HC-SR04 distance sensor.</p>
+          <p>RGB LED (common anode) and a 220 Ω resistor.</p>
         </div>
         <div class="card">
           <h3>The goal</h3>
-          <p>Measure distance and show it on your phone.</p>
+          <p>Change the LED's color from your phone's browser.</p>
         </div>
         <div class="card">
           <h3>The connection</h3>
-          <p>The Tufts_Wireless open WiFi hotspot.</p>
+          <p>The board's own WiFi hotspot — your phone joins directly.</p>
         </div>
       </div>
-      <div class="callout" style="margin-top:16px;">The MAC line is extra: it prints the address you'll register with Tufts IT. See the next section.</div>
-    </section>
-
-    <section class="section-block" id="register">
-      <h2>Register your device</h2>
-      <p class="lede">Tufts_Wireless needs your device's MAC address before it will let it join. This is a one-time step.</p>
-      <div class="cards">
-        <div class="card">
-          <span class="num">01</span>
-          <h3>Get your MAC address</h3>
-          <p>Run the code with opencode and copy your device's MAC address from what it prints. It looks like <span class="mono">6c:c8:40:77:e0:9c</span>, but with your own numbers and letters.</p>
-        </div>
-        <div class="card">
-          <span class="num">02</span>
-          <h3>Expect an error</h3>
-          <p>The rest of the code will fail at this point. You can't reach WiFi yet. That's expected.</p>
-        </div>
-        <div class="card">
-          <span class="num">03</span>
-          <h3>Register it</h3>
-          <p>Go to <a href="https://device-registration.it.tufts.edu" target="_blank" rel="noopener">device-registration.it.tufts.edu</a>.</p>
-        </div>
-        <div class="card">
-          <span class="num">04</span>
-          <h3>Paste your MAC</h3>
-          <p>Clear the default MAC address, then copy your ESP32's MAC from opencode into the field.</p>
-        </div>
-      </div>
-      <div class="gallery" style="margin-top:16px;">
-        <figure class="shot">
-          <img src="shots/tufts-registration-default-mac.jpg" alt="Tufts device registration form showing the default Mac/Apple Computers MAC address that needs to be cleared" style="aspect-ratio: 1600 / 658; object-fit: contain; background: #fff;">
-          <figcaption><b>1 · The default MAC</b>Clear the pre-filled address first.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="shots/tufts-device-registration.jpg" alt="Tufts device registration form with the ESP32 MAC address filled in and Device Type set to Other Mobile Devices" style="aspect-ratio: 1600 / 658; object-fit: contain; background: #fff;">
-          <figcaption><b>2 · Your device's MAC</b>Description: ESP32 Device · Type: Other Mobile Devices · SUBMIT.</figcaption>
-        </figure>
-      </div>
-      <div class="callout" style="margin-top:16px;"><b>Use the IP address, not the MAC.</b> Once registered, type the IP address opencode prints into your phone's browser (e.g. <span class="mono">http://192.168.6.134</span>). The MAC address (<span class="mono">6c:c8:40:77:e0:9c</span>) will not open a web page. It was only needed for registration. It may take a few minutes before your registration is active.</div>
     </section>
 
     <section class="section-block" id="how">
@@ -234,9 +194,9 @@
       <p class="lede">Every tap on your phone becomes a request the ESP32 answers.</p>
       <div class="cycle">
         <div class="cyc"><span class="cn">1</span><h3>A web server starts</h3><p>Your ESP32 runs a web server that renders a web page. No separate computer needed.</p></div>
-        <div class="cyc"><span class="cn">2</span><h3>The page gets an address</h3><p>The page is accessible at the device's IP address, assigned automatically when it joins Tufts_Wireless.</p></div>
+        <div class="cyc"><span class="cn">2</span><h3>The page gets an address</h3><p>The board serves the page from the network it creates — the address the code prints, like <span class="mono">http://192.168.4.1</span>.</p></div>
         <div class="cyc"><span class="cn">3</span><h3>Your phone renders it</h3><p>Your phone's browser renders the HTML that the ESP32's web server generates.</p></div>
-        <div class="cyc"><span class="cn">4</span><h3>Requests round-trip</h3><p>Interacting with the page sends a request to the ESP32 (e.g. <span class="mono">http://10.243.94.14/</span>). It reads the request, calls the sensor, and passes the data back.</p></div>
+        <div class="cyc"><span class="cn">4</span><h3>Requests round-trip</h3><p>Interacting with the page sends a request to the ESP32 (its address is <span class="mono">http://192.168.4.1</span>). It reads the request, sets the pins, and answers with the next state.</p></div>
       </div>
     </section>
 

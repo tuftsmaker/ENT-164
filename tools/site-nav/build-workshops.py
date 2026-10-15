@@ -113,8 +113,8 @@ CARDS = {
     6: {
         "image": "classes/class-06/shots/phone-rgb-control.jpg",
         "alt": "A phone screen showing an RGB LED control page",
-        "blurb": "Direct an AI coding agent: give your ESP32 a web page with Wi-Fi setup, "
-                 "the client/server model, a smart RGB light, and Tufts device registration.",
+        "blurb": "Direct an AI coding agent: serve a page from your ESP32, change an RGB "
+                 "LED's color from your phone, and drive the robot over its own Wi-Fi.",
     },
     7: {
         "image": "assets/photos/class/robot-internals.jpg",
