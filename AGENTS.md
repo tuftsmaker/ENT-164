@@ -109,8 +109,10 @@ Load the student-writing-style skill before writing or editing any student-facin
   slides item — the class page links the deck now, so nothing replaces it.
   On 2026-09-30 the live course was synced: classes 1, 2, 3, 4, 5, 6, 9 and 11
   carry their converted Pages pages, with the old slides item removed from each
-  module. The classes still being converted (8, 10, 12, 13 — modules 314496,
-  314498, 314500, 314501) keep their Google Slides items until their decks land.
+  module. On 2026-10-29 Class 8 joined them: its retrospective deck was converted
+  and its Google Slides module item (2140716) deleted. Classes 10, 12 and 13
+  (modules 314498, 314500, 314501) keep their Google Slides items until their
+  decks land.
 
   Note: the source file `ENT-164 Class 10 - Intelligent Devices with AI.pptx`
   is the deck for **Class 11** (syllabus Week 11, Thu Nov 19) — module 314499.
@@ -604,9 +606,11 @@ The ID is never resolved at run time.
   from the deck (it is not generated). Keep its links to `slides.html` and the
   PDF working, and update it when shared facts change (title, dates, TA info).
 - **Every class in the course has a page; not every class has a deck yet.**
-  Classes 8, 10, 12 and 13 are placeholders: a real page with the syllabus week
+  Classes 10, 12 and 13 are placeholders: a real page with the syllabus week
   title, what the class covers, and the milestone reflection where one is due
-  (weeks 8 and 13), plus the note that the deck is being converted. Class 7
+  (week 13), plus the note that the deck is being converted. Class 8 converted
+  with the **retrospective** deck only: the race half of the session lives on
+  its page, and the PDF is `ENT-164-Class-8-Team-Retrospective.pdf`. Class 7
   (Final Robot Assembly and Testing) is a full working session: a page with the
   build checklist and the assembly checkpoint, no deck, and no Canvas module of
   its own — its page is reached from the home page's week list and the syllabus

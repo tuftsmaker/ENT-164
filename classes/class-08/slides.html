@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT-164 Class 8 · Robo Challenge and Team Retrospective — Slides</title>
+<meta name="theme-color" content="#f7f9fc">
+<style>
+  :root {
+    --tufts-blue: #3E8EDE;
+    --blue-deep: #1F6FD0;
+    --jumbo-blue: #002E6D;
+    --tufts-brown: #63493A;
+    --bessie-brown: #3D2E25;
+    --candle: #F2EDE7;
+    --ink: #0d1526;
+    --text: #17203a;
+    --muted: #5f6b7a;
+    --muted-2: #3f4a5a;
+    --line: #e6eaf1;
+    --line-strong: #d5dce7;
+    --paper: #ffffff;
+    --paper-2: #f7f9fc;
+    --blue-tint: #f2f7fd;
+    --blue-tint-2: #eaf3fd;
+    --radius: 4mm;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: 297mm 167mm; margin: 0; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #e8ecf2;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    position: relative; overflow: hidden;
+    width: 297mm; height: 167mm;
+    padding: 13mm 16mm 15mm;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide > * { position: relative; z-index: 1; }
+  .slide-logo {
+    position: absolute; top: 12.4mm; right: 16mm; z-index: 2;
+    height: 5.2mm; width: auto;
+  }
+  .cover .slide-logo { top: 18mm; height: 7mm; }
+
+  .s-head { margin-bottom: 6.5mm; }
+  .s-kicker {
+    font-size: 8.5pt; letter-spacing: 2.6px; text-transform: uppercase;
+    color: var(--blue-deep); font-weight: 700; margin: 0 0 2.4mm;
+  }
+  h2 { font-size: 24pt; line-height: 1.12; letter-spacing: -0.6px; font-weight: 700; margin: 0; color: var(--ink); }
+  .s-sub { color: var(--muted); font-size: 12pt; margin: 2.6mm 0 0; max-width: 210mm; }
+  h2 .accent { color: var(--blue-deep); }
+  .s-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .s-foot {
+    position: absolute; left: 16mm; right: 16mm; bottom: 5.5mm; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 7.5pt; color: #8a93a3; letter-spacing: 0.3px;
+    border-top: 1px solid var(--line); padding-top: 2.2mm;
+  }
+  .s-foot .fnum { color: var(--ink); font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 6mm 6mm 5.5mm;
+    box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    display: flex; flex-direction: column;
+  }
+  .card .num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);
+    align-self: flex-start; margin-bottom: 3.4mm;
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 2mm; padding: 0.8mm 2.4mm;
+  }
+  .card h3 { margin: 0 0 1.8mm; font-size: 13.5pt; letter-spacing: -0.2px; color: var(--ink); }
+  .card p { margin: 0; color: var(--muted); font-size: 10.5pt; line-height: 1.45; }
+  .card.tight p { font-size: 10pt; }
+  .card .ico {
+    width: 9mm; height: 9mm; border-radius: 2.6mm; margin-bottom: 3.4mm;
+    background: var(--blue-tint-2); border: 1px solid #cfe1f7;
+    display: grid; place-items: center;
+  }
+  .card .ico svg { width: 4.6mm; height: 4.6mm; }
+  .card.accent { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- cover ---------- */
+  .cover { padding: 15mm 16mm 12mm; }
+  .cover .top { display: flex; align-items: center; gap: 4mm; margin-bottom: 7mm; }
+  .cover .mark {
+    width: 13mm; height: 13mm; border-radius: 3.6mm; flex: 0 0 auto;
+    background: linear-gradient(145deg, #4c9ae6, #2f7cc9);
+    display: grid; place-items: center;
+    box-shadow: 0 2mm 6mm rgba(62, 142, 222, 0.28);
+  }
+  .cover .mark svg { width: 6.6mm; height: 6.6mm; }
+  .cover .course { font-weight: 700; font-size: 13pt; letter-spacing: -0.2px; color: var(--ink); }
+  .cover .course small { color: var(--muted); font-weight: 500; font-size: 10pt; }
+  .cover .cols { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr); gap: 10mm; flex: 1; min-height: 0; }
+  .cover .lede { display: flex; flex-direction: column; justify-content: center; }
+  .cover h1 { font-size: 40pt; line-height: 1.04; letter-spacing: -1.6px; margin: 0 0 5mm; font-weight: 700; color: var(--ink); }
+  .cover h1 .accent { color: var(--blue-deep); }
+  .cover .sub { color: var(--muted-2); font-size: 13pt; max-width: 150mm; margin: 0 0 6mm; }
+  .cover .pills { display: flex; flex-wrap: wrap; gap: 2.6mm; }
+  .pill {
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 1.6mm 4.4mm; font-size: 9.5pt; color: #46505f;
+    background: var(--paper);
+  }
+  .cover .shot {
+    border-radius: 5mm; overflow: hidden; border: 1px solid var(--line-strong);
+    box-shadow: 0 3mm 10mm rgba(13, 21, 38, 0.10);
+    position: relative; min-height: 0;
+  }
+  .cover .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover .team {
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    border-top: 1px solid var(--line); margin-top: 7mm; padding-top: 4mm;
+    font-size: 9.5pt; color: var(--muted-2);
+  }
+  .cover .team b { color: var(--ink); font-weight: 600; }
+  .cover .team .tufts { color: var(--muted); }
+
+  /* ---------- discussion ---------- */
+  .prompts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; flex: 1; }
+  .prompt {
+    position: relative;
+    border: 1px solid var(--line); border-radius: 5mm;
+    background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04);
+    padding: 8mm 7mm;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .prompt .q { font-size: 16pt; line-height: 1.3; letter-spacing: -0.3px; font-weight: 600; margin: 0; color: var(--ink); }
+  .prompt .qn { position: absolute; top: 6mm; left: 7mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--blue-deep); font-size: 10pt; font-weight: 700; letter-spacing: 1.4px; }
+  .prompt.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+
+  /* ---------- gallery / mosaic ---------- */
+  .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 2.6mm; flex: 1; min-height: 0; }
+  .tile { position: relative; border-radius: 3mm; overflow: hidden; border: 1px solid var(--line); background: var(--paper); min-height: 0; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 1.8mm 3mm; font-size: 7.5pt; color: var(--muted-2);
+    background: rgba(255, 255, 255, 0.93); border-top: 1px solid var(--line);
+  }
+
+  .gallery { display: grid; gap: 4.5mm; flex: 1; min-height: 0; align-content: center; }
+  .gallery.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gallery.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery .tile { display: flex; flex-direction: column; background: var(--paper); }
+  .gallery .tile img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+  .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
+  .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
+
+  /* ---------- structure ---------- */
+  .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
+  .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
+  .phase.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .phase .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 1mm; }
+  .phase .ptime { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9.5pt; color: var(--muted); margin: 0 0 4mm; }
+  .phase h3 { margin: 0 0 3mm; font-size: 14pt; color: var(--ink); }
+  .phase ul { margin: 0; padding: 0; list-style: none; }
+  .phase li { color: var(--muted); font-size: 10.5pt; padding-left: 5mm; position: relative; margin-bottom: 2.2mm; }
+  .phase li::before { content: "→"; position: absolute; left: 0; color: var(--blue-deep); }
+  .assign { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); margin-top: 4mm; padding: 4.6mm 6mm; display: flex; align-items: center; gap: 6mm; }
+  .assign .alabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); white-space: nowrap; }
+  .assign p { margin: 0; color: var(--muted); font-size: 10.5pt; }
+  .assign p b { color: var(--ink); }
+
+  /* ---------- outline ---------- */
+  .outline { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5mm; flex: 1; min-height: 0; align-items: center; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5.5mm 6mm; display: flex; flex-direction: column; min-height: 0; }
+  .panel .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 3.6mm; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2.2mm; align-content: flex-start; }
+  .chip {
+    border: 1px solid #cfe1f7; background: var(--blue-tint-2);
+    border-radius: 999px; padding: 1.4mm 3.6mm; font-size: 10pt; color: var(--muted-2);
+  }
+  .journey { display: flex; align-items: stretch; gap: 2.4mm; margin-top: 4mm; }
+  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.6mm 3mm; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .step b { display: block; font-size: 10.5pt; color: var(--ink); }
+  .step span { display: block; color: var(--muted); font-size: 8.5pt; margin-top: 0.8mm; }
+  .step.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .arrow { display: grid; place-items: center; color: var(--blue-deep); font-size: 14pt; }
+
+  /* ---------- rubrics ---------- */
+  .rubric { display: flex; flex-direction: column; gap: 5mm; flex: 1; justify-content: center; }
+  .rub-row { display: grid; grid-template-columns: 62mm minmax(0, 1fr) 16mm; align-items: center; gap: 6mm; }
+  .rub-label { color: var(--muted-2); font-size: 12pt; }
+  .rub-label small { display: block; color: var(--muted); font-size: 9pt; }
+  .bar { height: 3.4mm; border-radius: 999px; background: #edf1f6; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4c9ae6, #6FB3EC); }
+  .rub-val { text-align: right; font-weight: 700; font-size: 16pt; color: var(--ink); }
+  .footnote { color: var(--muted); font-size: 9.5pt; margin-top: 3mm; }
+
+  /* ---------- reflections ---------- */
+  .refl { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 5mm; flex: 1; min-height: 0; }
+  .cycle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm; }
+  .cyc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 5mm 4mm; position: relative; }
+  .cyc .cn { position: absolute; top: 3.6mm; right: 4mm; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9pt; color: var(--blue-deep); font-weight: 700; }
+  .cyc h3 { margin: 0 0 1.6mm; font-size: 12.5pt; color: var(--ink); }
+  .cyc p { margin: 0; color: var(--muted); font-size: 9.5pt; }
+  .qs { list-style: none; margin: 0; padding: 0; }
+  .qs li { position: relative; padding-left: 7mm; margin-bottom: 3.4mm; color: var(--muted-2); font-size: 11pt; }
+  .qs li::before { content: "?"; position: absolute; left: 0; top: 0; color: var(--blue-deep); font-weight: 700; }
+  .qs li:last-child { margin-bottom: 0; }
+
+  /* ---------- kit / makerspace ---------- */
+  .kit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4mm; flex: 1; align-content: center; }
+  .kit .card { align-items: flex-start; }
+  .bigline { text-align: center; margin: auto 0; }
+  .bigline .kicker-sm { font-size: 9pt; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin: 0 0 4mm; }
+  .bigline h2 { font-size: 34pt; letter-spacing: -1.2px; margin: 0 0 5mm; color: var(--ink); }
+  .bigline p { color: var(--muted); font-size: 14pt; max-width: 190mm; margin: 0 auto 6mm; }
+  .bigline .url { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12pt; color: var(--blue-deep); }
+
+  /* ---------- closing ---------- */
+  .closing { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6mm; flex: 1; align-items: center; }
+  .closing h2 { font-size: 36pt; }
+  .contact-card { border: 1px solid var(--line-strong); border-radius: 5mm; background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 7mm; }
+  .contact-card .plabel { font-size: 8.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-deep); margin: 0 0 4mm; }
+  .contact-card p { margin: 0 0 3.4mm; color: var(--muted); font-size: 11pt; }
+  .contact-card p:last-child { margin-bottom: 0; }
+  .contact-card b { color: var(--ink); }
+
+  @media screen {
+    body { padding: 10mm 0; }
+    .slide { margin: 0 auto 10mm; box-shadow: 0 12px 40px rgba(13, 21, 38, 0.16); border-radius: 2mm; }
+  }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .slide { margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 01 · COVER ===== -->
+<section class="slide cover">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="top">
+    <span class="mark" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+        <path d="m18 15 4-4" />
+        <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+      </svg>
+    </span>
+    <div class="course">ENT-164 <small>· Intro to Making</small></div>
+  </div>
+  <div class="cols">
+    <div class="lede">
+      <p class="s-kicker">Class 8 · Week 8 · Fall 2026</p>
+      <h1>Team <span class="accent">Retrospective</span></h1>
+      <p class="sub">Race day ends with a conversation. Look back on the build with your team, decide what to keep, and leave with actions you will use on the next project.</p>
+      <div class="pills">
+        <span class="pill">Thu, Oct 29</span>
+        <span class="pill">JCC 301 / Nolop</span>
+        <span class="pill">Post-its and a pen</span>
+        <span class="pill">After the race</span>
+      </div>
+    </div>
+    <figure class="shot">
+      <img src="shots/classroom-builds.jpg" alt="A row of student-built robots waiting on a table in the classroom">
+    </figure>
+  </div>
+  <div class="team">
+    <span><b>Thomas Van de Velde</b> · Instructor &nbsp; · &nbsp; <b>Alexander Beattie</b> · TA &nbsp; · &nbsp; <b>Patrice Pinardo</b> · TA</span>
+    <span class="tufts">Tufts University · Gordon Institute</span>
+  </div>
+</section>
+
+<!-- ===== 02 · WHAT A RETROSPECTIVE IS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Why we stop and look back</p>
+    <h2>A retrospective is a <span class="accent">team meeting</span></h2>
+    <p class="s-sub">You hold it at the end of a project or a phase. Everyone looks at what happened and agrees on what to change. It is the last step of the build, not an extra one.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g3">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>What went well?</h3>
+        <p>Name the successes and the strengths behind them, so the team keeps doing those on purpose.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>What could be improved?</h3>
+        <p>Name what cost you time, parts, or runs. A problem you can describe is a problem you can plan around.</p>
+      </article>
+      <article class="card accent">
+        <span class="num">03</span>
+        <h3>What have we learned?</h3>
+        <p>Write the lesson in a sentence you would pass to the next team.</p>
+      </article>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 8 · Robo Challenge and Team Retrospective</span><span class="fnum">02</span></footer>
+</section>
+
+<!-- ===== 03 · THE PROCESS ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The process</p>
+    <h2>Six steps, <span class="accent">one conversation</span></h2>
+    <p class="s-sub">Write first, decide as a team, and finish with something you can hand in.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid" style="grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3mm;">
+      <article class="card tight" style="padding: 4.6mm 3.8mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">1</span>
+        <h3 style="font-size: 11.5pt;">Write</h3>
+        <p>Three or more post-its per category, one idea on each.</p>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 3.8mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">2</span>
+        <h3 style="font-size: 11.5pt;">Group</h3>
+        <p>Cluster the similar ones and name each cluster.</p>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 3.8mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">3</span>
+        <h3 style="font-size: 11.5pt;">Vote</h3>
+        <p>Dot stickers on the items that matter most.</p>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 3.8mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">4</span>
+        <h3 style="font-size: 11.5pt;">Discuss</h3>
+        <p>One or two top items per category. Talk about why.</p>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 3.8mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">5</span>
+        <h3 style="font-size: 11.5pt;">Act</h3>
+        <p>Turn the discussion into actions with names on them.</p>
+      </article>
+      <article class="card tight accent" style="padding: 4.6mm 3.8mm;">
+        <span class="num" style="margin-bottom: 2.6mm;">6</span>
+        <h3 style="font-size: 11.5pt;">Document</h3>
+        <p>Write it up and hand it in with the Robo Challenge.</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Why this order</span>
+      <p><b>Write before you talk.</b> Ideas from the quietest person land in the pile first, before the loudest story sets the agenda.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 8 · Robo Challenge and Team Retrospective</span><span class="fnum">03</span></footer>
+</section>
+
+<!-- ===== 04 · STEP 1 — WRITE ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Step 1 · Write</p>
+    <h2>Quiet time <span class="accent">first</span></h2>
+    <p class="s-sub">Five to ten minutes each, alone, before anyone speaks.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <article class="phase">
+        <p class="plabel">The rules</p>
+        <h3>How to write</h3>
+        <ul>
+          <li>Three or more items per category</li>
+          <li>One item per post-it</li>
+          <li>Be specific. Name the moment, not the mood</li>
+          <li>No talking yet. This is quiet time</li>
+        </ul>
+      </article>
+      <article class="phase hot">
+        <p class="plabel">The three piles</p>
+        <h3>One category each</h3>
+        <ul>
+          <li>What went well?</li>
+          <li>What could be improved?</li>
+          <li>What have we learned?</li>
+        </ul>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Specific</span>
+      <p><b>“The left wheel spun backwards when we pushed up”</b> teaches something. “The wiring was confusing” does not.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 8 · Robo Challenge and Team Retrospective</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ===== 05 · STEPS 2 & 3 — GROUP & VOTE ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Steps 2 and 3 · Group and vote</p>
+    <h2>Sort the pile, then <span class="accent">pick the few</span></h2>
+    <p class="s-sub">Grouping turns a board of post-its into a handful of themes. Voting tells you which themes the whole team cares about.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <article class="phase">
+        <p class="plabel">Step 2</p>
+        <h3>Group similar items</h3>
+        <ul>
+          <li>Everyone puts their post-its on one shared board</li>
+          <li>Read the whole board before moving anything</li>
+          <li>Move related items into clusters</li>
+          <li>Give each cluster a short theme name</li>
+        </ul>
+      </article>
+      <article class="phase hot">
+        <p class="plabel">Step 3</p>
+        <h3>Vote on the top items</h3>
+        <ul>
+          <li>Each person gets a set of dot stickers</li>
+          <li>Put dots on the items you think matter most</li>
+          <li>Spread your dots, or spend them all on one item</li>
+          <li>Count the dots. The top items go to the discussion</li>
+        </ul>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Why dots</span>
+      <p><b>A dot is a quiet vote.</b> Everyone's view lands on the board, without anyone needing to win the room.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 8 · Robo Challenge and Team Retrospective</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ===== 06 · STEPS 4 & 5 — DISCUSS & ACT ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Steps 4 and 5 · Discuss and act</p>
+    <h2>Talk about <span class="accent">why</span>, then decide what changes</h2>
+    <p class="s-sub">The discussion explains the list. The action items are the only part that reaches the next build.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <article class="card">
+        <span class="num">04</span>
+        <h3>Discuss the top items</h3>
+        <p>Take the one or two most-voted items in each category. Ask why it happened, not only what happened. Agree on the cause, or say clearly that you see it differently.</p>
+      </article>
+      <article class="card accent">
+        <span class="num">05</span>
+        <h3>Define actions</h3>
+        <p>Each action names what changes and who owns it. Put a name and a date next to it, so the next build can start with it.</p>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Test an action</span>
+      <p><b>Could a teammate start it without asking you?</b> If not, it is still a wish. Good: “Test the robot on the competition surface at least twice.” Not: “Do more testing.”</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 8 · Robo Challenge and Team Retrospective</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ===== 07 · STEP 6 — DOCUMENT ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Step 6 · Document</p>
+    <h2>Write it up and <span class="accent">hand it in</span></h2>
+    <p class="s-sub">One shared document, written while the discussion is fresh. It is what your team reads before the next project starts.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <article class="phase">
+        <p class="plabel">The document</p>
+        <h3>What goes in it</h3>
+        <ul>
+          <li>The top-voted items from each category</li>
+          <li>Brief notes on the discussion for each one</li>
+          <li>Action items with names and dates where you can</li>
+          <li>Anything else the team wants to keep</li>
+        </ul>
+      </article>
+      <article class="phase hot">
+        <p class="plabel">Hand it in</p>
+        <h3>With the Robo Challenge</h3>
+        <ul>
+          <li>Put every teammate's name at the top</li>
+          <li>Submit the document, or a link to it</li>
+          <li>Use the Robo Challenge assignment on Canvas</li>
+        </ul>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">Two documents</span>
+      <p>The team document is not the individual reflection. The milestone reflection is yours alone, due today at <b>go.tufts.edu/reflect</b>.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 8 · Robo Challenge and Team Retrospective</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ===== 08 · LET'S GET STARTED ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div style="flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 9mm;">
+      <div class="bigline" style="margin: 0;">
+        <p class="kicker-sm">Your turn</p>
+        <h2 style="margin-bottom: 4mm;">Grab a pen and <span class="accent">start with the good</span></h2>
+        <p style="margin: 0;">Quiet writing first. Three post-its minimum in each category, one item per post-it.</p>
+      </div>
+      <div class="grid g3" style="flex: 0 0 auto;">
+        <article class="card tight">
+          <h3>What went well?</h3>
+          <p>Name the wins and the strengths behind them.</p>
+        </article>
+        <article class="card tight">
+          <h3>What could be improved?</h3>
+          <p>Name what cost you time, parts, or runs.</p>
+        </article>
+        <article class="card tight">
+          <h3>What have we learned?</h3>
+          <p>Write the lesson you would pass on.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 8 · Robo Challenge and Team Retrospective</span><span class="fnum">08</span></footer>
+</section>
+
+<!-- ===== 09 · CLOSING ===== -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <div class="s-body">
+    <div class="closing">
+      <div>
+        <p class="s-kicker">Before you go</p>
+        <h2>Questions?</h2>
+        <p class="s-sub" style="margin-top: 4mm;">Then finish the document and submit it with the Robo Challenge. The individual milestone reflection is due today, at go.tufts.edu/reflect.</p>
+        <p style="margin-top: 5mm; color: var(--muted); font-size: 10.5pt;"><b style="color: var(--ink);">Next class · Thu, Nov 5:</b> the final project begins with a concept pitch.</p>
+      </div>
+      <div class="contact-card">
+        <p class="plabel">Where to find us</p>
+        <p><b>Office hours</b><br><span class="mono">go.tufts.edu/meet_tvdv</span></p>
+        <p><b>Email</b><br><span class="mono">thomas.van_de_velde@tufts.edu</span></p>
+        <p><b>Course materials</b><br>tuftsmaker.github.io/ENT-164</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 8 · Robo Challenge and Team Retrospective</span><span class="fnum">09</span></footer>
+</section>
+
+</body>
+</html>
