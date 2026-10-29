@@ -16,46 +16,26 @@
     class-12: 314500
     class-13: 314501
   assignments:
+    robo-challenge-mid-point-assembly-checkpoint: 646293
     robo-challenge: 646292
     final-team-project-part-1-product-concept-presentation: 646283
+    final-product-presentation: 646281
+    final-project-checkpoint-1-core-functionality-and-technical-approach: 652132
+    final-project-checkpoint-2-integrated-features-and-user-experience: 652133
+    ent-164-onboarding-survey: 646279
+    individual-assignment-laser-cut-object: 646287
     individual-assignment-3d-printed-object: 646284
+    individual-assignment-ai-assisted-electronics-project: 646285
     individual-assignment-intelligent-device: 646286
     midterm-peer-evaluations: 646288
-    ent-164-onboarding-survey: 646279
-    individual-assignment-ai-assisted-electronics-project: 646285
     midterm-self-evaluation: 646289
-    robo-challenge-mid-point-assembly-checkpoint: 646293
-    individual-assignment-laser-cut-object: 646287
     final-peer-reviews: 646280
-    final-product-presentation: 646281
     final-self-review: 646282
     milestone-reflection-after-connectivity: 652130
     milestone-reflection-after-the-robo-challenge: 652131
-    final-project-checkpoint-1-core-functionality-and-technical-approach: 652132
-    final-project-checkpoint-2-integrated-features-and-user-experience: 652133
     milestone-reflection-final-project-mid-point: 652134
     milestone-reflection-the-course-end-to-end: 652135
     physical-making-reflection: 653213
-  pages:
-    about: about-the-instructor
-    class-01: class-1-introductions-and-course-overview
-    class-02: class-2-hand-making-and-robot-challenge-kickoff
-    class-03: class-3-laser-cutting
-    class-04: class-4-3d-printing
-    class-05: class-5-electronics
-    class-06: class-6-going-wireless
-    class-07: class-7-final-robot-assembly-and-testing
-    class-08: class-8-robo-challenge-and-team-retrospective
-    class-09: class-9-the-final-project-sprint
-    class-10: class-10-from-device-to-cloud
-    class-11: class-11-final-project-design-review
-    class-12: class-12-final-project-making-time
-    class-13: class-13-final-project-showcase
-    laser-cutting: laser-cutting-at-nolop-with-inkscape
-    laser-cutting-guide: laser-cutting-at-nolop-with-inkscape-beginners-guide
-    onshape-tips: onshape-tips
-    opencode-setup: ai-coding-agent-setup-guide
-    workshops: workshops
 '81044':
   modules:
     class-01: 316382
