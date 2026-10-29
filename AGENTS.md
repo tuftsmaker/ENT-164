@@ -529,8 +529,8 @@ The ID is never resolved at run time.
   repo authors (`summary`, `week`, `audience`, `in_class`) and entries Canvas
   does not have (`source: repo` — create on push; `source: schedule` —
   site-only). `in_class` marks work done during the class itself (the Robo
-  Challenge race): the class page describes it directly, so
-  `render-assignments.py` never lists it in either due block.
+  Challenge race): `render-assignments.py` lists it in a "What's Due in Class"
+  block on its own class's page, and never as preparation for another class.
   Descriptions are scrubbed of Canvas injections (dp_app, `data-api-*`,
   verifier tokens) and of secret-shaped strings — a shared key stays in Canvas,
   where students read it, never in this public repo; their Canvas file links

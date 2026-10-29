@@ -210,10 +210,10 @@ def _description(entry):
 
 
 def due_sections(week, entries, live_ids, web, live_id, weeks):
-    """The class page's due blocks: what students prepare for this class's day,
-    and what falls due by the next one. An in-class item is described by the
-    class page itself and is never listed as preparation, so it appears in
-    neither block."""
+    """The class page's due blocks: what is done in the class itself, what
+    students prepare for this class's day, and what falls due by the next one.
+    An in-class item is listed as "What's Due in Class" on its own class's
+    page, and is never listed as preparation."""
     today, later = weeks.get(week), weeks.get(week + 1)
     if today is None:
         return ""
@@ -225,23 +225,30 @@ def due_sections(week, entries, live_ids, web, live_id, weeks):
             .astimezone(ET).date()
 
     groups = [
+        ("What's Due in Class",
+         sorted((e for e in entries
+                 if due_date(e) == today and e.get("in_class")),
+                key=lambda e: (due_date(e), plain_name(e["name"]))),
+         "due-in-class"),
         ("What's due today",
          sorted((e for e in entries
                  if due_date(e) == today and not e.get("in_class")),
-                key=lambda e: (due_date(e), plain_name(e["name"])))),
+                key=lambda e: (due_date(e), plain_name(e["name"]))),
+         "due-today"),
         ("What's due next week",
          sorted((e for e in entries
                  if later and not e.get("in_class")
                  and due_date(e) is not None and today < due_date(e) <= later),
-                key=lambda e: (due_date(e), plain_name(e["name"])))),
+                key=lambda e: (due_date(e), plain_name(e["name"]))),
+         "due-next"),
     ]
     blocks = []
-    for heading, hits in groups:
+    for heading, hits, label in groups:
         if not hits:
             continue
         # the first block carries the page's "What's due" anchor, so a sidebar
         # link lands on whichever list the week actually has
-        anchor = "due" if not blocks else "due-next"
+        anchor = "due" if not blocks else label
         lines = [f'<section class="section-block" id="{anchor}">',
                  f"  <h2>{heading}</h2>",
                  '  <div class="cards">']

@@ -2,10 +2,10 @@
 # The repo is the master copy of the content; edit here and push.
 - slug: robo-challenge
   name: 👥 Robo Challenge
-  summary: Robot race. Compete and demonstrate your team's robot
+  summary: Robo Challenge. Compete and demonstrate your team's robot
   group: Team Assignments (35 points)
   points: 10.0
-  due: '2026-10-29T16:00:00Z'
+  due: '2026-10-29T20:00:00Z'
   in_class: true
   submission_types:
   - online_text_entry
