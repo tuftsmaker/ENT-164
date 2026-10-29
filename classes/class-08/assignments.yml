@@ -6,6 +6,7 @@
   group: Team Assignments (35 points)
   points: 10.0
   due: '2026-10-29T16:00:00Z'
+  in_class: true
   submission_types:
   - online_text_entry
   - online_url
@@ -43,7 +44,8 @@
   summary: Milestone reflection. After the Robo Challenge
   group: Reflections and Participation (10 points)
   points: 2.0
-  due: '2026-10-30T03:59:00Z'
+  week: 8
+  due: '2026-11-06T04:59:59Z'
   submission_types:
   - none
   module_item:

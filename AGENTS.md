@@ -526,8 +526,11 @@ The ID is never resolved at run time.
   generated (`pull-assignments.py`), because ids change when a course is copied
   and the repo's identity is the slug. `pull-assignments.py` imports from live
   (`--report`, `--check`, `--ids COURSE`); it preserves the display fields the
-  repo authors (`summary`, `week`, `audience`) and entries Canvas does not have
-  (`source: repo` — create on push; `source: schedule` — site-only).
+  repo authors (`summary`, `week`, `audience`, `in_class`) and entries Canvas
+  does not have (`source: repo` — create on push; `source: schedule` —
+  site-only). `in_class` marks work done during the class itself (the Robo
+  Challenge race): the class page describes it directly, so
+  `render-assignments.py` never lists it in either due block.
   Descriptions are scrubbed of Canvas injections (dp_app, `data-api-*`,
   verifier tokens) and of secret-shaped strings — a shared key stays in Canvas,
   where students read it, never in this public repo; their Canvas file links

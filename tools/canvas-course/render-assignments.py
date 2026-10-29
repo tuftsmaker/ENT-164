@@ -210,9 +210,10 @@ def _description(entry):
 
 
 def due_sections(week, entries, live_ids, web, live_id, weeks):
-    """The class page's due blocks: what is due on this class's day, and what
-    falls due by the next one. An in-class item is only ever "due today" — it
-    is done during its own class, not prepared for in advance."""
+    """The class page's due blocks: what students prepare for this class's day,
+    and what falls due by the next one. An in-class item is described by the
+    class page itself and is never listed as preparation, so it appears in
+    neither block."""
     today, later = weeks.get(week), weeks.get(week + 1)
     if today is None:
         return ""
@@ -225,7 +226,8 @@ def due_sections(week, entries, live_ids, web, live_id, weeks):
 
     groups = [
         ("What's due today",
-         sorted((e for e in entries if due_date(e) == today),
+         sorted((e for e in entries
+                 if due_date(e) == today and not e.get("in_class")),
                 key=lambda e: (due_date(e), plain_name(e["name"])))),
         ("What's due next week",
          sorted((e for e in entries
