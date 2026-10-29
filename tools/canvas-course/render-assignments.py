@@ -418,14 +418,17 @@ def main() -> int:
     all_entries = [e for es in per_class.values() for e in es]
     updated = rewrite_syllabus(syllabus, week_list, all_entries)
 
+    exclusions = spec.get("due_exclusions") or {}
     pages = {}
     for cls in sorted(per_class):
         page = CLASSES / cls / "index.html"
         if not page.exists():
             continue
         week = int(cls.split("-")[1])
+        excluded = set(exclusions.get(cls) or [])
+        listed = [e for e in all_entries if e.get("slug") not in excluded]
         pages[page] = rewrite_class_page(page.read_text(encoding="utf-8"), week,
-                                         all_entries, live_ids, web, live_id, weeks)
+                                         listed, live_ids, web, live_id, weeks)
 
     names = class_names()
     for path in (HOME, WORKSHOPS):

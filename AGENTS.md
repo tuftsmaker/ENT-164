@@ -522,7 +522,9 @@ The ID is never resolved at run time.
 - **Assignments live in the repo.** `classes/class-NN/assignments.yml` plus its
   `assignments/<slug>.html` descriptions are the master copy of every
   assignment. `tools/canvas-course/course.yml` names the courses, groups and
-  the module→class pattern; `canvas-ids.yml` records Canvas ids per course,
+  the module→class pattern, and holds `due_exclusions` (per class, by slug) for
+  an assignment that falls inside a class's next-week window but is introduced
+  in a later class; `canvas-ids.yml` records Canvas ids per course,
   generated (`pull-assignments.py`), because ids change when a course is copied
   and the repo's identity is the slug. `pull-assignments.py` imports from live
   (`--report`, `--check`, `--ids COURSE`); it preserves the display fields the

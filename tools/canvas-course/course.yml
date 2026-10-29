@@ -38,3 +38,11 @@ home_class_overrides:
   "Final Product Presentation": class-13
   "Final Peer Reviews": class-13
   "Final Self Review": class-13
+
+# Assignments a class page must not list in its due blocks, by class and slug.
+# Use it when an assignment falls inside a class's next-week window but is
+# introduced in a later class, so it is not yet preparation for the earlier
+# page. The syllabus chips and the later class's own page are unaffected.
+due_exclusions:
+  class-08:
+    - final-team-project-part-1-product-concept-presentation
