@@ -191,6 +191,25 @@ them that way.
 Keep `documentName` in `video.json` matching the on-screen title, and have the
 take that creates the document type that name.
 
+## A timed agenda video (no narration, no recording)
+
+`make-step-timer.py` renders a clock for a class sprint: one screen per step,
+the step's instructions, and a countdown, for running on the projector while
+teams work. Nothing is recorded and nothing is narrated — the frames are drawn.
+
+    python3 tools/video-build/make-step-timer.py --preview /tmp/timer   # stills
+    python3 tools/video-build/make-step-timer.py                        # full video
+
+Output: `classes/class-09/brainstorm-steps-timer.mp4` (1920×1080, 90 min).
+The agenda lives in the `STEPS` list at the top of the script — durations,
+headings and bullets — so a different class means editing that list, not the
+drawing code. `TRANSITION` and `END_CARD` set the pause between steps.
+
+It exists because this ffmpeg has no `drawtext` (no freetype), so the alternative
+— an overlay filter graph — would need one PNG per second anyway. Drawing each
+second once and encoding at `fps=5` keeps the render linear and the file small;
+a 90-minute run is about nine minutes of wall time.
+
 ## Publishing
 
 `scripts/upload-youtube.py` uploads the finished MP4 (`videos.insert`,
