@@ -14,18 +14,3 @@
     position: 5
     section: Assignments
   description: assignments/individual-assignment-intelligent-device.html
-- slug: final-project-checkpoint-1-core-functionality-and-technical-approach
-  name: '👥 Final Project Checkpoint 1: Core Functionality and Technical Approach'
-  summary: Project checkpoint 1. Core functionality and technical approach
-  group: Team Assignments (35 points)
-  points: 0.0
-  due: '2026-11-12T17:00:00Z'
-  submission_types:
-  - online_text_entry
-  - online_url
-  - online_upload
-  module_item:
-    position: null
-    section: null
-  description: assignments/final-project-checkpoint-1-core-functionality-and-technical-approach.html
-  source: repo
