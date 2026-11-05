@@ -173,6 +173,44 @@
   .gallery .tile figcaption { position: static; background: none; font-size: 8.5pt; padding: 3mm 4.5mm 3.4mm; border-top: 1px solid var(--line); }
   .gallery .tile figcaption b { display: block; font-size: 10.5pt; color: var(--ink); margin-bottom: 0.6mm; }
 
+  /* ---------- making strip ---------- */
+  .funstrip { display: flex; gap: 4mm; height: 70.6mm; margin: auto 0; }
+  .funstrip .tile { height: 100%; margin: 0; }
+  .funstrip .tile.p { flex: 0.753 1 0; }
+  .funstrip .tile.l { flex: 1.327 1 0; }
+  .funstrip .tile img { width: 100%; height: 100%; object-fit: contain; }
+
+  /* ---------- retro boards ---------- */
+  .boardrow { display: flex; gap: 6mm; justify-content: center; align-items: center; flex: 1; min-height: 0; }
+  .boardrow img { height: 100%; width: auto; display: block; border-radius: 3mm; border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); }
+
+  /* ---------- post-it notes ---------- */
+  .notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; flex: 1; min-height: 0; margin-bottom: 2.5mm; }
+  .col { display: flex; flex-direction: column; gap: 3mm; min-height: 0; }
+  .colhead {
+    font-size: 8.5pt; letter-spacing: 2.2px; text-transform: uppercase;
+    font-weight: 700; color: var(--blue-deep); margin: 0 0 0.6mm;
+    padding-bottom: 1.6mm; border-bottom: 1.4px solid var(--line-strong);
+  }
+  .note {
+    flex: 1; min-height: 0; border-radius: 1.4mm; padding: 2.2mm 3mm;
+    display: flex; flex-direction: column; justify-content: center;
+    box-shadow: 0 0.5mm 1.6mm rgba(13, 21, 38, 0.13);
+  }
+  .note b { display: block; font-size: 9.2pt; line-height: 1.2; margin-bottom: 0.7mm; }
+  .note span { font-size: 8.6pt; line-height: 1.25; }
+  .col.well .note { background: #fbf0b0; border: 1px solid #f0e397; }
+  .col.well .note b { color: #4a3f14; }
+  .col.well .note span { color: #635627; }
+  .col.chal .note { background: #fbd9c6; border: 1px solid #f3c3a8; }
+  .col.chal .note b { color: #4a2b19; }
+  .col.chal .note span { color: #6b412c; }
+  .col.learn .note { background: #e3ddf5; border: 1px solid #d3caea; }
+  .col.learn .note b { color: #33294f; }
+  .col.learn .note span { color: #4d4370; }
+  .note:nth-of-type(odd) { transform: rotate(-0.45deg); }
+  .note:nth-of-type(even) { transform: rotate(0.4deg); }
+
   /* ---------- structure ---------- */
   .strip { display: grid; grid-template-columns: 1fr 0.62fr 1fr; gap: 4mm; flex: 1; min-height: 0; align-items: center; }
   .phase { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.04); padding: 6mm; display: flex; flex-direction: column; }
@@ -198,10 +236,22 @@
     border-radius: 999px; padding: 1.4mm 3.6mm; font-size: 10pt; color: var(--muted-2);
   }
   .journey { display: flex; align-items: stretch; gap: 2.4mm; margin-top: 4mm; }
-  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.6mm 3mm; text-align: center; display: flex; flex-direction: column; justify-content: center; }
-  .step b { display: block; font-size: 10.5pt; color: var(--ink); }
-  .step span { display: block; color: var(--muted); font-size: 8.5pt; margin-top: 0.8mm; }
-  .step.hot { background: var(--blue-tint); border-color: #cfe1f7; }
+  .step { flex: 1; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); overflow: hidden; display: flex; flex-direction: column; }
+  .step-head {
+    padding: 2.1mm 3mm; background: var(--blue-tint-2); border-bottom: 1px solid #d8e5f5;
+  }
+  .step-head .wk { font-size: 7.8pt; letter-spacing: 1.8px; text-transform: uppercase; font-weight: 700; color: var(--blue-deep); }
+  .step-body { flex: 1; padding: 2.7mm 3mm 3mm; display: flex; flex-direction: column; }
+  .step-body .ttl { font-size: 9.5pt; line-height: 1.18; font-weight: 700; color: var(--ink); }
+  .step-body .dt { font-size: 8.2pt; font-weight: 700; color: var(--muted-2); letter-spacing: 0.2px; margin-top: 1.7mm; }
+  .step-body .act { font-size: 8.2pt; line-height: 1.3; color: var(--muted); margin-top: 0.7mm; }
+  .step.hot { border-color: #cfe1f7; }
+  .step.hot .step-head { background: #dceafa; border-bottom-color: #c6dcf6; }
+  .step.off { border-style: dashed; background: transparent; }
+  .step.off .step-head { background: #f2f4f7; border-bottom-color: var(--line-strong); }
+  .step.off .step-head .wk { color: var(--muted-2); }
+  .step.off .step-body .ttl { color: var(--muted-2); }
+  .step.off .step-body .dt { color: var(--muted); }
   .arrow { display: grid; place-items: center; color: var(--blue-deep); font-size: 14pt; }
 
   /* ---------- rubrics ---------- */
@@ -273,7 +323,7 @@
     <div class="lede">
       <p class="s-kicker">Class 9 · Week 9 · Fall 2026</p>
       <h1>The Final Project<br><span class="accent">Sprint</span></h1>
-      <p class="sub">The Robo Challenge is in the books. A three-hour sprint: from idea to a prototype plan. Brainstorm with your team, choose a concept, and leave with the plan you'll present on Demo Day.</p>
+      <p class="sub">The Robo Challenge is in the books. A three-hour sprint: from idea to a prototype plan. Brainstorm with your team, choose a concept, and leave with an idea for what you'll build.</p>
       <div class="pills">
         <span class="pill">Thu, Nov 5</span>
         <span class="pill">JCC 301 / Nolop</span>
@@ -282,7 +332,7 @@
       </div>
     </div>
     <figure class="shot">
-      <img src="shots/final-project-box.jpg" alt="A black project box with dividers and a clear lid">
+      <img src="shots/final-project-presentation.jpg" alt="Four students at the podium in front of their Final Product Presentation slide">
     </figure>
   </div>
   <div class="team">
@@ -316,43 +366,87 @@
         </article>
       </div>
       <div style="display: flex; min-height: 0; justify-content: center;">
-        <img src="shots/robo-challenge-scores.jpg" alt="Team scores tallied on a whiteboard after the Robo Challenge" style="height: 100%; width: auto; max-width: 100%; border-radius: 3mm; border: 1px solid var(--line);">
+        <img src="shots/robo-challenge-leaderboard.jpg" alt="Team names and scores written on a whiteboard after the Robo Challenge" style="height: 100%; width: auto; max-width: 100%; border-radius: 3mm; border: 1px solid var(--line);">
       </div>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">02</span></footer>
 </section>
 
-<!-- ============ 03 · MID-TERM REVIEWS ============ -->
+<!-- ============ 03 · WHY WE MAKE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Due tomorrow</p>
-    <h2>Mid-term <span class="accent">self &amp; peer reviews</span></h2>
-    <p class="s-sub">Last call. No later than tomorrow at noon, Friday, Nov 6.</p>
+    <p class="s-kicker">Why we do this</p>
+    <h2>It's not about winning. It's about <span class="accent">learning</span></h2>
+    <p class="s-sub">… and having fun!</p>
   </header>
   <div class="s-body">
-    <div class="grid g2">
-      <article class="card">
-        <span class="num">01</span>
-        <h3>Midterm self review</h3>
-        <p>Reflect on your own contributions to the Robo Challenge: what you built, how you worked with your team, and what you would do differently.</p>
-      </article>
-      <article class="card">
-        <span class="num">02</span>
-        <h3>Midterm peer reviews</h3>
-        <p>Give every teammate honest, specific feedback on the first half of the semester.</p>
-      </article>
-    </div>
-    <div class="assign">
-      <span class="alabel">Deadline</span>
-      <p><b>Tomorrow, Friday, Nov 6 at noon.</b> Links and instructions are on Canvas. Don't leave it to the last minute.</p>
+    <div class="funstrip">
+      <figure class="tile p"><img src="shots/nolop-ball-bin.jpg" alt="Three students at a workbench with a bin of colorful balls and laser-cut parts"></figure>
+      <figure class="tile l"><img src="shots/nolop-four-students.jpg" alt="Four students behind a workbench with laser-cut boxes and a wooden robot"></figure>
+      <figure class="tile p"><img src="shots/nolop-laptop-pair.jpg" alt="Two students working at a laptop beside a workbench"></figure>
+      <figure class="tile p"><img src="shots/nolop-project-holders.jpg" alt="Two students holding the laser-cut projects they built"></figure>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">03</span></footer>
 </section>
 
-<!-- ============ 04 · ROADMAP ============ -->
+<!-- ============ 04 · RETRO BOARDS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Reflection</p>
+    <h2>You learned <span class="accent">a lot</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="boardrow">
+      <img src="shots/robo-retro-board-1.jpg" alt="Whiteboard with sticky notes grouped under Well, Better and Learned">
+      <img src="shots/robo-retro-board-2.jpg" alt="A second team's whiteboard with sticky notes grouped under Well, Better and Learned">
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ============ 05 · RETRO NOTES ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">The boards</p>
+    <h2>Robo Challenge <span class="accent">retro</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="notes">
+      <div class="col well">
+        <p class="colhead">What went well</p>
+        <article class="note"><b>Communication and teamwork</b><span>Clear roles, frequent check-ins.</span></article>
+        <article class="note"><b>Adapting on the fly</b><span>Rubber bands for grip, spare power bank.</span></article>
+        <article class="note"><b>Early prototyping paid off</b><span>Foam models settled shape and material.</span></article>
+        <article class="note"><b>Solid fabrication</b><span>Laser-cut and printed parts fit as planned.</span></article>
+        <article class="note"><b>Simple, reused designs</b><span>One proven gate mechanism, used twice.</span></article>
+      </div>
+      <div class="col chal">
+        <p class="colhead">Key challenges</p>
+        <article class="note"><b>Little full-system testing</b><span>Full runs came at the last minute.</span></article>
+        <article class="note"><b>Electronics underestimated</b><span>Power drain, wiring, WiFi, motor control.</span></article>
+        <article class="note"><b>Hard to assemble and reach</b><span>Glued batteries, hidden power switch.</span></article>
+        <article class="note"><b>Late material choices</b><span>Warped prints, flimsy single mounts.</span></article>
+        <article class="note"><b>No slack in the plan</b><span>Work finished right at the deadline.</span></article>
+      </div>
+      <div class="col learn">
+        <p class="colhead">Learnings</p>
+        <article class="note"><b>Schedule full test runs</b><span>Two or three complete runs, a week early.</span></article>
+        <article class="note"><b>Start code and wiring early</b><span>Prototype with real motors and batteries.</span></article>
+        <article class="note"><b>Design for access</b><span>Reachable power. Temporary fixings first.</span></article>
+        <article class="note"><b>Match material to the load</b><span>Wood for structure, more mount points.</span></article>
+        <article class="note"><b>Owners and weekly check-ins</b><span>SMART goals. Riskiest part first.</span></article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ============ 06 · ROADMAP ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -362,26 +456,46 @@
   </header>
   <div class="s-body" style="justify-content: center;">
     <div class="journey" style="margin-top: 0;">
-      <div class="step hot"><b>Week 9 · The Final Project Sprint</b><span>Nov 5 · Brainstorm &amp; Note-and-Vote</span></div>
+      <div class="step hot">
+        <div class="step-head"><span class="wk">Week 9</span></div>
+        <div class="step-body"><span class="ttl">The Final Project Sprint</span><span class="dt">Nov 5</span><span class="act">Brainstorm &amp; Note-and-Vote</span></div>
+      </div>
       <div class="arrow">→</div>
-      <div class="step"><b>Week 10 · From Device to Cloud</b><span>Nov 12 · Sketch, mockup &amp; 5-minute pitch</span></div>
+      <div class="step">
+        <div class="step-head"><span class="wk">Week 10</span></div>
+        <div class="step-body"><span class="ttl">From Device to Cloud</span><span class="dt">Nov 12</span><span class="act">Sketch, mockup &amp; 5-minute pitch</span></div>
+      </div>
       <div class="arrow">→</div>
-      <div class="step"><b>Week 11 · Final Project Design Review</b><span>Nov 19 · Start making</span></div>
+      <div class="step">
+        <div class="step-head"><span class="wk">Week 11</span></div>
+        <div class="step-body"><span class="ttl">Final Project Design Review</span><span class="dt">Nov 19</span><span class="act">Start making</span></div>
+      </div>
       <div class="arrow">→</div>
-      <div class="step"><b>Week 12 · Final Project Making Time</b><span>Dec 3 · Integrate &amp; test runs at Nolop</span></div>
+      <div class="step off">
+        <div class="step-head"><span class="wk">Break</span></div>
+        <div class="step-body"><span class="ttl">Thanksgiving</span><span class="dt">Nov 26</span><span class="act">No class</span></div>
+      </div>
       <div class="arrow">→</div>
-      <div class="step hot"><b>Week 13 · Final Project Showcase</b><span>Dec 10 · Present the final product</span></div>
+      <div class="step">
+        <div class="step-head"><span class="wk">Week 12</span></div>
+        <div class="step-body"><span class="ttl">Final Project Making Time</span><span class="dt">Dec 3</span><span class="act">Integrate &amp; test runs at Nolop</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step hot">
+        <div class="step-head"><span class="wk">Week 13</span></div>
+        <div class="step-body"><span class="ttl">Final Project Showcase</span><span class="dt">Dec 10</span><span class="act">Present the final product</span></div>
+      </div>
     </div>
     <div class="assign" style="margin-top: 6mm;">
       <span class="alabel">Deliverable</span>
       <p><b>Concept presentation</b>. 5 Minutes per team: problem &amp; opportunity, proposed product concept with sketch and mockup, and next steps.</p>
     </div>
-    <p class="footnote">No class Thu, Nov 26 (Thanksgiving). Build sessions happen at Nolop.</p>
+    <p class="footnote">Build sessions happen at Nolop.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">04</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">06</span></footer>
 </section>
 
-<!-- ============ 05 · DEMO DAY ============ -->
+<!-- ============ 07 · DEMO DAY ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -394,8 +508,8 @@
         <p style="color: var(--muted); font-size: 13pt; margin: 0 0 5mm;">Final presentations and live product demos, built by students with no prior experience. Open to the public. No registration required.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 2.6mm;">
           <span class="pill">Thu, Dec 10</span>
-          <span class="pill">11:30 am</span>
-          <span class="pill">JCC 160</span>
+          <span class="pill">1:30 pm</span>
+          <span class="pill">DEC</span>
         </div>
         <p class="footnote">Week 13 · the finish line for your final project.</p>
       </div>
@@ -404,10 +518,10 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">05</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">07</span></footer>
 </section>
 
-<!-- ============ 06 · PROJECT REQUIREMENTS ============ -->
+<!-- ============ 08 · PROJECT REQUIREMENTS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -444,44 +558,10 @@
     </div>
     <p class="footnote">** Cannot be an automatic plant-watering system :)</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">06</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">08</span></footer>
 </section>
 
-<!-- ============ 07 · CONCEPT PRESENTATION ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Next class · Thu, Nov 12</p>
-    <h2>The 5-minute <span class="accent">concept pitch</span></h2>
-    <p class="s-sub">Every team presents its final project concept to the class.</p>
-  </header>
-  <div class="s-body">
-    <div class="grid g3">
-      <article class="card">
-        <span class="num">01</span>
-        <h3>Problem &amp; opportunity</h3>
-        <p>A clear articulation of the problem and why it matters.</p>
-      </article>
-      <article class="card accent">
-        <span class="num">02</span>
-        <h3>Proposed product concept</h3>
-        <p>A walkthrough of the concept and how it meets the final product requirements. Bring sketches and a foam-core or other mockup.</p>
-      </article>
-      <article class="card">
-        <span class="num">03</span>
-        <h3>Next steps</h3>
-        <p>What you will build and test in the second half of the semester.</p>
-      </article>
-    </div>
-    <div class="assign">
-      <span class="alabel">Working docs</span>
-      <p>Team folders for working docs and presentations: <span class="mono" style="color: var(--blue-deep);">go.tufts.edu/teams</span></p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">07</span></footer>
-</section>
-
-<!-- ============ 08 · NOTE-AND-VOTE ============ -->
+<!-- ============ 09 · NOTE-AND-VOTE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -504,14 +584,14 @@
         <p class="footnote">Voice for everyone, fast decision, then the team discusses the top ideas together.</p>
       </div>
       <div style="display: flex; min-height: 0; justify-content: center; align-items: center;">
-        <img src="shots/note-and-vote.jpg" alt="Illustration of the Note-and-Vote method: individuals write one idea per note, then the group votes with dot stickers" style="width: 100%; height: auto; border-radius: 3mm; border: 1px solid var(--line);">
+        <img src="shots/note-vote-decide.png" alt="Illustration of Note, Vote, Decide: four people each write their own ideas on separate notes, then the group votes with dot stickers on a whiteboard" style="width: 100%; height: auto;">
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">08</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ============ 09 · BRAINSTORM AGENDA ============ -->
+<!-- ============ 10 · BRAINSTORM AGENDA ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -519,74 +599,88 @@
     <h2>From sticky notes <span class="accent">to a team concept</span></h2>
   </header>
   <div class="s-body">
-    <div class="grid g3">
+    <div class="grid g4">
       <article class="phase">
         <p class="plabel">Step 1</p>
-        <p class="ptime">Individually · 10 min · in silence</p>
+        <p class="ptime">Individually · 15 min</p>
         <h3>Write ideas</h3>
         <ul>
-          <li>Write 3 unique ideas</li>
+          <li>Write 3 to 5 unique ideas</li>
           <li>One idea per sticky note</li>
           <li>Each idea must meet the criteria</li>
         </ul>
       </article>
-      <article class="phase hot">
+      <article class="phase">
         <p class="plabel">Step 2</p>
-        <p class="ptime">As a team · 5 min · in silence</p>
+        <p class="ptime">As a team · 15 min</p>
         <h3>Post &amp; vote</h3>
         <ul>
           <li>Post every idea on the team wall</li>
+          <li>Briefly present your ideas to the team</li>
           <li>Vote for your top 3 with round stickers. You can vote for your own</li>
         </ul>
       </article>
       <article class="phase">
         <p class="plabel">Step 3</p>
-        <p class="ptime">As a team · 20 min</p>
+        <p class="ptime">As a team · 15 min</p>
         <h3>Discuss &amp; decide</h3>
         <ul>
           <li>Count the votes</li>
           <li>Discuss the top 3 ideas</li>
+          <li>Combine ideas (optional)</li>
           <li>Decide what you'll pursue</li>
         </ul>
       </article>
-    </div>
-    <div class="assign">
-      <span class="alabel">Then</span>
-      <p><b>Go directly to Nolop</b> and start the concept presentation. Sketch, mockup, and slides.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">09</span></footer>
-</section>
-
-<!-- ============ 10 · NEW PROJECT BOXES ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">New build</p>
-    <h2>New project <span class="accent">boxes</span></h2>
-    <p class="s-sub">Your team's final project starts with a fresh box of parts.</p>
-  </header>
-  <div class="s-body">
-    <div class="grid" style="grid-template-columns: 1.15fr 0.85fr; grid-template-rows: 1fr; gap: 8mm;">
-      <div style="display: flex; flex-direction: column; gap: 4mm; justify-content: center;">
-        <article class="card accent">
-          <h3>Everything in one box</h3>
-          <p>Pick up your team's project box. The parts for the final build live here.</p>
-        </article>
-        <article class="card">
-          <h3>It has to fit back in</h3>
-          <p>The finished product must fit inside the box: <b>40 × 25 × 25 cm</b>. Plan for the size from day one.</p>
-        </article>
-      </div>
-      <div style="display: flex; min-height: 0; justify-content: center;">
-        <img src="shots/final-project-box.jpg" alt="A black project box with a clear lid and dividers" style="height: 100%; width: auto; max-width: 100%; border-radius: 3mm; border: 1px solid var(--line);">
-      </div>
+      <article class="phase">
+        <p class="plabel">Step 4</p>
+        <p class="ptime">As a team · 45 min</p>
+        <h3>Present</h3>
+        <ul>
+          <li>Present your top 1 or 2 ideas to the entire class</li>
+          <li>Get feedback from the instructors</li>
+        </ul>
+      </article>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">10</span></footer>
 </section>
 
-<!-- ============ 11 · CLOSING ============ -->
+<!-- ============ 11 · TEAM ASSIGNMENT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Final team project · part 1</p>
+    <h2>What's due <span class="accent">next class</span></h2>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Five minutes, in class</h3>
+        <p>Every team pitches its product concept on Thu, Nov 12. Five minutes per team.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Show every requirement</h3>
+        <p>How the concept uses laser cutting, 3D printing, a microcontroller with sensors and actuators, and smart API integration. It has to fit the 40 × 25 × 25 cm project box.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>Product mockup</h3>
+        <p>Bring sketches and a foam-core or other mockup of the concept.</p>
+      </article>
+      <article class="card">
+        <span class="num">04</span>
+        <h3>Electronics and parts</h3>
+        <p>List the electronics you'll need (sensors, motors, display, etc.) and what you'll laser cut and 3D print.</p>
+      </article>
+    </div>
+    <p class="footnote">Part 1 of the final team project · 5 of the 35 team-assignment points. Slides due on Canvas by noon, Thu, Nov 12.</p>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">11</span></footer>
+</section>
+
+<!-- ============ 12 · CLOSING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -600,12 +694,11 @@
         <p class="plabel">Where to find us</p>
         <p><b>Office hours</b><br><span class="mono">go.tufts.edu/meet_tvdv</span></p>
         <p><b>Email</b><br><span class="mono">thomas.van_de_velde@tufts.edu</span></p>
-        <p><b>Team folders</b><br><span class="mono">go.tufts.edu/teams</span></p>
         <p><b>Course materials</b><br>tuftsmaker.github.io/ENT-164</p>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">11</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 9 · The Final Project Sprint</span><span class="fnum">12</span></footer>
 </section>
 
 </body>
