@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="430" viewBox="10 90 1180 430" role="img"
+     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>An ESP32 sends a request with its API key over Wi-Fi, the weather service answers with JSON, and the board acts on the answer.</title>
+  <rect width="1200" height="600" fill="#ffffff"/>
+
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14"
+            markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#3E8EDE"/>
+    </marker>
+  </defs>
+
+  <!-- device -->
+  <rect x="40" y="140" width="310" height="330" rx="18" fill="#f2f7fd" stroke="#bcd8f7" stroke-width="2.5"/>
+  <g transform="translate(76,176) scale(2.6)" fill="none" stroke="#1F6FD0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="16" height="16" x="4" y="4" rx="2"/>
+    <rect width="6" height="6" x="9" y="9"/>
+    <path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/>
+    <path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>
+  </g>
+  <text x="76" y="300" font-size="24" font-weight="700" fill="#0d1526">Your ESP32</text>
+  <text x="76" y="326" font-size="14.5" fill="#5f6b7a">the client, this time</text>
+
+  <rect x="76" y="352" width="238" height="64" rx="10" fill="#ffffff" stroke="#e6eaf1" stroke-width="2"/>
+  <text x="94" y="374" font-size="11" fill="#8a93a3" letter-spacing="1.4">DHT22 SENSOR</text>
+  <text x="94" y="398" font-size="15" fill="#0d1526" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">21.4 °C · 48 %</text>
+
+  <!-- service -->
+  <rect x="850" y="120" width="310" height="370" rx="18" fill="#ffffff" stroke="#e6eaf1" stroke-width="2.5"/>
+  <g transform="translate(886,156) scale(2.4)" fill="none" stroke="#1F6FD0" stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+  </g>
+  <text x="886" y="300" font-size="24" font-weight="700" fill="#0d1526">A weather API</text>
+  <text x="886" y="324" font-size="13" fill="#5f6b7a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">api.open-meteo.com</text>
+
+  <rect x="886" y="344" width="238" height="122" rx="10" fill="#0f1b2d"/>
+  <text x="904" y="371" font-size="13" fill="#dbe7f7" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">{</text>
+  <text x="904" y="393" font-size="13" fill="#dbe7f7" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">  <tspan fill="#9ecbff">"temp"</tspan>: 21.4,</text>
+  <text x="904" y="415" font-size="13" fill="#dbe7f7" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">  <tspan fill="#9ecbff">"humidity"</tspan>: 48</text>
+  <text x="904" y="437" font-size="13" fill="#dbe7f7" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">}</text>
+
+  <!-- the two arrows -->
+  <line x1="354" y1="235" x2="844" y2="235" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="2 11" marker-end="url(#arr2)"/>
+  <rect x="509" y="206" width="182" height="30" rx="15" fill="#ffffff" stroke="#cfe1f7" stroke-width="1.5"/>
+  <text x="600" y="226" font-size="13" fill="#1F6FD0" text-anchor="middle">1 · request + your key</text>
+
+  <line x1="846" y1="365" x2="356" y2="365" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="2 11" marker-end="url(#arr2)"/>
+  <rect x="522" y="336" width="156" height="30" rx="15" fill="#ffffff" stroke="#cfe1f7" stroke-width="1.5"/>
+  <text x="600" y="356" font-size="13" fill="#1F6FD0" text-anchor="middle">2 · JSON comes back</text>
+
+  <!-- wifi hint -->
+  <g stroke="#3E8EDE" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.85">
+    <path d="M 388 292 A 13 13 0 0 0 388 314"/>
+    <path d="M 377 281 A 26 26 0 0 0 377 325"/>
+    <path d="M 366 270 A 39 39 0 0 0 366 336"/>
+  </g>
+  <text x="414" y="306" font-size="13" fill="#5f6b7a">over Wi-Fi</text>
+</svg>

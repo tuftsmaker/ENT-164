@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ENT-164 · Class 10 — From Device to Cloud</title>
-<meta name="description" content="Class 10 of ENT-164 Intro to Making: collect environmental data with sensors and present it in a real-time visualization, then apply it to your final project.">
+<title>ENT-164 · Class 10 — Device to Cloud</title>
+<meta name="description" content="Class 10 of ENT-164 Intro to Making: how a browser, a server, and a database fit together, what an API is, and connecting an ESP32 to the web in both directions.">
 <meta name="theme-color" content="#f7f9fc">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ENT-164 · Class 10 — From Device to Cloud">
-<meta property="og:description" content="Turn sensor readings into something a person can read at a glance.">
+<meta property="og:title" content="ENT-164 · Class 10 — Device to Cloud">
+<meta property="og:description" content="Browser, server, database, and the two directions a device talks to the cloud.">
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
 <body class="page-class">
@@ -34,7 +34,7 @@
         <a href="../../workshops/">Workshops</a>
         <a href="../../syllabus/">Syllabus</a>
         <a href="../../about/">About</a>
-        <a class="nav-cta" href="../../syllabus/#schedule">Class 10 in the syllabus</a>
+        <a class="nav-cta" href="ENT-164-Class-10-Device-to-Cloud.pdf">Download slides</a>
     </div>
   </div>
 </nav>
@@ -42,17 +42,17 @@
 <header class="hero">
   <div class="wrap">
     <p class="kicker reveal">Class 10 · Week 10 · Fall 2026</p>
-    <h1 class="reveal" style="--d:.06s">From Device <span class="accent">to Cloud</span></h1>
-    <p class="lead reveal" style="--d:.12s">A sensor reading is a number. A good visualization is an answer. Today we collect data from the physical world and put it on a screen in a form someone can act on.</p>
+    <h1 class="reveal" style="--d:.06s">Device <span class="accent">to Cloud</span></h1>
+    <p class="lead reveal" style="--d:.12s">Your board can sense the room and turn a motor. Today you give it the internet: a browser asks, a server answers, a database remembers, and an API lets your device ask a question of its own.</p>
     <div class="pills reveal" style="--d:.18s">
       <span class="pill">Thu, Nov 12</span>
       <span class="pill">JCC 301 / Nolop</span>
-      <span class="pill">Sensors &rarr; data &rarr; screen</span>
-      <span class="pill">Concept pitches due</span>
+      <span class="pill">Browser · server · database</span>
+      <span class="pill">Connect both ways</span>
     </div>
     <div class="cta-row reveal" style="--d:.24s">
-      <a class="btn btn-primary" href="../../syllabus/#schedule">See the syllabus week &rarr;</a>
-      <a class="btn btn-ghost" href="#project">For your final project &darr;</a>
+      <a class="btn btn-primary" href="ENT-164-Class-10-Device-to-Cloud.pdf">Download the slides (PDF)</a>
+      <a class="btn btn-ghost" href="#architecture">Start with the web &darr;</a>
     </div>
     <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
   </div>
@@ -62,98 +62,133 @@
 
   <aside class="toc reveal" style="--d:.36s">
     <h2>On this page</h2>
-    <a href="#pitches">Concept pitches</a>
-    <a href="#sensing">Collecting data</a>
-    <a href="#visualization">Showing it clearly</a>
+    <a href="#architecture">The shape of the web</a>
+    <a href="#api">What an API is</a>
+    <a href="#device">Device to API</a>
+    <a href="#web">Web to device</a>
     <a href="#project">For your final project</a>
   </aside>
 
   <main class="content">
 
-    <section class="section-block" id="pitches">
-      <h2>First: concept pitches</h2>
-      <p class="lede">Class 10 opens with the pitches from last week's brainstorming. Five minutes per team.</p>
+    <section class="section-block" id="architecture">
+      <h2>The shape of the web</h2>
+      <p class="lede">Every page you load is three things talking to each other. Learn the parts and the rest of today follows.</p>
       <div class="cards">
         <div class="card">
-          <span class="num">01</span>
-          <h3>Pitch</h3>
-          <p>Five minutes: the problem, the concept, and how you would build it.</p>
+          <span class="num">client</span>
+          <h3>Browser</h3>
+          <p>It runs on your machine. It asks for a page or some data, then draws whatever comes back.</p>
         </div>
         <div class="card">
-          <span class="num">02</span>
-          <h3>Feedback</h3>
-          <p>Classmates respond. What's clear, what's missing, what to try next.</p>
+          <span class="num">the answerer</span>
+          <h3>Server</h3>
+          <p>A computer that is always on. It receives the request, works out the answer, and sends it back.</p>
         </div>
         <div class="card accent">
-          <span class="num">03</span>
-          <h3>Commit</h3>
-          <p>Pick the concept your team will take to Demo Day and start making.</p>
+          <span class="num">the memory</span>
+          <h3>Database</h3>
+          <p>It holds the rows. The server asks it questions and it answers with data, quickly and in order.</p>
         </div>
       </div>
+      <figure class="shot" style="margin-top:24px;">
+        <img src="shots/web-architecture.svg" alt="A browser sends a request to a server, the server queries a database and gets rows back, and the response returns to the browser" style="aspect-ratio: 3 / 1; object-fit: contain; background: var(--paper); padding: 12px 16px;">
+        <figcaption><b>Ask, answer, remember</b>A server is just a computer running a program that listens at an address. Your board can play any of the three parts.</figcaption>
+      </figure>
     </section>
 
-    <section class="section-block" id="sensing">
-      <h2>Collecting data</h2>
-      <p class="lede">You already have the parts: the same sensors and microcontrollers from Class 5 and Class 6.</p>
-      <div class="cards">
+    <section class="section-block" id="api">
+      <h2>What an API is</h2>
+      <p class="lede">An API is a fixed way to ask another computer for something. It is a menu, not a website.</p>
+      <div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));">
         <div class="card">
-          <h3>What you can sense</h3>
-          <ul>
-            <li>Distance. Ultrasonic and time-of-flight</li>
-            <li>Light, temperature, and humidity</li>
-            <li>Motion, tilt, and orientation</li>
-            <li>Sound level, or a button and a knob</li>
-          </ul>
+          <span class="num">01 · method</span>
+          <h3>GET or POST</h3>
+          <p><b>GET</b> reads. <b>POST</b> sends something new. Almost everything you need today is GET.</p>
         </div>
         <div class="card">
-          <h3>Getting the reading out</h3>
-          <ul>
-            <li>Print it to the serial console</li>
-            <li>Serve it from the device's own page</li>
-            <li>Send it to a cloud service</li>
-          </ul>
+          <span class="num">02 · address</span>
+          <h3>The host and path</h3>
+          <p>The service and the endpoint, copied from the API's documentation.</p>
         </div>
-        <div class="card accent">
-          <h3>Start small</h3>
-          <p>Read one sensor reliably before you add a second. Two trustworthy numbers beat five flaky ones.</p>
+        <div class="card">
+          <span class="num">03 · parameters</span>
+          <h3>After the ?</h3>
+          <p>The values that choose what you get, joined with an ampersand.</p>
+        </div>
+        <div class="card">
+          <span class="num">04 · key</span>
+          <h3>Who is asking</h3>
+          <p>Many APIs want one. It identifies you, and it is billed to you.</p>
         </div>
       </div>
-      <div class="callout"><b>AI as a coding partner:</b> describe the sensor and the reading you want, and let your AI assistant write the MicroPython. You tested this loop in Class 5. Keep it to one conversation.</div>
+      <div class="callout" style="margin-top:20px;"><b>Put together, it is one line:</b> <span class="mono" style="word-break:break-all;">https://api.open-meteo.com/v1/forecast?latitude=42.4&amp;longitude=-71.1&amp;current=temperature_2m</span>. Paste it into a browser and the answer appears as JSON.</div>
+      <div class="callout warm" style="margin-top:16px;"><b>A key is a password.</b> Keep it out of screenshots, slides, and public repositories. If it leaks, revoke it and make a new one. Free tiers also count requests per minute and per day, so read the limit before you put a call in a loop.</div>
     </section>
 
-    <section class="section-block" id="visualization">
-      <h2>Showing it clearly</h2>
-      <p class="lede">The data is only useful if a person can read it at a glance. Three moves do most of the work.</p>
+    <section class="section-block" id="device">
+      <h2>Connecting a device to an API</h2>
+      <p class="lede">Your board is the client here. It asks, waits, reads the answer, and does something physical with it.</p>
       <div class="phases">
         <div class="phase">
-          <p class="plabel">Make 1</p>
-          <h3>Pick the form</h3>
+          <p class="plabel">Step 1</p>
+          <h3>Join the network</h3>
           <ul>
-            <li>A live number when the value is what matters</li>
-            <li>A gauge or bar when it has a good range</li>
-            <li>A line over time when the trend matters</li>
+            <li>Connect to Wi-Fi</li>
+            <li>Wait for an address</li>
+            <li>Check it connected before you ask for anything</li>
           </ul>
         </div>
         <div class="phase accent">
-          <p class="plabel">Make 2</p>
-          <h3>Give it scale</h3>
+          <p class="plabel">Step 2</p>
+          <h3>Make the request</h3>
           <ul>
-            <li>Label the units</li>
-            <li>Show the range the value can take</li>
-            <li>Mark what counts as normal</li>
+            <li>The address from the docs</li>
+            <li>Your parameters</li>
+            <li>Your key, in the URL or a header</li>
           </ul>
         </div>
         <div class="phase">
-          <p class="plabel">Make 3</p>
-          <h3>Make it live</h3>
+          <p class="plabel">Step 3</p>
+          <h3>Read the answer</h3>
           <ul>
-            <li>Refresh on the device's own page</li>
-            <li>Colour for state. Safe, warning, alarm</li>
-            <li>Keep it readable across the room</li>
+            <li>Check the status code first</li>
+            <li>Turn the body into JSON</li>
+            <li>Pull out the one value you need</li>
           </ul>
         </div>
       </div>
-      <div class="callout warm"><b>The test:</b> hand your screen to someone who has never seen the project. If they can tell you what the number means and whether it is good or bad without asking, the visualization works.</div>
+      <figure class="shot" style="margin-top:24px;">
+        <img src="shots/device-to-api.svg" alt="The ESP32 sends a request with its key over Wi-Fi, a weather API answers with JSON, and the board acts on the value" style="aspect-ratio: 2.7 / 1; object-fit: contain; background: var(--paper); padding: 12px 16px;">
+        <figcaption><b>Ask, wait, act</b>The board sends a request and gets JSON back. A failed request does not raise an error on the board, so check <span class="mono">r.status_code</span> before you trust the body.</figcaption>
+      </figure>
+      <div class="callout" style="margin-top:20px;"><b>Try it in class:</b> ask an AI assistant for a weather-triggered light. "My ESP32 is connected to Wi-Fi. Call a weather API for the current temperature in Medford, print it, and turn an RGB LED blue when it is below 10 °C. Check once every ten minutes." Ten minutes, not one second: the weather does not change faster, and free tiers count requests.</div>
+    </section>
+
+    <section class="section-block" id="web">
+      <h2>Connecting a website to a device</h2>
+      <p class="lede">In Class 6 your board served the page. Now the page lives on the internet, and the board is the thing it controls.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">Class 6</span>
+          <h3>The device serves the page</h3>
+          <p>The board runs a web server and your phone joins its Wi-Fi. Nothing else is needed, and it only works on that network.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">Today</span>
+          <h3>The site sits in the middle</h3>
+          <p>Board and browser both talk to a website. It works from anywhere, and the site has to hold the last command.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px;"><b>Why the device starts:</b> a board behind a home router has no public address. It can call out, but you cannot call in. So the device asks the site for new commands, every second or so, and the site answers with the last one.</div>
+      <figure class="shot" style="margin-top:24px;">
+        <img src="shots/site-to-device.svg" alt="A browser sends a command to your site, the device asks the site for that command, and the page updates with the device's state" style="aspect-ratio: 3 / 1; object-fit: contain; background: var(--paper); padding: 12px 16px;">
+        <figcaption><b>The site is the meeting point</b>You press a button, the site stores it, and the board picks it up on its next ask. No install and no app store: a page, an address, and a device.</figcaption>
+      </figure>
+      <figure class="shot" style="margin-top:20px;">
+        <img src="../../assets/photos/class/device-item-added.jpg" alt="A tablet showing a student-built dashboard with the local weather from an API and a task list stored in a database" style="aspect-ratio: 16 / 9; object-fit: cover; object-position: center 60%;">
+        <figcaption><b>A student build</b>The Boston weather line comes from an API. The tasks are stored on the server, so the list survives a reboot.</figcaption>
+      </figure>
     </section>
 
 <!-- assignments:begin -->
@@ -196,9 +231,25 @@
 
     <section class="section-block" id="project">
       <h2>For your final project</h2>
-      <p class="lede">Most final projects this term lean on at least one sensor. This is the class to make that reliable.</p>
-      <div class="callout"><b>Checkpoint 2 follows next week.</b> Integrated features and user experience: the whole product working together, and what a user does, sees, and feels. <a href="../../syllabus/#schedule">See the full schedule in the syllabus</a>.</div>
-      <div class="callout warm" style="margin-top:16px;"><b>Deck and notes:</b> this class is being converted to the site format. Its slides, notes, and photos will appear here when they are ready.</div>
+      <p class="lede">The web is free input and free output. Pick one of each.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">input</span>
+          <h3>React to the world outside</h3>
+          <p>Weather, transit, a shared sheet, a model. One input that changes what your build does is enough.</p>
+        </div>
+        <div class="card">
+          <span class="num">output</span>
+          <h3>Be watchable from a phone</h3>
+          <p>A page that shows the state is easier to demo than a serial console, and easier for a visitor to try.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">honesty</span>
+          <h3>Design for the day it is down</h3>
+          <p>If the API does not answer, say so on the screen. A fallback is part of the design, not an afterthought.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px;"><b>Checkpoint 2 follows next week.</b> Integrated features and user experience: the whole product working together, and what a user does, sees, and feels. <a href="../../syllabus/#schedule">See the full schedule in the syllabus</a>.</div>
     </section>
 
   </main>
@@ -220,7 +271,8 @@
       <a href="../../">All class materials</a>
       <a href="../../syllabus/">Syllabus</a>
       <a href="../../about/">About the instructor</a>
-      <a href="../../syllabus/#schedule">Class 10 in the syllabus</a>
+      <a href="slides.html">Slide deck (web)</a>
+      <a href="ENT-164-Class-10-Device-to-Cloud.pdf">Download the slides</a>
     </div>
   </div>
 </footer>

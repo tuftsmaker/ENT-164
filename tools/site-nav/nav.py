@@ -138,7 +138,7 @@ PAGES = {
     "classes/class-07/index.html": ("../../syllabus/#schedule", "Class 7 in the syllabus", None),
     "classes/class-08/index.html": ("ENT-164-Class-8-Team-Retrospective.pdf", "Download slides", None),
     "classes/class-09/index.html": ("ENT-164-Class-9-The-Final-Project-Sprint.pdf", "Download slides", None),
-    "classes/class-10/index.html": ("../../syllabus/#schedule", "Class 10 in the syllabus", None),
+    "classes/class-10/index.html": ("ENT-164-Class-10-Device-to-Cloud.pdf", "Download slides", None),
     "classes/class-11/index.html": ("ENT-164-Class-11-Final-Project-Design-Review.pdf", "Download slides", None),
     "classes/class-12/index.html": ("../../syllabus/#schedule", "Class 12 in the syllabus", None),
     "classes/class-13/index.html": ("../../syllabus/#schedule", "Class 13 in the syllabus", None),

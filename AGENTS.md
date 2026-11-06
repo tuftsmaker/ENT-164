@@ -110,13 +110,16 @@ Load the student-writing-style skill before writing or editing any student-facin
   On 2026-09-30 the live course was synced: classes 1, 2, 3, 4, 5, 6, 9 and 11
   carry their converted Pages pages, with the old slides item removed from each
   module. On 2026-10-29 Class 8 joined them: its retrospective deck was converted
-  and its Google Slides module item (2140716) deleted. Classes 10, 12 and 13
-  (modules 314498, 314500, 314501) keep their Google Slides items until their
-  decks land.
+  and its Google Slides module item (2140716) deleted. Classes 12 and 13
+  (modules 314500, 314501) keep their Google Slides items until their decks
+  land. Class 10 (module 314498) has a deck as of 2026-11-06 but still carries
+  its Google Slides item: converting it means pushing the site, curling the PDF,
+  pushing the Pages page, and then deleting the slides item.
 
   Note: the source file `ENT-164 Class 10 - Intelligent Devices with AI.pptx`
   is the deck for **Class 11** (syllabus Week 11, Thu Nov 19) — module 314499.
-  Class 10 "Smart Devices" still has no source deck.
+  Class 10 "Smart Devices" had no source deck; its 2026 deck, "Device to Cloud",
+  was written for the site rather than converted from a `.pptx`.
 
 ## Tutorial videos (`tools/video-build/`)
 
@@ -611,9 +614,13 @@ The ID is never resolved at run time.
   from the deck (it is not generated). Keep its links to `slides.html` and the
   PDF working, and update it when shared facts change (title, dates, TA info).
 - **Every class in the course has a page; not every class has a deck yet.**
-  Classes 10, 12 and 13 are placeholders: a real page with the syllabus week
+  Classes 12 and 13 are placeholders: a real page with the syllabus week
   title, what the class covers, and the milestone reflection where one is due
-  (week 13), plus the note that the deck is being converted. Class 8 converted
+  (week 13), plus the note that the deck is being converted. Class 10 converted
+  on 2026-11-06: the deck is `ENT-164-Class-10-Device-to-Cloud.pdf` (Device to
+  Cloud, the web and APIs) and its page is no longer a placeholder; the Canvas
+  module still points at Google Slides until the PDF is live and converted.
+  Class 8 converted
   with the **retrospective** deck only: the race half of the session lives on
   its page, and the PDF is `ENT-164-Class-8-Team-Retrospective.pdf`. Class 7
   (Final Robot Assembly and Testing) is a full working session: a page with the
@@ -625,10 +632,11 @@ The ID is never resolved at run time.
     hero kicker, so a placeholder's Canvas module name changes with its page.
     A placeholder has no `ENT-164-Class-N-*.pdf`, so the plan gives it no
     "Slides (PDF)" item — just the class page.
-  - Canvas module names and the syllabus week titles disagree for weeks 10, 12
-    and 13 (Canvas: "Smart Devices", "Connectivity (Part 2)", "Final Demos and
-    Class Retro"). The class pages follow the **syllabus** titles by decision;
-    the Canvas modules still carry the deck names.
+  - Canvas module names and the syllabus week titles disagree for weeks 12
+    and 13 (Canvas: "Connectivity (Part 2)", "Final Demos and
+    Class Retro"). Week 10's now agree: both say "Device to Cloud". The class
+    pages follow the **syllabus** titles by decision; the remaining Canvas
+    modules still carry the deck names.
   - Placeholders are in `PAGES` in `nav.py` with a syllabus CTA rather than
     "Download slides". When a real deck is converted, add the PDF name and
     switch the CTA and footer link like the other classes.

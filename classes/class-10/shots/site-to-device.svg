@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1170" height="390" viewBox="15 110 1170 390" role="img"
+     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>A browser sends a command to your site, the device asks the site for that command, and the page updates with the device's state.</title>
+  <rect width="1200" height="600" fill="#ffffff"/>
+
+  <defs>
+    <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14"
+            markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#3E8EDE"/>
+    </marker>
+  </defs>
+
+  <!-- browser -->
+  <rect x="45" y="180" width="270" height="250" rx="18" fill="#ffffff" stroke="#e6eaf1" stroke-width="2.5"/>
+  <g transform="translate(80,208)" fill="none" stroke="#3E8EDE" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="0" width="60" height="46" rx="6"/>
+    <line x1="0" y1="15" x2="60" y2="15"/>
+    <circle cx="9" cy="7.5" r="1.7" fill="#3E8EDE" stroke="none"/>
+    <circle cx="16" cy="7.5" r="1.7" fill="#3E8EDE" stroke="none"/>
+  </g>
+  <text x="80" y="316" font-size="23" font-weight="700" fill="#0d1526">A browser</text>
+  <text x="80" y="342" font-size="14" fill="#5f6b7a">your phone or laptop</text>
+  <text x="80" y="384" font-size="13.5" fill="#3f4a5a">The page has a button.</text>
+
+  <!-- site -->
+  <rect x="450" y="140" width="300" height="330" rx="18" fill="#f2f7fd" stroke="#bcd8f7" stroke-width="2.5"/>
+  <text x="486" y="186" font-size="23" font-weight="700" fill="#0d1526">Your site</text>
+  <text x="486" y="210" font-size="14" fill="#5f6b7a">the meeting point</text>
+
+  <rect x="486" y="234" width="228" height="56" rx="9" fill="#ffffff" stroke="#e6eaf1" stroke-width="2"/>
+  <text x="502" y="259" font-size="13.5" font-weight="600" fill="#0d1526">Web server</text>
+  <text x="502" y="278" font-size="12" fill="#5f6b7a">serves the page</text>
+
+  <rect x="486" y="302" width="228" height="56" rx="9" fill="#ffffff" stroke="#e6eaf1" stroke-width="2"/>
+  <text x="502" y="327" font-size="13.5" font-weight="600" fill="#0d1526">Database</text>
+  <text x="502" y="346" font-size="12" fill="#5f6b7a">keeps the last command</text>
+
+  <text x="486" y="398" font-size="12.5" fill="#3f4a5a">Both run on a computer</text>
+  <text x="486" y="418" font-size="12.5" fill="#3f4a5a">you rent in the cloud.</text>
+
+  <!-- device -->
+  <rect x="880" y="180" width="275" height="250" rx="18" fill="#ffffff" stroke="#e6eaf1" stroke-width="2.5"/>
+  <g transform="translate(914,208) scale(2.4)" fill="none" stroke="#3E8EDE" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="16" height="16" x="4" y="4" rx="2"/>
+    <rect width="6" height="6" x="9" y="9"/>
+    <path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/>
+    <path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>
+  </g>
+  <text x="914" y="316" font-size="23" font-weight="700" fill="#0d1526">Your ESP32</text>
+  <text x="914" y="342" font-size="14" fill="#5f6b7a">the device</text>
+  <text x="914" y="384" font-size="13.5" fill="#3f4a5a">Asks every second:</text>
+  <text x="914" y="404" font-size="13.5" fill="#3f4a5a">anything for me?</text>
+
+  <!-- arrows: browser <-> site -->
+  <line x1="317" y1="240" x2="446" y2="240" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" marker-end="url(#arr3)"/>
+  <rect x="324" y="211" width="116" height="28" rx="14" fill="#ffffff" stroke="#cfe1f7" stroke-width="1.5"/>
+  <text x="382" y="230" font-size="12.5" fill="#1F6FD0" text-anchor="middle">1 · press</text>
+
+  <line x1="448" y1="362" x2="319" y2="362" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" marker-end="url(#arr3)"/>
+  <rect x="324" y="348" width="116" height="28" rx="14" fill="#ffffff" stroke="#cfe1f7" stroke-width="1.5"/>
+  <text x="382" y="367" font-size="12.5" fill="#1F6FD0" text-anchor="middle">4 · update</text>
+
+  <!-- arrows: device <-> site -->
+  <line x1="878" y1="240" x2="752" y2="240" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" marker-end="url(#arr3)"/>
+  <rect x="758" y="211" width="114" height="28" rx="14" fill="#ffffff" stroke="#cfe1f7" stroke-width="1.5"/>
+  <text x="815" y="230" font-size="12.5" fill="#1F6FD0" text-anchor="middle">2 · ask</text>
+
+  <line x1="750" y1="362" x2="876" y2="362" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" marker-end="url(#arr3)"/>
+  <rect x="758" y="348" width="114" height="28" rx="14" fill="#ffffff" stroke="#cfe1f7" stroke-width="1.5"/>
+  <text x="815" y="367" font-size="12.5" fill="#1F6FD0" text-anchor="middle">3 · answer</text>
+</svg>

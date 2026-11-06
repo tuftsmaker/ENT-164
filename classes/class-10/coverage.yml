@@ -1,15 +1,15 @@
 # What this class covers. The Canvas class page's "What we'll cover"
 # cards: a reading of the deck, one brief line per topic. The page is
 # generated from these, so edit here rather than in Canvas.
-hero: "../../assets/photos/class/breadboard-esp32.jpg"
-hero_alt: "An ESP32 on a breadboard with sensor wiring"
+hero: "../../assets/photos/class/device-item-added.jpg"
+hero_alt: "A tablet showing a student-built dashboard with the local weather and a task list"
 
 topics:
-  - title: "Five-minute concept pitches"
-    learn: "Each team pitches its idea, then takes questions and feedback."
-  - title: "Collecting data with your Class 5–6 sensors"
-    learn: "Putting the same boards and sensors to work gathering real readings."
-  - title: "Making data readable at a glance"
-    learn: "The three moves that turn raw numbers into something a person can read."
-  - title: "Making a sensor reliable for the final project"
-    learn: "Calibrating and steadying a sensor so your project can depend on it."
+  - title: "Browser, server, and database"
+    learn: "The three jobs behind every page, and which one answers which question."
+  - title: "What an API is"
+    learn: "A fixed set of addresses, the questions each one accepts, and the shape of the answer."
+  - title: "Connecting a device to an API"
+    learn: "Your board calls a service over Wi-Fi and acts on the JSON that comes back."
+  - title: "Connecting a website to a device"
+    learn: "Why the device starts the conversation, and what the site in the middle holds."
