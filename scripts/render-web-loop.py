@@ -29,8 +29,6 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 SCALE = 2                      # render at 2x, downscale in ffmpeg
 W, H = 1920 * SCALE, 1080 * SCALE
 FPS = 30
-DURATION = 11.2
-RESET = (9.1, 10.1)             # everything dims back to the base state
 
 INK, MUTED, MUTED2 = "#0d1526", "#5f6b7a", "#3f4a5a"
 LINE, STRONG, BLUE, DEEP = "#e6eaf1", "#d5dce7", "#3E8EDE", "#1F6FD0"
@@ -125,35 +123,55 @@ PANELS = [
          lines=("Keeps data after the", "server is switched off")),
 ]
 
-HOPS = [
-    dict(key="req", x0=470, x1=770, y=440, t0=1.00, t1=2.05),
-    dict(key="query", x0=1150, x1=1450, y=440, t0=2.45, t1=3.45),
-    dict(key="rows", x0=1450, x1=1150, y=660, t0=3.85, t1=4.85),
-    dict(key="resp", x0=770, x1=470, y=660, t0=5.20, t1=6.25),
+# ---------------------------------------------------------------- timing
+
+FIRST, HOP, PAUSE = 0.70, 1.05, 0.95   # one hop, then a beat to read its card
+
+HOP_TIMES = []
+_t = FIRST
+for _ in range(4):
+    HOP_TIMES.append((round(_t, 3), round(_t + HOP, 3)))
+    _t += HOP + PAUSE
+
+LAST = HOP_TIMES[-1][1]
+RESET = (LAST + 1.55, LAST + 2.65)       # everything dims back to the base state
+DURATION = LAST + 3.5                    # and a beat on the base state before looping
+
+# ---------------------------------------------------------------- pieces
+
+_HOP_SPEC = [
+    ("req", 470, 770, 440),
+    ("query", 1150, 1450, 440),
+    ("rows", 1450, 1150, 660),
+    ("resp", 770, 470, 660),
 ]
+HOPS = [dict(key=key, x0=x0, x1=x1, y=y, t0=HOP_TIMES[i][0], t1=HOP_TIMES[i][1])
+        for i, (key, x0, x1, y) in enumerate(_HOP_SPEC)]
 
 # The message itself, sitting in the gap beside its hop: HTTP on the left,
 # SQL on the right, the row coming back, the JSON reply.
-CARDS = [
-    dict(cx=620, top=352, caption="HTTP · REQUEST", t0=1.00,
-         lines=["GET /readings/current", "Host: weather.example.com"]),
-    dict(cx=1300, top=287, caption="SQL · QUERY", t0=2.45,
-         lines=["SELECT temp_c", "FROM readings", "WHERE station = 'Medford'",
-                "ORDER BY taken_at DESC", "LIMIT 1;"]),
-    dict(cx=1300, top=700, caption="SQL · ONE ROW", t0=3.85,
-         lines=["temp_c = 8.4"]),
-    dict(cx=620, top=700, caption="HTTP · RESPONSE", t0=5.20,
-         lines=["HTTP/1.1 200 OK", '{"station": "Medford",', ' "temp_c": 8.4}']),
+_CARD_SPEC = [
+    (620, 352, "HTTP · REQUEST",
+     ["GET /readings/current", "Host: weather.example.com"]),
+    (1300, 287, "SQL · QUERY",
+     ["SELECT temp_c", "FROM readings", "WHERE station = 'Medford'",
+      "ORDER BY taken_at DESC", "LIMIT 1;"]),
+    (1300, 700, "SQL · ONE ROW", ["temp_c = 8.4"]),
+    (620, 700, "HTTP · RESPONSE",
+     ["HTTP/1.1 200 OK", '{"station": "Medford",', ' "temp_c": 8.4}']),
 ]
+CARDS = [dict(cx=cx, top=top, caption=caption, lines=lines, t0=HOP_TIMES[i][0])
+         for i, (cx, top, caption, lines) in enumerate(_CARD_SPEC)]
 
 STEPS = [
-    ("The browser asks", 0.95),
-    ("The server decides", 2.10),
-    ("The database answers", 3.50),
-    ("The response returns", 5.15),
+    ("The browser asks", HOP_TIMES[0][0] - 0.15),
+    ("The server decides", HOP_TIMES[1][0] - 0.15),
+    ("The database answers", HOP_TIMES[2][0] - 0.15),
+    ("The response returns", HOP_TIMES[3][0] - 0.15),
 ]
 
-PULSES = [(2.05, "server"), (3.45, "data"), (4.85, "server"), (6.25, "browser")]
+PULSES = [(HOP_TIMES[0][1], "server"), (HOP_TIMES[1][1], "data"),
+          (HOP_TIMES[2][1], "server"), (HOP_TIMES[3][1], "browser")]
 
 
 def background() -> Image.Image:
@@ -375,7 +393,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", required=True, help="MP4 to write")
     ap.add_argument("--poster", help="JPEG still to write (a lit frame)")
-    ap.add_argument("--poster-time", type=float, default=7.4)
+    ap.add_argument("--poster-time", type=float, default=round(LAST + 0.9, 2),
+                    help="seconds into the clip for the poster still")
     ap.add_argument("--crf", type=int, default=18)
     ap.add_argument("--keep-frames", action="store_true")
     args = ap.parse_args()
