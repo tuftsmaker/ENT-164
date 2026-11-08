@@ -433,7 +433,42 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">06</span></footer>
 </section>
 
-<!-- ============ 07 · A SERVER IS A COMPUTER ============ -->
+<!-- ============ 07 · HTTP AND SQL ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Part 1 · The two messages</p>
+    <h2>Two languages, <span class="accent">one request</span></h2>
+    <p class="s-sub">The browser asks in HTTP. The server asks its database in SQL. The same temperature moves between them.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 1.12fr 0.88fr;">
+      <div class="panel" style="justify-content: center; gap: 3mm;">
+        <p class="plabel" style="margin-bottom: 2mm;">Browser &rarr; server &middot; HTTP</p>
+        <pre class="code" style="font-size: 9pt;"><span class="k">GET</span> /readings/current?station=Medford HTTP/1.1
+Host: weather.example.com
+Accept: application/json</pre>
+        <p class="plabel" style="margin: 4mm 0 2mm;">Server &rarr; browser &middot; HTTP</p>
+        <pre class="code" style="font-size: 9pt;">HTTP/1.1 <span class="n">200</span> OK
+Content-Type: application/json
+
+{<span class="s">"station"</span>: <span class="s">"Medford"</span>, <span class="s">"temp_c"</span>: <span class="n">8.4</span>}</pre>
+      </div>
+      <div class="panel" style="justify-content: center;">
+        <p class="plabel" style="margin-bottom: 2mm;">Server &rarr; database &middot; SQL</p>
+        <pre class="code" style="font-size: 9pt;"><span class="k">SELECT</span> temp_c, taken_at
+<span class="k">FROM</span> readings
+<span class="k">WHERE</span> station = <span class="s">'Medford'</span>
+<span class="k">ORDER BY</span> taken_at <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">1</span>;</pre>
+        <p class="footnote" style="padding-top: 4mm;">One row comes back. The server turns it into the JSON on the left.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ============ 08 · A SERVER IS A COMPUTER ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -464,10 +499,10 @@
       <p>Different machine. Class 6 put the server on your board. Today we also call servers we did not build.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">07</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">08</span></footer>
 </section>
 
-<!-- ============ 08 · WHAT AN API IS ============ -->
+<!-- ============ 09 · WHAT AN API IS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -499,10 +534,10 @@
     </div>
     <p class="footnote">The rules live in the docs. Every API has a page that lists its addresses and what each one returns.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">08</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ============ 09 · FOUR PARTS OF A CALL ============ -->
+<!-- ============ 10 · FOUR PARTS OF A CALL ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -540,10 +575,10 @@
     </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
 </section>
 
-<!-- ============ 10 · JSON ============ -->
+<!-- ============ 11 · JSON ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -579,10 +614,10 @@
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
 </section>
 
-<!-- ============ 11 · SAME CALL, TWO WAYS ============ -->
+<!-- ============ 12 · SAME CALL, TWO WAYS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -610,10 +645,10 @@ data = r.json()
     </div>
     <p class="footnote">Same address, same answer. The browser draws it for you; the board stores it in a variable.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ============ 12 · KEYS ============ -->
+<!-- ============ 13 · KEYS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -644,10 +679,10 @@ data = r.json()
       <p><b>Revoke it and make a new one.</b> Every service has a button for this. Rotating a key takes two minutes; a surprise bill does not.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ============ 13 · PART 3 DIVIDER ============ -->
+<!-- ============ 14 · PART 3 DIVIDER ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -657,10 +692,10 @@ data = r.json()
       <p>The board is the client this time. It asks, waits, reads the answer, and does something physical with it.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">13</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">14</span></footer>
 </section>
 
-<!-- ============ 14 · DEVICE TO API DIAGRAM ============ -->
+<!-- ============ 15 · DEVICE TO API DIAGRAM ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -675,10 +710,10 @@ data = r.json()
       <p class="footnote" style="margin: 0; text-align: center;"><b>1</b> join the Wi-Fi &nbsp;·&nbsp; <b>2</b> send the request &nbsp;·&nbsp; <b>3</b> read the JSON &nbsp;·&nbsp; <b>4</b> do something with it</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">14</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">15</span></footer>
 </section>
 
-<!-- ============ 15 · THE LOOP ============ -->
+<!-- ============ 16 · THE LOOP ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -711,10 +746,10 @@ data = r.json()
     </div>
     <p class="footnote">A request that fails does not raise an error on the board. Check <span class="mono" style="font-size: 9pt;">r.status_code</span> before you trust the body.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">15</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">16</span></footer>
 </section>
 
-<!-- ============ 16 · WORKED EXAMPLE ============ -->
+<!-- ============ 17 · WORKED EXAMPLE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -740,10 +775,10 @@ data = r.json()
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">16</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">17</span></footer>
 </section>
 
-<!-- ============ 17 · WHEN IT FAILS ============ -->
+<!-- ============ 18 · WHEN IT FAILS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -771,10 +806,10 @@ data = r.json()
     </div>
     <p class="footnote">Print the status code and the first part of the body. Nine times in ten, that names the problem.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">17</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">18</span></footer>
 </section>
 
-<!-- ============ 18 · PART 4 DIVIDER ============ -->
+<!-- ============ 19 · PART 4 DIVIDER ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -784,10 +819,10 @@ data = r.json()
       <p>In Class 6 your board served the page. Now the page lives on the internet, and the board is the thing it controls.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">18</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">19</span></footer>
 </section>
 
-<!-- ============ 19 · TWO PATTERNS ============ -->
+<!-- ============ 20 · TWO PATTERNS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -812,10 +847,10 @@ data = r.json()
       <p>A device behind a home router has <b>no public address</b>. It can call out. You cannot call in. So the device asks.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">19</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">20</span></footer>
 </section>
 
-<!-- ============ 20 · RELAY DIAGRAM ============ -->
+<!-- ============ 21 · RELAY DIAGRAM ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -830,10 +865,10 @@ data = r.json()
       <p class="footnote" style="margin: 0; text-align: center;">The board asks every second, so the button feels instant. The database keeps the last command, so a reboot does not lose it.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">20</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">21</span></footer>
 </section>
 
-<!-- ============ 21 · PRESS AND SEE ============ -->
+<!-- ============ 22 · PRESS AND SEE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -862,10 +897,10 @@ data = r.json()
     </div>
     <p class="footnote">No install, no app store, no pairing screen. A page, an address, and a device on the network.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">21</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">22</span></footer>
 </section>
 
-<!-- ============ 22 · PUT IT TOGETHER ============ -->
+<!-- ============ 23 · PUT IT TOGETHER ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -899,10 +934,10 @@ data = r.json()
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">22</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">23</span></footer>
 </section>
 
-<!-- ============ 23 · FINAL PROJECT ============ -->
+<!-- ============ 24 · FINAL PROJECT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -932,10 +967,10 @@ data = r.json()
       <p><b>Checkpoint 2:</b> integrated features and user experience. The whole product working together, and what a user does, sees, and feels.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">23</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">24</span></footer>
 </section>
 
-<!-- ============ 24 · CLOSING ============ -->
+<!-- ============ 25 · CLOSING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -954,7 +989,7 @@ data = r.json()
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">24</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">25</span></footer>
 </section>
 
 </body>
