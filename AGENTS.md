@@ -620,6 +620,9 @@ The ID is never resolved at run time.
   on 2026-11-06: the deck is `ENT-164-Class-10-Device-to-Cloud.pdf` (Device to
   Cloud, the web and APIs) and its page is no longer a placeholder; the Canvas
   module still points at Google Slides until the PDF is live and converted.
+  Its "shape of the web" section plays `shots/web-round-trip.mp4`, a 10-second
+  loop rendered by `scripts/render-web-loop.py` (PIL + ffmpeg, no browser); the
+  deck keeps the still `shots/web-architecture.svg` for print.
   Class 8 converted
   with the **retrospective** deck only: the race half of the session lives on
   its page, and the PDF is `ENT-164-Class-8-Team-Retrospective.pdf`. Class 7
