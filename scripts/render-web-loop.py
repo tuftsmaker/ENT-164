@@ -29,8 +29,8 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 SCALE = 2                      # render at 2x, downscale in ffmpeg
 W, H = 1920 * SCALE, 1080 * SCALE
 FPS = 30
-DURATION = 10.4
-RESET = (8.6, 9.8)             # everything dims back to the base state
+DURATION = 11.2
+RESET = (9.1, 10.1)             # everything dims back to the base state
 
 INK, MUTED, MUTED2 = "#0d1526", "#5f6b7a", "#3f4a5a"
 LINE, STRONG, BLUE, DEEP = "#e6eaf1", "#d5dce7", "#3E8EDE", "#1F6FD0"
@@ -73,7 +73,9 @@ def text(d, xy, s, size, color, weight="Regular", anchor="la", tracking=0.0):
     d.text((px(x), px(y)), s, font=f, fill=color, anchor=anchor)
 
 
-def rgb(c: str) -> tuple[int, int, int]:
+def rgb(c) -> tuple[int, int, int]:
+    if isinstance(c, tuple):
+        return c
     return tuple(int(c[i:i + 2], 16) for i in (1, 3, 5))  # type: ignore[return-value]
 
 
@@ -124,14 +126,24 @@ PANELS = [
 ]
 
 HOPS = [
-    dict(key="req", x0=470, x1=770, y=440, label="request", side="up",
-         t0=1.00, t1=2.05),
-    dict(key="query", x0=1150, x1=1450, y=440, label="query", side="up",
-         t0=2.45, t1=3.45),
-    dict(key="rows", x0=1450, x1=1150, y=660, label="rows", side="down",
-         t0=3.85, t1=4.85),
-    dict(key="resp", x0=770, x1=470, y=660, label="response", side="down",
-         t0=5.20, t1=6.25),
+    dict(key="req", x0=470, x1=770, y=440, t0=1.00, t1=2.05),
+    dict(key="query", x0=1150, x1=1450, y=440, t0=2.45, t1=3.45),
+    dict(key="rows", x0=1450, x1=1150, y=660, t0=3.85, t1=4.85),
+    dict(key="resp", x0=770, x1=470, y=660, t0=5.20, t1=6.25),
+]
+
+# The message itself, sitting in the gap beside its hop: HTTP on the left,
+# SQL on the right, the row coming back, the JSON reply.
+CARDS = [
+    dict(cx=620, top=352, caption="HTTP · REQUEST", t0=1.00,
+         lines=["GET /readings/current", "Host: weather.example.com"]),
+    dict(cx=1300, top=287, caption="SQL · QUERY", t0=2.45,
+         lines=["SELECT temp_c", "FROM readings", "WHERE station = 'Medford'",
+                "ORDER BY taken_at DESC", "LIMIT 1;"]),
+    dict(cx=1300, top=700, caption="SQL · ONE ROW", t0=3.85,
+         lines=["temp_c = 8.4"]),
+    dict(cx=620, top=700, caption="HTTP · RESPONSE", t0=5.20,
+         lines=["HTTP/1.1 200 OK", '{"station": "Medford",', ' "temp_c": 8.4}']),
 ]
 
 STEPS = [
@@ -234,23 +246,26 @@ def arrow_head(d, x, y, direction, color):
     d.polygon([(px(a), px(b)) for a, b in pts], fill=color)
 
 
-def pill(d, cx, cy, label, alpha):
-    f = font(22, "Semibold")
-    tw = d.textlength(label, font=f) / SCALE
-    w, h = tw + 44, 44
-    d.rounded_rectangle([px(cx - w / 2), px(cy - h / 2), px(cx + w / 2), px(cy + h / 2)],
-                        radius=px(22), fill=mix("#ffffff", "#ffffff", 0),
-                        outline=fade("#cfe1f7", alpha), width=px(1.5))
-    d.text((px(cx), px(cy + 1)), label, font=f, fill=fade(DEEP, alpha), anchor="mm")
+def code_card(d, cx, top, caption, lines, a):
+    """A message card: caption, then the line itself in mono on a dark panel."""
+    if a <= 0.01:
+        return
+    f = mono(15)
+    widest = max(d.textlength(line, font=f) for line in lines) / SCALE
+    w = widest + 36
+    line_h = 21
+    h = len(lines) * line_h + 22
+    body = mix("#ffffff", "#0f1b2d", min(1.0, a * 1.7))
+    fg = mix(body, "#dbe7f7", a)
 
-
-def draw_chip(d, x, y, s, alpha):
-    f = mono(20)
-    w = d.textlength(s, font=f) / SCALE + 34
-    d.rounded_rectangle([px(x - w), px(y - 19), px(x), px(y + 19)], radius=px(19),
-                        fill=fade("#eaf3fd", alpha), outline=fade("#cfe1f7", alpha),
-                        width=px(1.2))
-    d.text((px(x - w / 2), px(y + 1)), s, font=f, fill=fade(DEEP, alpha), anchor="mm")
+    d.text((px(cx), px(top - 17)), caption, font=font(12, "Semibold"),
+           fill=mix("#ffffff", DEEP, min(1.0, a * 1.4)), anchor="mm")
+    d.rounded_rectangle([px(cx - w / 2), px(top), px(cx + w / 2), px(top + h)],
+                        radius=px(12), fill=body)
+    y = top + 12
+    for line in lines:
+        d.text((px(cx - w / 2 + 18), px(y)), line, font=f, fill=fg)
+        y += line_h
 
 
 def draw_rail(d, t):
@@ -329,12 +344,6 @@ def render(t: float) -> Image.Image:
             if p > 0.93:
                 arrow_head(d, x1, y, direction, col)
 
-        # label
-        la = seg(t, hop["t0"] + 0.15, hop["t0"] + 0.45) * on
-        if la > 0.01:
-            cy = y - 44 if hop["side"] == "up" else y + 44
-            pill(d, (x0 + x1) / 2, cy, hop["label"], la)
-
         # travelling dot, with a short trail
         dot_a = (1 - seg(t, hop["t1"] - 0.18, hop["t1"])) * (1 if p > 0 else 0) * on
         if dot_a > 0.01:
@@ -353,10 +362,9 @@ def render(t: float) -> Image.Image:
     draw_pulses(d, t)
     draw_rail(d, t)
 
-    # the request itself, once the first hop is under way
-    chip_a = seg(t, 1.15, 1.5) * lit(t)
-    if chip_a > 0.01:
-        draw_chip(d, 430, 352, "GET /forecast", chip_a)
+    for card in CARDS:
+        code_card(d, card["cx"], card["top"], card["caption"], card["lines"],
+                  seg(t, card["t0"] + 0.10, card["t0"] + 0.40) * lit(t))
 
     return img
 
