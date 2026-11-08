@@ -102,11 +102,6 @@ def lerp(a: float, b: float, p: float) -> float:
     return a + (b - a) * p
 
 
-def lit(t: float) -> float:
-    """1 while the story is on screen, 0 once it has reset for the loop."""
-    return 1.0 - seg(t, *RESET)
-
-
 # ---------------------------------------------------------------- pieces
 
 PANEL_Y, PANEL_H, PANEL_W = 300, 490, 380
@@ -134,8 +129,7 @@ for _ in range(4):
     _t += HOP + PAUSE
 
 LAST = HOP_TIMES[-1][1]
-RESET = (LAST + 1.55, LAST + 2.65)       # everything dims back to the base state
-DURATION = LAST + 3.5                    # and a beat on the base state before looping
+DURATION = LAST + 2.2                    # hold the finished picture to the last frame
 
 # ---------------------------------------------------------------- pieces
 
@@ -294,16 +288,15 @@ def draw_rail(d, t):
         if t >= start:
             active = i
 
-    lit_a = lit(t)
     progress = 1.0 if t >= STEPS[0][1] else 0.0
     end_x = xs[active] if progress else xs[0]
 
     d.line([px(xs[0]), px(y), px(xs[-1]), px(y)], fill=STRONG, width=px(3))
     if active > 0 or progress:
-        d.line([px(xs[0]), px(y), px(end_x), px(y)], fill=fade(BLUE, lit_a), width=px(3))
+        d.line([px(xs[0]), px(y), px(end_x), px(y)], fill=BLUE, width=px(3))
 
     for i, (label, start) in enumerate(STEPS):
-        on = (t >= start) * lit_a
+        on = 1.0 if t >= start else 0.0
         x = xs[i]
         r = 9
         if on > 0.01:
@@ -321,7 +314,7 @@ def draw_pulses(d, t):
         p = seg(t, at, at + 0.55)
         if not 0 < p < 1:
             continue
-        a = (1 - p) * lit(t)
+        a = 1 - p
         x0, y0, x1, y1 = panel_box(key)[1:]
         grow = 6 + 26 * p
         d.rounded_rectangle([px(x0 - grow), px(y0 - grow), px(x1 + grow), px(y1 + grow)],
@@ -350,20 +343,18 @@ def render(t: float) -> Image.Image:
         x0, x1, y = hop["x0"], hop["x1"], hop["y"]
         direction = 1 if x1 > x0 else -1
         p = seg(t, hop["t0"], hop["t1"])
-        on = lit(t)
 
         d.line([px(x0), px(y), px(x1), px(y)], fill=STRONG, width=px(3))
         arrow_head(d, x1, y, direction, mix("#c3cbd7", BLUE, 0.0))
 
         head = lerp(x0, x1, p)
         if p > 0:
-            col = fade(BLUE, on)
-            d.line([px(x0), px(y), px(head), px(y)], fill=col, width=px(4))
+            d.line([px(x0), px(y), px(head), px(y)], fill=BLUE, width=px(4))
             if p > 0.93:
-                arrow_head(d, x1, y, direction, col)
+                arrow_head(d, x1, y, direction, BLUE)
 
         # travelling dot, with a short trail
-        dot_a = (1 - seg(t, hop["t1"] - 0.18, hop["t1"])) * (1 if p > 0 else 0) * on
+        dot_a = (1 - seg(t, hop["t1"] - 0.18, hop["t1"])) * (1 if p > 0 else 0)
         if dot_a > 0.01:
             for k in range(4, 0, -1):
                 tx = head - direction * k * 20
@@ -382,7 +373,7 @@ def render(t: float) -> Image.Image:
 
     for card in CARDS:
         code_card(d, card["cx"], card["top"], card["caption"], card["lines"],
-                  seg(t, card["t0"] + 0.10, card["t0"] + 0.40) * lit(t))
+                  seg(t, card["t0"] + 0.10, card["t0"] + 0.40))
 
     return img
 
