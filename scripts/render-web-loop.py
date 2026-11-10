@@ -104,7 +104,7 @@ def lerp(a: float, b: float, p: float) -> float:
 
 # ---------------------------------------------------------------- pieces
 
-PANEL_Y, PANEL_H, PANEL_W = 300, 490, 380
+PANEL_Y, PANEL_H, PANEL_W = 230, 490, 380
 
 PANELS = [
     dict(key="browser", x=90, fill="#ffffff", stroke=LINE,
@@ -134,10 +134,10 @@ DURATION = LAST + 2.2                    # hold the finished picture to the last
 # ---------------------------------------------------------------- pieces
 
 _HOP_SPEC = [
-    ("req", 470, 770, 440),
-    ("query", 1150, 1450, 440),
-    ("rows", 1450, 1150, 660),
-    ("resp", 770, 470, 660),
+    ("req", 470, 770, 370),
+    ("query", 1150, 1450, 370),
+    ("rows", 1450, 1150, 590),
+    ("resp", 770, 470, 590),
 ]
 HOPS = [dict(key=key, x0=x0, x1=x1, y=y, t0=HOP_TIMES[i][0], t1=HOP_TIMES[i][1])
         for i, (key, x0, x1, y) in enumerate(_HOP_SPEC)]
@@ -145,13 +145,13 @@ HOPS = [dict(key=key, x0=x0, x1=x1, y=y, t0=HOP_TIMES[i][0], t1=HOP_TIMES[i][1])
 # The message itself, sitting in the gap beside its hop: HTTP on the left,
 # SQL on the right, the row coming back, the JSON reply.
 _CARD_SPEC = [
-    (620, 352, "HTTP · REQUEST",
+    (620, 282, "HTTP · REQUEST",
      ["GET /readings/current", "Host: weather.example.com"]),
-    (1300, 287, "SQL · QUERY",
+    (1300, 217, "SQL · QUERY",
      ["SELECT temp_c", "FROM readings", "WHERE station = 'Medford'",
       "ORDER BY taken_at DESC", "LIMIT 1;"]),
-    (1300, 700, "SQL · ONE ROW", ["temp_c = 8.4"]),
-    (620, 700, "HTTP · RESPONSE",
+    (1300, 630, "SQL · ONE ROW", ["temp_c = 8.4"]),
+    (620, 630, "HTTP · RESPONSE",
      ["HTTP/1.1 200 OK", '{"station": "Medford",', ' "temp_c": 8.4}']),
 ]
 CARDS = [dict(cx=cx, top=top, caption=caption, lines=lines, t0=HOP_TIMES[i][0])
@@ -172,7 +172,7 @@ def background() -> Image.Image:
     img = Image.new("RGB", (W, H), "#ffffff")
     d = ImageDraw.Draw(img)
     for y in range(H):
-        d.line([(0, y), (W, y)], fill=mix("#ffffff", "#eef3fa", y / (H - 1)))
+        d.line([(0, y), (W, y)], fill=mix("#ffffff", PAPER2, y / (H - 1)))
     return img
 
 
@@ -281,7 +281,7 @@ def code_card(d, cx, top, caption, lines, a):
 
 
 def draw_rail(d, t):
-    y = 872
+    y = 802
     xs = [110, 560, 1010, 1460]
     active = 0
     for i, (_, start) in enumerate(STEPS):
@@ -324,16 +324,6 @@ def draw_pulses(d, t):
 def render(t: float) -> Image.Image:
     img = BG.copy()
     d = ImageDraw.Draw(img)
-
-    # heading
-    text(d, (90, 92), "WEB ARCHITECTURE", 20, DEEP, "Semibold", tracking=3.2)
-    f = font(58, "Semibold")
-    head_x = 90
-    d.text((px(head_x), px(126)), "One ", font=f, fill=INK)
-    head_x += d.textlength("One ", font=f) / SCALE
-    d.text((px(head_x), px(126)), "round trip", font=f, fill=DEEP)
-    text(d, (90, 208), "The browser asks, the server answers, the database remembers.",
-         27, MUTED)
 
     for p in PANELS:
         draw_panel(img, d, p)
