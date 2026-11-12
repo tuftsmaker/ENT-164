@@ -163,7 +163,7 @@
         <video src="shots/web-round-trip.mp4" poster="shots/web-round-trip-poster.jpg" autoplay muted playsinline controls style="width:100%; display:block; background:var(--paper);"></video>
         <figcaption><b>One POST, end to end</b>The request leaves the board, the server writes a row, and the answer comes back. Ten seconds of video, then the finished picture stays.</figcaption>
       </figure>
-      <p style="margin-top: 20px;">Behind the route there are two Postgres tables: <span class="mono">readings</span> grows by a row every ten seconds, and <span class="mono">settings</span> is a single row holding the threshold. The app creates both on its first request, so there is no SQL console and no schema step. Vercel runs the code and gives you the address; you never see the machine.</p>
+      <p style="margin-top: 20px;">Behind the route there are two Postgres tables: <span class="mono">readings</span> grows by a row every ten seconds, and <span class="mono">settings</span> is a single row holding the threshold. The app creates both on its first request, so there is no SQL console and no schema step. The code lives in a GitHub repository imported into Vercel, so every push redeploys the site; you never see the machine.</p>
       <div class="callout"><b>The database, in one click.</b> Add Neon from the Vercel Marketplace at <a href="https://vercel.com/marketplace/neon">vercel.com/marketplace/neon</a>, choose <b>Create New Neon Account</b>, and attach it to the project. The free plan is enough.</div>
     </section>
 

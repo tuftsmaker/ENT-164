@@ -287,6 +287,7 @@
   </div>
 </section>
 
+
 <!-- ============ 02 · WHAT YOU'RE BUILDING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
@@ -313,16 +314,18 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">02</span></footer>
 </section>
 
+
 <!-- ============ 03 · HOW IT FITS TOGETHER ============ -->
 <section class="slide" style="padding: 0; background: #ffffff;">
   <img src="shots/how-it-works.jpg" alt="A four-step illustration of the build: a DHT22 measures temperature and humidity, the ESP32 sends the readings over Wi-Fi to a Vercel API, Vercel stores them in a Postgres database and serves the web app, and a laptop shows the latest 18.4 °C with a 24-hour chart" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff;">
 </section>
 
+
 <!-- ============ 04 · WIRE THE DHT22 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 1 · Read the room · 1 of 5</p>
+    <p class="s-kicker">Act 1 · Read the room · 1 of 4</p>
     <h2>Three wires <span class="accent">and a pull-up</span></h2>
     <p class="s-sub">The DHT22 is slow and a little fussy. Wire it once, carefully, and it behaves for the rest of the class.</p>
   </header>
@@ -355,11 +358,12 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">04</span></footer>
 </section>
 
+
 <!-- ============ 05 · READ IT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 1 · Read the room · 2 of 5</p>
+    <p class="s-kicker">Act 1 · Read the room · 2 of 4</p>
     <h2>Ask the sensor <span class="accent">for a number</span></h2>
     <p class="s-sub">One prompt, one small program. Print the numbers before you send them anywhere.</p>
   </header>
@@ -387,11 +391,12 @@ sensor = dht.DHT22(Pin(<span class="n">4</span>))
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">05</span></footer>
 </section>
 
+
 <!-- ============ 06 · REGISTER THE BOARD ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 1 · Read the room · 3 of 5</p>
+    <p class="s-kicker">Act 1 · Read the room · 3 of 4</p>
     <h2>Register the board <span class="accent">before it connects</span></h2>
     <p class="s-sub">The Tufts network expects every device to sign in. A board with no browser cannot, so IT registers its MAC address by hand.</p>
   </header>
@@ -422,11 +427,12 @@ sensor = dht.DHT22(Pin(<span class="n">4</span>))
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">06</span></footer>
 </section>
 
+
 <!-- ============ 07 · SERVE IT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 1 · Read the room · 4 of 5</p>
+    <p class="s-kicker">Act 1 · Read the room · 4 of 4</p>
     <h2>Serve it <span class="accent">to a browser</span></h2>
     <p class="s-sub">Before any cloud, prove the whole chain on your own network: sensor, Wi-Fi, HTTP, browser.</p>
   </header>
@@ -458,67 +464,47 @@ s.listen(<span class="n">1</span>)
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">07</span></footer>
 </section>
 
-<!-- ============ 08 · UPLOAD ============ -->
+
+<!-- ============ 08 · GITHUB AND VERCEL ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 1 · Read the room · 5 of 5</p>
-    <h2>One POST <span class="accent">every ten seconds</span></h2>
-    <p class="s-sub">Same shape as any API call: an address, a JSON body, a status code back.</p>
+    <p class="s-kicker">Act 2 · Show it · 1 of 5</p>
+    <h2>One repo, <span class="accent">one project</span></h2>
+    <p class="s-sub">Vercel deploys what is in the repository, every time you push. So the repository comes first.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
-      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
-        <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Connect the board to Wi-Fi and, every ten seconds, POST the reading to https://your-app.vercel.app/api/readings as JSON: {"station": "medford-01", "temp_c": ..., "humidity": ...}. Send Content-Type: application/json. Print the status code and the body, then close the response. If a request fails, keep going and try again in ten seconds.</p>
-        <p class="footnote" style="padding-top: 3mm;">Close every response. The board has about 8 MB of RAM, and a leaked response eats it in a few hours.</p>
-      </div>
-      <div class="panel" style="padding: 3.5mm; justify-content: center;">
-        <pre class="code" style="font-size: 8pt;"><span class="k">import</span> ujson, urequests
-
-URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
-HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>}
-
-<span class="k">while</span> <span class="k">True</span>:
-    sensor.measure()
-    body = {<span class="s">"station"</span>: <span class="s">"medford-01"</span>,
-            <span class="s">"temp_c"</span>: sensor.temperature(),
-            <span class="s">"humidity"</span>: sensor.humidity()}
-    r = urequests.post(URL, data=ujson.dumps(body),
-                       headers=HEADERS)
-    <span class="k">print</span>(r.status_code, r.text)
-    r.close()
-    time.sleep(<span class="n">10</span>)</pre>
-      </div>
+    <div class="grid g3">
+      <article class="card" style="justify-content: center;">
+        <span class="num">01 · github</span>
+        <h3>A repository</h3>
+        <p>Sign in at <span class="mono" style="font-size: 9.5pt;">github.com</span>, then <b>New repository</b>. Name it <span class="mono" style="font-size: 9.5pt;">my-weather-station</span> and leave it empty.</p>
+      </article>
+      <article class="card" style="justify-content: center;">
+        <span class="num">02 · vercel</span>
+        <h3>Import it</h3>
+        <p><b>Add New → Project → Import Git Repository.</b> Authorize GitHub if Vercel asks, then pick the repository.</p>
+      </article>
+      <article class="card accent" style="justify-content: center;">
+        <span class="num">03 · deploy</span>
+        <h3>Get a URL</h3>
+        <p>Vercel builds it and gives you <span class="mono" style="font-size: 9.5pt;">your-app.vercel.app</span>. Every push to the repo rebuilds it.</p>
+      </article>
     </div>
-    <p class="footnote">The server was the test rig. From here the board pushes, and your page is the console.</p>
+    <div class="assign">
+      <span class="alabel">From here</span>
+      <p>The code lives in GitHub. Ask opencode to commit and push; <b>Vercel builds it</b> and the URL keeps working.</p>
+    </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">08</span></footer>
 </section>
 
-<!-- ============ 09 · WHAT VERCEL IS ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Act 2 · Show it · 1 of 4</p>
-    <h2>A server and a database <span class="accent">without a server room</span></h2>
-  </header>
-  <div class="s-body">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4mm; flex: 1; min-height: 0;">
-      <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0; max-height: 100%;">
-        <img src="shots/web-architecture.svg" alt="A browser sends a request to a server, the server queries a database and gets rows back, and the response returns to the browser" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.08);">
-      </figure>
-      <p class="footnote" style="margin: 0; text-align: center;">Vercel runs the <b>server</b> and hosts the page. Its Postgres database is the <b>database</b>. Your board is a fourth client: it posts to the same server the browser reads from.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
-</section>
 
-<!-- ============ 10 · TWO TABLES ============ -->
+<!-- ============ 09 · TWO TABLES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 2 · Show it · 2 of 4</p>
+    <p class="s-kicker">Act 2 · Show it · 2 of 5</p>
     <h2>Two tables <span class="accent">hold everything</span></h2>
     <p class="s-sub">The app creates both on its first request. Nobody opens a SQL console.</p>
   </header>
@@ -555,14 +541,15 @@ HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/j
     </div>
     <p class="footnote">The store comes from the Vercel Marketplace: <b class="mono" style="font-size: 9.5pt;">vercel.com/marketplace/neon</b>, then Install and <b>Create New Neon Account</b>. The free plan is enough.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ============ 11 · THE APP ============ -->
+
+<!-- ============ 10 · THE APP ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 2 · Show it · 3 of 4</p>
+    <p class="s-kicker">Act 2 · Show it · 3 of 5</p>
     <h2>The app, <span class="accent">in one prompt</span></h2>
     <p class="s-sub">Two tables and two routes. Everything else on the page is drawing.</p>
   </header>
@@ -587,14 +574,54 @@ HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/j
     </div>
     <p class="footnote">Read the reply to the board's POST as carefully as the page's GET. The threshold in it is what turns the LED on.</p>
   </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
+</section>
+
+
+<!-- ============ 11 · UPLOAD ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Act 2 · Show it · 4 of 5</p>
+    <h2>One POST <span class="accent">every ten seconds</span></h2>
+    <p class="s-sub">Same shape as any API call: an address, a JSON body, a status code back.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Connect the board to Wi-Fi and, every ten seconds, POST the reading to https://your-app.vercel.app/api/readings as JSON: {"station": "medford-01", "temp_c": ..., "humidity": ...}. Send Content-Type: application/json. Print the status code and the body, then close the response. If a request fails, keep going and try again in ten seconds.</p>
+        <p class="footnote" style="padding-top: 3mm;">Close every response. The board has about 8 MB of RAM, and a leaked response eats it in a few hours.</p>
+      </div>
+      <div class="panel" style="padding: 3.5mm; justify-content: center;">
+        <pre class="code" style="font-size: 8pt;"><span class="k">import</span> ujson, urequests
+
+URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
+HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>}
+
+<span class="k">while</span> <span class="k">True</span>:
+    sensor.measure()
+    body = {<span class="s">"station"</span>: <span class="s">"medford-01"</span>,
+            <span class="s">"temp_c"</span>: sensor.temperature(),
+            <span class="s">"humidity"</span>: sensor.humidity()}
+    r = urequests.post(URL, data=ujson.dumps(body),
+                       headers=HEADERS)
+    <span class="k">print</span>(r.status_code, r.text)
+    r.close()
+    time.sleep(<span class="n">10</span>)</pre>
+      </div>
+    </div>
+    <p class="footnote">The server was the test rig. From here the board pushes, and your page is the console.</p>
+  </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
 </section>
+
 
 <!-- ============ 12 · THE PAGE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 2 · Show it · 4 of 4</p>
+    <p class="s-kicker">Act 2 · Show it · 5 of 5</p>
     <h2>The page reads <span class="accent">the newest row</span></h2>
     <p class="s-sub">Fetch the route, draw the numbers, and do it again five seconds later.</p>
   </header>
@@ -620,6 +647,7 @@ setInterval(load, <span class="n">5000</span>)</pre>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
 </section>
+
 
 <!-- ============ 13 · THE FORECAST ============ -->
 <section class="slide">
@@ -652,6 +680,7 @@ setInterval(load, <span class="n">5000</span>)</pre>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">13</span></footer>
 </section>
 
+
 <!-- ============ 14 · TWO SOURCES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
@@ -683,6 +712,7 @@ setInterval(load, <span class="n">5000</span>)</pre>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">14</span></footer>
 </section>
 
+
 <!-- ============ 15 · THE THRESHOLD ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
@@ -709,6 +739,7 @@ setInterval(load, <span class="n">5000</span>)</pre>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">15</span></footer>
 </section>
+
 
 <!-- ============ 16 · THE LED ============ -->
 <section class="slide">
@@ -741,6 +772,7 @@ r.close()</pre>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">16</span></footer>
 </section>
+
 
 <!-- ============ 17 · FOUR ENDPOINTS ============ -->
 <section class="slide">
@@ -777,6 +809,7 @@ r.close()</pre>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">17</span></footer>
 </section>
 
+
 <!-- ============ 18 · WHEN IT DOESN'T WORK ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
@@ -808,6 +841,7 @@ r.close()</pre>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">18</span></footer>
 </section>
 
+
 <!-- ============ 19 · CLOSING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
@@ -830,6 +864,9 @@ r.close()</pre>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">19</span></footer>
 </section>
+
+</body>
+</html>
 
 </body>
 </html>
