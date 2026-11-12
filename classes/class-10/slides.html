@@ -513,26 +513,13 @@ s.listen(<span class="n">1</span>)
   <header class="s-head">
     <p class="s-kicker">Act 2 · Show it · 4 of 10</p>
     <h2>Vercel, step 4: <span class="accent">make a repository</span></h2>
-    <p class="s-sub">The list is empty because there is nothing to import yet. Make one.</p>
+    <p class="s-sub">The import list is empty because there is nothing to import yet.</p>
   </header>
   <div class="s-body">
-    <div class="grid g3">
-      <article class="card">
-        <span class="num">01</span>
-        <h3>Open GitHub</h3>
-        <p>Sign in at <span class="mono" style="font-size: 9pt;">github.com</span>. The account you made in step 2.</p>
-      </article>
-      <article class="card">
-        <span class="num">02</span>
-        <h3>Click +</h3>
-        <p>Top right corner, then <b>New repository</b> from the menu.</p>
-      </article>
-      <article class="card accent">
-        <span class="num">03</span>
-        <h3>Check the owner</h3>
-        <p>The form opens with your account selected on the left of the name field.</p>
-      </article>
-    </div>
+    <figure style="margin: 0; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
+      <img src="shots/github-new-repo.png" alt="GitHub's + menu open, listing New issue, New repository, Import repository, New codespace, New gist and more" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 3mm; border: 1px solid var(--line-strong);">
+    </figure>
+    <p class="footnote" style="margin-top: 3mm;">Open <b>github.com</b>, click <b>+</b> in the top right, then <b>New repository</b>. Check the owner is your account.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
 </section>
@@ -546,24 +533,28 @@ s.listen(<span class="n">1</span>)
     <p class="s-sub">Short and memorable. It ends up in the URL Vercel gives you.</p>
   </header>
   <div class="s-body">
-    <div class="grid g3">
-      <article class="card">
-        <span class="num">01</span>
-        <h3>Type a name</h3>
-        <p><span class="mono" style="font-size: 9pt;">my-weather-station</span>. GitHub tells you straight away if it is taken.</p>
-      </article>
-      <article class="card">
-        <span class="num">02</span>
-        <h3>Leave it empty</h3>
-        <p>No README, no .gitignore, no licence. opencode fills it in.</p>
-      </article>
-      <article class="card accent">
-        <span class="num">03</span>
-        <h3>Create, then back to Vercel</h3>
-        <p>Refresh the import list, pick the repository, press <b>Deploy</b>.</p>
-      </article>
+    <div class="outline" style="grid-template-columns: 0.85fr 1.15fr;">
+      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
+        <article class="card tight" style="padding: 3.2mm 4.4mm;">
+          <span class="num" style="margin-bottom: 1.8mm;">01</span>
+          <h3 style="font-size: 11pt; margin-bottom: 0.8mm;">Type a name</h3>
+          <p style="font-size: 9.5pt;"><span class="mono" style="font-size: 8pt;">weather</span>. GitHub says straight away if it is taken.</p>
+        </article>
+        <article class="card tight" style="padding: 3.2mm 4.4mm;">
+          <span class="num" style="margin-bottom: 1.8mm;">02</span>
+          <h3 style="font-size: 11pt; margin-bottom: 0.8mm;">Leave it empty</h3>
+          <p style="font-size: 9.5pt;">No README, no .gitignore, no licence. opencode fills it in.</p>
+        </article>
+        <article class="card tight accent" style="padding: 3.2mm 4.4mm;">
+          <span class="num" style="margin-bottom: 1.8mm;">03</span>
+          <h3 style="font-size: 11pt; margin-bottom: 0.8mm;">Create it</h3>
+          <p style="font-size: 9.5pt;">Then back in Vercel: refresh, pick the repository, press <b>Deploy</b>.</p>
+        </article>
+      </div>
+      <figure class="panel" style="margin: 0; padding: 3mm; align-items: center; justify-content: center;">
+        <img src="shots/github-name-repo.png" alt="GitHub's Create a new repository form: owner selected, repository name weather with a green tick saying weather is available, and an empty description" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 3mm; border: 1px solid var(--line-strong);">
+      </figure>
     </div>
-    <p class="footnote">Vercel builds it and gives you <b>weather-xxxx.vercel.app</b>. Every push to the repository rebuilds it.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
 </section>
