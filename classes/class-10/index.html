@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ENT-164 · Class 10 — Device to Cloud</title>
-<meta name="description" content="Class 10 of ENT-164 Intro to Making: build a weather station. A DHT22 on the ESP32 posts to a Vercel app every ten seconds, the page shows the reading and a five-day forecast, and a threshold set on the page switches an LED.">
+<meta name="description" content="Class 10 of ENT-164 Intro to Making: build a weather station. A DHT22 on the ESP32 posts to a Vercel app every five seconds, the page shows the reading and a five-day forecast, and a threshold set on the page switches an LED.">
 <meta name="theme-color" content="#f7f9fc">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ENT-164 · Class 10 — Device to Cloud">
@@ -43,7 +43,7 @@
   <div class="wrap">
     <p class="kicker reveal">Class 10 · Week 10 · Fall 2026</p>
     <h1 class="reveal" style="--d:.06s">Device <span class="accent">to Cloud</span></h1>
-    <p class="lead reveal" style="--d:.12s">Build a weather station. A DHT22 on your ESP32 reads the room and posts the number to a Vercel app every ten seconds. A page shows the latest reading, adds a five-day forecast, and lets you set a threshold that turns on an LED.</p>
+    <p class="lead reveal" style="--d:.12s">Build a weather station. A DHT22 on your ESP32 reads the room and posts the number to a Vercel app every five seconds. A page shows the latest reading, adds a five-day forecast, and lets you set a threshold that turns on an LED.</p>
     <div class="pills reveal" style="--d:.18s">
       <span class="pill">Thu, Nov 12</span>
       <span class="pill">JCC 301 / Nolop</span>
@@ -89,7 +89,7 @@
         <div class="card">
           <span class="num">02</span>
           <h3>Upload it</h3>
-          <p>One POST every ten seconds to your Vercel app. One row in Postgres per reading.</p>
+          <p>One POST every five seconds to your Vercel app. One row in Postgres per reading.</p>
         </div>
         <div class="card">
           <span class="num">03</span>
@@ -157,13 +157,13 @@
 
     <section class="section-block" id="upload">
       <h2>Upload it</h2>
-      <p class="lede">Every ten seconds the board sends one reading to your own app, and gets one number back.</p>
+      <p class="lede">Every five seconds the board sends one reading to your own app, and gets one number back.</p>
       <div class="callout"><b>The contract:</b> <span class="mono" style="word-break:break-all;">POST /cloud/history</span> with <span class="mono">{"station": "medford-01", "temperature": 21.4, "humidity": 48}</span> answers <span class="mono">{"ok": true, "threshold_c": 24}</span>. Agree on this shape before you ask an AI for code.</div>
       <figure class="shot" style="margin-top: 20px;">
         <video src="shots/web-round-trip.mp4" poster="shots/web-round-trip-poster.jpg" autoplay muted playsinline controls style="width:100%; display:block; background:var(--paper);"></video>
         <figcaption><b>One POST, end to end</b>The request leaves the board, the server writes a row, and the answer comes back. Ten seconds of video, then the finished picture stays.</figcaption>
       </figure>
-      <p style="margin-top: 20px;">Behind the route there are two Postgres tables: <span class="mono">readings</span> grows by a row every ten seconds, and <span class="mono">settings</span> is a single row holding the threshold. The app creates both on its first request, so there is no SQL console and no schema step. The code lives in a GitHub repository imported into Vercel, so every push redeploys the site; you never see the machine.</p>
+      <p style="margin-top: 20px;">Behind the route there are two Postgres tables: <span class="mono">readings</span> grows by a row every five seconds, and <span class="mono">settings</span> is a single row holding the threshold. The app creates both on its first request, so there is no SQL console and no schema step. The code lives in a GitHub repository imported into Vercel, so every push redeploys the site; you never see the machine.</p>
       <div class="callout"><b>The database, in one click.</b> Add Neon from the Vercel Marketplace at <a href="https://vercel.com/marketplace/neon">vercel.com/marketplace/neon</a>, choose <b>Create New Neon Account</b>, and attach it to the project. The free plan is enough.</div>
     </section>
 
@@ -189,7 +189,7 @@
 
     <section class="section-block" id="control">
       <h2>Set a threshold</h2>
-      <p class="lede">A number on the page reaches the board, ten seconds later.</p>
+      <p class="lede">A number on the page reaches the board, five seconds later.</p>
       <div class="phases">
         <div class="phase">
           <p class="plabel">Type it</p>
@@ -219,7 +219,7 @@
           </ul>
         </div>
       </div>
-      <div class="callout"><b>Demo it:</b> set the threshold below room temperature on your phone. Within ten seconds the LED is on, and you have built the whole loop.</div>
+      <div class="callout"><b>Demo it:</b> set the threshold below room temperature on your phone. Within five seconds the LED is on, and you have built the whole loop.</div>
     </section>
 
 <!-- assignments:begin -->
