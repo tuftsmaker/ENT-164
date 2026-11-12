@@ -270,11 +270,11 @@
     <div class="lede">
       <p class="s-kicker">Class 10 · Week 10 · Fall 2026</p>
       <h1>Device<br><span class="accent">to Cloud</span></h1>
-      <p class="sub">Your board can sense the room and turn a motor. Today you give it the internet: a browser asks, a server answers, a database remembers.</p>
+      <p class="sub">Build a weather station that reads the room, posts to the internet every ten seconds, and turns on an LED when the page says so.</p>
       <div class="pills">
         <span class="pill">Thu, Nov 12</span>
-        <span class="pill">Browser · server · database</span>
-        <span class="pill">What an API is</span>
+        <span class="pill">ESP32 + DHT22</span>
+        <span class="pill">Vercel · Postgres</span>
       </div>
     </div>
     <figure class="shot" style="align-self: center;">
@@ -287,328 +287,341 @@
   </div>
 </section>
 
-<!-- ============ 02 · THE GAP ============ -->
+<!-- ============ 02 · WHAT YOU'RE BUILDING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
-    <div class="bigline">
-      <p class="kicker-sm">Where we are</p>
-      <h2>Your device has never<br><span class="accent">left the room</span></h2>
-      <p>It reads a sensor, it drives a motor, and every one of those things happened on your desk. Today it joins the web.</p>
+    <div style="flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 12mm;">
+      <div class="bigline" style="margin: 0;">
+        <p class="kicker-sm">Today</p>
+        <h2 style="margin-bottom: 4mm;">A weather station<br>that lives <span class="accent">on the web</span></h2>
+        <p>Read the room, post the number, see it on a page.<br>Then let the page switch an LED.</p>
+      </div>
+      <div class="journey" style="margin-top: 0;">
+        <div class="step"><b>Read</b><span>DHT22 on GPIO 4</span></div>
+        <span class="arrow">&rarr;</span>
+        <div class="step hot"><b>Upload</b><span>one POST every 10 s</span></div>
+        <span class="arrow">&rarr;</span>
+        <div class="step"><b>Show</b><span>a page with the latest</span></div>
+        <span class="arrow">&rarr;</span>
+        <div class="step"><b>Control</b><span>a threshold and an LED</span></div>
+      </div>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">02</span></footer>
 </section>
 
-<!-- ============ 03 · FOUR MOVES ============ -->
+<!-- ============ 03 · FOUR PARTS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">What we'll cover</p>
-    <h2>Four moves, <span class="accent">one loop</span></h2>
-    <p class="s-sub">Each one is a conversation between two computers. By the end they form a circle.</p>
+    <p class="s-kicker">The build</p>
+    <h2>Four parts, <span class="accent">one afternoon</span></h2>
+    <p class="s-sub">Each part ends with something you can see. Do not move on until you can.</p>
   </header>
   <div class="s-body">
     <div class="grid g4" style="gap: 3.6mm;">
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm;">
+      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm; justify-content: center;">
         <span class="num" style="margin-bottom: 2.6mm;">01</span>
-        <h3 style="font-size: 12pt;">The shape of the web</h3>
-        <p>Browser, server, database. Who asks, who answers, who remembers.</p>
+        <h3 style="font-size: 12pt;">Read the room</h3>
+        <p>A DHT22 on GPIO 4, giving temperature and humidity every ten seconds.</p>
       </article>
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm;">
+      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm; justify-content: center;">
         <span class="num" style="margin-bottom: 2.6mm;">02</span>
-        <h3 style="font-size: 12pt;">What an API is</h3>
-        <p>A fixed way to ask another computer for data, and the shape of the answer.</p>
+        <h3 style="font-size: 12pt;">Upload it</h3>
+        <p>One POST to your Vercel app. One row in Postgres. Ten seconds later, another.</p>
       </article>
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm;">
+      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm; justify-content: center;">
         <span class="num" style="margin-bottom: 2.6mm;">03</span>
-        <h3 style="font-size: 12pt;">Device to API</h3>
-        <p>Your board calls a service over Wi-Fi and acts on what comes back.</p>
+        <h3 style="font-size: 12pt;">Show it</h3>
+        <p>The page reads the newest row, then adds five days of forecast from a weather API.</p>
       </article>
-      <article class="card tight accent" style="padding: 4.6mm 4.8mm 4.2mm;">
+      <article class="card tight accent" style="padding: 4.6mm 4.8mm 4.2mm; justify-content: center;">
         <span class="num" style="margin-bottom: 2.6mm;">04</span>
-        <h3 style="font-size: 12pt;">Web to device</h3>
-        <p>A page on your phone controls the thing sitting on your desk.</p>
+        <h3 style="font-size: 12pt;">Control it</h3>
+        <p>Set a threshold on the page. When the room passes it, the board lights an LED.</p>
       </article>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">03</span></footer>
 </section>
 
-<!-- ============ 04 · THREE JOBS ============ -->
+<!-- ============ 04 · THE BENCH ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 1 · Web architecture</p>
-    <h2>The web is <span class="accent">three jobs</span></h2>
-    <p class="s-sub">Every page you have ever loaded is these three things talking to each other.</p>
+    <p class="s-kicker">Before you start</p>
+    <h2>The bench and <span class="accent">the accounts</span></h2>
+    <p class="s-sub">Everything here is in your kit except the two accounts. Have both open before you wire anything.</p>
   </header>
   <div class="s-body">
-    <div class="grid g3">
+    <div class="grid g2">
       <article class="card">
-        <span class="ico" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1F6FD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M6.5 6.5h.01"/><path d="M9.5 6.5h.01"/></svg>
-        </span>
-        <span class="num">client</span>
-        <h3>Browser</h3>
-        <p>It runs on your machine. It asks for a page or some data, then draws whatever comes back.</p>
+        <span class="num">on the bench</span>
+        <h3>Hardware</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 10.5pt; line-height: 1.5;">
+          <li style="margin-bottom: 2.4mm;">ESP32-WROVER and its USB cable</li>
+          <li style="margin-bottom: 2.4mm;">DHT22 temperature and humidity sensor</li>
+          <li style="margin-bottom: 2.4mm;">One LED and a 220 &Omega; resistor</li>
+          <li>Breadboard and four jumper wires</li>
+        </ul>
       </article>
       <article class="card">
-        <span class="ico" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1F6FD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01"/><path d="M7 17.5h.01"/></svg>
-        </span>
-        <span class="num">the answerer</span>
-        <h3>Server</h3>
-        <p>A computer that is always on. It receives the request, works out the answer, and sends it.</p>
-      </article>
-      <article class="card">
-        <span class="ico" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1F6FD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
-        </span>
-        <span class="num">the memory</span>
-        <h3>Database</h3>
-        <p>It holds the rows. The server asks it questions and it answers with data, quickly and in order.</p>
+        <span class="num">online</span>
+        <h3>Accounts</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 10.5pt; line-height: 1.5;">
+          <li style="margin-bottom: 2.4mm;">A Vercel account, free tier</li>
+          <li style="margin-bottom: 2.4mm;">A Postgres database connected to it</li>
+          <li style="margin-bottom: 2.4mm;">The Wi-Fi name and password</li>
+          <li>opencode, with your class skills</li>
+        </ul>
       </article>
     </div>
     <div class="assign">
-      <span class="alabel">One request</span>
-      <p>It touches all three, usually in <b>under a second</b>. That is the whole trick.</p>
+      <span class="alabel">Tip</span>
+      <p>Let your AI write the code. You check the wiring and the numbers. <b>One working step at a time.</b></p>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">04</span></footer>
 </section>
 
-<!-- ============ 05 · WEB ARCHITECTURE DIAGRAM ============ -->
+<!-- ============ 05 · WIRE THE DHT22 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 1 · The round trip</p>
-    <h2>Ask, answer, <span class="accent">remember</span></h2>
+    <p class="s-kicker">Act 1 · Read the room · 1 of 3</p>
+    <h2>Three wires <span class="accent">and a pull-up</span></h2>
+    <p class="s-sub">The DHT22 is slow and a little fussy. Wire it once, carefully, and it behaves for the rest of the class.</p>
+  </header>
+  <div class="s-body">
+    <div class="grid g2">
+      <article class="card">
+        <span class="num">DHT22 &rarr; ESP32</span>
+        <h3>The wires</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 10.5pt; line-height: 1.5;">
+          <li style="margin-bottom: 2.4mm;"><b>VCC</b> to <b>3V3</b></li>
+          <li style="margin-bottom: 2.4mm;"><b>DATA</b> to <b>GPIO 4</b></li>
+          <li style="margin-bottom: 2.4mm;"><b>GND</b> to <b>GND</b></li>
+          <li>10 k&Omega; from <b>VCC</b> to <b>DATA</b></li>
+        </ul>
+      </article>
+      <article class="card accent">
+        <span class="num">watch out</span>
+        <h3>Two things that bite</h3>
+        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 10.5pt; line-height: 1.5;">
+          <li style="margin-bottom: 2.4mm;"><b>3.3 V, not 5 V.</b> The ESP32 pins are not 5 V tolerant.</li>
+          <li><b>Two seconds between reads.</b> Ask faster and you get stale numbers, then errors.</li>
+        </ul>
+      </article>
+    </div>
+    <div class="assign">
+      <span class="alabel">The module</span>
+      <p>The three-pin module has the resistor built in. The bare four-pin sensor needs it, or the data line floats.</p>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ============ 06 · READ IT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Act 1 · Read the room · 2 of 3</p>
+    <h2>Ask the sensor <span class="accent">for a number</span></h2>
+    <p class="s-sub">One object, one measurement, two values back. Print them before you send them anywhere.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 1.06fr 0.94fr;">
+      <div class="panel" style="padding: 4mm; justify-content: center;">
+        <pre class="code" style="font-size: 10pt;"><span class="k">import</span> dht, time
+<span class="k">from</span> machine <span class="k">import</span> Pin
+
+sensor = dht.DHT22(Pin(<span class="n">4</span>))
+
+<span class="k">while</span> <span class="k">True</span>:
+    sensor.measure()
+    <span class="k">print</span>(sensor.temperature(), sensor.humidity())
+    time.sleep(<span class="n">2</span>)</pre>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
+        <article class="card tight" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Measure first</h3>
+          <p><span class="mono" style="font-size: 9pt;">measure()</span> takes the reading. The two numbers come from that one read.</p>
+        </article>
+        <article class="card tight" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Then read both</h3>
+          <p>Humidity is free once you have the temperature. Keep it: it makes the page feel real.</p>
+        </article>
+        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">The console is the proof</h3>
+          <p>If the numbers are not printing, nothing later will work. Fix this first.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">06</span></footer>
+</section>
+
+<!-- ============ 07 · UPLOAD ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Act 1 · Read the room · 3 of 3</p>
+    <h2>One POST <span class="accent">every ten seconds</span></h2>
+    <p class="s-sub">The same shape as any API call: an address, a JSON body, a status code back.</p>
+  </header>
+  <div class="s-body">
+    <div class="panel" style="padding: 4mm; justify-content: center;">
+      <pre class="code" style="font-size: 9pt;"><span class="k">import</span> ujson, urequests
+
+URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
+
+<span class="k">while</span> <span class="k">True</span>:
+    sensor.measure()
+    body = {<span class="s">"station"</span>: <span class="s">"medford-01"</span>,
+            <span class="s">"temp_c"</span>: sensor.temperature(),
+            <span class="s">"humidity"</span>: sensor.humidity()}
+    r = urequests.post(URL, data=ujson.dumps(body),
+                       headers={<span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>})
+    <span class="k">print</span>(r.status_code, r.text)
+    r.close()
+    time.sleep(<span class="n">10</span>)</pre>
+    </div>
+    <p class="footnote">Close every response. The board has about 8 MB of RAM, and a response left open eats it in a few hours.</p>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">07</span></footer>
+</section>
+
+<!-- ============ 08 · WHAT VERCEL IS ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Act 2 · Show it · 1 of 4</p>
+    <h2>A server and a database <span class="accent">without a server room</span></h2>
   </header>
   <div class="s-body">
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4mm; flex: 1; min-height: 0;">
       <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0; max-height: 100%;">
         <img src="shots/web-architecture.svg" alt="A browser sends a request to a server, the server queries a database and gets rows back, and the response returns to the browser" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.08);">
       </figure>
-      <p class="footnote" style="margin: 0; text-align: center;"><b>Browser</b> asks &nbsp;·&nbsp; <b>Server</b> answers &nbsp;·&nbsp; <b>Database</b> remembers. Your board can play any of the three parts.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">05</span></footer>
-</section>
-
-<!-- ============ 06 · FOUR STEPS ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Part 1 · Under the hood</p>
-    <h2>One request, <span class="accent">four steps</span></h2>
-    <p class="s-sub">You type an address, or a page loads a chart. This is what happens next.</p>
-  </header>
-  <div class="s-body">
-    <div class="cycle fill" style="flex: 1; gap: 4mm;">
-      <div class="cyc">
-        <span class="cn">1</span>
-        <h3>The browser asks</h3>
-        <p>It sends a request to an address on the network. The request names what it wants.</p>
-      </div>
-      <div class="cyc" style="padding: 7mm 5mm;">
-        <span class="cn">2</span>
-        <h3>The server decides</h3>
-        <p>A file, a calculation, or a lookup. Either way it works out what the answer should be.</p>
-      </div>
-      <div class="cyc" style="padding: 7mm 5mm;">
-        <span class="cn">3</span>
-        <h3>The database answers</h3>
-        <p>If the answer needs stored data, the server queries the database and gets rows back.</p>
-      </div>
-      <div class="cyc">
-        <span class="cn">4</span>
-        <h3>The response returns</h3>
-        <p>HTML, an image, or JSON. The browser draws it. Nothing is kept on your machine.</p>
-      </div>
-    </div>
-    <p class="footnote">A slow page is usually step 2 or 3. A page showing stale data is almost always step 3.</p>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">06</span></footer>
-</section>
-
-<!-- ============ 07 · HTTP AND SQL ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Part 1 · The two messages</p>
-    <h2>Two languages, <span class="accent">one request</span></h2>
-    <p class="s-sub">The browser asks in HTTP. The server asks its database in SQL. The same temperature moves between them.</p>
-  </header>
-  <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1.12fr 0.88fr;">
-      <div class="panel" style="justify-content: center; gap: 3mm;">
-        <p class="plabel" style="margin-bottom: 2mm;">Browser &rarr; server &middot; HTTP</p>
-        <pre class="code" style="font-size: 9pt;"><span class="k">GET</span> /readings/current?station=Medford HTTP/1.1
-Host: weather.example.com
-Accept: application/json</pre>
-        <p class="plabel" style="margin: 4mm 0 2mm;">Server &rarr; browser &middot; HTTP</p>
-        <pre class="code" style="font-size: 9pt;">HTTP/1.1 <span class="n">200</span> OK
-Content-Type: application/json
-
-{<span class="s">"station"</span>: <span class="s">"Medford"</span>, <span class="s">"temp_c"</span>: <span class="n">8.4</span>}</pre>
-      </div>
-      <div class="panel" style="justify-content: center;">
-        <p class="plabel" style="margin-bottom: 2mm;">Server &rarr; database &middot; SQL</p>
-        <pre class="code" style="font-size: 9pt;"><span class="k">SELECT</span> temp_c, taken_at
-<span class="k">FROM</span> readings
-<span class="k">WHERE</span> station = <span class="s">'Medford'</span>
-<span class="k">ORDER BY</span> taken_at <span class="k">DESC</span>
-<span class="k">LIMIT</span> <span class="n">1</span>;</pre>
-        <p class="footnote" style="padding-top: 4mm;">One row comes back. The server turns it into the JSON on the left.</p>
-      </div>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">07</span></footer>
-</section>
-
-<!-- ============ 08 · A SERVER IS A COMPUTER ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Part 1 · Where it runs</p>
-    <h2>A server is just <span class="accent">a computer</span></h2>
-    <p class="s-sub">The word sounds like a building. It is a program, on a machine, listening at an address.</p>
-  </header>
-  <div class="s-body">
-    <div class="grid g3">
-      <article class="card">
-        <span class="num">tiny</span>
-        <h3>On your board</h3>
-        <p>The ESP32 runs a small web server. It is the page you opened from your phone in Class 6.</p>
-      </article>
-      <article class="card">
-        <span class="num">local</span>
-        <h3>On a laptop</h3>
-        <p>One command serves a folder to anyone on the same Wi-Fi. Same idea, more memory.</p>
-      </article>
-      <article class="card accent">
-        <span class="num">always on</span>
-        <h3>In the cloud</h3>
-        <p>Somebody else's computer, with a public address, running day and night. You rent it by the month.</p>
-      </article>
-    </div>
-    <div class="assign">
-      <span class="alabel">Same three jobs</span>
-      <p>Different machine. Class 6 put the server on your board. Today we also call servers we did not build.</p>
+      <p class="footnote" style="margin: 0; text-align: center;">Vercel runs the <b>server</b> and hosts the page. Its Postgres database is the <b>database</b>. Your board is a fourth client: it posts to the same server the browser reads from.</p>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">08</span></footer>
 </section>
 
-<!-- ============ 09 · WHAT AN API IS ============ -->
+<!-- ============ 09 · TWO TABLES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 2 · APIs</p>
-    <h2>An API is a <span class="accent">fixed way to ask</span></h2>
-    <p class="s-sub">Application programming interface. A menu of requests a service agrees to answer.</p>
+    <p class="s-kicker">Act 2 · Show it · 2 of 4</p>
+    <h2>Two tables <span class="accent">hold everything</span></h2>
+    <p class="s-sub">One grows by a row every ten seconds. One is a single row, forever.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1.04fr 0.96fr;">
-      <div class="panel" style="justify-content: center;">
-        <p class="plabel">What it is</p>
-        <p style="font-size: 13.5pt; line-height: 1.42; color: var(--ink); margin: 0 0 4mm;">A list of addresses, the questions each one accepts, and the shape of the answer.</p>
-        <p style="color: var(--muted); font-size: 11pt; margin: 0;">If you can read the menu, you can call it. The same request works from a browser, a laptop, or a board with 8 MB of memory.</p>
+    <div class="outline" style="grid-template-columns: 1.16fr 0.84fr;">
+      <div class="panel" style="padding: 4mm; justify-content: center;">
+        <pre class="code" style="font-size: 9pt;"><span class="k">create table</span> readings (
+  id        bigserial <span class="k">primary key</span>,
+  station   text <span class="k">not null</span>,
+  temp_c    real <span class="k">not null</span>,
+  humidity  real,
+  taken_at  timestamptz <span class="k">default</span> now()
+);
+
+<span class="k">create table</span> settings (
+  id           int <span class="k">primary key default</span> <span class="n">1</span>,
+  threshold_c  real <span class="k">not null default</span> <span class="n">24</span>
+);</pre>
       </div>
       <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
         <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Not a website</h3>
-          <p>You get data, not a page to look at.</p>
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">readings</h3>
+          <p>One row per POST, with its own timestamp. Never update a row; add another.</p>
         </article>
         <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Not a library</h3>
-          <p>Nothing to install. You send a request over the network.</p>
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">settings</h3>
+          <p>One row, id 1. The threshold lives here, so the board and the page read the same number.</p>
         </article>
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Not magic</h3>
-          <p>It is somebody's server, answering by rules they wrote down.</p>
+        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Why not one table</h3>
+          <p>Readings are history. The threshold is a setting. Mixing them makes both harder.</p>
         </article>
       </div>
     </div>
-    <p class="footnote">The rules live in the docs. Every API has a page that lists its addresses and what each one returns.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ============ 10 · FOUR PARTS OF A CALL ============ -->
+<!-- ============ 10 · THE CONTRACT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 2 · One request</p>
-    <h2>Four parts make <span class="accent">one call</span></h2>
-    <p class="s-sub">Read them left to right and you have written the request yourself.</p>
+    <p class="s-kicker">Act 2 · Show it · 3 of 4</p>
+    <h2>Two routes, <span class="accent">one contract</span></h2>
+    <p class="s-sub">Agree on this before you ask for code. The board and the page both depend on it.</p>
   </header>
   <div class="s-body">
-    <div style="flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 7mm;">
-    <div class="grid g4" style="gap: 3.6mm; flex: 0 0 auto; align-content: start;">
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm;">
-        <span class="num" style="margin-bottom: 2.6mm;">01 · method</span>
-        <h3 style="font-size: 12pt;">GET</h3>
-        <p><b>GET</b> reads. <b>POST</b> sends something new. Almost everything today is GET.</p>
+    <div class="grid g2">
+      <article class="card" style="justify-content: flex-start;">
+        <span class="num">POST /api/readings</span>
+        <h3>The board sends a reading</h3>
+        <pre class="code" style="font-size: 9pt; margin-top: 2mm;">{<span class="s">"station"</span>: <span class="s">"medford-01"</span>,
+ <span class="s">"temp_c"</span>: <span class="n">21.4</span>,
+ <span class="s">"humidity"</span>: <span class="n">48</span>}
+
+<span class="c">200 OK</span>
+{<span class="s">"ok"</span>: <span class="k">true</span>, <span class="s">"threshold_c"</span>: <span class="n">24</span>}</pre>
+        <p style="margin-top: 3mm;">Four lines in, one line out. The reply carries the threshold, so the board learns it for free.</p>
       </article>
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm;">
-        <span class="num" style="margin-bottom: 2.6mm;">02 · address</span>
-        <h3 style="font-size: 12pt;">the host and path</h3>
-        <p>The service and the endpoint, copied from the docs.</p>
+      <article class="card" style="justify-content: flex-start;">
+        <span class="num">GET /api/readings/latest</span>
+        <h3>The page asks for the newest row</h3>
+        <pre class="code" style="font-size: 9pt; margin-top: 2mm;"><span class="c">200 OK</span>
+{<span class="s">"temp_c"</span>: <span class="n">21.4</span>,
+ <span class="s">"humidity"</span>: <span class="n">48</span>,
+ <span class="s">"taken_at"</span>: <span class="s">"2026-11-12T14:03:11Z"</span>,
+ <span class="s">"threshold_c"</span>: <span class="n">24</span>}</pre>
+        <p style="margin-top: 3mm;">One row, four fields. If your page can draw these, the hard part is done.</p>
       </article>
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm;">
-        <span class="num" style="margin-bottom: 2.6mm;">03 · parameters</span>
-        <h3 style="font-size: 12pt;">after the ?</h3>
-        <p>The values that choose what you get. Joined with an ampersand.</p>
-      </article>
-      <article class="card tight accent" style="padding: 4.6mm 4.8mm 4.2mm;">
-        <span class="num" style="margin-bottom: 2.6mm;">04 · key</span>
-        <h3 style="font-size: 12pt;">who is asking</h3>
-        <p>Many APIs want one. It identifies you, and it is billed to you.</p>
-      </article>
-    </div>
-    <div class="panel" style="flex: 0 0 auto; padding: 4.2mm 5mm;">
-      <p class="plabel" style="margin-bottom: 2.2mm;">Put together</p>
-      <p class="url">https://api.open-meteo.com/v1/forecast?latitude=42.4&amp;longitude=-71.1&amp;current=temperature_2m</p>
-    </div>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
 </section>
 
-<!-- ============ 11 · JSON ============ -->
+<!-- ============ 11 · THE PAGE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 2 · The answer</p>
-    <h2>The answer comes back <span class="accent">as JSON</span></h2>
-    <p class="s-sub">Names and values, in braces. It reads like a list with labels on it.</p>
+    <p class="s-kicker">Act 2 · Show it · 4 of 4</p>
+    <h2>The page reads <span class="accent">the newest row</span></h2>
+    <p class="s-sub">Fetch the route, draw the numbers, and do it again five seconds later.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1.1fr 0.9fr;">
+    <div class="outline" style="grid-template-columns: 1.06fr 0.94fr;">
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 10pt;"><span class="n">{</span>
-  <span class="s">"latitude"</span>: 42.4,
-  <span class="s">"longitude"</span>: -71.1,
-  <span class="s">"current"</span>: <span class="n">{</span>
-    <span class="s">"time"</span>: <span class="s">"2026-11-12T09:00"</span>,
-    <span class="s">"temperature_2m"</span>: 8.4
-  <span class="n">}</span>
-<span class="n">}</span></pre>
+        <pre class="code" style="font-size: 9.5pt;"><span class="k">const</span> res = <span class="k">await</span> fetch(
+  <span class="s">"/api/readings/latest"</span>,
+  { cache: <span class="s">"no-store"</span> })
+
+<span class="k">const</span> { temp_c, humidity, taken_at } =
+  <span class="k">await</span> res.json()
+
+<span class="c">// and again, every five seconds</span>
+setInterval(load, <span class="n">5000</span>)</pre>
       </div>
       <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
         <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Names in quotes</h3>
-          <p>Each label is a key you can ask for by name.</p>
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">no-store</h3>
+          <p>Serverless responses are cached by default. You want the newest row, every time.</p>
         </article>
         <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Braces nest</h3>
-          <p>Inside <span class="mono" style="font-size: 9pt;">current</span> sits another set of names. You reach it one level at a time.</p>
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Five seconds</h3>
+          <p>The board uploads every ten. Refreshing twice as often makes the page feel live.</p>
         </article>
         <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">One number is all you need</h3>
-          <p><span class="mono" style="font-size: 9pt;">data["current"]["temperature_2m"]</span> is <span class="mono" style="font-size: 9pt;">8.4</span>. That is a value you can compare and act on.</p>
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">One big number</h3>
+          <p>Temperature large, humidity and the time underneath. That is the whole page.</p>
         </article>
       </div>
     </div>
@@ -616,379 +629,241 @@ Content-Type: application/json
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
 </section>
 
-<!-- ============ 12 · SAME CALL, TWO WAYS ============ -->
+<!-- ============ 12 · THE FORECAST ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 2 · Same request</p>
-    <h2>Your browser is <span class="accent">already an API client</span></h2>
-    <p class="s-sub">Paste the address into the bar and it calls the API. The board makes the same call from code.</p>
+    <p class="s-kicker">Act 3 · The forecast · 1 of 2</p>
+    <h2>Your server asks <span class="accent">another server</span></h2>
+    <p class="s-sub">The browser never calls the weather API. Your route does, and the key, the cache and the rate limit stay on your side.</p>
   </header>
   <div class="s-body">
-    <div class="grid g2">
-      <article class="card" style="justify-content: flex-start;">
-        <span class="num">from a browser</span>
-        <h3>Paste and press enter</h3>
-        <p style="margin-bottom: 3mm;">The JSON appears in the window. No tool, no login, no extension.</p>
-        <p class="url">https://api.open-meteo.com/v1/forecast?latitude=42.4&amp;longitude=-71.1&amp;current=temperature_2m</p>
-      </article>
-      <article class="card" style="justify-content: flex-start;">
-        <span class="num">from your board</span>
-        <h3>Three lines of MicroPython</h3>
-        <pre class="code" style="font-size: 9pt; margin-top: 2.4mm;"><span class="k">import</span> urequests
+    <div class="outline" style="grid-template-columns: 1.08fr 0.92fr;">
+      <div class="panel" style="padding: 4mm; justify-content: center;">
+        <pre class="code" style="font-size: 9pt;"><span class="k">const</span> url = <span class="s">"https://api.open-meteo.com/v1/forecast"</span>
+  + <span class="s">"?latitude=42.4&amp;longitude=-71.1"</span>
+  + <span class="s">"&amp;daily=temperature_2m_max,temperature_2m_min"</span>
+  + <span class="s">"&amp;timezone=auto&amp;forecast_days=5"</span>
 
-r = urequests.get(URL)
-data = r.json()
-<span class="k">print</span>(data[<span class="s">"current"</span>][<span class="s">"temperature_2m"</span>])</pre>
-      </article>
+<span class="k">const</span> res = <span class="k">await</span> fetch(url, {
+  next: { revalidate: <span class="n">1800</span> } })
+
+<span class="k">const</span> { daily } = <span class="k">await</span> res.json()</pre>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
+        <article class="card tight" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">No key</h3>
+          <p>Open-Meteo is free and asks for no key. Services that do want one keep it in a Vercel environment variable.</p>
+        </article>
+        <article class="card tight" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Cache half an hour</h3>
+          <p>The forecast does not change faster than that, and the free tier counts requests.</p>
+        </article>
+        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Five days, two numbers</h3>
+          <p>Daily max and min. Draw them as five small cards, not a table.</p>
+        </article>
+      </div>
     </div>
-    <p class="footnote">Same address, same answer. The browser draws it for you; the board stores it in a variable.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ============ 13 · KEYS ============ -->
+<!-- ============ 13 · TWO SOURCES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 2 · Keys</p>
-    <h2>A key is <span class="accent">a password</span></h2>
-    <p class="s-sub">It answers "who is asking", and it is the only thing standing between you and someone else's bill.</p>
+    <p class="s-kicker">Act 3 · The forecast · 2 of 2</p>
+    <h2>One page, <span class="accent">two sources</span></h2>
+    <p class="s-sub">The number under "now" is your sensor. The five days are the forecast. They arrive by different roads.</p>
   </header>
   <div class="s-body">
-    <div class="grid g3">
+    <div class="grid g2">
       <article class="card">
-        <span class="num">01</span>
-        <h3>Keep it out of the shot</h3>
-        <p>A key in a screenshot, a slide, or a public repository is a key someone else can spend.</p>
+        <span class="num">now</span>
+        <h3>From your board</h3>
+        <p style="margin-bottom: 2.4mm;">DHT22 &rarr; POST /api/readings &rarr; Postgres &rarr; GET /api/readings/latest &rarr; the page.</p>
+        <p>It updates every ten seconds, and it is the only source that knows your room.</p>
       </article>
       <article class="card">
-        <span class="num">02</span>
-        <h3>One key per project</h3>
-        <p>Easier to revoke, and easier to see which build used what.</p>
-      </article>
-      <article class="card">
-        <span class="num">03</span>
-        <h3>Expect a limit</h3>
-        <p>Free tiers count requests per minute and per day. The docs say the number. Read it before you loop.</p>
+        <span class="num">next five days</span>
+        <h3>From the weather API</h3>
+        <p style="margin-bottom: 2.4mm;">GET /api/forecast &rarr; Open-Meteo &rarr; cached 30 minutes &rarr; the page.</p>
+        <p>It is the same for everyone in Medford, and it is fine for it to be an hour old.</p>
       </article>
     </div>
     <div class="assign">
-      <span class="alabel" style="color: #a1561c;">If it leaks</span>
-      <p><b>Revoke it and make a new one.</b> Every service has a button for this. Rotating a key takes two minutes; a surprise bill does not.</p>
+      <span class="alabel">Rule</span>
+      <p>If the forecast fails, the page still shows the room. <b>One source down must not blank the other.</b></p>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ============ 14 · PART 3 DIVIDER ============ -->
+<!-- ============ 14 · THE THRESHOLD ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Act 4 · Control it · 1 of 2</p>
+    <h2>A number on the page <span class="accent">that reaches the board</span></h2>
+    <p class="s-sub">The page writes the threshold. The board picks it up on its next upload, ten seconds later.</p>
+  </header>
   <div class="s-body">
-    <div class="bigline">
-      <p class="kicker-sm">Part 3</p>
-      <h2>Now the board <span class="accent">calls out</span></h2>
-      <p>The board is the client this time. It asks, waits, reads the answer, and does something physical with it.</p>
+    <div class="outline" style="grid-template-columns: 1.06fr 0.94fr;">
+      <div class="panel" style="padding: 4mm; justify-content: center;">
+        <pre class="code" style="font-size: 9.5pt;"><span class="k">await</span> fetch(<span class="s">"/api/threshold"</span>, {
+  method: <span class="s">"POST"</span>,
+  headers: { <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span> },
+  body: JSON.stringify({ threshold_c: <span class="n">26</span> }),
+})</pre>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
+        <article class="card tight" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">1 · You type 26</h3>
+          <p>A number field and a save button. Nothing else on the page changes.</p>
+        </article>
+        <article class="card tight" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">2 · The route updates one row</h3>
+          <p><span class="mono" style="font-size: 9pt;">update settings set threshold_c = 26 where id = 1</span></p>
+        </article>
+        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">3 · The board asks</h3>
+          <p>It cannot be called from outside, so it asks. The reply to its upload carries the new number.</p>
+        </article>
+      </div>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">14</span></footer>
 </section>
 
-<!-- ============ 15 · DEVICE TO API DIAGRAM ============ -->
+<!-- ============ 15 · THE LED ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 3 · Device to API</p>
-    <h2>Ask, wait, <span class="accent">act</span></h2>
+    <p class="s-kicker">Act 4 · Control it · 2 of 2</p>
+    <h2>The upload <span class="accent">answers with the threshold</span></h2>
+    <p class="s-sub">One request, two jobs: it sends the reading, and it brings back the setting.</p>
   </header>
   <div class="s-body">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4mm; flex: 1; min-height: 0;">
-      <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0; max-height: 100%;">
-        <img src="shots/device-to-api.svg" alt="The ESP32 sends a request with its key over Wi-Fi, a weather API answers with JSON, and the board acts on the value" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.08);">
-      </figure>
-      <p class="footnote" style="margin: 0; text-align: center;"><b>1</b> join the Wi-Fi &nbsp;·&nbsp; <b>2</b> send the request &nbsp;·&nbsp; <b>3</b> read the JSON &nbsp;·&nbsp; <b>4</b> do something with it</p>
+    <div class="outline" style="grid-template-columns: 1.08fr 0.92fr;">
+      <div class="panel" style="padding: 4mm; justify-content: center;">
+        <pre class="code" style="font-size: 9.5pt;">led = Pin(<span class="n">2</span>, Pin.OUT)
+
+r = urequests.post(
+    URL, data=ujson.dumps(body),
+    headers={<span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>})
+data = r.json()
+threshold = data[<span class="s">"threshold_c"</span>]
+
+led.value(<span class="n">1</span> <span class="k">if</span> body[<span class="s">"temp_c"</span>] &gt; threshold <span class="k">else</span> <span class="n">0</span>)
+r.close()</pre>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
+        <article class="card tight" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">The reply is the setting</h3>
+          <p>No second request. The response you already wait for carries the number you need.</p>
+        </article>
+        <article class="card tight" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Compare, then drive</h3>
+          <p>One comparison, one pin. The LED is the smallest possible actuator, and that is the point.</p>
+        </article>
+        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
+          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Try it now</h3>
+          <p>Set the threshold below room temperature. Within ten seconds the LED is on.</p>
+        </article>
+      </div>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">15</span></footer>
 </section>
 
-<!-- ============ 16 · THE LOOP ============ -->
+<!-- ============ 16 · FOUR ENDPOINTS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 3 · The loop</p>
-    <h2>Four steps, <span class="accent">one loop</span></h2>
-    <p class="s-sub">The first step is the one people skip. Nothing else works until it passes.</p>
+    <p class="s-kicker">The whole system</p>
+    <h2>Four endpoints. <span class="accent">That is the app.</span></h2>
+    <p class="s-sub">If you can describe these four, you can ask an AI to rebuild the whole thing.</p>
   </header>
   <div class="s-body">
-    <div class="cycle fill" style="flex: 1; gap: 4mm;">
-      <div class="cyc">
-        <span class="cn">1</span>
-        <h3>Join the network</h3>
-        <p>Connect to Wi-Fi and wait for an address. Check that it connected before you ask for anything.</p>
-      </div>
-      <div class="cyc" style="padding: 7mm 5mm;">
-        <span class="cn">2</span>
-        <h3>Build the request</h3>
-        <p>The address from the docs, your parameters, and your key. One call to <span class="mono" style="font-size: 8.5pt;">urequests.get()</span>.</p>
-      </div>
-      <div class="cyc" style="padding: 7mm 5mm;">
-        <span class="cn">3</span>
-        <h3>Read the answer</h3>
-        <p>The body is text. <span class="mono" style="font-size: 8.5pt;">r.json()</span> turns it into names and values you can index.</p>
-      </div>
-      <div class="cyc">
-        <span class="cn">4</span>
-        <h3>Do something</h3>
-        <p>Print it, put it on a screen, or drive a pin. The answer only matters once it changes the device.</p>
-      </div>
+    <div class="grid g2" style="align-content: center;">
+      <article class="card tight" style="justify-content: center;">
+        <span class="num">POST</span>
+        <h3 class="mono" style="font-size: 12pt;">/api/readings</h3>
+        <p>The board sends temperature and humidity. The reply carries the threshold.</p>
+      </article>
+      <article class="card tight" style="justify-content: center;">
+        <span class="num">GET</span>
+        <h3 class="mono" style="font-size: 12pt;">/api/readings/latest</h3>
+        <p>The page reads the newest row, with its timestamp.</p>
+      </article>
+      <article class="card tight" style="justify-content: center;">
+        <span class="num">POST</span>
+        <h3 class="mono" style="font-size: 12pt;">/api/threshold</h3>
+        <p>The page sets the number the board compares against.</p>
+      </article>
+      <article class="card tight accent" style="justify-content: center;">
+        <span class="num">GET</span>
+        <h3 class="mono" style="font-size: 12pt;">/api/forecast</h3>
+        <p>Five days of high and low, fetched server-side and cached.</p>
+      </article>
     </div>
-    <p class="footnote">A request that fails does not raise an error on the board. Check <span class="mono" style="font-size: 9pt;">r.status_code</span> before you trust the body.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">16</span></footer>
 </section>
 
-<!-- ============ 17 · WORKED EXAMPLE ============ -->
+<!-- ============ 17 · WHEN IT DOESN'T WORK ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Part 3 · A small build</p>
-    <h2>The forecast, <span class="accent">on your desk</span></h2>
-    <p class="s-sub">One sensor you did not have to wire: the weather outside. The board reads it and changes a color.</p>
+    <p class="s-kicker">Debugging</p>
+    <h2>When the page <span class="accent">stays empty</span></h2>
+    <p class="s-sub">Work from the board outwards. The problem is almost always at the end you have not checked.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 0.9fr 1.1fr;">
-      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
-        <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 10pt; line-height: 1.58; margin: 0; color: var(--muted-2);">"My ESP32 is connected to Wi-Fi. Call a weather API for the current temperature in Medford, print it, and turn an RGB LED blue when it is below 10 °C. Check once every ten minutes."</p>
-        <p class="footnote" style="padding-top: 4mm;">Ten minutes, not one second. The weather does not change faster, and free tiers count requests.</p>
-      </div>
-      <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 10.5pt;"><span class="c"># once the board is online</span>
-<span class="k">while</span> <span class="k">True</span>:
-    r = urequests.get(URL)
-    temp = r.json()[<span class="s">"current"</span>][<span class="s">"temperature_2m"</span>]
-    <span class="k">print</span>(<span class="s">"outside:"</span>, temp)
-    led.value(<span class="n">1</span> <span class="k">if</span> temp &lt; <span class="n">10</span> <span class="k">else</span> <span class="n">0</span>)
-    time.sleep(<span class="n">600</span>)</pre>
-      </div>
+    <div class="grid fill" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4mm;">
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Nothing arrives</h3>
+        <p>The serial shows an exception or a 000. That is Wi-Fi, not the route. Print your IP address first.</p>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">404 or 405</h3>
+        <p>The path or the method is wrong. It is <b>POST /api/readings</b>, not <b>/api/reading</b>, and case matters.</p>
+      </article>
+      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">500</h3>
+        <p>Read the Vercel log, not the page. Usually a missing environment variable or a column that does not exist.</p>
+      </article>
+      <article class="card tight accent" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
+        <h3 style="font-size: 12pt; margin-bottom: 2mm;">The number never moves</h3>
+        <p>Open the route in a browser. If it changes there, it is cache. If it does not, the board stopped.</p>
+      </article>
     </div>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">17</span></footer>
 </section>
 
-<!-- ============ 18 · WHEN IT FAILS ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Part 3 · Debugging</p>
-    <h2>When nothing <span class="accent">comes back</span></h2>
-  </header>
-  <div class="s-body">
-    <div class="grid fill" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4mm;">
-      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
-        <h3 style="font-size: 12pt; margin-bottom: 2mm;">No Wi-Fi</h3>
-        <p>The board never got an address. Wrong password, or out of range. Fix the network before you touch the code.</p>
-      </article>
-      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
-        <h3 style="font-size: 12pt; margin-bottom: 2mm;">401, 403, 429</h3>
-        <p>The key is missing, the key is not allowed, or you are asking too often. The number tells you which.</p>
-      </article>
-      <article class="card tight" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
-        <h3 style="font-size: 12pt; margin-bottom: 2mm;">A name error</h3>
-        <p>You asked for a key that is not in the answer. Print the whole body once and read the names it actually has.</p>
-      </article>
-      <article class="card tight accent" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
-        <h3 style="font-size: 12pt; margin-bottom: 2mm;">Worked once, then stopped</h3>
-        <p>A rate limit, or a sleep that is too short. Add the delay the docs ask for and try again.</p>
-      </article>
-    </div>
-    <p class="footnote">Print the status code and the first part of the body. Nine times in ten, that names the problem.</p>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">18</span></footer>
-</section>
-
-<!-- ============ 19 · PART 4 DIVIDER ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <div class="s-body">
-    <div class="bigline">
-      <p class="kicker-sm">Part 4</p>
-      <h2>A page that <span class="accent">reaches back</span></h2>
-      <p>In Class 6 your board served the page. Now the page lives on the internet, and the board is the thing it controls.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">19</span></footer>
-</section>
-
-<!-- ============ 20 · TWO PATTERNS ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Part 4 · Two ways</p>
-    <h2>Who starts <span class="accent">the conversation?</span></h2>
-  </header>
-  <div class="s-body">
-    <div class="grid g2">
-      <article class="card" style="justify-content: flex-start;">
-        <span class="num">Class 6</span>
-        <h3>The device serves the page</h3>
-        <p>The board runs a web server and your phone joins its Wi-Fi. Nothing else is needed, and it only works on that network.</p>
-      </article>
-      <article class="card accent" style="justify-content: flex-start;">
-        <span class="num">Today</span>
-        <h3>The site sits in the middle</h3>
-        <p>Board and browser both talk to a website. It works from anywhere, and the site has to hold the last command.</p>
-      </article>
-    </div>
-    <div class="assign">
-      <span class="alabel">The constraint</span>
-      <p>A device behind a home router has <b>no public address</b>. It can call out. You cannot call in. So the device asks.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">20</span></footer>
-</section>
-
-<!-- ============ 21 · RELAY DIAGRAM ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Part 4 · The relay</p>
-    <h2>The site is the <span class="accent">meeting point</span></h2>
-  </header>
-  <div class="s-body">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4mm; flex: 1; min-height: 0;">
-      <figure style="margin: 0; display: flex; align-items: center; justify-content: center; min-height: 0; max-height: 100%;">
-        <img src="shots/site-to-device.svg" alt="A browser sends a command to your site, the device asks the site for that command, and the page updates with the device's state" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong); box-shadow: 0 1px 2px rgba(13, 21, 38, 0.08);">
-      </figure>
-      <p class="footnote" style="margin: 0; text-align: center;">The board asks every second, so the button feels instant. The database keeps the last command, so a reboot does not lose it.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">21</span></footer>
-</section>
-
-<!-- ============ 22 · PRESS AND SEE ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Part 4 · What it looks like</p>
-    <h2>Press a button, <span class="accent">the room changes</span></h2>
-    <p class="s-sub">Three requests in the time it takes to lift your thumb.</p>
-  </header>
-  <div class="s-body">
-    <div class="cycle" style="grid-template-columns: repeat(3, minmax(0, 1fr)); flex: 1; align-content: center; gap: 4mm;">
-      <div class="cyc" style="padding: 7mm 5mm;">
-        <span class="cn">1</span>
-        <h3>The browser sends</h3>
-        <p>You press Red. The page sends a request to your site, with the new value in the body.</p>
-        <p class="mono" style="font-size: 8.5pt; color: var(--blue-deep); margin-top: 2.4mm;">POST /color → red</p>
-      </div>
-      <div class="cyc" style="padding: 7mm 5mm;">
-        <span class="cn">2</span>
-        <h3>The site stores it</h3>
-        <p>The server writes one row to the database and answers the browser. The page shows the new state.</p>
-      </div>
-      <div class="cyc" style="padding: 7mm 5mm;">
-        <span class="cn">3</span>
-        <h3>The board reads it</h3>
-        <p>On its next ask, the board gets <span class="mono" style="font-size: 8.5pt;">red</span> back and sets the pins. The LED changes.</p>
-      </div>
-    </div>
-    <p class="footnote">No install, no app store, no pairing screen. A page, an address, and a device on the network.</p>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">22</span></footer>
-</section>
-
-<!-- ============ 23 · PUT IT TOGETHER ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Part 4 · All of it</p>
-    <h2>Sensor, API, site, <span class="accent">screen</span></h2>
-  </header>
-  <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1fr 1.05fr; align-items: stretch;">
-      <div style="display: flex; flex-direction: column; justify-content: center; gap: 2.4mm; min-height: 0;">
-        <div style="display: flex; align-items: center; gap: 3mm; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.4mm 4mm;">
-          <span class="mono" style="font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);">01</span>
-          <p style="margin: 0; font-size: 10.5pt; color: var(--muted-2);">The board reads its own sensor.</p>
-        </div>
-        <div style="display: flex; align-items: center; gap: 3mm; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.4mm 4mm;">
-          <span class="mono" style="font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);">02</span>
-          <p style="margin: 0; font-size: 10.5pt; color: var(--muted-2);">It calls the weather API and gets a number.</p>
-        </div>
-        <div style="display: flex; align-items: center; gap: 3mm; border: 1px solid var(--line); border-radius: 3mm; background: var(--paper); padding: 3.4mm 4mm;">
-          <span class="mono" style="font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);">03</span>
-          <p style="margin: 0; font-size: 10.5pt; color: var(--muted-2);">It posts both readings to your site.</p>
-        </div>
-        <div style="display: flex; align-items: center; gap: 3mm; border: 1px solid #cfe1f7; border-radius: 3mm; background: var(--blue-tint); padding: 3.4mm 4mm;">
-          <span class="mono" style="font-size: 8.5pt; font-weight: 700; color: var(--blue-deep);">04</span>
-          <p style="margin: 0; font-size: 10.5pt; color: var(--muted-2);">The site serves a page that shows both, live.</p>
-        </div>
-        <p class="footnote" style="margin: 2mm 0 0;">Every arrow is one request. That is the whole internet.</p>
-      </div>
-      <figure class="tile" style="margin: 0; min-height: 0; display: flex; flex-direction: column;">
-        <img src="../../assets/photos/class/device-item-added.jpg" alt="A tablet showing a student-built dashboard: the local weather from an API, and a task list stored in a database" style="width: 100%; height: auto; flex: 1; min-height: 0; object-fit: contain; background: #ffffff; padding: 3mm;">
-        <figcaption style="position: static;">A student build. The Boston weather line comes from an API; the tasks are stored on the server.</figcaption>
-      </figure>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">23</span></footer>
-</section>
-
-<!-- ============ 24 · FINAL PROJECT ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Carry it forward</p>
-    <h2>What this unlocks <span class="accent">for Demo Day</span></h2>
-  </header>
-  <div class="s-body">
-    <div class="grid g3">
-      <article class="card">
-        <span class="num">input</span>
-        <h3>React to the world outside</h3>
-        <p>Weather, transit, a shared sheet, a model. Pick one input that changes what your build does.</p>
-      </article>
-      <article class="card">
-        <span class="num">output</span>
-        <h3>Be watchable from a phone</h3>
-        <p>A page that shows the state is easier to demo than a serial console, and easier for a visitor to try.</p>
-      </article>
-      <article class="card accent">
-        <span class="num">honesty</span>
-        <h3>Design for the day it is down</h3>
-        <p>If the API does not answer, say so on the screen. A fallback is part of the design, not an afterthought.</p>
-      </article>
-    </div>
-    <div class="assign">
-      <span class="alabel">Next week</span>
-      <p><b>Checkpoint 2:</b> integrated features and user experience. The whole product working together, and what a user does, sees, and feels.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">24</span></footer>
-</section>
-
-<!-- ============ 25 · CLOSING ============ -->
+<!-- ============ 18 · CLOSING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
     <div class="closing">
       <div>
         <p class="s-kicker">Before you go</p>
-        <h2>Remember</h2>
-        <p class="s-sub" style="margin-top: 4mm;">Pick one API you could call from your final project. Write down the address and what the answer looks like. That is the design.</p>
+        <h2>Demo it</h2>
+        <p class="s-sub" style="margin-top: 4mm;">Set the threshold on your phone, lower than the room. When the LED comes on, you have built the whole loop: sensor, server, database, page and back out to the board.</p>
       </div>
       <div class="contact-card">
         <p class="plabel">Due and where to find it</p>
-        <p><b>Concept pitch</b><br>Due today, Thu, Nov 12</p>
-        <p><b>Checkpoint 2 · intelligent device project</b><br>Due Thu, Nov 19</p>
+        <p><b>Product concept</b><br>Due today, Thu, Nov 12</p>
+        <p><b>Intelligent device project</b><br>Due Thu, Nov 19</p>
+        <p><b>Checkpoint 2</b><br>Due Thu, Nov 19</p>
         <p><b>Office hours</b><br><a class="mono" href="https://go.tufts.edu/meet_tvdv" style="font-size: 10pt; color: var(--blue-deep); text-decoration: none;">go.tufts.edu/meet_tvdv</a></p>
         <p><b>Course materials</b><br>tuftsmaker.github.io/ENT-164</p>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">25</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">18</span></footer>
 </section>
 
 </body>

@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ENT-164 · Class 10 — Device to Cloud</title>
-<meta name="description" content="Class 10 of ENT-164 Intro to Making: how a browser, a server, and a database fit together, what an API is, and connecting an ESP32 to the web in both directions.">
+<meta name="description" content="Class 10 of ENT-164 Intro to Making: build a weather station. A DHT22 on the ESP32 posts to a Vercel app every ten seconds, the page shows the reading and a five-day forecast, and a threshold set on the page switches an LED.">
 <meta name="theme-color" content="#f7f9fc">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ENT-164 · Class 10 — Device to Cloud">
-<meta property="og:description" content="Browser, server, database, and the two directions a device talks to the cloud.">
+<meta property="og:description" content="Build a weather station: DHT22, Vercel, Postgres, a five-day forecast, and a threshold that lights an LED.">
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
 <body class="page-class">
@@ -43,16 +43,16 @@
   <div class="wrap">
     <p class="kicker reveal">Class 10 · Week 10 · Fall 2026</p>
     <h1 class="reveal" style="--d:.06s">Device <span class="accent">to Cloud</span></h1>
-    <p class="lead reveal" style="--d:.12s">Your board can sense the room and turn a motor. Today you give it the internet: a browser asks, a server answers, a database remembers, and an API lets your device ask a question of its own.</p>
+    <p class="lead reveal" style="--d:.12s">Build a weather station. A DHT22 on your ESP32 reads the room and posts the number to a Vercel app every ten seconds. A page shows the latest reading, adds a five-day forecast, and lets you set a threshold that turns on an LED.</p>
     <div class="pills reveal" style="--d:.18s">
       <span class="pill">Thu, Nov 12</span>
       <span class="pill">JCC 301 / Nolop</span>
-      <span class="pill">Browser · server · database</span>
-      <span class="pill">Connect both ways</span>
+      <span class="pill">ESP32 + DHT22</span>
+      <span class="pill">Vercel + Postgres</span>
     </div>
     <div class="cta-row reveal" style="--d:.24s">
       <a class="btn btn-primary" href="ENT-164-Class-10-Device-to-Cloud.pdf">Download the slides (PDF)</a>
-      <a class="btn btn-ghost" href="#architecture">Start with the web &darr;</a>
+      <a class="btn btn-ghost" href="#build">What you'll build &darr;</a>
     </div>
     <p class="note reveal" style="--d:.3s">Instructor team: Thomas Van de Velde · Alexander Beattie · Patrice Pinardo</p>
   </div>
@@ -62,133 +62,139 @@
 
   <aside class="toc reveal" style="--d:.36s">
     <h2>On this page</h2>
-    <a href="#architecture">The shape of the web</a>
-    <a href="#api">What an API is</a>
-    <a href="#device">Device to API</a>
-    <a href="#web">Web to device</a>
+    <a href="#build">What you'll build</a>
+    <a href="#read">Read the room</a>
+    <a href="#upload">Upload it</a>
+    <a href="#show">Show it</a>
+    <a href="#control">Set a threshold</a>
     <a href="#project">For your final project</a>
   </aside>
 
   <main class="content">
 
-    <section class="section-block" id="architecture">
-      <h2>The shape of the web</h2>
-      <p class="lede">Every page you load is three things talking to each other. Learn the parts and the rest of today follows.</p>
-      <div class="cards">
-        <div class="card">
-          <span class="num">client</span>
-          <h3>Browser</h3>
-          <p>It runs on your machine. It asks for a page or some data, then draws whatever comes back.</p>
-        </div>
-        <div class="card">
-          <span class="num">the answerer</span>
-          <h3>Server</h3>
-          <p>A computer that is always on. It receives the request, works out the answer, and sends it back.</p>
-        </div>
-        <div class="card accent">
-          <span class="num">the memory</span>
-          <h3>Database</h3>
-          <p>It holds the rows. The server asks it questions and it answers with data, quickly and in order.</p>
-        </div>
-      </div>
-      <figure class="shot" style="margin-top:24px;">
-        <video src="shots/web-round-trip.mp4" poster="shots/web-round-trip-poster.jpg" autoplay muted playsinline controls style="width:100%; display:block; background:var(--paper);"></video>
-        <figcaption><b>One request, end to end</b>A server is just a computer running a program that listens at an address. Watch the request leave the browser, become a query, and come back as rows.</figcaption>
+    <section class="section-block" id="build">
+      <h2>What you'll build</h2>
+      <p class="lede">Four steps, one afternoon. Each one ends with something you can see, so do not move on until you can see it.</p>
+      <figure class="shot" style="margin: 0 auto 24px; max-width: 720px;">
+        <img src="shots/weather-station-cover.jpg" alt="An illustrated IoT weather station on a wooden post, with a dashed link through the internet cloud to a laptop showing the same readings on a web page" style="aspect-ratio: 3 / 2;">
+        <figcaption><b>The whole system</b>A sensor on the ESP32, a Vercel app with Postgres behind it, and a page you can open anywhere.</figcaption>
       </figure>
-    </section>
-
-    <section class="section-block" id="api">
-      <h2>What an API is</h2>
-      <p class="lede">An API is a fixed way to ask another computer for something. It is a menu, not a website.</p>
       <div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));">
         <div class="card">
-          <span class="num">01 · method</span>
-          <h3>GET or POST</h3>
-          <p><b>GET</b> reads. <b>POST</b> sends something new. Almost everything you need today is GET.</p>
+          <span class="num">01</span>
+          <h3>Read the room</h3>
+          <p>A DHT22 on GPIO 4 gives temperature and humidity. Print them before you send them anywhere.</p>
         </div>
         <div class="card">
-          <span class="num">02 · address</span>
-          <h3>The host and path</h3>
-          <p>The service and the endpoint, copied from the API's documentation.</p>
+          <span class="num">02</span>
+          <h3>Upload it</h3>
+          <p>One POST every ten seconds to your Vercel app. One row in Postgres per reading.</p>
         </div>
         <div class="card">
-          <span class="num">03 · parameters</span>
-          <h3>After the ?</h3>
-          <p>The values that choose what you get, joined with an ampersand.</p>
+          <span class="num">03</span>
+          <h3>Show it</h3>
+          <p>The page reads the newest row, then adds five days of forecast from a weather API.</p>
         </div>
-        <div class="card">
-          <span class="num">04 · key</span>
-          <h3>Who is asking</h3>
-          <p>Many APIs want one. It identifies you, and it is billed to you.</p>
+        <div class="card accent">
+          <span class="num">04</span>
+          <h3>Control it</h3>
+          <p>Set a threshold on the page. When the room passes it, the board lights an LED.</p>
         </div>
       </div>
-      <div class="callout" style="margin-top:20px;"><b>Put together, it is one line:</b> <span class="mono" style="word-break:break-all;">https://api.open-meteo.com/v1/forecast?latitude=42.4&amp;longitude=-71.1&amp;current=temperature_2m</span>. Paste it into a browser and the answer appears as JSON.</div>
-      <div class="callout warm" style="margin-top:16px;"><b>A key is a password.</b> Keep it out of screenshots, slides, and public repositories. If it leaks, revoke it and make a new one. Free tiers also count requests per minute and per day, so read the limit before you put a call in a loop.</div>
     </section>
 
-    <section class="section-block" id="device">
-      <h2>Connecting a device to an API</h2>
-      <p class="lede">Your board is the client here. It asks, waits, reads the answer, and does something physical with it.</p>
+    <section class="section-block" id="read">
+      <h2>Read the room</h2>
+      <p class="lede">Three wires and a pull-up. The DHT22 is slow and a little fussy, so wire it once and carefully.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>The wires</h3>
+          <ul>
+            <li><b>VCC</b> to <b>3V3</b></li>
+            <li><b>DATA</b> to <b>GPIO 4</b></li>
+            <li><b>GND</b> to <b>GND</b></li>
+            <li>10 k&Omega; from VCC to DATA</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Two things that bite</h3>
+          <ul>
+            <li><b>3.3 V, not 5 V.</b> The ESP32 pins are not 5 V tolerant.</li>
+            <li><b>Two seconds between reads.</b> Faster gives stale numbers, then errors.</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>The module</h3>
+          <p>The three-pin module has the resistor built in. The bare four-pin sensor needs it, or the data line floats.</p>
+        </div>
+      </div>
+      <div class="callout"><b>In MicroPython:</b> <span class="mono" style="word-break:break-all;">sensor = dht.DHT22(Pin(4))</span>, then <span class="mono">sensor.measure()</span>, then <span class="mono">sensor.temperature()</span> and <span class="mono">sensor.humidity()</span>. If the numbers are not printing to the console, nothing later will work.</div>
+    </section>
+
+    <section class="section-block" id="upload">
+      <h2>Upload it</h2>
+      <p class="lede">Every ten seconds the board sends one reading to your own app, and gets one number back.</p>
+      <div class="callout"><b>The contract:</b> <span class="mono" style="word-break:break-all;">POST /api/readings</span> with <span class="mono">{"station": "medford-01", "temp_c": 21.4, "humidity": 48}</span> answers <span class="mono">{"ok": true, "threshold_c": 24}</span>. Agree on this shape before you ask an AI for code.</div>
+      <figure class="shot" style="margin-top: 20px;">
+        <video src="shots/web-round-trip.mp4" poster="shots/web-round-trip-poster.jpg" autoplay muted playsinline controls style="width:100%; display:block; background:var(--paper);"></video>
+        <figcaption><b>One POST, end to end</b>The request leaves the board, the server writes a row, and the answer comes back. Ten seconds of video, then the finished picture stays.</figcaption>
+      </figure>
+      <p style="margin-top: 20px;">Behind the route there are two Postgres tables: <span class="mono">readings</span> grows by a row every ten seconds, and <span class="mono">settings</span> is a single row holding the threshold. Vercel runs the code and gives you the address; you never see the machine.</p>
+    </section>
+
+    <section class="section-block" id="show">
+      <h2>Show it</h2>
+      <p class="lede">Two sources on one page: your room, and the next five days.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>From your board</h3>
+          <p>The page calls <span class="mono">GET /api/readings/latest</span> every five seconds and draws the newest row with its timestamp.</p>
+        </div>
+        <div class="card">
+          <h3>From the weather API</h3>
+          <p><span class="mono">GET /api/forecast</span> calls Open-Meteo on the server and caches it for half an hour. Five days of high and low.</p>
+        </div>
+        <div class="card accent">
+          <h3>One big number</h3>
+          <p>Temperature large, humidity and the time underneath, the forecast as five small cards. That is the whole page.</p>
+        </div>
+      </div>
+      <div class="callout warm"><b>If the forecast fails,</b> the page still shows the room. One source down must not blank the other.</div>
+    </section>
+
+    <section class="section-block" id="control">
+      <h2>Set a threshold</h2>
+      <p class="lede">A number on the page reaches the board, ten seconds later.</p>
       <div class="phases">
         <div class="phase">
-          <p class="plabel">Step 1</p>
-          <h3>Join the network</h3>
+          <p class="plabel">Type it</p>
+          <h3>On the page</h3>
           <ul>
-            <li>Connect to Wi-Fi</li>
-            <li>Wait for an address</li>
-            <li>Check it connected before you ask for anything</li>
+            <li>A number field and a save button</li>
+            <li>POST to <span class="mono">/api/threshold</span></li>
+            <li>One row changes</li>
           </ul>
         </div>
         <div class="phase accent">
-          <p class="plabel">Step 2</p>
-          <h3>Make the request</h3>
+          <p class="plabel">Pick it up</p>
+          <h3>On the board</h3>
           <ul>
-            <li>The address from the docs</li>
-            <li>Your parameters</li>
-            <li>Your key, in the URL or a header</li>
+            <li>The reply to its upload carries the threshold</li>
+            <li>No second request</li>
+            <li>The board cannot be called, so it asks</li>
           </ul>
         </div>
         <div class="phase">
-          <p class="plabel">Step 3</p>
-          <h3>Read the answer</h3>
+          <p class="plabel">Act</p>
+          <h3>The LED</h3>
           <ul>
-            <li>Check the status code first</li>
-            <li>Turn the body into JSON</li>
-            <li>Pull out the one value you need</li>
+            <li>One comparison</li>
+            <li>One pin</li>
+            <li>On above the threshold, off below</li>
           </ul>
         </div>
       </div>
-      <figure class="shot" style="margin-top:24px;">
-        <img src="shots/device-to-api.svg" alt="The ESP32 sends a request with its key over Wi-Fi, a weather API answers with JSON, and the board acts on the value" style="aspect-ratio: 2.7 / 1; object-fit: contain; background: var(--paper); padding: 12px 16px;">
-        <figcaption><b>Ask, wait, act</b>The board sends a request and gets JSON back. A failed request does not raise an error on the board, so check <span class="mono">r.status_code</span> before you trust the body.</figcaption>
-      </figure>
-      <div class="callout" style="margin-top:20px;"><b>Try it in class:</b> ask an AI assistant for a weather-triggered light. "My ESP32 is connected to Wi-Fi. Call a weather API for the current temperature in Medford, print it, and turn an RGB LED blue when it is below 10 °C. Check once every ten minutes." Ten minutes, not one second: the weather does not change faster, and free tiers count requests.</div>
-    </section>
-
-    <section class="section-block" id="web">
-      <h2>Connecting a website to a device</h2>
-      <p class="lede">In Class 6 your board served the page. Now the page lives on the internet, and the board is the thing it controls.</p>
-      <div class="cards">
-        <div class="card">
-          <span class="num">Class 6</span>
-          <h3>The device serves the page</h3>
-          <p>The board runs a web server and your phone joins its Wi-Fi. Nothing else is needed, and it only works on that network.</p>
-        </div>
-        <div class="card accent">
-          <span class="num">Today</span>
-          <h3>The site sits in the middle</h3>
-          <p>Board and browser both talk to a website. It works from anywhere, and the site has to hold the last command.</p>
-        </div>
-      </div>
-      <div class="callout" style="margin-top:20px;"><b>Why the device starts:</b> a board behind a home router has no public address. It can call out, but you cannot call in. So the device asks the site for new commands, every second or so, and the site answers with the last one.</div>
-      <figure class="shot" style="margin-top:24px;">
-        <img src="shots/site-to-device.svg" alt="A browser sends a command to your site, the device asks the site for that command, and the page updates with the device's state" style="aspect-ratio: 3 / 1; object-fit: contain; background: var(--paper); padding: 12px 16px;">
-        <figcaption><b>The site is the meeting point</b>You press a button, the site stores it, and the board picks it up on its next ask. No install and no app store: a page, an address, and a device.</figcaption>
-      </figure>
-      <figure class="shot" style="margin-top:20px;">
-        <img src="../../assets/photos/class/device-item-added.jpg" alt="A tablet showing a student-built dashboard with the local weather from an API and a task list stored in a database" style="aspect-ratio: 16 / 9; object-fit: cover; object-position: center 60%;">
-        <figcaption><b>A student build</b>The Boston weather line comes from an API. The tasks are stored on the server, so the list survives a reboot.</figcaption>
-      </figure>
+      <div class="callout"><b>Demo it:</b> set the threshold below room temperature on your phone. Within ten seconds the LED is on, and you have built the whole loop.</div>
     </section>
 
 <!-- assignments:begin -->
@@ -231,22 +237,22 @@
 
     <section class="section-block" id="project">
       <h2>For your final project</h2>
-      <p class="lede">The web is free input and free output. Pick one of each.</p>
+      <p class="lede">This is the smallest complete version of what a connected product needs.</p>
       <div class="cards">
         <div class="card">
           <span class="num">input</span>
-          <h3>React to the world outside</h3>
-          <p>Weather, transit, a shared sheet, a model. One input that changes what your build does is enough.</p>
+          <h3>A reading worth keeping</h3>
+          <p>One sensor, recorded over time, is more convincing than five that disagree. Pick the number your product depends on.</p>
         </div>
         <div class="card">
           <span class="num">output</span>
-          <h3>Be watchable from a phone</h3>
-          <p>A page that shows the state is easier to demo than a serial console, and easier for a visitor to try.</p>
+          <h3>Something the page can change</h3>
+          <p>A threshold, a mode, a color. The web page should be able to act on the build, not only watch it.</p>
         </div>
         <div class="card accent">
           <span class="num">honesty</span>
           <h3>Design for the day it is down</h3>
-          <p>If the API does not answer, say so on the screen. A fallback is part of the design, not an afterthought.</p>
+          <p>If the API or the network fails, say so and keep working. A fallback is part of the design.</p>
         </div>
       </div>
       <div class="callout" style="margin-top:20px;"><b>Checkpoint 2 follows next week.</b> Integrated features and user experience: the whole product working together, and what a user does, sees, and feels. <a href="../../syllabus/#schedule">See the full schedule in the syllabus</a>.</div>

@@ -616,15 +616,18 @@ The ID is never resolved at run time.
 - **Every class in the course has a page; not every class has a deck yet.**
   Classes 12 and 13 are placeholders: a real page with the syllabus week
   title, what the class covers, and the milestone reflection where one is due
-  (week 13), plus the note that the deck is being converted. Class 10 converted
-  on 2026-11-06: the deck is `ENT-164-Class-10-Device-to-Cloud.pdf` (Device to
-  Cloud, the web and APIs) and its page is no longer a placeholder; the Canvas
-  module still points at Google Slides until the PDF is live and converted.
-  Its "shape of the web" section plays `shots/web-round-trip.mp4`, a 10-second
-  clip of one HTTP request, the SQL it triggers, and the JSON reply, rendered
-  by `scripts/render-web-loop.py` (PIL + ffmpeg, no browser). It plays once and
-  ends on the finished diagram, so the page does not loop it; the deck keeps
-  the still `shots/web-architecture.svg` for print.
+  (week 13), plus the note that the deck is being converted. Class 10 was
+  converted on 2026-11-06 and rebuilt on 2026-11-12 as a build rather than a
+  lecture: `ENT-164-Class-10-Device-to-Cloud.pdf` (Device to Cloud) walks
+  through a DHT22 on the ESP32, a POST every ten seconds to a Vercel app with
+  Postgres, the latest reading plus a five-day forecast on the page, and a
+  threshold set on the page that drives an LED. Its page is no longer a
+  placeholder; the Canvas module still points at Google Slides until the PDF is
+  live and converted. The page plays `shots/web-round-trip.mp4` under "Upload
+  it", a 10-second clip of one HTTP request, the SQL it triggers, and the JSON
+  reply, rendered by `scripts/render-web-loop.py` (PIL + ffmpeg, no browser). It
+  plays once and ends on the finished diagram, so the page does not loop it; the
+  deck keeps the still `shots/web-architecture.svg` on slide 8.
   Class 8 converted
   with the **retrospective** deck only: the race half of the session lives on
   its page, and the PDF is `ENT-164-Class-8-Team-Retrospective.pdf`. Class 7
