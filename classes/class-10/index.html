@@ -158,7 +158,7 @@
     <section class="section-block" id="upload">
       <h2>Upload it</h2>
       <p class="lede">Every ten seconds the board sends one reading to your own app, and gets one number back.</p>
-      <div class="callout"><b>The contract:</b> <span class="mono" style="word-break:break-all;">POST /api/readings</span> with <span class="mono">{"station": "medford-01", "temp_c": 21.4, "humidity": 48}</span> answers <span class="mono">{"ok": true, "threshold_c": 24}</span>. Agree on this shape before you ask an AI for code.</div>
+      <div class="callout"><b>The contract:</b> <span class="mono" style="word-break:break-all;">POST /cloud/history</span> with <span class="mono">{"station": "medford-01", "temperature": 21.4, "humidity": 48}</span> answers <span class="mono">{"ok": true, "threshold_c": 24}</span>. Agree on this shape before you ask an AI for code.</div>
       <figure class="shot" style="margin-top: 20px;">
         <video src="shots/web-round-trip.mp4" poster="shots/web-round-trip-poster.jpg" autoplay muted playsinline controls style="width:100%; display:block; background:var(--paper);"></video>
         <figcaption><b>One POST, end to end</b>The request leaves the board, the server writes a row, and the answer comes back. Ten seconds of video, then the finished picture stays.</figcaption>
@@ -173,11 +173,11 @@
       <div class="cards">
         <div class="card">
           <h3>From your board</h3>
-          <p>The page calls <span class="mono">GET /api/readings/latest</span> every five seconds and draws the newest row with its timestamp.</p>
+          <p>The page calls <span class="mono">GET /cloud/history</span> every five seconds and draws the newest reading with its timestamp.</p>
         </div>
         <div class="card">
           <h3>From the weather API</h3>
-          <p><span class="mono">GET /api/forecast</span> calls Open-Meteo on the server and caches it for half an hour. Five days of high and low.</p>
+          <p><span class="mono">GET /cloud/forecast</span> calls Open-Meteo on the server and caches it for half an hour. Five days of high and low.</p>
         </div>
         <div class="card accent">
           <h3>One big number</h3>
@@ -196,7 +196,7 @@
           <h3>On the page</h3>
           <ul>
             <li>A number field and a save button</li>
-            <li>POST to <span class="mono">/api/threshold</span></li>
+            <li>POST to <span class="mono">/cloud/threshold</span></li>
             <li>One row changes</li>
           </ul>
         </div>

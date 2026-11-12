@@ -385,7 +385,7 @@ s.listen(<span class="n">1</span>)
 <span class="k">while</span> <span class="k">True</span>:
     conn, _ = s.accept()
     sensor.measure()
-    body = <span class="s">'{"temp_c": %.1f, "humidity": %.1f}'</span> % (
+    body = <span class="s">'{"temperature": %.1f, "humidity": %.1f}'</span> % (
         sensor.temperature(), sensor.humidity())
     conn.send(<span class="s">"HTTP/1.1 200 OK\r\n"</span>)
     conn.send(<span class="s">"Content-Type: application/json\r\n\r\n"</span>)
@@ -450,11 +450,11 @@ s.listen(<span class="n">1</span>)
     <div class="outline" style="grid-template-columns: 1.16fr 0.84fr;">
       <div class="panel" style="padding: 4mm; justify-content: center;">
         <pre class="code" style="font-size: 8.5pt;"><span class="k">create table if not exists</span> readings (
-  id        bigserial <span class="k">primary key</span>,
-  station   text <span class="k">not null</span>,
-  temp_c    real <span class="k">not null</span>,
-  humidity  real,
-  taken_at  timestamptz <span class="k">default</span> now()
+  id          bigserial <span class="k">primary key</span>,
+  station     text <span class="k">not null</span>,
+  temperature real <span class="k">not null</span>,
+  humidity    real,
+  taken_at    timestamptz <span class="k">default</span> now()
 );
 
 <span class="k">create table if not exists</span> settings (
@@ -495,18 +495,19 @@ s.listen(<span class="n">1</span>)
     <div class="outline" style="grid-template-columns: 0.92fr 1.08fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Create a Next.js app on Vercel with a Postgres database. Create the tables if they do not exist on first request. Two tables: readings (id, station, temp_c, humidity, taken_at) and settings (a single row, threshold_c default 24). Two API routes: POST /api/readings inserts a reading and returns {"ok": true, "threshold_c": the current threshold}; GET /api/readings/latest returns the newest reading with temp_c, humidity, taken_at and threshold_c.</p>
+        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Create a Next.js app on Vercel with a Postgres database. Create the tables if they do not exist on first request. Two tables: readings (id, station, temperature, humidity, taken_at) and settings (a single row, threshold_c default 24). Two API routes: POST /cloud/history inserts a reading and returns {"ok": true, "threshold_c": the current threshold}; GET /cloud/history returns the newest readings with their timestamps, plus threshold_c.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 8.5pt;"><span class="c">POST /api/readings</span>
-{<span class="s">"station"</span>: <span class="s">"medford-01"</span>, <span class="s">"temp_c"</span>: <span class="n">21.4</span>,
+        <pre class="code" style="font-size: 8.5pt;"><span class="c">POST /cloud/history</span>
+{<span class="s">"station"</span>: <span class="s">"medford-01"</span>, <span class="s">"temperature"</span>: <span class="n">21.4</span>,
  <span class="s">"humidity"</span>: <span class="n">48</span>}
 
 <span class="c">200 OK</span>
 {<span class="s">"ok"</span>: <span class="k">true</span>, <span class="s">"threshold_c"</span>: <span class="n">24</span>}</pre>
-        <pre class="code" style="font-size: 8.5pt; margin-top: 3mm;"><span class="c">GET /api/readings/latest</span>
-{<span class="s">"temp_c"</span>: <span class="n">21.4</span>, <span class="s">"humidity"</span>: <span class="n">48</span>,
- <span class="s">"taken_at"</span>: <span class="s">"2026-11-12T14:03:11Z"</span>,
+        <pre class="code" style="font-size: 8.5pt; margin-top: 3mm;"><span class="c">GET /cloud/history</span>
+{<span class="s">"readings"</span>: [
+  {<span class="s">"timestamp"</span>: <span class="s">"2026-11-12T14:03:11Z"</span>,
+   <span class="s">"temperature"</span>: <span class="n">21.4</span>, <span class="s">"humidity"</span>: <span class="n">48</span>}, …],
  <span class="s">"threshold_c"</span>: <span class="n">24</span>}</pre>
       </div>
     </div>
@@ -528,19 +529,19 @@ s.listen(<span class="n">1</span>)
     <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Connect the board to Wi-Fi and, every ten seconds, POST the reading to https://your-app.vercel.app/api/readings as JSON: {"station": "medford-01", "temp_c": ..., "humidity": ...}. Send Content-Type: application/json. Print the status code and the body, then close the response. If a request fails, keep going and try again in ten seconds.</p>
+        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Connect the board to Wi-Fi and, every ten seconds, POST the reading to https://your-app.vercel.app/cloud/history as JSON: {"station": "medford-01", "temperature": ..., "humidity": ...}. Send Content-Type: application/json. Print the status code and the body, then close the response. If a request fails, keep going and try again in ten seconds.</p>
         <p class="footnote" style="padding-top: 3mm;">Close every response. The board has about 8 MB of RAM, and a leaked response eats it in a few hours.</p>
       </div>
       <div class="panel" style="padding: 3.5mm; justify-content: center;">
         <pre class="code" style="font-size: 8pt;"><span class="k">import</span> ujson, urequests
 
-URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
+URL = <span class="s">"https://your-app.vercel.app/cloud/history"</span>
 HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>}
 
 <span class="k">while</span> <span class="k">True</span>:
     sensor.measure()
     body = {<span class="s">"station"</span>: <span class="s">"medford-01"</span>,
-            <span class="s">"temp_c"</span>: sensor.temperature(),
+            <span class="s">"temperature"</span>: sensor.temperature(),
             <span class="s">"humidity"</span>: sensor.humidity()}
     r = urequests.post(URL, data=ujson.dumps(body),
                        headers=HEADERS)
@@ -560,23 +561,24 @@ HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/j
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">Act 2 · Show it · 5 of 5</p>
-    <h2>The page reads <span class="accent">the newest row</span></h2>
+    <h2>The page reads <span class="accent">the history</span></h2>
     <p class="s-sub">Fetch the route, draw the numbers, and do it again five seconds later.</p>
   </header>
   <div class="s-body">
     <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">Build a page that fetches /api/readings/latest every five seconds with cache: "no-store" and shows the temperature large, with humidity and the time underneath. If the fetch fails, keep the last number on screen and show a small "offline" note.</p>
-        <p class="footnote" style="padding-top: 4mm;">Serverless responses are cached by default. You want the newest row, every time.</p>
+        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">Build a page that fetches /cloud/history every five seconds with cache: "no-store", shows the newest reading large with humidity and the time underneath, and draws the rest as a chart. If the fetch fails, keep the last number on screen and show a small "offline" note.</p>
+        <p class="footnote" style="padding-top: 4mm;">Serverless responses are cached by default. You want the newest readings, every time.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
         <pre class="code" style="font-size: 9pt;"><span class="k">const</span> res = <span class="k">await</span> fetch(
-  <span class="s">"/api/readings/latest"</span>,
+  <span class="s">"/cloud/history"</span>,
   { cache: <span class="s">"no-store"</span> })
 
-<span class="k">const</span> { temp_c, humidity, taken_at } =
+<span class="k">const</span> { readings, threshold_c } =
   <span class="k">await</span> res.json()
+<span class="k">const</span> latest = readings[<span class="n">0</span>]
 
 <span class="c">// and again, every five seconds</span>
 setInterval(load, <span class="n">5000</span>)</pre>
@@ -599,7 +601,7 @@ setInterval(load, <span class="n">5000</span>)</pre>
     <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Add GET /api/forecast. It calls https://api.open-meteo.com/v1/forecast for latitude 42.4, longitude -71.1, with daily temperature_2m_max and temperature_2m_min, timezone auto and five days. Cache the answer for 30 minutes. Show the five days as five small cards under the reading.</p>
+        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Add GET /cloud/forecast. It calls https://api.open-meteo.com/v1/forecast for latitude 42.4, longitude -71.1, with daily temperature_2m_max and temperature_2m_min, timezone auto and five days. Cache the answer for 30 minutes. Show the five days as five small cards under the reading.</p>
         <p class="footnote" style="padding-top: 3mm;">No key needed. Services that want one keep it in a Vercel environment variable.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
@@ -632,13 +634,13 @@ setInterval(load, <span class="n">5000</span>)</pre>
       <article class="card">
         <span class="num">now</span>
         <h3>From your board</h3>
-        <p style="margin-bottom: 2.4mm;">DHT22 &rarr; POST /api/readings &rarr; Postgres &rarr; GET /api/readings/latest &rarr; the page.</p>
+        <p style="margin-bottom: 2.4mm;">DHT22 &rarr; POST /cloud/history &rarr; Postgres &rarr; GET /cloud/history &rarr; the page.</p>
         <p>It updates every ten seconds, and it is the only source that knows your room.</p>
       </article>
       <article class="card">
         <span class="num">next five days</span>
         <h3>From the weather API</h3>
-        <p style="margin-bottom: 2.4mm;">GET /api/forecast &rarr; Open-Meteo &rarr; cached 30 minutes &rarr; the page.</p>
+        <p style="margin-bottom: 2.4mm;">GET /cloud/forecast &rarr; Open-Meteo &rarr; cached 30 minutes &rarr; the page.</p>
         <p>It is the same for everyone in Medford, and it is fine for it to be an hour old.</p>
       </article>
     </div>
@@ -663,11 +665,11 @@ setInterval(load, <span class="n">5000</span>)</pre>
     <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">Add a threshold field to the page. When it is saved, POST {"threshold_c": 26} to /api/threshold, which updates the single settings row. Show the current value when the page loads.</p>
+        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">Add a threshold field to the page. When it is saved, POST {"threshold_c": 26} to /cloud/threshold, which updates the single settings row. Show the current value when the page loads.</p>
         <p class="footnote" style="padding-top: 4mm;">The board cannot be called from outside, so it asks. The reply to its upload carries the new number.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 9pt;"><span class="k">await</span> fetch(<span class="s">"/api/threshold"</span>, {
+        <pre class="code" style="font-size: 9pt;"><span class="k">await</span> fetch(<span class="s">"/cloud/threshold"</span>, {
   method: <span class="s">"POST"</span>,
   headers: { <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span> },
   body: JSON.stringify({ threshold_c: <span class="n">26</span> }),
@@ -703,7 +705,7 @@ r = urequests.post(
 data = r.json()
 threshold = data[<span class="s">"threshold_c"</span>]
 
-led.value(<span class="n">1</span> <span class="k">if</span> body[<span class="s">"temp_c"</span>] &gt; threshold <span class="k">else</span> <span class="n">0</span>)
+led.value(<span class="n">1</span> <span class="k">if</span> body[<span class="s">"temperature"</span>] &gt; threshold <span class="k">else</span> <span class="n">0</span>)
 r.close()</pre>
       </div>
     </div>
@@ -724,22 +726,22 @@ r.close()</pre>
     <div class="grid g2" style="align-content: center;">
       <article class="card tight" style="justify-content: center;">
         <span class="num">POST</span>
-        <h3 class="mono" style="font-size: 12pt;">/api/readings</h3>
+        <h3 class="mono" style="font-size: 12pt;">/cloud/history</h3>
         <p>The board sends temperature and humidity. The reply carries the threshold.</p>
       </article>
       <article class="card tight" style="justify-content: center;">
         <span class="num">GET</span>
-        <h3 class="mono" style="font-size: 12pt;">/api/readings/latest</h3>
-        <p>The page reads the newest row, with its timestamp.</p>
+        <h3 class="mono" style="font-size: 12pt;">/cloud/history</h3>
+        <p>The page reads the newest readings, each with its timestamp.</p>
       </article>
       <article class="card tight" style="justify-content: center;">
         <span class="num">POST</span>
-        <h3 class="mono" style="font-size: 12pt;">/api/threshold</h3>
+        <h3 class="mono" style="font-size: 12pt;">/cloud/threshold</h3>
         <p>The page sets the number the board compares against.</p>
       </article>
       <article class="card tight accent" style="justify-content: center;">
         <span class="num">GET</span>
-        <h3 class="mono" style="font-size: 12pt;">/api/forecast</h3>
+        <h3 class="mono" style="font-size: 12pt;">/cloud/forecast</h3>
         <p>Five days of high and low, fetched server-side and cached.</p>
       </article>
     </div>
@@ -764,7 +766,7 @@ r.close()</pre>
       </article>
       <article class="card tight" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
         <h3 style="font-size: 12pt; margin-bottom: 2mm;">404 or 405</h3>
-        <p>The path or the method is wrong. It is <b>POST /api/readings</b>, not <b>/api/reading</b>, and case matters.</p>
+        <p>The path or the method is wrong. It is <b>POST /cloud/history</b>, not <b>/cloud/histories</b>, and case matters.</p>
       </article>
       <article class="card tight" style="padding: 4.6mm 5mm 4.2mm; justify-content: center;">
         <h3 style="font-size: 12pt; margin-bottom: 2mm;">500</h3>
