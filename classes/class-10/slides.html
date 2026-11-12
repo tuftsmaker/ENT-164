@@ -369,11 +369,11 @@
     <div class="outline" style="grid-template-columns: 0.95fr 1.05fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">I have an ESP32 with MicroPython and a DHT22 sensor. I want to read the current temperature and humidity via an API on the device. Connect the ESP32 to the open Tufts_Wireless network.</p>
-        <p class="footnote" style="padding-top: 4mm;">Ask opencode for the address and the path, then open it in your browser. One device, one reading, no cloud yet.</p>
+        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">I have an ESP32 with MicroPython and a DHT22 sensor. I want to read the current temperature and humidity via an API on the device. Connect the ESP32 to the open Tufts_Wireless network. Serve it at GET /device/readings.</p>
+        <p class="footnote" style="padding-top: 4mm;">Ask opencode for the board's address, then open <b>/device/readings</b> on it. One device, one reading, no cloud yet.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 10pt;"><span class="c"># after wlan.connect(...) and an IP address</span>
+        <pre class="code" style="font-size: 10pt;"><span class="c"># after wlan.connect(...), answer GET /device/readings</span>
 s = socket.socket()
 s.bind((<span class="s">""</span>, <span class="n">80</span>))
 s.listen(<span class="n">1</span>)

@@ -8,7 +8,7 @@ topics:
   - title: "Wire the sensor"
     learn: "A DHT22 on the ESP32. opencode chooses the data pin; you check the wiring."
   - title: "Serve it"
-    learn: "A tiny web server on the board answers a request with the readings, so a browser can check the sensor."
+    learn: "A tiny web server on the board answers GET /device/readings, so a browser can check the sensor."
   - title: "Upload it"
     learn: "One POST to a Vercel app, and one row per reading in Postgres."
   - title: "Show it"
