@@ -5,10 +5,10 @@ hero: "../../assets/photos/class/device-item-added.jpg"
 hero_alt: "A tablet showing a student-built dashboard with the local weather and a task list"
 
 topics:
-  - title: "Read the room"
-    learn: "A DHT22 on GPIO 4, giving the ESP32 a temperature and a humidity every ten seconds."
+  - title: "Wire the sensor"
+    learn: "A DHT22 on the ESP32. opencode chooses the data pin; you check the wiring."
   - title: "Serve it"
-    learn: "A tiny web server on the board answers GET /temperature, so a browser can check the reading."
+    learn: "A tiny web server on the board answers GET /readings, so a browser can check the sensor."
   - title: "Upload it"
     learn: "One POST to a Vercel app, and one row per reading in Postgres."
   - title: "Show it"
