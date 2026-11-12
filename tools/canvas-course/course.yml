@@ -46,3 +46,5 @@ home_class_overrides:
 due_exclusions:
   class-08:
     - final-team-project-part-1-product-concept-presentation
+  class-10:
+    - milestone-reflection-final-project-mid-point
