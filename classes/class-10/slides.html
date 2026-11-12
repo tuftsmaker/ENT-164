@@ -311,42 +311,7 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">02</span></footer>
 </section>
 
-<!-- ============ 03 · FOUR PARTS ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">The build</p>
-    <h2>Four parts, <span class="accent">one afternoon</span></h2>
-    <p class="s-sub">Each part ends with something you can see. Do not move on until you can.</p>
-  </header>
-  <div class="s-body">
-    <div class="grid g4" style="gap: 3.6mm;">
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm; justify-content: center;">
-        <span class="num" style="margin-bottom: 2.6mm;">01</span>
-        <h3 style="font-size: 12pt;">Read the room</h3>
-        <p>A DHT22 on GPIO 4, giving temperature and humidity every ten seconds.</p>
-      </article>
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm; justify-content: center;">
-        <span class="num" style="margin-bottom: 2.6mm;">02</span>
-        <h3 style="font-size: 12pt;">Upload it</h3>
-        <p>One POST to your Vercel app. One row in Postgres. Ten seconds later, another.</p>
-      </article>
-      <article class="card tight" style="padding: 4.6mm 4.8mm 4.2mm; justify-content: center;">
-        <span class="num" style="margin-bottom: 2.6mm;">03</span>
-        <h3 style="font-size: 12pt;">Show it</h3>
-        <p>The page reads the newest row, then adds five days of forecast from a weather API.</p>
-      </article>
-      <article class="card tight accent" style="padding: 4.6mm 4.8mm 4.2mm; justify-content: center;">
-        <span class="num" style="margin-bottom: 2.6mm;">04</span>
-        <h3 style="font-size: 12pt;">Control it</h3>
-        <p>Set a threshold on the page. When the room passes it, the board lights an LED.</p>
-      </article>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">03</span></footer>
-</section>
-
-<!-- ============ 04 · THE BENCH ============ -->
+<!-- ============ 03 · THE BENCH ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -378,14 +343,14 @@
       </article>
     </div>
     <div class="assign">
-      <span class="alabel">Tip</span>
-      <p>Let your AI write the code. You check the wiring and the numbers. <b>One working step at a time.</b></p>
+      <span class="alabel">How we build</span>
+      <p>Each step gives you <b>a prompt</b>. Paste it into opencode, run what comes back, and check the result before the next step.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">04</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">03</span></footer>
 </section>
 
-<!-- ============ 05 · WIRE THE DHT22 ============ -->
+<!-- ============ 04 · WIRE THE DHT22 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -419,21 +384,26 @@
       <p>The three-pin module has the resistor built in. The bare four-pin sensor needs it, or the data line floats.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">05</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">04</span></footer>
 </section>
 
-<!-- ============ 06 · READ IT ============ -->
+<!-- ============ 05 · READ IT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">Act 1 · Read the room · 2 of 3</p>
     <h2>Ask the sensor <span class="accent">for a number</span></h2>
-    <p class="s-sub">One object, one measurement, two values back. Print them before you send them anywhere.</p>
+    <p class="s-sub">One prompt, one small program. Print the numbers before you send them anywhere.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1.06fr 0.94fr;">
+    <div class="outline" style="grid-template-columns: 1fr 1.05fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 9.5pt; line-height: 1.55; margin: 0; color: var(--muted-2);">My ESP32 is running MicroPython and a DHT22 is wired to GPIO 4. Write a program that measures temperature and humidity every two seconds and prints both to the console.</p>
+        <p class="footnote" style="padding-top: 4mm;">Leave the wiring comment in the code. Two seconds is the sensor's limit, not a suggestion.</p>
+      </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 10pt;"><span class="k">import</span> dht, time
+        <pre class="code" style="font-size: 9.5pt;"><span class="k">import</span> dht, time
 <span class="k">from</span> machine <span class="k">import</span> Pin
 
 sensor = dht.DHT22(Pin(<span class="n">4</span>))
@@ -443,38 +413,32 @@ sensor = dht.DHT22(Pin(<span class="n">4</span>))
     <span class="k">print</span>(sensor.temperature(), sensor.humidity())
     time.sleep(<span class="n">2</span>)</pre>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Measure first</h3>
-          <p><span class="mono" style="font-size: 9pt;">measure()</span> takes the reading. The two numbers come from that one read.</p>
-        </article>
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Then read both</h3>
-          <p>Humidity is free once you have the temperature. Keep it: it makes the page feel real.</p>
-        </article>
-        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">The console is the proof</h3>
-          <p>If the numbers are not printing, nothing later will work. Fix this first.</p>
-        </article>
-      </div>
     </div>
+    <p class="footnote">If the numbers are not printing, nothing later will work. Fix this before Act 2.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">06</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">05</span></footer>
 </section>
 
-<!-- ============ 07 · UPLOAD ============ -->
+<!-- ============ 06 · UPLOAD ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">Act 1 · Read the room · 3 of 3</p>
     <h2>One POST <span class="accent">every ten seconds</span></h2>
-    <p class="s-sub">The same shape as any API call: an address, a JSON body, a status code back.</p>
+    <p class="s-sub">Same shape as any API call: an address, a JSON body, a status code back.</p>
   </header>
   <div class="s-body">
-    <div class="panel" style="padding: 4mm; justify-content: center;">
-      <pre class="code" style="font-size: 9pt;"><span class="k">import</span> ujson, urequests
+    <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Connect the board to Wi-Fi and, every ten seconds, POST the reading to https://your-app.vercel.app/api/readings as JSON: {"station": "medford-01", "temp_c": ..., "humidity": ...}. Send Content-Type: application/json. Print the status code and the body, then close the response. If a request fails, keep going and try again in ten seconds.</p>
+        <p class="footnote" style="padding-top: 3mm;">Close every response. The board has about 8 MB of RAM, and a leaked response eats it in a few hours.</p>
+      </div>
+      <div class="panel" style="padding: 3.5mm; justify-content: center;">
+        <pre class="code" style="font-size: 8pt;"><span class="k">import</span> ujson, urequests
 
 URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
+HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>}
 
 <span class="k">while</span> <span class="k">True</span>:
     sensor.measure()
@@ -482,17 +446,17 @@ URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
             <span class="s">"temp_c"</span>: sensor.temperature(),
             <span class="s">"humidity"</span>: sensor.humidity()}
     r = urequests.post(URL, data=ujson.dumps(body),
-                       headers={<span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>})
+                       headers=HEADERS)
     <span class="k">print</span>(r.status_code, r.text)
     r.close()
     time.sleep(<span class="n">10</span>)</pre>
+      </div>
     </div>
-    <p class="footnote">Close every response. The board has about 8 MB of RAM, and a response left open eats it in a few hours.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">07</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">06</span></footer>
 </section>
 
-<!-- ============ 08 · WHAT VERCEL IS ============ -->
+<!-- ============ 07 · WHAT VERCEL IS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -507,10 +471,10 @@ URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
       <p class="footnote" style="margin: 0; text-align: center;">Vercel runs the <b>server</b> and hosts the page. Its Postgres database is the <b>database</b>. Your board is a fourth client: it posts to the same server the browser reads from.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">08</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">07</span></footer>
 </section>
 
-<!-- ============ 09 · TWO TABLES ============ -->
+<!-- ============ 08 · TWO TABLES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -550,46 +514,42 @@ URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">08</span></footer>
 </section>
 
-<!-- ============ 10 · THE CONTRACT ============ -->
+<!-- ============ 09 · THE APP ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">Act 2 · Show it · 3 of 4</p>
-    <h2>Two routes, <span class="accent">one contract</span></h2>
-    <p class="s-sub">Agree on this before you ask for code. The board and the page both depend on it.</p>
+    <h2>The app, <span class="accent">in one prompt</span></h2>
+    <p class="s-sub">Two tables and two routes. Everything else on the page is drawing.</p>
   </header>
   <div class="s-body">
-    <div class="grid g2">
-      <article class="card" style="justify-content: flex-start;">
-        <span class="num">POST /api/readings</span>
-        <h3>The board sends a reading</h3>
-        <pre class="code" style="font-size: 9pt; margin-top: 2mm;">{<span class="s">"station"</span>: <span class="s">"medford-01"</span>,
- <span class="s">"temp_c"</span>: <span class="n">21.4</span>,
+    <div class="outline" style="grid-template-columns: 0.92fr 1.08fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Create a Next.js app on Vercel with a Postgres database. Two tables: readings (id, station, temp_c, humidity, taken_at) and settings (a single row, threshold_c default 24). Two API routes: POST /api/readings inserts a reading and returns {"ok": true, "threshold_c": the current threshold}; GET /api/readings/latest returns the newest reading with temp_c, humidity, taken_at and threshold_c.</p>
+      </div>
+      <div class="panel" style="padding: 4mm; justify-content: center;">
+        <pre class="code" style="font-size: 8.5pt;"><span class="c">POST /api/readings</span>
+{<span class="s">"station"</span>: <span class="s">"medford-01"</span>, <span class="s">"temp_c"</span>: <span class="n">21.4</span>,
  <span class="s">"humidity"</span>: <span class="n">48</span>}
 
 <span class="c">200 OK</span>
 {<span class="s">"ok"</span>: <span class="k">true</span>, <span class="s">"threshold_c"</span>: <span class="n">24</span>}</pre>
-        <p style="margin-top: 3mm;">Four lines in, one line out. The reply carries the threshold, so the board learns it for free.</p>
-      </article>
-      <article class="card" style="justify-content: flex-start;">
-        <span class="num">GET /api/readings/latest</span>
-        <h3>The page asks for the newest row</h3>
-        <pre class="code" style="font-size: 9pt; margin-top: 2mm;"><span class="c">200 OK</span>
-{<span class="s">"temp_c"</span>: <span class="n">21.4</span>,
- <span class="s">"humidity"</span>: <span class="n">48</span>,
+        <pre class="code" style="font-size: 8.5pt; margin-top: 3mm;"><span class="c">GET /api/readings/latest</span>
+{<span class="s">"temp_c"</span>: <span class="n">21.4</span>, <span class="s">"humidity"</span>: <span class="n">48</span>,
  <span class="s">"taken_at"</span>: <span class="s">"2026-11-12T14:03:11Z"</span>,
  <span class="s">"threshold_c"</span>: <span class="n">24</span>}</pre>
-        <p style="margin-top: 3mm;">One row, four fields. If your page can draw these, the hard part is done.</p>
-      </article>
+      </div>
     </div>
+    <p class="footnote">Read the reply to the board's POST as carefully as the page's GET. The threshold in it is what turns the LED on.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ============ 11 · THE PAGE ============ -->
+<!-- ============ 10 · THE PAGE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -598,9 +558,14 @@ URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
     <p class="s-sub">Fetch the route, draw the numbers, and do it again five seconds later.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1.06fr 0.94fr;">
+    <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">Build a page that fetches /api/readings/latest every five seconds with cache: "no-store" and shows the temperature large, with humidity and the time underneath. If the fetch fails, keep the last number on screen and show a small "offline" note.</p>
+        <p class="footnote" style="padding-top: 4mm;">Serverless responses are cached by default. You want the newest row, every time.</p>
+      </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 9.5pt;"><span class="k">const</span> res = <span class="k">await</span> fetch(
+        <pre class="code" style="font-size: 9pt;"><span class="k">const</span> res = <span class="k">await</span> fetch(
   <span class="s">"/api/readings/latest"</span>,
   { cache: <span class="s">"no-store"</span> })
 
@@ -610,37 +575,28 @@ URL = <span class="s">"https://your-app.vercel.app/api/readings"</span>
 <span class="c">// and again, every five seconds</span>
 setInterval(load, <span class="n">5000</span>)</pre>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">no-store</h3>
-          <p>Serverless responses are cached by default. You want the newest row, every time.</p>
-        </article>
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Five seconds</h3>
-          <p>The board uploads every ten. Refreshing twice as often makes the page feel live.</p>
-        </article>
-        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">One big number</h3>
-          <p>Temperature large, humidity and the time underneath. That is the whole page.</p>
-        </article>
-      </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
 </section>
 
-<!-- ============ 12 · THE FORECAST ============ -->
+<!-- ============ 11 · THE FORECAST ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">Act 3 · The forecast · 1 of 2</p>
     <h2>Your server asks <span class="accent">another server</span></h2>
-    <p class="s-sub">The browser never calls the weather API. Your route does, and the key, the cache and the rate limit stay on your side.</p>
+    <p class="s-sub">The browser never calls the weather API. Your route does, and the cache and the rate limit stay on your side.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1.08fr 0.92fr;">
+    <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 8.5pt; line-height: 1.5; margin: 0; color: var(--muted-2);">Add GET /api/forecast. It calls https://api.open-meteo.com/v1/forecast for latitude 42.4, longitude -71.1, with daily temperature_2m_max and temperature_2m_min, timezone auto and five days. Cache the answer for 30 minutes. Show the five days as five small cards under the reading.</p>
+        <p class="footnote" style="padding-top: 3mm;">No key needed. Services that want one keep it in a Vercel environment variable.</p>
+      </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 9pt;"><span class="k">const</span> url = <span class="s">"https://api.open-meteo.com/v1/forecast"</span>
+        <pre class="code" style="font-size: 8.5pt;"><span class="k">const</span> url = <span class="s">"https://api.open-meteo.com/v1/forecast"</span>
   + <span class="s">"?latitude=42.4&amp;longitude=-71.1"</span>
   + <span class="s">"&amp;daily=temperature_2m_max,temperature_2m_min"</span>
   + <span class="s">"&amp;timezone=auto&amp;forecast_days=5"</span>
@@ -650,26 +606,12 @@ setInterval(load, <span class="n">5000</span>)</pre>
 
 <span class="k">const</span> { daily } = <span class="k">await</span> res.json()</pre>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">No key</h3>
-          <p>Open-Meteo is free and asks for no key. Services that do want one keep it in a Vercel environment variable.</p>
-        </article>
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Cache half an hour</h3>
-          <p>The forecast does not change faster than that, and the free tier counts requests.</p>
-        </article>
-        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Five days, two numbers</h3>
-          <p>Daily max and min. Draw them as five small cards, not a table.</p>
-        </article>
-      </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
 </section>
 
-<!-- ============ 13 · TWO SOURCES ============ -->
+<!-- ============ 12 · TWO SOURCES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -697,10 +639,10 @@ setInterval(load, <span class="n">5000</span>)</pre>
       <p>If the forecast fails, the page still shows the room. <b>One source down must not blank the other.</b></p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">13</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ============ 14 · THE THRESHOLD ============ -->
+<!-- ============ 13 · THE THRESHOLD ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -709,34 +651,25 @@ setInterval(load, <span class="n">5000</span>)</pre>
     <p class="s-sub">The page writes the threshold. The board picks it up on its next upload, ten seconds later.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1.06fr 0.94fr;">
+    <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">Add a threshold field to the page. When it is saved, POST {"threshold_c": 26} to /api/threshold, which updates the single settings row. Show the current value when the page loads.</p>
+        <p class="footnote" style="padding-top: 4mm;">The board cannot be called from outside, so it asks. The reply to its upload carries the new number.</p>
+      </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 9.5pt;"><span class="k">await</span> fetch(<span class="s">"/api/threshold"</span>, {
+        <pre class="code" style="font-size: 9pt;"><span class="k">await</span> fetch(<span class="s">"/api/threshold"</span>, {
   method: <span class="s">"POST"</span>,
   headers: { <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span> },
   body: JSON.stringify({ threshold_c: <span class="n">26</span> }),
 })</pre>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">1 · You type 26</h3>
-          <p>A number field and a save button. Nothing else on the page changes.</p>
-        </article>
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">2 · The route updates one row</h3>
-          <p><span class="mono" style="font-size: 9pt;">update settings set threshold_c = 26 where id = 1</span></p>
-        </article>
-        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">3 · The board asks</h3>
-          <p>It cannot be called from outside, so it asks. The reply to its upload carries the new number.</p>
-        </article>
-      </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">14</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ============ 15 · THE LED ============ -->
+<!-- ============ 14 · THE LED ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -745,39 +678,30 @@ setInterval(load, <span class="n">5000</span>)</pre>
     <p class="s-sub">One request, two jobs: it sends the reading, and it brings back the setting.</p>
   </header>
   <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1.08fr 0.92fr;">
+    <div class="outline" style="grid-template-columns: 0.98fr 1.02fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">On the board, after each upload, read threshold_c from the response and set GPIO 2 high when the reading is above it and low when it is below. Keep the loop at ten seconds.</p>
+        <p class="footnote" style="padding-top: 4mm;">Set the threshold below room temperature on the page. Within ten seconds the LED is on.</p>
+      </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 9.5pt;">led = Pin(<span class="n">2</span>, Pin.OUT)
+        <pre class="code" style="font-size: 9pt;">led = Pin(<span class="n">2</span>, Pin.OUT)
 
 r = urequests.post(
     URL, data=ujson.dumps(body),
-    headers={<span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>})
+    headers=HEADERS)
 data = r.json()
 threshold = data[<span class="s">"threshold_c"</span>]
 
 led.value(<span class="n">1</span> <span class="k">if</span> body[<span class="s">"temp_c"</span>] &gt; threshold <span class="k">else</span> <span class="n">0</span>)
 r.close()</pre>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 2.6mm; min-height: 0; justify-content: center;">
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">The reply is the setting</h3>
-          <p>No second request. The response you already wait for carries the number you need.</p>
-        </article>
-        <article class="card tight" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Compare, then drive</h3>
-          <p>One comparison, one pin. The LED is the smallest possible actuator, and that is the point.</p>
-        </article>
-        <article class="card tight accent" style="padding: 3.8mm 4.6mm;">
-          <h3 style="font-size: 11.5pt; margin-bottom: 1.2mm;">Try it now</h3>
-          <p>Set the threshold below room temperature. Within ten seconds the LED is on.</p>
-        </article>
-      </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">15</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">14</span></footer>
 </section>
 
-<!-- ============ 16 · FOUR ENDPOINTS ============ -->
+<!-- ============ 15 · FOUR ENDPOINTS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -809,10 +733,10 @@ r.close()</pre>
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">16</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">15</span></footer>
 </section>
 
-<!-- ============ 17 · WHEN IT DOESN'T WORK ============ -->
+<!-- ============ 16 · WHEN IT DOESN'T WORK ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -840,10 +764,10 @@ r.close()</pre>
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">17</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">16</span></footer>
 </section>
 
-<!-- ============ 18 · CLOSING ============ -->
+<!-- ============ 17 · CLOSING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -863,7 +787,7 @@ r.close()</pre>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">18</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">17</span></footer>
 </section>
 
 </body>
