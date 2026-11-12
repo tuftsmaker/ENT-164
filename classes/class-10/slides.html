@@ -313,43 +313,9 @@
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">02</span></footer>
 </section>
 
-<!-- ============ 03 · THE BENCH ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Before you start</p>
-    <h2>The bench and <span class="accent">the accounts</span></h2>
-    <p class="s-sub">Everything here is in your kit except the two accounts. Have both open before you wire anything.</p>
-  </header>
-  <div class="s-body">
-    <div class="grid g2">
-      <article class="card">
-        <span class="num">on the bench</span>
-        <h3>Hardware</h3>
-        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 10.5pt; line-height: 1.5;">
-          <li style="margin-bottom: 2.4mm;">ESP32-WROVER and its USB cable</li>
-          <li style="margin-bottom: 2.4mm;">DHT22 temperature and humidity sensor</li>
-          <li style="margin-bottom: 2.4mm;">One LED and a 220 &Omega; resistor</li>
-          <li>Breadboard and four jumper wires</li>
-        </ul>
-      </article>
-      <article class="card">
-        <span class="num">online</span>
-        <h3>Accounts</h3>
-        <ul style="margin: 0; padding-left: 4.6mm; color: var(--muted); font-size: 10.5pt; line-height: 1.5;">
-          <li style="margin-bottom: 2.4mm;">A Vercel account, free tier</li>
-          <li style="margin-bottom: 2.4mm;">A Vercel Postgres store, connected to the app</li>
-          <li style="margin-bottom: 2.4mm;">The Wi-Fi name and password</li>
-          <li>opencode, with your class skills</li>
-        </ul>
-      </article>
-    </div>
-    <div class="assign">
-      <span class="alabel">How we build</span>
-      <p>Each step gives you <b>a prompt</b>. Paste it into opencode, run what comes back, and check the result before the next step.</p>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">03</span></footer>
+<!-- ============ 03 · HOW IT FITS TOGETHER ============ -->
+<section class="slide" style="padding: 0; background: #ffffff;">
+  <img src="shots/how-it-works.jpg" alt="A four-step illustration of the build: a DHT22 measures temperature and humidity, the ESP32 sends the readings over Wi-Fi to a Vercel API, Vercel stores them in a Postgres database and serves the web app, and a laptop shows the latest 18.4 °C with a 24-hour chart" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff;">
 </section>
 
 <!-- ============ 04 · WIRE THE DHT22 ============ -->
@@ -587,6 +553,7 @@ HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/j
         </article>
       </div>
     </div>
+    <p class="footnote">The store comes from the Vercel Marketplace: <b class="mono" style="font-size: 9.5pt;">vercel.com/marketplace/neon</b>, then Install and <b>Create New Neon Account</b>. The free plan is enough.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
 </section>
