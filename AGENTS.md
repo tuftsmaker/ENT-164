@@ -112,9 +112,11 @@ Load the student-writing-style skill before writing or editing any student-facin
   module. On 2026-10-29 Class 8 joined them: its retrospective deck was converted
   and its Google Slides module item (2140716) deleted. Classes 12 and 13
   (modules 314500, 314501) keep their Google Slides items until their decks
-  land. Class 10 (module 314498) has a deck as of 2026-11-06 but still carries
-  its Google Slides item: converting it means pushing the site, curling the PDF,
-  pushing the Pages page, and then deleting the slides item.
+  land. Class 10 (module 314498) converted on 2026-11-12: the page is
+  `class-10-device-to-cloud`, the module is named "Class 10: Device to Cloud",
+  and instead of a deleted slides item it carries a **"Slides (PDF)" ExternalUrl**
+  to the site PDF, because the class asked for the deck to be posted in the
+  module.
 
   Note: the source file `ENT-164 Class 10 - Intelligent Devices with AI.pptx`
   is the deck for **Class 11** (syllabus Week 11, Thu Nov 19) — module 314499.
@@ -618,16 +620,19 @@ The ID is never resolved at run time.
   title, what the class covers, and the milestone reflection where one is due
   (week 13), plus the note that the deck is being converted. Class 10 was
   converted on 2026-11-06 and rebuilt on 2026-11-12 as a build rather than a
-  lecture: `ENT-164-Class-10-Device-to-Cloud.pdf` (Device to Cloud) walks
-  through a DHT22 on the ESP32, a POST every ten seconds to a Vercel app with
-  Postgres, the latest reading plus a five-day forecast on the page, and a
-  threshold set on the page that drives an LED. Its page is no longer a
-  placeholder; the Canvas module still points at Google Slides until the PDF is
-  live and converted. The page plays `shots/web-round-trip.mp4` under "Upload
-  it", a 10-second clip of one HTTP request, the SQL it triggers, and the JSON
-  reply, rendered by `scripts/render-web-loop.py` (PIL + ffmpeg, no browser). It
-  plays once and ends on the finished diagram, so the page does not loop it; the
-  deck keeps the still `shots/web-architecture.svg` on slide 8.
+  lecture: `ENT-164-Class-10-Device-to-Cloud.pdf` (Device to Cloud) walks the
+  Vercel and GitHub accounts, a DHT22 served from the board at
+  `/device/readings`, a Vercel app with a Neon Postgres store, and a dashboard
+  the board posts to every five seconds. The API contract, device loop, page,
+  forecast, threshold and LED slides sit in an appendix, so the walkthrough ends
+  at the whole-system picture and the assignment slide. Full-bleed
+  illustrations carry the pictures: the device API, the cloud flow and the
+  development environment. The page plays `shots/web-round-trip.mp4` under
+  "Upload it", a 10-second clip of one HTTP request, the SQL it triggers and the
+  JSON reply, rendered by `scripts/render-web-loop.py` (PIL + ffmpeg, no
+  browser); it plays once and ends on the finished diagram. Checkpoint 2 was
+  deleted from Canvas on 2026-11-12, and the intelligent device assignment now
+  asks for a site plus an external API, explicitly not a weather site.
   Class 8 converted
   with the **retrospective** deck only: the race half of the session lives on
   its page, and the PDF is `ENT-164-Class-8-Team-Retrospective.pdf`. Class 7
