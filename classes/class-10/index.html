@@ -138,9 +138,9 @@
       <div class="callout"><b>First, register the board.</b> Tufts Wi-Fi expects a sign-in the ESP32 cannot do, so register its MAC address at <a href="https://access.tufts.edu/manual-non-browser-device-registration">access.tufts.edu/manual-non-browser-device-registration</a> before you connect. Until it takes effect, <span class="mono">wlan.isconnected()</span> stays False.</div>
       <div class="cards" style="margin-top: 20px;">
         <div class="card">
-          <span class="num">GET /readings</span>
+          <span class="num">the board's own API</span>
           <h3>An endpoint on the board</h3>
-          <p>The ESP32 runs a tiny server. Open <span class="mono">http://the-board-address/readings</span> on the same Wi-Fi and the temperature and humidity come back as JSON.</p>
+          <p>The ESP32 runs a tiny server. opencode prints the address and the path; open them on the same Wi-Fi and the temperature and humidity come back as JSON.</p>
         </div>
         <div class="card">
           <span class="num">why</span>

@@ -370,7 +370,7 @@
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
         <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">I have an ESP32 with MicroPython and a DHT22 sensor. I want to read the current temperature and humidity via an API on the device. Connect the ESP32 to the open Tufts_Wireless network.</p>
-        <p class="footnote" style="padding-top: 4mm;">Ask opencode for the address if you missed it. One page, one number, no cloud yet.</p>
+        <p class="footnote" style="padding-top: 4mm;">Ask opencode for the address and the path, then open it in your browser. One device, one reading, no cloud yet.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
         <pre class="code" style="font-size: 10pt;"><span class="c"># after wlan.connect(...) and an IP address</span>
@@ -389,7 +389,6 @@ s.listen(<span class="n">1</span>)
     conn.close()</pre>
       </div>
     </div>
-    <p class="footnote">Open <b>http://the-board-address/readings</b> on the same Wi-Fi. That is your first proof the whole chain works.</p>
   </div>
   <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">05</span></footer>
 </section>
