@@ -114,9 +114,9 @@ Load the student-writing-style skill before writing or editing any student-facin
   (modules 314500, 314501) keep their Google Slides items until their decks
   land. Class 10 (module 314498) converted on 2026-11-12: the page is
   `class-10-device-to-cloud`, the module is named "Class 10: Device to Cloud",
-  and instead of a deleted slides item it carries a **"Slides (PDF)" ExternalUrl**
-  to the site PDF, because the class asked for the deck to be posted in the
-  module.
+  and its slides item was deleted. The page carries the deck's download button
+  and, as its hero, the deck's own cover illustration (`coverage.yml`'s `hero`
+  points at `shots/weather-station-cover.jpg`).
 
   Note: the source file `ENT-164 Class 10 - Intelligent Devices with AI.pptx`
   is the deck for **Class 11** (syllabus Week 11, Thu Nov 19) — module 314499.

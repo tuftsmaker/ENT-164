@@ -1,8 +1,8 @@
 # What this class covers. The Canvas class page's "What we'll cover"
 # cards: a reading of the deck, one brief line per topic. The page is
 # generated from these, so edit here rather than in Canvas.
-hero: "../../assets/photos/class/device-item-added.jpg"
-hero_alt: "A tablet showing a student-built dashboard with the local weather and a task list"
+hero: "shots/weather-station-cover.jpg"
+hero_alt: "An illustrated weather station on a wooden post, with a dashed link through the internet cloud to a laptop showing its readings on a web page"
 
 topics:
   - title: "Wire the sensor"
