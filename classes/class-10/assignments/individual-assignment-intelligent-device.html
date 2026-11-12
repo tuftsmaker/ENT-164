@@ -1,26 +1,29 @@
-<h2>Overview</h2>
-<p>Use Claude to generate MicroPython code that connects your ESP32-WROVER to Claude's API and wires it into something physical. A sensor feeding data to Claude, a display showing Claude's response, a button triggering a prompt, or some combination. The code comes from Claude. The physical build and the prompting strategy come from you.</p>
-<h2>The Task</h2>
-<p>Build something physical that sends real-world data to Claude, displays Claude's response in the physical world, or both. Your project must include:</p>
-<ol>
-<li>
-<strong>A working API connection.</strong> Your ESP32 sends a prompt to Claude's API over WiFi and receives a response.</li>
-<li>
-<strong>Physical input, output, or both.</strong> At least one side of the interaction must go beyond the console and leverage a sensor or actuator.</li>
-</ol>
-<p>Use Claude to generate all the code. Tell it you're using MicroPython on an ESP32-WROVER, what hardware you're wiring up (sensor model, display type, anything else in your kit), and give it the API key. Test in stages: get the API call working first, then the hardware, then combine them.</p>
-<p>Your class API key is posted with this assignment in Canvas. Copy it from there, and do not share it outside class.</p>
+<h2>Goal</h2>
+<p><strong>Build your own web site that integrates with your ESP32 and an external API.</strong> It cannot be a weather site, including the one we built in class. Pick something you would actually use or show someone.</p>
 
-<h2>What to Submit</h2>
-<p><strong>Prompt Log: </strong>Your full conversation with Claude showing your initial prompt, what broke, how you described problems back, and how many rounds it took.</p>
-<p><strong>Working Demo: </strong>Short video (under 2 min) showing your physical build in action.</p>
-<p><strong>Reflection: </strong></p>
+<h2>What it must include</h2>
+<ol>
+<li><strong>A device that is part of the product.</strong> Your ESP32 sends something real to the site, acts on something the site sends, or both. A sensor, an LED, a motor, a display.</li>
+<li><strong>A deployed web site.</strong> A URL anyone can open, showing something that is true about your device.</li>
+<li><strong>An external API.</strong> Something your site calls that you could not compute yourself: weather, transit, a model, a public dataset.</li>
+</ol>
+
+<h2>How to build it</h2>
+<p>Use opencode, and work in stages. Get the device reading or acting on its own first, then the upload, then the page, then the API. Push to main as you go: Vercel rebuilds the site on every push, so the live URL always matches your repository.</p>
+<p>Keep the shape from class: the board posts to your own API, the database keeps the readings, the page shows them, and one API call adds something new.</p>
+
+<h2>What to submit</h2>
+<p><strong>Site URL:</strong> the deployed address, working, with your device's data on it.</p>
+<p><strong>Demo:</strong> a short video, under 2 minutes, with the device and the page in the same shot so the connection is visible.</p>
+<p><strong>Conversation:</strong> a share link to your opencode session, showing the prompts, what broke, and how you described the problem back.</p>
+<p><strong>Reflection:</strong></p>
 <ul>
-<li class="whitespace-normal break-words pl-2">What surprised you? Describe a moment where the result didn't match your expectation and how that changed your approach.</li>
-<li class="whitespace-normal break-words pl-2">When did you get stuck, and what did you try before it clicked?</li>
-<li class="whitespace-normal break-words pl-2">What would you do differently if you started over tomorrow?</li>
+<li>What surprised you? Describe a moment where the result did not match your expectation and how that changed your approach.</li>
+<li>When did you get stuck, and what did you try before it clicked?</li>
+<li>What would you do differently if you started over tomorrow?</li>
 </ul>
-<p>Grading (10 pts)</p>
+
+<h2>Grading (10 pts)</h2>
 <table>
 <thead>
 <tr>
@@ -30,21 +33,27 @@
 </thead>
 <tbody>
 <tr>
-<td>Prompt log showing iteration</td>
-<td>3</td>
-</tr>
-<tr>
-<td>Working demo with physical I/O</td>
+<td>Working site with the device's data</td>
 <td>4</td>
 </tr>
 <tr>
-<td>Reflection</td>
-<td>3</td>
+<td>External API used for something real</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Demo shows the device and the page together</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Conversation and reflection</td>
+<td>2</td>
 </tr>
 </tbody>
 </table>
+
 <h2>Tips</h2>
 <ul>
-<li>Be specific. Include sensor models, pin wiring, exact error messages.</li>
-<li>Ask Claude to explain code you don't understand.</li>
+<li>Be specific with the agent: name the board, the pin, the endpoint, and paste the exact error.</li>
+<li>If a key is involved, keep it in Vercel's environment variables, never in the repository.</li>
+<li>Build the smallest version that works end to end, then add to it.</li>
 </ul>
