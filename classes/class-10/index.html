@@ -64,6 +64,7 @@
     <h2>On this page</h2>
     <a href="#build">What you'll build</a>
     <a href="#read">Read the room</a>
+    <a href="#serve">Serve it</a>
     <a href="#upload">Upload it</a>
     <a href="#show">Show it</a>
     <a href="#control">Set a threshold</a>
@@ -128,7 +129,29 @@
           <p>The three-pin module has the resistor built in. The bare four-pin sensor needs it, or the data line floats.</p>
         </div>
       </div>
-      <div class="callout"><b>In MicroPython:</b> <span class="mono" style="word-break:break-all;">sensor = dht.DHT22(Pin(4))</span>, then <span class="mono">sensor.measure()</span>, then <span class="mono">sensor.temperature()</span> and <span class="mono">sensor.humidity()</span>. If the numbers are not printing to the console, nothing later will work.</div>
+      <div class="callout"><b>In MicroPython:</b> <span class="mono" style="word-break:break-all;">sensor = dht.DHT22(Pin(4))</span>, then <span class="mono">sensor.measure()</span>, then <span class="mono">sensor.temperature()</span> and <span class="mono">sensor.humidity()</span>. opencode does not show the board's serial output, so ask it to run the program once and report the numbers.</div>
+    </section>
+
+    <section class="section-block" id="serve">
+      <h2>Serve it</h2>
+      <p class="lede">Before the cloud, prove the chain on your own network.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">GET /temperature</span>
+          <h3>An endpoint on the board</h3>
+          <p>The ESP32 runs a tiny server. Open <span class="mono">http://the-board-address/temperature</span> on the same Wi-Fi and the reading comes back as JSON.</p>
+        </div>
+        <div class="card">
+          <span class="num">why</span>
+          <h3>It is your console</h3>
+          <p>opencode cannot show you the board's serial output, so the browser is how you check the sensor and the Wi-Fi before anything else.</p>
+        </div>
+        <div class="card accent">
+          <span class="num">next</span>
+          <h3>Then swap it</h3>
+          <p>With the number proven, the server is replaced by the POST loop. From here the page is the console.</p>
+        </div>
+      </div>
     </section>
 
     <section class="section-block" id="upload">

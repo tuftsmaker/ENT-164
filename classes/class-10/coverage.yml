@@ -7,6 +7,8 @@ hero_alt: "A tablet showing a student-built dashboard with the local weather and
 topics:
   - title: "Read the room"
     learn: "A DHT22 on GPIO 4, giving the ESP32 a temperature and a humidity every ten seconds."
+  - title: "Serve it"
+    learn: "A tiny web server on the board answers GET /temperature, so a browser can check the reading."
   - title: "Upload it"
     learn: "One POST to a Vercel app, and one row per reading in Postgres."
   - title: "Show it"
