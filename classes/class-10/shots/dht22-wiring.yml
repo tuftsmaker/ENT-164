@@ -8,11 +8,8 @@ layout:
     hidden: false
 
 components:
-  - type: module
+  - type: dht22
     at: [10, c]
-    pins: ["VCC", "DATA", "GND"]
-    label_text: DHT22
-    height: 96
 
 wires:
   - {from: bb.10.c, to: board.L1, color: red, label: 3V3}
