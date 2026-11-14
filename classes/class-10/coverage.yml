@@ -15,3 +15,8 @@ topics:
     learn: "A page with the newest reading, plus five days of forecast from a weather API."
   - title: "Control it"
     learn: "A threshold set on the page that turns on an LED when the room passes it."
+
+links:
+  - title: "Step-by-step tutorial"
+    url: "tutorial.html"
+    note: "The whole build at your own pace, from the first wire to the database. PDF included."
