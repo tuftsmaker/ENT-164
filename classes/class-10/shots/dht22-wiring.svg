@@ -381,69 +381,41 @@
 <circle cx="1548" cy="534" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
 <polyline class="wire" data-wire="2" data-colour="black" data-label="ground — GND" points="1616,534 1616,634 756,634 756,788 670,788" fill="none" stroke="#2b2b2b" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
 <circle cx="1616" cy="534" r="6.5" fill="none" stroke="#333" stroke-width="2.5" opacity="0.5"/>
-<line x1="1480" y1="534" x2="1480" y2="516" stroke="#9a9a9a" stroke-width="3.5"/>
-<line x1="1548" y1="534" x2="1548" y2="516" stroke="#9a9a9a" stroke-width="3.5"/>
-<line x1="1616" y1="534" x2="1616" y2="516" stroke="#9a9a9a" stroke-width="3.5"/>
-<rect x="1453.0" y="266" width="190" height="250" rx="10" fill="#f6f4ee" stroke="#cdc8bb" stroke-width="2.5"/>
-<rect x="1468.0" y="279.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="279.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="279.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="279.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="279.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="279.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1468.0" y="295.625" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="295.625" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="295.625" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="295.625" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="295.625" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="295.625" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1468.0" y="311.75" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="311.75" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="311.75" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="311.75" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="311.75" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="311.75" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1468.0" y="327.875" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="327.875" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="327.875" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="327.875" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="327.875" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="327.875" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1468.0" y="344.0" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="344.0" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="344.0" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="344.0" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="344.0" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="344.0" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1468.0" y="360.125" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="360.125" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="360.125" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="360.125" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="360.125" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="360.125" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1468.0" y="376.25" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="376.25" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="376.25" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="376.25" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="376.25" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="376.25" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1468.0" y="392.375" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="392.375" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="392.375" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="392.375" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="392.375" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="392.375" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1468.0" y="408.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1498.0" y="408.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1528.0" y="408.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1558.0" y="408.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1588.0" y="408.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1618.0" y="408.5" width="10" height="5" rx="2.5" fill="#d9d5c9"/>
-<rect x="1469.0" y="429.0" width="158" height="75.0" rx="5" fill="#1b1b1e" stroke="#0d0d0f" stroke-width="1.5"/>
-<text x="1480" y="444.0" font-size="10" font-weight="400" fill="#9a9aa4" text-anchor="middle">+</text>
-<text x="1548" y="444.0" font-size="10" font-weight="400" fill="#9a9aa4" text-anchor="middle">out</text>
-<text x="1616" y="444.0" font-size="10" font-weight="400" fill="#9a9aa4" text-anchor="middle">-</text>
-<text x="1548" y="484.5" font-size="13" font-weight="700" fill="#f2f2f4" text-anchor="middle">DHT22</text>
+<line x1="1480" y1="476.0" x2="1480" y2="534" stroke="#9a9a9a" stroke-width="3.5"/>
+<line x1="1548" y1="476.0" x2="1548" y2="534" stroke="#9a9a9a" stroke-width="3.5"/>
+<line x1="1616" y1="476.0" x2="1616" y2="534" stroke="#9a9a9a" stroke-width="3.5"/>
+<path d="M1433.0 386.0 L1433.0 285.0 A69.0 69.0 0 0 1 1502.0 216 L1594.0 216 A69.0 69.0 0 0 1 1663.0 285.0 L1663.0 386.0 Z" fill="#f4f2ec" stroke="#cfcabd" stroke-width="2.5"/>
+<circle cx="1548" cy="241.5" r="14.26" fill="#ffffff" stroke="#cfcabd" stroke-width="2"/>
+<rect x="1449.1" y="276.0" width="197.80000000000018" height="90.0" fill="#e7e4da"/>
+<rect x="1457.8031999999998" y="280.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1497.3631999999998" y="280.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1536.9232" y="280.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1576.4832" y="280.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1616.0432" y="280.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1457.8031999999998" y="303.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1497.3631999999998" y="303.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1536.9232" y="303.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1576.4832" y="303.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1616.0432" y="303.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1457.8031999999998" y="325.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1497.3631999999998" y="325.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1536.9232" y="325.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1576.4832" y="325.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1616.0432" y="325.5" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1457.8031999999998" y="348.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1497.3631999999998" y="348.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1536.9232" y="348.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1576.4832" y="348.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<rect x="1616.0432" y="348.0" width="22.153600000000022" height="13.5" rx="1.5" fill="#232326"/>
+<text x="1548" y="375.5" font-size="9.5" font-weight="400" fill="#9a9a9f" text-anchor="middle">AOSONG AM2302</text>
+<rect x="1456.0" y="386.0" width="184.0" height="96.0" fill="#1b1b1e" stroke="#0d0d0f" stroke-width="1.5"/>
+<circle cx="1548" cy="414.8" r="21.12" fill="none" stroke="#8f8f96" stroke-width="11.616000000000001"/>
+<text x="1480" y="462.56" font-size="9" font-weight="400" fill="#e8e8ec" text-anchor="middle">+</text>
+<rect x="1469" y="468.56" width="22" height="13.440000000000001" rx="2" fill="#7a2b26"/>
+<text x="1548" y="462.56" font-size="9" font-weight="400" fill="#e8e8ec" text-anchor="middle">OUT</text>
+<rect x="1537" y="468.56" width="22" height="13.440000000000001" rx="2" fill="#7a2b26"/>
+<text x="1616" y="462.56" font-size="9" font-weight="400" fill="#e8e8ec" text-anchor="middle">-</text>
+<rect x="1605" y="468.56" width="22" height="13.440000000000001" rx="2" fill="#7a2b26"/>
 <rect class="legend" data-colour="red" x="90" y="1023" width="26" height="16" rx="4" fill="#e02020"/>
 <text x="124" y="1038" font-size="18" fill="#444">3V3</text>
 <rect class="legend" data-colour="orange" x="216.8" y="1023" width="26" height="16" rx="4" fill="#e07a1f"/>
