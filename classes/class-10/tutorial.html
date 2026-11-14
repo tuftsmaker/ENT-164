@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Build a weather station — ENT-164 tutorial</title>
+<link rel="stylesheet" href="../../assets/guide.css">
+<style>
+  /* Page-local: the prompt panels and code blocks this tutorial needs. */
+  .prompt { background: var(--blue-tint); border: 1px solid #cfe1f7; border-radius: 8px; padding: 4mm 5mm; margin: 0 0 5mm; }
+  .prompt .label { font-size: 8pt; letter-spacing: 1.6px; text-transform: uppercase; color: var(--blue-deep); font-weight: 700; margin-bottom: 2.5mm; }
+  .prompt p { margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 8.8pt; line-height: 1.55; color: var(--muted-2); }
+  pre { background: #0f1b2d; color: #dbe7f7; border-radius: 8px; padding: 4mm 5mm; margin: 0 0 5mm;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 8.2pt; line-height: 1.6; white-space: pre-wrap; overflow: hidden; }
+  pre .c { color: #7f8ea3; }
+  pre .s { color: #9ecbff; }
+  pre .k { color: #ffb86b; }
+  pre .n { color: #b8e0a0; }
+  .step h3 { page-break-after: avoid; break-after: avoid; }
+  .check { border-left: 3px solid var(--tufts-blue); padding: 0 0 0 4mm; margin: 0 0 4mm; font-size: 10pt; color: var(--muted-2); }
+  .check b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="../../">
+    <span class="mark"><img src="../../laser-cutting/shots/class-hammer.svg" alt=""></span>
+    <span>ENT-164 <small>&middot; Intro to Making</small></span>
+  </a>
+  <div class="links">
+    <a href="../../workshops/">Workshops</a>
+    <a href="../../syllabus/">Syllabus</a>
+    <a href="../../about/">About</a>
+    <a class="pill-link" href="./">Class 10</a>
+  </div>
+</nav>
+
+<!-- ================= COVER ================= -->
+<div class="cover cover-text">
+  <div class="mark"><img src="shots/weather-mark.svg" alt="A weather station mark"></div>
+  <div class="course">ENT-164 · Intro to Making</div>
+  <div class="kicker">Step-by-step tutorial · Class 10 · No experience needed</div>
+  <h1>Build a weather station<br><span class="accent">that lives on the web</span></h1>
+  <div class="subtitle">Wire a DHT22 to your ESP32, serve the reading from the board, then build a Vercel app that stores it, shows it, and adds a forecast.</div>
+  <div class="pills">
+    <div class="pill">ESP32 + DHT22</div>
+    <div class="pill">Vercel + Neon</div>
+    <div class="pill">opencode</div>
+    <div class="pill">About 3 hours</div>
+  </div>
+  <div class="cover-middle">
+    <div class="paste">
+      <div class="label">The one idea</div>
+      <div class="say"><b>The board sends, the site shows.</b> If the page cannot see it, the board did not send it. Check the sending end first.</div>
+    </div>
+    <p class="cover-hint">Every step below ends with something you can see. Do not move on until you can see it.</p>
+  </div>
+  <div class="footer">
+    <span>Prepared for ENT-164 · Fall 2026</span>
+    <span>Class 10 · Device to Cloud</span>
+  </div>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<div class="page">
+
+  <p class="lead">This tutorial builds the class 10 weather station at your own pace. You will wire one sensor, serve its reading from the board, put an app on the internet, give that app a database, and end with a page you can open from anywhere. Each step says what to do and what you should see before you continue.</p>
+
+  <h2>What you'll build</h2>
+  <p>A DHT22 sensor on your ESP32 reads temperature and humidity. The board serves that reading at its own address, then posts it to an app you deploy on Vercel. The app stores the readings in a Postgres database and shows them on a page. Later you add a weather API, so the page shows both your room and the next few days.</p>
+
+  <h2>Before you start</h2>
+  <table>
+    <thead><tr><th>Parts</th><th>Accounts and software</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>
+          ESP32-WROVER and its USB cable<br>
+          DHT22 sensor<br>
+          Breadboard and four jumper wires<br>
+          10 k&Omega; resistor, if your sensor is the bare four-pin kind
+        </td>
+        <td>
+          opencode, with the class skills<br>
+          A Vercel account (free Hobby plan)<br>
+          A GitHub account (you can make it from Vercel)<br>
+          The board's MAC address registered with Tufts IT
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip"><b>Work in order.</b> Every step depends on the one before it. If something breaks, you know it is the step you are in, not the five before it.</div>
+
+  <!-- ============ STEP 1 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><h2>Wire the DHT22</h2></div>
+    <p>Put the ESP32 and the sensor on the breadboard. Four wires, and one resistor if you have the bare sensor rather than the module.</p>
+    <table>
+      <thead><tr><th>DHT22</th><th>ESP32</th></tr></thead>
+      <tbody>
+        <tr><td>VCC</td><td>3V3</td></tr>
+        <tr><td>DATA</td><td>GPIO 4</td></tr>
+        <tr><td>GND</td><td>GND</td></tr>
+        <tr><td>10 k&Omega; between VCC and DATA</td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="check"><b>Two things that bite.</b> Use 3.3 V, not 5 V: the ESP32 pins are not 5 V tolerant. And leave two seconds between reads, or the sensor returns stale numbers and then errors.</p>
+    <div class="callout tip"><b>Different pin?</b> Any free GPIO works. If you use another one, say which when you talk to opencode: "the DHT22 data pin is on GPIO 15". Nothing else changes.</div>
+    <div class="callout"><b>The module versus the bare sensor.</b> The three-pin module has the pull-up resistor built in. The bare four-pin sensor needs the 10 k&Omega; between VCC and DATA, or the data line floats and every reading fails.</div>
+  </div>
+
+  <!-- ============ STEP 2 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><h2>Register the board with Tufts IT</h2></div>
+    <p>Tufts Wi-Fi expects every device to sign in through a web page. Your board has no browser, so IT registers its MAC address by hand.</p>
+    <p>Plug the board into your laptop and ask opencode to print its MAC address. It is six pairs, like <span class="mono">24:6f:28:1a:2b:3c</span>.</p>
+    <p>Open <span class="mono">access.tufts.edu/manual-non-browser-device-registration</span> on your laptop. Paste the address, give the device your name, and submit. It can take a few minutes to take effect.</p>
+    <div class="callout warn"><b>Until it is registered,</b> the board cannot join the network, and nothing later in this tutorial will work.</div>
+  </div>
+
+  <!-- ============ STEP 3 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">3</div><h2>Serve the reading from the board</h2></div>
+    <p>Now ask opencode for the device's own API. Start a session in an empty folder and paste this:</p>
+    <div class="prompt">
+      <div class="label">The prompt</div>
+      <p>I have an ESP32 with MicroPython and a DHT22 sensor. I want to read the current temperature and humidity via an API on the device. Connect the ESP32 to the open Tufts_Wireless network. Serve it at GET /device/readings.</p>
+    </div>
+    <p>Run what it writes. When it starts, it prints an address like <span class="mono">192.168.1.42</span>. Open <span class="mono">http://192.168.1.42/device/readings</span> in a browser on the same Wi-Fi.</p>
+    <p class="check"><b>You should see</b> a JSON line with a temperature and a humidity, refreshing each time you reload. That is the sensor, the Wi-Fi and the server all working at once.</p>
+    <div class="callout warn"><b>If the browser cannot connect,</b> check the three in order: the board printed an address (Wi-Fi), your laptop is on the same network, and the path is exactly <span class="mono">/device/readings</span>. A 404 means the first two worked and the path is wrong.</div>
+  </div>
+
+  <!-- ============ STEP 4 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">4</div><h2>Make a Vercel account</h2></div>
+    <p>Go to <span class="mono">vercel.com</span> and sign up. Choose the <b>Hobby</b> plan; it is the free one and it is enough for this project.</p>
+    <p>You do not need a credit card, and you do not need to install anything.</p>
+  </div>
+
+  <!-- ============ STEP 5 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">5</div><h2>Make a GitHub account</h2></div>
+    <p>GitHub is where the code lives. Vercel deploys whatever is in the repository, so the repository comes first.</p>
+    <p>On Vercel's <b>Import Git Repository</b> panel, click <b>GitHub</b>. It opens GitHub's sign-up: an email, a username, your country, then <b>Create account</b>. Click the link GitHub emails you.</p>
+    <p class="check"><b>Remember the username.</b> It appears in the repository address and in Vercel's list of repositories.</p>
+  </div>
+
+  <!-- ============ STEP 6 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">6</div><h2>Install the GitHub app and make the repository</h2></div>
+    <p>Back in Vercel, the panel says it wants the GitHub application installed. Press <b>Install</b>, choose your account, and let it see the repositories you need. All of them is simpler.</p>
+    <p>Now go to <span class="mono">github.com</span>, click <b>+</b> in the top right, then <b>New repository</b>. Name it <span class="mono">weather</span> and leave it empty: no README, no .gitignore, no licence. Your agent fills it in.</p>
+    <p>Press <b>Create repository</b>. On the page that follows, copy the <b>HTTPS</b> address under Quick setup, the one that ends in <span class="mono">.git</span>.</p>
+  </div>
+
+  <!-- ============ STEP 7 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">7</div><h2>Let opencode build the app</h2></div>
+    <p>Start a new opencode session, and paste this with your own repository address:</p>
+    <div class="prompt">
+      <div class="label">The prompt</div>
+      <p>Check out this repository: https://github.com/your-username/weather.git and add a vercel app to show the current temperature and humidity. Push to main when done.</p>
+    </div>
+    <p class="check"><b>You should see</b> opencode clone the repository, write the app into it, and push to <span class="mono">main</span>. Ask it to confirm the push worked before you move on.</p>
+    <div class="callout tip"><b>New session, not the old one.</b> The device API session is about the board. A fresh session keeps the app work and the board work from tangling.</div>
+  </div>
+
+  <!-- ============ STEP 8 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">8</div><h2>Import the repository and deploy</h2></div>
+    <p>In Vercel, open <b>Projects</b> and press <b>Import</b>. Pick <span class="mono">weather</span> from the list.</p>
+    <p>On the New Project screen, check that it is importing your repository on the <span class="mono">main</span> branch. Leave the root directory and the preset alone: Vercel reads your files and decides. Then press <b>Deploy</b>.</p>
+    <p class="check"><b>You should see</b> a build log, then a confirmation with an address. That address is your site.</p>
+  </div>
+
+  <!-- ============ STEP 9 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">9</div><h2>Open your site</h2></div>
+    <p>On the project page, copy the address under <b>Domains</b>, not the one under Deployment. The deployment address changes on every push; the domain stays.</p>
+    <p>Paste it into a browser. You should see the app's page. It may be empty of readings for now, because nothing is posting yet.</p>
+  </div>
+
+  <!-- ============ STEP 10 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">10</div><h2>Add the database</h2></div>
+    <p>In Vercel, open <b>Storage</b>, then <b>Create Database</b>, then pick <b>Neon</b>. The free plan is enough.</p>
+    <p>Vercel makes a Neon project and adds its connection string to your project's environment variables, so the app can already reach it.</p>
+    <div class="callout tip"><b>What Neon is.</b> It is Postgres, the same database language the deck shows. You never open a SQL console: the app creates its own tables on the first request.</div>
+  </div>
+
+  <!-- ============ STEP 11 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">11</div><h2>Tell opencode about the database</h2></div>
+    <p>Back in your opencode session:</p>
+    <div class="prompt">
+      <div class="label">The prompt</div>
+      <p>I've added a Neon database to my project to store temperature and humidity readings from my ESP32. POST the temperature and humidity every 5 second to an API endpoint and show the latest values on my weather dashboard.</p>
+    </div>
+    <p class="check"><b>You should see</b> a table for the readings, a route that accepts them, and a page that shows the latest values. Ask opencode to commit and push when you are happy, and Vercel rebuilds the site on its own.</p>
+  </div>
+
+  <!-- ============ STEP 12 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">12</div><h2>Point the board at the site</h2></div>
+    <p>Now the board has somewhere to post. In the device session, ask opencode to send the reading to your app every five seconds:</p>
+    <div class="prompt">
+      <div class="label">The prompt</div>
+      <p>Change the program so the board posts its temperature and humidity every five seconds to https://your-app.vercel.app/cloud/history as JSON, and prints the status code and the reply. Keep GET /device/readings working.</p>
+    </div>
+    <p class="check"><b>You should see</b> a reading appear on your site within a few seconds of the board starting, and a new one every five seconds after that.</p>
+  </div>
+
+  <!-- ============ STEP 13 ============ -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">13</div><h2>Make it yours</h2></div>
+    <p>The page works. Now decide what it should look like, one request at a time:</p>
+    <ul>
+      <li><span class="mono">Add a table with the temperature history.</span></li>
+      <li><span class="mono">Show the last 24 hours as a line chart.</span></li>
+      <li><span class="mono">Add the five-day forecast from Open-Meteo.</span></li>
+    </ul>
+    <p class="check"><b>After each request,</b> refresh the page and check it. One change at a time is what makes a broken page easy to explain.</p>
+  </div>
+
+  <h2>The two routes your app needs</h2>
+  <p>Everything on the page is built from these. If a route goes missing, ask opencode for that one by name.</p>
+  <table class="flow">
+    <thead><tr><th>Route</th><th>Who calls it</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><span class="mono">POST /cloud/history</span></td><td>the board</td><td>stores one reading and answers with the current threshold</td></tr>
+      <tr><td><span class="mono">GET /cloud/history</span></td><td>the page</td><td>returns the readings, newest first, with their timestamps</td></tr>
+    </tbody>
+  </table>
+
+  <h2>When it doesn't work</h2>
+  <table class="flow">
+    <thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>The board prints no address</td><td>Wi-Fi</td><td>Check the network name and password; confirm the MAC is registered</td></tr>
+      <tr><td>The browser cannot reach the board</td><td>Not on the same network, or the wrong path</td><td>Join the same Wi-Fi; use <span class="mono">/device/readings</span> exactly</td></tr>
+      <tr><td>404 or 405 from Vercel</td><td>Wrong path or method</td><td><span class="mono">POST /cloud/history</span>, not <span class="mono">/cloud/histories</span></td></tr>
+      <tr><td>500 from Vercel</td><td>The app, not the board</td><td>Read the Vercel log: a missing environment variable, or a table that was never created</td></tr>
+      <tr><td>The number never moves</td><td>Cache, or the board stopped</td><td>Open the route in a browser; if it changes there, it is cache</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><b>Where this goes next.</b> The class deck's appendix has the API contract, the device loop, the page, the forecast, the threshold and the LED in detail. Your assignment builds a different product with the same pieces: a site, a device, and an external API.</div>
+
+</div>
+
+</body>
+</html>
