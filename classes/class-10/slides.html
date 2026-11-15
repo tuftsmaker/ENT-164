@@ -499,8 +499,8 @@ sensor = dht.DHT22(Pin(<span class="n">4</span>))
     <div class="outline" style="grid-template-columns: 0.95fr 1.05fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
         <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">Serve the current temperature and humidity reading from the device at GET /device/readings. Print the device URL when ready.</p>
-        <p class="footnote" style="padding-top: 4mm;">Open that URL in a browser on the same Wi-Fi. One device, one reading, no cloud yet.</p>
+        <p class="mono" style="font-size: 9pt; line-height: 1.52; margin: 0; color: var(--muted-2);">Serve the current temperature and humidity reading from the device at GET /device/readings. Print the device's API endpoint when ready.</p>
+        <p class="footnote" style="padding-top: 4mm;">Ask opencode for the board's address, then open <b>/device/readings</b> on it. One device, one reading, no cloud yet.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
         <pre class="code" style="font-size: 9pt;"><span class="c"># after wlan.connect(...), answer GET /device/readings</span>
