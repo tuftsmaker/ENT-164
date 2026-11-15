@@ -324,7 +324,7 @@
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 1 · Read the room · 1 of 2</p>
+    <p class="s-kicker">Act 1 · Read the room · 1 of 3</p>
     <h2>Register the board <span class="accent">before it connects</span></h2>
     <p class="s-sub">The Tufts network expects every device to sign in. A board with no browser cannot, so IT registers its MAC address by hand.</p>
   </header>
@@ -356,16 +356,47 @@
 </section>
 
 
-<!-- ============ 05 · THE DEVICE API ============ -->
+<!-- ============ 05 · READ IT ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Act 1 · Read the room · 2 of 3</p>
+    <h2>Wire it <span class="accent">and read it</span></h2>
+    <p class="s-sub">Numbers on the bench first. The next step puts the same numbers on the network.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 1fr 1.05fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">The prompt</p>
+        <p class="mono" style="font-size: 9.5pt; line-height: 1.52; margin: 0; color: var(--muted-2);">I have an ESP32 with MicroPython and a DHT22 sensor. Tell me which pin to wire the data line to, then write a program that reads the temperature and humidity every two seconds and prints both.</p>
+        <p class="footnote" style="padding-top: 4mm;">The pin is opencode's choice. It does not show the board's serial output, so ask it to run the program once and report the numbers.</p>
+      </div>
+      <div class="panel" style="padding: 4mm; justify-content: center;">
+        <pre class="code" style="font-size: 9.5pt;"><span class="k">import</span> dht, time
+<span class="k">from</span> machine <span class="k">import</span> Pin
+
+sensor = dht.DHT22(Pin(<span class="n">4</span>))
+
+<span class="k">while</span> <span class="k">True</span>:
+    sensor.measure()
+    <span class="k">print</span>(sensor.temperature(), sensor.humidity())
+    time.sleep(<span class="n">2</span>)</pre>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">05</span></footer>
+</section>
+
+<!-- ============ 06 · THE DEVICE API ============ -->
 <section class="slide" style="padding: 0; background: #ffffff;">
   <img src="shots/device-api.jpg" alt="A three-step illustration of the device API: the DHT22 measures temperature and humidity, the ESP32 serves it at GET /api/weather over the local Wi-Fi, and a browser fetches the JSON and shows 18.4 degrees and 72 percent" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff;">
 </section>
 
-<!-- ============ 06 · SERVE IT ============ -->
+<!-- ============ 07 · SERVE IT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
-    <p class="s-kicker">Act 1 · Read the room · 2 of 2</p>
+    <p class="s-kicker">Act 1 · Read the room · 3 of 3</p>
     <h2>Serve it <span class="accent">to a browser</span></h2>
     <p class="s-sub">Before any cloud, prove the whole chain on your own network: sensor, Wi-Fi, HTTP, browser.</p>
   </header>
@@ -377,7 +408,7 @@
         <p class="footnote" style="padding-top: 4mm;">Ask opencode for the board's address, then open <b>/device/readings</b> on it. One device, one reading, no cloud yet.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 10pt;"><span class="c"># after wlan.connect(...), answer GET /device/readings</span>
+        <pre class="code" style="font-size: 9pt;"><span class="c"># after wlan.connect(...), answer GET /device/readings</span>
 s = socket.socket()
 s.bind((<span class="s">""</span>, <span class="n">80</span>))
 s.listen(<span class="n">1</span>)
@@ -385,8 +416,8 @@ s.listen(<span class="n">1</span>)
 <span class="k">while</span> <span class="k">True</span>:
     conn, _ = s.accept()
     sensor.measure()
-    body = <span class="s">'{"temperature": %.1f, "humidity": %.1f}'</span> % (
-        sensor.temperature(), sensor.humidity())
+    t, h = sensor.temperature(), sensor.humidity()
+    body = <span class="s">'{"temperature": %.1f, "humidity": %.1f}'</span> % (t, h)
     conn.send(<span class="s">"HTTP/1.1 200 OK\r\n"</span>)
     conn.send(<span class="s">"Content-Type: application/json\r\n\r\n"</span>)
     conn.send(body)
@@ -394,16 +425,16 @@ s.listen(<span class="n">1</span>)
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">06</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">07</span></footer>
 </section>
 
 
-<!-- ============ 07 · THE CLOUD FLOW ============ -->
+<!-- ============ 08 · THE CLOUD FLOW ============ -->
 <section class="slide" style="padding: 0; background: #ffffff;">
   <img src="shots/cloud-flow.jpg" alt="A four-step illustration of the cloud half: the DHT22 measures, the ESP32 posts readings over Wi-Fi to a Vercel API at POST /cloud/history, Vercel stores a time-stamped history in Postgres, and a browser renders the raw JSON from GET /cloud/history" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff;">
 </section>
 
-<!-- ============ 08 · THE DEVELOPMENT ENVIRONMENT ============ -->
+<!-- ============ 09 · THE DEVELOPMENT ENVIRONMENT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -416,10 +447,10 @@ s.listen(<span class="n">1</span>)
       <img src="shots/dev-environment.jpg" alt="Four steps of the development environment: develop in OpenCode on the laptop, push to GitHub, let Vercel build and deploy, and the app is live at a public address" style="display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4mm; border: 1px solid var(--line-strong);">
     </figure>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">08</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
 </section>
 
-<!-- ============ 09 · VERCEL STEP 1 ============ -->
+<!-- ============ 10 · VERCEL STEP 1 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -451,10 +482,10 @@ s.listen(<span class="n">1</span>)
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">09</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
 </section>
 
-<!-- ============ 10 · VERCEL STEP 2 ============ -->
+<!-- ============ 11 · VERCEL STEP 2 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -486,10 +517,10 @@ s.listen(<span class="n">1</span>)
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">10</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
 </section>
 
-<!-- ============ 11 · VERCEL STEP 3 ============ -->
+<!-- ============ 12 · VERCEL STEP 3 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -520,10 +551,10 @@ s.listen(<span class="n">1</span>)
       <p>You can revoke or widen this later in GitHub under <b>Settings → Applications</b>. Nothing here is permanent.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">11</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
 </section>
 
-<!-- ============ 12 · VERCEL STEP 4 ============ -->
+<!-- ============ 13 · VERCEL STEP 4 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -537,10 +568,10 @@ s.listen(<span class="n">1</span>)
     </figure>
     <p class="footnote" style="margin-top: 3mm;">Open <b>github.com</b>, click <b>+</b> in the top right, then <b>New repository</b>. Check the owner is your account.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">12</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">13</span></footer>
 </section>
 
-<!-- ============ 13 · VERCEL STEP 5 ============ -->
+<!-- ============ 14 · VERCEL STEP 5 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -572,10 +603,10 @@ s.listen(<span class="n">1</span>)
       </figure>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">13</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">14</span></footer>
 </section>
 
-<!-- ============ 14 · VERCEL STEP 6 ============ -->
+<!-- ============ 15 · VERCEL STEP 6 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -593,10 +624,10 @@ s.listen(<span class="n">1</span>)
       <p class="footnote" style="padding-top: 3mm;">New session, and the URL you copied. The last sentence matters: Vercel deploys main.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">14</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">15</span></footer>
 </section>
 
-<!-- ============ 15 · VERCEL STEP 7 ============ -->
+<!-- ============ 16 · VERCEL STEP 7 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -610,10 +641,10 @@ s.listen(<span class="n">1</span>)
     </figure>
     <p class="footnote">Copy the <b>domain</b> under Domains, not the deployment address: the deployment changes on every push, the domain stays.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">15</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">16</span></footer>
 </section>
 
-<!-- ============ 16 · VERCEL STEP 8 ============ -->
+<!-- ============ 17 · VERCEL STEP 8 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -634,10 +665,10 @@ s.listen(<span class="n">1</span>)
     </div>
     <p class="footnote">Vercel makes a Neon project and adds its connection string to this project's environment variables, so the app can already reach it.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">16</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">17</span></footer>
 </section>
 
-<!-- ============ 17 · DB PROMPT ============ -->
+<!-- ============ 18 · DB PROMPT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -669,10 +700,10 @@ s.listen(<span class="n">1</span>)
     </div>
     <p class="footnote">The next two slides are what to check: the table first, then the routes.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">17</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">18</span></footer>
 </section>
 
-<!-- ============ 18 · STEP 10 ============ -->
+<!-- ============ 19 · STEP 10 ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -698,15 +729,15 @@ s.listen(<span class="n">1</span>)
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">18</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">19</span></footer>
 </section>
 
-<!-- ============ 19 · THE WHOLE SYSTEM ============ -->
+<!-- ============ 20 · THE WHOLE SYSTEM ============ -->
 <section class="slide" style="padding: 0; background: #ffffff;">
   <img src="shots/full-system.jpg" alt="The complete system: the DHT22 measures, the ESP32 posts over Wi-Fi to a Vercel API, Vercel stores the readings in Postgres and serves the web app, the app calls Open-Meteo for the forecast, and a browser shows the readings and the forecast on one page" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff;">
 </section>
 
-<!-- ============ 20 · CLOSING ============ -->
+<!-- ============ 21 · CLOSING ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -725,10 +756,10 @@ s.listen(<span class="n">1</span>)
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">20</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">21</span></footer>
 </section>
 
-<!-- ============ 21 · APPENDIX ============ -->
+<!-- ============ 22 · APPENDIX ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
@@ -738,10 +769,10 @@ s.listen(<span class="n">1</span>)
       <p>Ten slides to keep beside you while you build. They are not part of the walkthrough.</p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">21</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">22</span></footer>
 </section>
 
-<!-- ============ 22 · TWO TABLES ============ -->
+<!-- ============ 23 · TWO TABLES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -782,11 +813,11 @@ s.listen(<span class="n">1</span>)
     </div>
     <p class="footnote">The store comes from the Vercel Marketplace: <b class="mono" style="font-size: 9.5pt;">vercel.com/marketplace/neon</b>, then Install and <b>Create New Neon Account</b>. The free plan is enough.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">22</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">23</span></footer>
 </section>
 
 
-<!-- ============ 23 · THE APP ============ -->
+<!-- ============ 24 · THE APP ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -817,11 +848,11 @@ s.listen(<span class="n">1</span>)
     </div>
     <p class="footnote">If the build missed a route, ask opencode for that one by name. Read the POST reply as carefully as the page's GET: the threshold in it turns the LED on.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">23</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">24</span></footer>
 </section>
 
 
-<!-- ============ 24 · UPLOAD ============ -->
+<!-- ============ 25 · UPLOAD ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -856,11 +887,11 @@ HEADERS = {<span class="s">"Content-Type"</span>: <span class="s">"application/j
     </div>
     <p class="footnote">The server was the test rig. From here the board pushes, and your page is the console.</p>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">24</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">25</span></footer>
 </section>
 
 
-<!-- ============ 25 · THE PAGE ============ -->
+<!-- ============ 26 · THE PAGE ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -889,11 +920,11 @@ setInterval(load, <span class="n">5000</span>)</pre>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">25</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">26</span></footer>
 </section>
 
 
-<!-- ============ 26 · THE FORECAST ============ -->
+<!-- ============ 27 · THE FORECAST ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -921,11 +952,11 @@ setInterval(load, <span class="n">5000</span>)</pre>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">26</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">27</span></footer>
 </section>
 
 
-<!-- ============ 27 · TWO SOURCES ============ -->
+<!-- ============ 28 · TWO SOURCES ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -953,11 +984,11 @@ setInterval(load, <span class="n">5000</span>)</pre>
       <p>If the forecast fails, the page still shows the room. <b>One source down must not blank the other.</b></p>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">27</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">28</span></footer>
 </section>
 
 
-<!-- ============ 28 · THE THRESHOLD ============ -->
+<!-- ============ 29 · THE THRESHOLD ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -981,11 +1012,11 @@ setInterval(load, <span class="n">5000</span>)</pre>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">28</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">29</span></footer>
 </section>
 
 
-<!-- ============ 29 · THE LED ============ -->
+<!-- ============ 30 · THE LED ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -1014,11 +1045,11 @@ r.close()</pre>
       </div>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">29</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">30</span></footer>
 </section>
 
 
-<!-- ============ 30 · FOUR ENDPOINTS ============ -->
+<!-- ============ 31 · FOUR ENDPOINTS ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -1050,11 +1081,11 @@ r.close()</pre>
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">30</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">31</span></footer>
 </section>
 
 
-<!-- ============ 31 · WHEN IT DOESN'T WORK ============ -->
+<!-- ============ 32 · WHEN IT DOESN'T WORK ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
@@ -1082,7 +1113,7 @@ r.close()</pre>
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">31</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">32</span></footer>
 </section>
 
 
