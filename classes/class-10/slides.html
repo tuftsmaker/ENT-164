@@ -367,9 +367,10 @@
   <div class="s-body">
     <div class="outline" style="grid-template-columns: 1fr 1.05fr; align-items: stretch;">
       <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
-        <p class="plabel">The prompt</p>
-        <p class="mono" style="font-size: 9.5pt; line-height: 1.52; margin: 0; color: var(--muted-2);">I have an ESP32 with MicroPython and a DHT22 sensor. Tell me which pin to wire the data line to, then write a program that reads the temperature and humidity every two seconds and prints both.</p>
-        <p class="footnote" style="padding-top: 4mm;">The pin is opencode's choice. It does not show the board's serial output, so ask it to run the program once and report the numbers.</p>
+        <p class="plabel">Fresh OpenCode session</p>
+        <p style="font-size: 9.5pt; line-height: 1.45; margin: 0 0 3.4mm; color: var(--muted-2);">Connect your ESP32 to your laptop, then run this prompt:</p>
+        <p class="mono" style="font-size: 9.5pt; line-height: 1.52; margin: 0; color: var(--muted-2);">I have an ESP32 and DHT22 sensor. Give me the wiring instructions for connecting it and upload the code to print the temperature and humidity.</p>
+        <p class="footnote" style="padding-top: 4mm;">The wiring and the pin are opencode's to choose. It does not show the board's serial output, so ask it to run the code once and report the numbers.</p>
       </div>
       <div class="panel" style="padding: 4mm; justify-content: center;">
         <pre class="code" style="font-size: 9.5pt;"><span class="k">import</span> dht, time
