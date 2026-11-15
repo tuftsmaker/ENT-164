@@ -320,11 +320,48 @@
 </section>
 
 
-<!-- ============ 04 · REGISTER THE BOARD ============ -->
+<!-- ============ 04 · READ IT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <header class="s-head">
     <p class="s-kicker">Act 1 · Read the room · 1 of 3</p>
+    <h2>Wire it <span class="accent">and read it</span></h2>
+    <p class="s-sub">Numbers on the bench first. The next step puts the same numbers on the network.</p>
+  </header>
+  <div class="s-body">
+    <div class="outline" style="grid-template-columns: 1fr 1.05fr; align-items: stretch;">
+      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
+        <p class="plabel">Fresh OpenCode session</p>
+        <p style="font-size: 9.5pt; line-height: 1.45; margin: 0 0 3.4mm; color: var(--muted-2);">Connect your ESP32 to your laptop, then run this prompt:</p>
+        <p class="mono" style="font-size: 9.5pt; line-height: 1.52; margin: 0; color: var(--muted-2);">I have an ESP32 and DHT22 sensor. Give me the wiring instructions for connecting it and upload the code to print the temperature and humidity.</p>
+        <p class="footnote" style="padding-top: 4mm;">The wiring and the pin are opencode's to choose. It does not show the board's serial output, so ask it to run the code once and report the numbers.</p>
+      </div>
+      <div class="panel" style="padding: 4mm; justify-content: center;">
+        <pre class="code" style="font-size: 9.5pt;"><span class="k">import</span> dht, time
+<span class="k">from</span> machine <span class="k">import</span> Pin
+
+sensor = dht.DHT22(Pin(<span class="n">4</span>))
+
+<span class="k">while</span> <span class="k">True</span>:
+    sensor.measure()
+    <span class="k">print</span>(sensor.temperature(), sensor.humidity())
+    time.sleep(<span class="n">2</span>)</pre>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">04</span></footer>
+</section>
+
+<!-- ============ 05 · THE DEVICE API ============ -->
+<section class="slide" style="padding: 0; background: #ffffff;">
+  <img src="shots/device-api.jpg" alt="A three-step illustration of the device API: the DHT22 measures temperature and humidity, the ESP32 serves it at GET /api/weather over the local Wi-Fi, and a browser fetches the JSON and shows 18.4 degrees and 72 percent" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff;">
+</section>
+
+<!-- ============ 06 · REGISTER THE BOARD ============ -->
+<section class="slide">
+<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
+  <header class="s-head">
+    <p class="s-kicker">Act 1 · Read the room · 2 of 3</p>
     <h2>Register the board <span class="accent">before it connects</span></h2>
     <p class="s-sub">The Tufts network expects every device to sign in. A board with no browser cannot, so IT registers its MAC address by hand.</p>
   </header>
@@ -352,46 +389,9 @@
       </article>
     </div>
   </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">04</span></footer>
+  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">06</span></footer>
 </section>
 
-
-<!-- ============ 05 · READ IT ============ -->
-<section class="slide">
-<img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
-  <header class="s-head">
-    <p class="s-kicker">Act 1 · Read the room · 2 of 3</p>
-    <h2>Wire it <span class="accent">and read it</span></h2>
-    <p class="s-sub">Numbers on the bench first. The next step puts the same numbers on the network.</p>
-  </header>
-  <div class="s-body">
-    <div class="outline" style="grid-template-columns: 1fr 1.05fr; align-items: stretch;">
-      <div class="panel" style="background: var(--blue-tint); border-color: #cfe1f7; justify-content: center;">
-        <p class="plabel">Fresh OpenCode session</p>
-        <p style="font-size: 9.5pt; line-height: 1.45; margin: 0 0 3.4mm; color: var(--muted-2);">Connect your ESP32 to your laptop, then run this prompt:</p>
-        <p class="mono" style="font-size: 9.5pt; line-height: 1.52; margin: 0; color: var(--muted-2);">I have an ESP32 and DHT22 sensor. Give me the wiring instructions for connecting it and upload the code to print the temperature and humidity.</p>
-        <p class="footnote" style="padding-top: 4mm;">The wiring and the pin are opencode's to choose. It does not show the board's serial output, so ask it to run the code once and report the numbers.</p>
-      </div>
-      <div class="panel" style="padding: 4mm; justify-content: center;">
-        <pre class="code" style="font-size: 9.5pt;"><span class="k">import</span> dht, time
-<span class="k">from</span> machine <span class="k">import</span> Pin
-
-sensor = dht.DHT22(Pin(<span class="n">4</span>))
-
-<span class="k">while</span> <span class="k">True</span>:
-    sensor.measure()
-    <span class="k">print</span>(sensor.temperature(), sensor.humidity())
-    time.sleep(<span class="n">2</span>)</pre>
-      </div>
-    </div>
-  </div>
-  <footer class="s-foot"><span>ENT-164 · Intro to Making</span><span>Class 10 · Device to Cloud</span><span class="fnum">05</span></footer>
-</section>
-
-<!-- ============ 06 · THE DEVICE API ============ -->
-<section class="slide" style="padding: 0; background: #ffffff;">
-  <img src="shots/device-api.jpg" alt="A three-step illustration of the device API: the DHT22 measures temperature and humidity, the ESP32 serves it at GET /api/weather over the local Wi-Fi, and a browser fetches the JSON and shows 18.4 degrees and 72 percent" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff;">
-</section>
 
 <!-- ============ 07 · SERVE IT ============ -->
 <section class="slide">
@@ -738,7 +738,7 @@ s.listen(<span class="n">1</span>)
   <img src="shots/full-system.jpg" alt="The complete system: the DHT22 measures, the ESP32 posts over Wi-Fi to a Vercel API, Vercel stores the readings in Postgres and serves the web app, the app calls Open-Meteo for the forecast, and a browser shows the readings and the forecast on one page" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff;">
 </section>
 
-<!-- ============ 21 · CLOSING ============ -->
+<!-- ============ 21 · ASSIGNMENT ============ -->
 <section class="slide">
 <img class="slide-logo" src="../../assets/logos/derby-entrepreneurship-center.png" alt="Derby Entrepreneurship Center at Tufts">
   <div class="s-body">
